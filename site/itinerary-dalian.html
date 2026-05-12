@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>大连 · 推荐行程</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f2f5; color: #333; padding: 20px 16px 60px; line-height: 1.8;
+  }
+  .container { max-width: 680px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  h1 { font-size: 22px; text-align: center; color: #0D47A1; margin-bottom: 6px; font-weight: 700; line-height: 1.4; }
+  .subtitle { text-align: center; color: #999; font-size: 14px; margin-bottom: 28px; }
+  .section-title { font-size: 18px; color: #0D47A1; font-weight: 700; margin-top: 28px; margin-bottom: 12px; padding-left: 12px; border-left: 4px solid #1565C0; }
+  p { font-size: 15px; margin-bottom: 10px; }
+  .highlight { background: #e8eaf6; border-radius: 8px; padding: 14px 16px; margin: 16px 0; font-size: 14px; color: #1a237e; border-left: 4px solid #1565C0; }
+  .day-card { background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+  .day-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .day-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: #1565C0; color: #fff; font-size: 14px; font-weight: 700; border-radius: 50%; flex-shrink: 0; }
+  .day-title { font-size: 16px; font-weight: 700; color: #0D47A1; }
+  .day-tag { display: inline-block; font-size: 11px; background: #e8eaf6; color: #0D47A1; padding: 1px 8px; border-radius: 10px; margin-left: auto; white-space: nowrap; font-weight: 600; }
+  .day-city { font-size: 12px; color: #999; margin-bottom: 6px; }
+  .day-item { font-size: 14px; padding: 3px 0; padding-left: 20px; position: relative; }
+  .day-item::before { content: ""; position: absolute; left: 4px; top: 11px; width: 6px; height: 6px; background: #bbb; border-radius: 50%; }
+  .day-item strong { color: #333; }
+  .day-meal { font-size: 13px; color: #888; padding-left: 20px; margin-top: 4px; }
+  .note-box { background: #e8eaf6; border: 1px solid #9fa8da; border-radius: 8px; padding: 14px 16px; margin: 16px 0; font-size: 14px; color: #1a237e; }
+  @media (max-width: 480px) {
+    body { padding: 10px 8px 40px; }
+    .container { padding: 20px 16px; }
+    h1 { font-size: 19px; } .section-title { font-size: 16px; }
+    p, .day-item, .highlight, .note-box { font-size: 14px; }
+    .day-card { padding: 12px 14px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>🇨🇳 大连 · 暑假家庭游<br>推荐行程方案</h1>
+  <div class="subtitle">海滨之城 · 22-28°C · 5天4晚</div>
+
+  <div class="highlight">
+    <strong>推荐理由：</strong>大连是东北最浪漫的海滨城市，夏季22-28°C凉爽宜人。上海直飞仅1.5小时，俄式日式建筑充满异域风情。滨海路贯穿全城，景点沿海岸线分布，不用走回头路。海鲜烧烤极其丰富，非常适合"吃吃、躺躺、逛逛"。
+  </div>
+
+  <div class="section-title">行程安排</div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">1</span><span class="day-title">抵达大连 · 星海广场</span><span class="day-tag">初到·地标</span></div>
+    <div class="day-city">📍 大连市区</div>
+    <div class="day-item"><strong>白天：</strong>上海直飞大连周水子机场（约1.5h），入住星海广场或中山广场附近酒店</div>
+    <div class="day-item"><strong>下午：</strong>星海广场——亚洲最大的城市广场，喂海鸥（大连特色！）、看百年城雕、远眺星海湾大桥</div>
+    <div class="day-item"><strong>傍晚：</strong>星海公园散步，海滩踩水</div>
+    <div class="day-meal">🍽 晚餐：星海广场附近海鲜餐厅——海鲜大咖、烤海胆</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">2</span><span class="day-title">滨海路 · 棒棰岛</span><span class="day-tag">海岸线·漫步</span></div>
+    <div class="day-city">📍 滨海路沿线</div>
+    <div class="day-item"><strong>上午：</strong>滨海路木栈道漫步——中国最长的沿海木栈道，沿途风景绝美，全程平缓好走</div>
+    <div class="day-item"><strong>下午：</strong>棒棰岛风景区——大连最好的海滨浴场，沙滩细腻，海水清澈，租个遮阳伞躺一下午</div>
+    <div class="day-item"><strong>傍晚：</strong>渔人码头——欧式风情小镇，渔船码头，拍照绝佳</div>
+    <div class="day-meal">🍽 晚餐：渔人码头海鲜餐厅——现捞现做，推荐椒盐皮皮虾、蒜蓉扇贝</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">3</span><span class="day-title">老虎滩 · 海洋公园</span><span class="day-tag">亲子·乐园</span></div>
+    <div class="day-city">📍 老虎滩</div>
+    <div class="day-item"><strong>全天：</strong>老虎滩海洋公园——极地馆看企鹅白鲸、海洋动物表演、珊瑚馆五彩斑斓、海兽馆看海狮海豹</div>
+    <div class="day-item">园区沿海而建，全程平路，有电瓶车，老人不累，孩子超爱</div>
+    <div class="day-item"><strong>傍晚：</strong>返回酒店休息，自由活动</div>
+    <div class="day-meal">🍽 晚餐：大连烧烤——烤海鲜串、烤牛羊肉、搭配大连干啤</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">4</span><span class="day-title">金石滩 · 黄金海岸</span><span class="day-tag">沙滩·躺平</span></div>
+    <div class="day-city">📍 金石滩（距市区约1h快轨）</div>
+    <div class="day-item"><strong>全天：</strong>金石滩国家旅游度假区——十里黄金海岸，沙质金黄细腻，坡度平缓，最适合老人小孩玩水</div>
+    <div class="day-item">沙滩躺平+海水浴，孩子挖沙捡贝壳</div>
+    <div class="day-item">金石滩地质公园——奇特礁石景观，可顺路一看</div>
+    <div class="day-item">傍晚返回市区</div>
+    <div class="day-meal">🍽 午餐：金石滩海景餐厅；晚餐：大连老菜馆——松鼠鱼、锅包肉</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">5</span><span class="day-title">俄罗斯风情街 · 返程</span><span class="day-tag">悠闲·回家</span></div>
+    <div class="day-city">📍 大连市区→上海</div>
+    <div class="day-item"><strong>上午：</strong>俄罗斯风情街——百年历史俄式建筑，拍拍照买伴手礼</div>
+    <div class="day-item">或去大连商场/青泥洼桥采购海产干货</div>
+    <div class="day-item"><strong>下午：</strong>前往机场返回上海</div>
+    <div class="day-meal">🍽 午餐：最后来一份大连焖子+海鲜焖面</div>
+  </div>
+
+  <hr>
+  <div class="section-title">实用信息</div>
+  <div class="note-box"><strong>✈️ 交通：</strong>上海⇋大连直飞约1.5小时，暑期往返约1000-2000元。市区地铁、公交、打车都很方便。</div>
+  <div class="note-box"><strong>🏨 住宿：</strong>推荐住星海广场或中山广场附近，四星酒店约400-800元/晚。</div>
+  <div class="note-box"><strong>🍜 美食必吃：</strong>海鲜大咖、烤海胆、椒盐皮皮虾、蒜蓉扇贝、大连焖子、海鲜烧烤、鲅鱼饺子、海凉粉。</div>
+  <div class="note-box"><strong>💰 预算参考（人均）：</strong><br>交通约800-1500元 · 住宿4晚约1000-2500元 · 餐饮约600-1200元 · 门票约400-600元<br><span style="color:#1565C0;font-weight:600;">合计预估：2800–5800 元/人</span></div>
+  <p style="text-align:center; color:#999; font-size:13px; margin-top:16px;">本文案为初步推荐，具体行程可根据各家庭需求灵活调整。</p>
+</div>
+</body>
+</html>
