@@ -1,0 +1,28 @@
+# Tencent Cloud EdgeOne
+.env
+.edgeone/*
+.tef_dist/*
+
+# Wrangler / Cloudflare
+.wrangler/
+site/.functions/
+site/node_modules/
+site/.edgeone/
+site/_worker.bundle
+
+# Claude
+.claude/
+
+# IDE
+*.code-workspace
+
+# Unrelated project files
+unpacked/
+logos/
+*.docx
+*.pptx
+*.svg
+*.png
+create_war_pres.js
+2026*.html
+中超*.html

@@ -1,0 +1,7 @@
+name = "family-trip-2026"
+pages_build_output_dir = ""
+
+[[d1_databases]]
+binding = "DB"
+database_name = "family-trip-comments"
+database_id = "b86baa3a-f848-4480-866f-5300416fc90a"

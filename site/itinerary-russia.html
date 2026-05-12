@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026暑假俄罗斯家庭游 · 推荐行程</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f2f5;
+    color: #333;
+    padding: 20px 16px 60px;
+    line-height: 1.8;
+  }
+  .container {
+    max-width: 680px;
+    margin: 0 auto;
+    background: #fff;
+    border-radius: 12px;
+    padding: 32px 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  h1 {
+    font-size: 22px;
+    text-align: center;
+    color: #1a4c7a;
+    margin-bottom: 6px;
+    font-weight: 700;
+    line-height: 1.4;
+  }
+  .subtitle {
+    text-align: center;
+    color: #999;
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+  .section-title {
+    font-size: 18px;
+    color: #1a4c7a;
+    font-weight: 700;
+    margin-top: 28px;
+    margin-bottom: 12px;
+    padding-left: 12px;
+    border-left: 4px solid #2e75b6;
+  }
+  p { font-size: 15px; margin-bottom: 10px; }
+  .highlight {
+    background: #e8f0fe;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: #1a4c7a;
+    border-left: 4px solid #2e75b6;
+  }
+  .highlight strong { color: #1a4c7a; }
+
+  .day-card {
+    background: #fafbfc;
+    border: 1px solid #e8e8e8;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    transition: box-shadow 0.2s;
+  }
+  .day-card:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.04); }
+
+  .day-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .day-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px; height: 32px;
+    background: #2e75b6;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .day-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #1a4c7a;
+  }
+  .day-tag {
+    display: inline-block;
+    font-size: 11px;
+    background: #fff3e0;
+    color: #e67e22;
+    padding: 1px 8px;
+    border-radius: 10px;
+    margin-left: auto;
+    white-space: nowrap;
+    font-weight: 600;
+  }
+  .day-city {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 6px;
+  }
+  .day-item {
+    font-size: 14px;
+    padding: 3px 0;
+    padding-left: 20px;
+    position: relative;
+  }
+  .day-item::before {
+    content: "";
+    position: absolute;
+    left: 4px;
+    top: 11px;
+    width: 6px; height: 6px;
+    background: #bbb;
+    border-radius: 50%;
+  }
+  .day-item strong { color: #333; }
+  .day-meal {
+    font-size: 13px;
+    color: #888;
+    padding-left: 20px;
+    margin-top: 4px;
+  }
+
+  .note-box {
+    background: #fff8e6;
+    border: 1px solid #f0db7a;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: #8a6d1f;
+  }
+  .note-box strong { color: #6b5215; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 16px;
+    font-size: 14px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #e0e0e0;
+  }
+  th, td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+  }
+  th { background: #e8f0fe; color: #1a4c7a; font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+
+  .tag-green { color: #27ae60; font-weight: 600; }
+  .tag-blue { color: #2e75b6; font-weight: 600; }
+  .tag-orange { color: #e67e22; font-weight: 600; }
+
+  hr {
+    border: none;
+    height: 1px;
+    background: #e0e0e0;
+    margin: 28px 0;
+  }
+
+  @media (max-width: 480px) {
+    body { padding: 10px 8px 40px; }
+    .container { padding: 20px 16px; }
+    h1 { font-size: 19px; }
+    .section-title { font-size: 16px; }
+    p, .day-item, .highlight, .note-box { font-size: 14px; }
+    .day-card { padding: 12px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <h1>2026暑假俄罗斯家庭游<br>推荐行程方案</h1>
+  <div class="subtitle">适合老人和小孩的慢节奏 · 莫斯科 + 圣彼得堡 · 10天9晚</div>
+
+  <div class="highlight">
+    <strong>设计思路：</strong>考虑到有老人和小孩，行程不赶路、不早起，每天安排 1–2 个核心景点，留足午休和自由活动时间。城市之间用高铁连接（约4小时），免去夜火车奔波。
+  </div>
+
+  <!-- ====== DAY 1 ====== -->
+  <div class="section-title">行程安排</div>
+
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-num">1</span>
+      <span class="day-title">抵达莫斯科</span>
+      <span class="day-tag">休整 · 适应</span>
+    </div>
+    <div class="day-city">📍 莫斯科</div>
+    <div class="day-item"><strong>白天：</strong>抵达莫斯科谢列梅捷沃机场，专车接机前往酒店办理入住</div>
+    <div class="day-item"><strong>下午·傍晚：</strong>在酒店附近散步，熟悉周边环境，简单用餐，早点休息倒时差</div>
+    <div class="day-meal">🍽 晚餐：酒店附近简餐 / 中餐厅</div>
+  </div>
+
+  <!-- ====== DAY 2 ====== -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-num">2</span>
+      <span class="day-title">红场 &amp; 克里姆林宫</span>
+      <span class="day-tag">经典必去</span>
+    </div>
+    <div class="day-city">📍 莫斯科</div>
+    <div class="day-item"><strong>上午：</strong>红场、圣瓦西里大教堂（外观拍照）、古姆百货商场（可进去逛逛，吃个著名的古姆冰淇淋）</div>
+    <div class="day-item"><strong>午餐：</strong>古姆百货3楼餐厅或周边俄餐</div>
+    <div class="day-item"><strong>下午：</strong>克里姆林宫内部参观（武器库或钻石馆），步行游览亚历山大花园</div>
+    <div class="day-item"><strong>傍晚：</strong>回酒店休息，老人和孩子如果精力够可以去莫斯科河畔散步</div>
+    <div class="day-meal">🍽 晚餐：预订中餐厅（莫斯科有不错的中餐馆）</div>
+  </div>
+
+  <!-- ====== DAY 3 ====== -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-num">3</span>
+      <span class="day-title">莫斯科地铁 &amp; 阿尔巴特街</span>
+      <span class="day-tag">轻松 · 室内为主</span>
+    </div>
+    <div class="day-city">📍 莫斯科</div>
+    <div class="day-item"><strong>上午：</strong>莫斯科地铁深度游（看最美地铁站：共青团站、马雅可夫斯基站、基辅站等，老人会很感兴趣）</div>
+    <div class="day-item"><strong>午餐：</strong>阿尔巴特街附近</div>
+    <div class="day-item"><strong>下午：</strong>逛老阿尔巴特街，街头艺人表演，普希金故居外观，买点纪念品</div>
+    <div class="day-item"><strong>傍晚：</strong>可去莫斯科国立大学俯瞰城市全景，或回酒店休息</div>
+    <div class="day-meal">🍽 晚餐：自由安排（推荐尝试俄式饺子Pelmeni）</div>
+  </div>
+
+  <!-- ====== DAY 4 ====== -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-num">4</span>
+      <span class="day-title">莫斯科 → 圣彼得堡（高铁）</span>
+      <span class="day-tag">转城市 · 半天车程</span>
+    </div>
+    <div class="day-city">📍 莫斯科 → 圣彼得堡</div>
+    <div class="day-item"><strong>上午：</strong>睡到自然醒，退房，前往莫斯科列宁格勒火车站</div>
+    <div class="day-item"><strong>中午：</strong>乘坐 Sapsan 高铁前往圣彼得堡（约4小时），车上可欣赏沿途风光，备好零食给小孩</div>
+    <div class="day-item"><strong>下午·傍晚：</strong>抵达圣彼得堡，专车接站，入住酒店，附近晚餐</div>
+    <div class="day-meal">🍽 晚餐：涅瓦大街附近餐厅</div>
+  </div>
+
+  <!-- ====== DAY 5 ====== -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-num">5</span>
+      <span class="day-title">冬宫博物馆（埃尔米塔日）</span>
+      <span class="day-tag">世界四大博物馆</span>
+    </div>
+    <div class="day-city">📍 圣彼得堡</div>
+    <div class="day-item"><strong>上午：</strong>冬宫广场拍照，进入冬宫博物馆参观（重点看约旦 staircase、达芬奇画作、埃及木乃伊，老人小孩都会感兴趣）</div>
+    <div class="day-item"><strong>午餐：</strong>博物馆附近用餐</div>
+    <div class="day-item"><strong>下午：</strong>如果体力够，继续参观冬宫剩余展厅；或回酒店午休，之后逛涅瓦大街</div>
+    <div class="day-item"><strong>傍晚：</strong>推荐乘坐涅瓦河游船（约1小时），从水上欣赏圣彼得堡</div>
+    <div class="day-meal">🍽 晚餐：涅瓦河畔俄式晚餐</div>
+  </div>
+
+  <!-- ====== DAY 6 ====== -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-num">6</span>
+      <span class="day-title">彼得宫（夏宫）</span>
+      <span class="day-tag">花园 · 喷泉 · 轻松</span>
+    </div>
+    <div class="day-city">📍 圣彼得堡</div>
+    <div class="day-item"><strong>上午：</strong>从冬宫码头乘坐水翼船前往夏宫（约30分钟，小孩会觉得很有趣），参观下花园和喷泉群</div>
+    <div class="day-item"><strong>午餐：</strong>夏宫附近或自带野餐（夏天花园里野餐很惬意）</div>
+    <div class="day-item"><strong>下午：</strong>在芬兰湾畔散步，孩子们可以在花园里跑动，老人坐在长椅上休息看海</div>
+    <div class="day-item"><strong>傍晚：</strong>水翼船返回市区，自由活动</div>
+    <div class="day-meal">🍽 晚餐：推荐尝尝俄式罗宋汤和烤鱼</div>
+  </div>
+
+  <!-- ====== DAY 7 ====== -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-num">7</span>
+      <span class="day-title">滴血大教堂 &amp; 圣以撒大教堂</span>
+      <span class="day-tag">教堂 · 登顶观景</span>
+    </div>
+    <div class="day-city">📍 圣彼得堡</div>
+    <div class="day-item"><strong>上午：</strong>滴血救世主大教堂（内部马赛克壁画极为震撼），之后步行至米哈伊洛夫花园散步</div>
+    <div class="day-item"><strong>午餐：</strong>花园附近</div>
+    <div class="day-item"><strong>下午：</strong>圣以撒大教堂（可登顶俯瞰圣彼得堡全景，老人可选择不登顶，在教堂内参观）</div>
+    <div class="day-item"><strong>傍晚：</strong>青铜骑士像、十二月党人广场，沿涅瓦河散步回酒店</div>
+    <div class="day-meal">🍽 晚餐：俄式烤肉餐</div>
+  </div>
+
+  <!-- ====== DAY 8 ====== -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-num">8</span>
+      <span class="day-title">叶卡捷琳娜宫（皇村）</span>
+      <span class="day-tag">琥珀宫 · 花园</span>
+    </div>
+    <div class="day-city">📍 圣彼得堡（普希金市）</div>
+    <div class="day-item"><strong>上午：</strong>乘车前往普希金市参观叶卡捷琳娜宫，重点看世界第八大奇迹——琥珀宫</div>
+    <div class="day-item"><strong>午餐：</strong>皇村附近餐厅</div>
+    <div class="day-item"><strong>下午：</strong>在叶卡捷琳娜公园散步，大片绿地非常适合老人休息、孩子玩耍</div>
+    <div class="day-item"><strong>傍晚：</strong>返回市区，自由活动或逛街买伴手礼</div>
+    <div class="day-meal">🍽 晚餐：自理（可找中餐或尝试俄式薄饼Blini）</div>
+  </div>
+
+  <!-- ====== DAY 9 ====== -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-num">9</span>
+      <span class="day-title">自由日 / 休闲购物</span>
+      <span class="day-tag">放松 · 灵活安排</span>
+    </div>
+    <div class="day-city">📍 圣彼得堡</div>
+    <div class="day-item"><strong>睡到自然醒</strong>，轻松自由安排</div>
+    <div class="day-item">可选方案：俄式桑拿体验（Banya）/ 俄罗斯博物馆 / 逛街买套娃、琥珀、巧克力等伴手礼 / 带孩子去中央游乐园</div>
+    <div class="day-item">或者就坐在涅瓦大街的咖啡馆里，感受这座城市的慢生活</div>
+    <div class="day-meal">🍽 晚餐：集体聚餐，推荐涅瓦大街上的格鲁吉亚餐厅（口味适合中国人）</div>
+  </div>
+
+  <!-- ====== DAY 10 ====== -->
+  <div class="day-card">
+    <div class="day-header">
+      <span class="day-num">10</span>
+      <span class="day-title">返程</span>
+      <span class="day-tag">回家</span>
+    </div>
+    <div class="day-city">📍 圣彼得堡 → 国内</div>
+    <div class="day-item"><strong>上午：</strong>退房，根据航班时间前往圣彼得堡普尔科沃机场</div>
+    <div class="day-item">办理退税（如有购物），飞回国内</div>
+    <div class="day-meal">🍽 飞机餐</div>
+  </div>
+
+  <!-- 缩略版 7天 -->
+  <hr>
+
+  <div class="section-title">附：7天精简版方案</div>
+  <p>如果时间有限，可压缩为7天6晚，去掉休整日和自由日：</p>
+
+  <table>
+    <tr><th>天数</th><th>安排</th></tr>
+    <tr><td>Day 1</td><td>抵达莫斯科，休整</td></tr>
+    <tr><td>Day 2</td><td>红场 + 克里姆林宫</td></tr>
+    <tr><td>Day 3</td><td>莫斯科地铁游 → 下午高铁前往圣彼得堡</td></tr>
+    <tr><td>Day 4</td><td>冬宫博物馆</td></tr>
+    <tr><td>Day 5</td><td>夏宫（彼得宫）</td></tr>
+    <tr><td>Day 6</td><td>滴血大教堂 + 圣以撒大教堂 + 涅瓦河游船</td></tr>
+    <tr><td>Day 7</td><td>返程</td></tr>
+  </table>
+
+  <!-- Tips -->
+  <hr>
+  <div class="section-title">温馨提示</div>
+
+  <div class="note-box">
+    <strong>🚄 城际交通：</strong>莫斯科 ↔ 圣彼得堡推荐乘坐 Sapsan 高铁，4小时直达，座位宽敞舒适，老人小孩不辛苦。建议提前在 Russian Railways 官网订票。
+  </div>
+
+  <div class="note-box">
+    <strong>🏨 住宿建议：</strong>莫斯科建议住在红场/特维尔大街附近；圣彼得堡建议住在涅瓦大街/冬宫附近。老人孩子少走路，舒适型酒店含早餐最佳。
+  </div>
+
+  <div class="note-box">
+    <strong>🍜 餐饮贴士：</strong>俄罗斯夏季有新鲜果蔬，不用担心蔬菜问题。带孩子和老人的话，每到一个城市先找好附近的中餐厅备用。莫斯科和圣彼得堡都有不错的中餐馆。
+  </div>
+
+  <div class="note-box">
+    <strong>🎫 门票预订：</strong>冬宫、克里姆林宫、叶卡捷琳娜宫等热门景点建议提前1-2周网上购票，免去现场排队，尤其带着老人孩子。
+  </div>
+
+  <div class="note-box">
+    <strong>🌡️ 穿衣指南：</strong>7-8月莫斯科/圣彼得堡 15–28°C，早晚凉，需带薄外套和长裤。晴天紫外线较强，备好防晒霜和帽子。雨伞随身带。
+  </div>
+
+  <div class="note-box">
+    <strong>💰 预算参考（人均）：</strong><br>
+    机票往返：约 3000–5000 元（视中转和提前预订时间）<br>
+    住宿（9晚）：约 2500–4000 元（舒适型酒店）<br>
+    餐饮：约 1500–2500 元<br>
+    门票+交通：约 1000–2000 元<br>
+    <span class="tag-green">合计预估：8000–13500 元/人</span>
+  </div>
+
+  <hr>
+  <p style="text-align:center; color:#999; font-size:13px;">本文案为初步推荐，具体行程可根据各家庭需求灵活调整。</p>
+
+</div>
+
+</body>
+</html>

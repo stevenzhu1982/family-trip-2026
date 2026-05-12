@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026暑假 · 家庭出游计划</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    color: #333;
+  }
+  .container { max-width: 600px; margin: 0 auto; }
+  .hero { text-align: center; color: #fff; margin-bottom: 30px; }
+  .hero h1 { font-size: 28px; font-weight: 700; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+  .hero p { font-size: 15px; opacity: 0.9; line-height: 1.6; }
+
+  .card { background: #fff; border-radius: 16px; padding: 24px 20px; margin-bottom: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+  .card-title { font-size: 18px; font-weight: 700; color: #1a4c7a; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+
+  .dest-list { display: flex; flex-direction: column; gap: 10px; }
+  .dest-item {
+    display: flex; align-items: center;
+    background: #f7f9fc; border: 1px solid #e8e8e8; border-radius: 12px;
+    padding: 14px 16px; text-decoration: none; color: #333;
+    transition: all 0.15s; gap: 12px;
+  }
+  .dest-item:hover { background: #f0f2f5; border-color: #ccc; }
+  .dest-item:active { transform: scale(0.99); }
+  .dest-flag { font-size: 28px; flex-shrink: 0; width: 42px; text-align: center; }
+  .dest-info { flex: 1; min-width: 0; }
+  .dest-name { font-size: 15px; font-weight: 600; }
+  .dest-desc { font-size: 12px; color: #888; }
+  .dest-arrow { color: #bbb; font-size: 18px; flex-shrink: 0; }
+
+  .badge { display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 8px; margin-left: 6px; font-weight: 600; vertical-align: middle; }
+  .badge-new { background: #fde8e8; color: #c0392b; }
+
+  .section-label {
+    font-size: 13px; font-weight: 600; color: #999; margin-bottom: 10px;
+    letter-spacing: 1px;
+  }
+
+  .info-card { font-size: 14px; color: #555; line-height: 1.8; }
+  .info-card strong { color: #333; }
+
+  .footer { text-align: center; color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 30px; }
+
+  /* 留言板样式 */
+  .msg-form { display: flex; flex-direction: column; gap: 10px; }
+  .msg-form input, .msg-form textarea {
+    font-family: inherit; font-size: 14px; padding: 10px 14px;
+    border: 1px solid #ddd; border-radius: 8px; outline: none; resize: none;
+    transition: border-color 0.15s;
+  }
+  .msg-form input:focus, .msg-form textarea:focus { border-color: #667eea; }
+  .msg-form .row { display: flex; gap: 10px; }
+  .msg-form .row input { flex: 1; }
+  .msg-form textarea { min-height: 70px; }
+  .msg-form .btn-submit {
+    align-self: flex-end; background: linear-gradient(135deg, #667eea, #764ba2);
+    color: #fff; border: none; padding: 10px 28px; border-radius: 8px;
+    font-size: 14px; font-weight: 600; cursor: pointer; transition: opacity 0.15s;
+  }
+  .msg-form .btn-submit:hover { opacity: 0.85; }
+  .msg-form .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+  .msg-form .msg-tip { font-size: 12px; color: #999; text-align: right; }
+
+  .msg-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; max-height: 400px; overflow-y: auto; }
+  .msg-item { background: #f7f9fc; border-radius: 10px; padding: 12px 14px; }
+  .msg-header { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+  .msg-avatar { width: 28px; height: 28px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; flex-shrink: 0; }
+  .msg-name { font-size: 13px; font-weight: 600; color: #333; }
+  .msg-time { font-size: 11px; color: #aaa; margin-left: auto; }
+  .msg-text { font-size: 14px; color: #555; line-height: 1.6; padding-left: 36px; word-break: break-all; }
+  .msg-empty { text-align: center; color: #ccc; font-size: 14px; padding: 30px 0; }
+  .msg-loading { text-align: center; color: #999; font-size: 13px; padding: 20px 0; }
+  .msg-error { text-align: center; color: #e74c3c; font-size: 13px; padding: 10px 0; }
+
+  @media (max-width: 480px) {
+    body { padding: 20px 12px; }
+    .hero h1 { font-size: 24px; }
+    .card { padding: 18px 16px; }
+    .dest-item { padding: 12px 14px; }
+    .dest-flag { font-size: 24px; width: 36px; }
+    .msg-form .row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="hero">
+    <h1>🏖️ 2026 暑假 · 家庭出游</h1>
+    <p>几个家庭一起，带上老人和孩子<br>选一个心仪的目的地，出发！</p>
+  </div>
+
+  <!-- 征求意见稿 -->
+  <div class="card">
+    <div class="card-title">📋 出行意向 · 征求意见</div>
+    <div class="dest-list">
+      <a href="proposal.html" class="dest-item">
+        <span class="dest-flag">📄</span>
+        <span class="dest-info">
+          <span class="dest-name">家庭出游征求意见稿</span>
+          <span class="dest-desc">5 个目的地方案对比 · 回执表</span>
+        </span>
+        <span class="dest-arrow">→</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- 推荐行程 -->
+  <div class="card">
+    <div class="card-title">🗺️ 各目的地 · 推荐行程</div>
+    <div class="section-label">点击查看详细行程安排</div>
+    <div class="dest-list">
+
+      <a href="itinerary-korea.html" class="dest-item">
+        <span class="dest-flag">🇰🇷</span>
+        <span class="dest-info">
+          <span class="dest-name">韩国 · 济州岛</span>
+          <span class="dest-desc">5天4晚 · 飞行1.5h · 免签 · 休闲度假</span>
+        </span>
+        <span class="dest-arrow">→</span>
+      </a>
+
+      <a href="itinerary-vietnam.html" class="dest-item">
+        <span class="dest-flag">🇻🇳</span>
+        <span class="dest-info">
+          <span class="dest-name">越南 · 岘港/会安</span>
+          <span class="dest-desc">6天5晚 · 飞行3.5h · 性价比之王</span>
+        </span>
+        <span class="dest-arrow">→</span>
+      </a>
+
+      <a href="itinerary-bali.html" class="dest-item">
+        <span class="dest-flag">🇮🇩</span>
+        <span class="dest-info">
+          <span class="dest-name">印尼 · 巴厘岛</span>
+          <span class="dest-desc">6天5晚 · 飞行6h · 落地签 · 神庙海滩</span>
+        </span>
+        <span class="badge badge-new">NEW</span>
+        <span class="dest-arrow">→</span>
+      </a>
+
+      <a href="itinerary-xinjiang.html" class="dest-item">
+        <span class="dest-flag">🇨🇳</span>
+        <span class="dest-info">
+          <span class="dest-name">新疆 · 北疆伊犁</span>
+          <span class="dest-desc">7天6晚 · 草原雪山 · 夏季避暑</span>
+        </span>
+        <span class="dest-arrow">→</span>
+      </a>
+
+      <a href="itinerary-yunnan.html" class="dest-item">
+        <span class="dest-flag">🇨🇳</span>
+        <span class="dest-info">
+          <span class="dest-name">云南 · 昆大丽</span>
+          <span class="dest-desc">8天7晚 · 古城雪山 · 四季如春</span>
+        </span>
+        <span class="dest-arrow">→</span>
+      </a>
+
+    </div>
+  </div>
+
+  <!-- 出游信息 -->
+  <div class="card info-card">
+    <div class="card-title">💡 关于本次出游</div>
+    <strong>时间：</strong>2026 年 7 月中下旬 ~ 8 月上旬<br>
+    <strong>成员：</strong>几个家庭，有老人和小孩<br>
+    <strong>风格：</strong>慢节奏、不赶路、舒适为主<br>
+    <strong>当前阶段：</strong>目的地意向征集<br>
+    <div style="margin-top:10px;font-size:13px;color:#999;">
+      请各家庭先看征求意见稿，再查看感兴趣的行程，反馈目的地偏好。
+    </div>
+  </div>
+
+  <!-- 留言板 -->
+  <div class="card">
+    <div class="card-title">💬 大家来说说</div>
+    <div class="msg-form">
+      <div class="row">
+        <input type="text" id="msg-name" placeholder="你的称呼" maxlength="20">
+      </div>
+      <textarea id="msg-content" placeholder="说说你的想法…（选哪个目的地？有什么建议？）" maxlength="500"></textarea>
+      <button class="btn-submit" id="msg-submit" onclick="submitMsg()">发表留言</button>
+      <div class="msg-tip"><span id="msg-count">0</span>/500</div>
+    </div>
+    <div class="msg-list" id="msg-list">
+      <div class="msg-loading">加载中…</div>
+    </div>
+  </div>
+
+  <div class="footer">家庭出游计划 · 2026 年 暑假</div>
+</div>
+
+<script>
+const API = '/api/comments';
+
+async function loadMsgs() {
+  const list = document.getElementById('msg-list');
+  try {
+    const res = await fetch(API);
+    const data = await res.json();
+    if (!data.success) throw new Error();
+    if (data.comments.length === 0) {
+      list.innerHTML = '<div class="msg-empty">还没有留言，来说两句吧 🎉</div>';
+      return;
+    }
+    list.innerHTML = data.comments.map(m => {
+      const date = m.created_at.slice(0, 16).replace('T', ' ');
+      const initial = m.name.charAt(0);
+      return '<div class="msg-item">' +
+        '<div class="msg-header">' +
+          '<div class="msg-avatar">' + initial + '</div>' +
+          '<span class="msg-name">' + escHtml(m.name) + '</span>' +
+          '<span class="msg-time">' + date + '</span>' +
+        '</div>' +
+        '<div class="msg-text">' + escHtml(m.content) + '</div>' +
+      '</div>';
+    }).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="msg-error">加载留言失败，请刷新重试</div>';
+  }
+}
+
+function escHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+async function submitMsg() {
+  const name = document.getElementById('msg-name').value.trim();
+  const content = document.getElementById('msg-content').value.trim();
+  const btn = document.getElementById('msg-submit');
+  if (!name) { alert('请填写你的称呼'); return; }
+  if (!content) { alert('请填写留言内容'); return; }
+  btn.disabled = true;
+  btn.textContent = '提交中…';
+  try {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, content })
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('msg-name').value = '';
+      document.getElementById('msg-content').value = '';
+      document.getElementById('msg-count').textContent = '0';
+      await loadMsgs();
+    } else {
+      alert(data.error || '提交失败');
+    }
+  } catch (e) {
+    alert('网络错误，请重试');
+  }
+  btn.disabled = false;
+  btn.textContent = '发表留言';
+}
+
+document.getElementById('msg-content').addEventListener('input', function() {
+  document.getElementById('msg-count').textContent = this.value.length;
+});
+
+loadMsgs();
+</script>
+
+</body>
+</html>
