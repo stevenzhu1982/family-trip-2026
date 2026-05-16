@@ -167,7 +167,7 @@ async def download_video(
                 total_sent += len(chunk)
                 if total_sent > MAX_FILE_SIZE:
                     proc.kill()
-                    yield b'{"error":"文件过大，超过2GB限制"}'
+                    yield '{"error":"文件过大，超过2GB限制"}'.encode('utf-8')
                     return
                 yield chunk
             proc.wait()

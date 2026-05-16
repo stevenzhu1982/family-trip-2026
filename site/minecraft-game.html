@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>我的世界 · 记忆翻牌小游戏</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;600;700;900&display=swap');
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --grass-top: #7ec850;
+    --grass-green: #5a8a3c;
+    --dirt-brown: #8b5e3c;
+    --gold-yellow: #f7d94c;
+    --dark-bg: #1a1a2e;
+    --card-bg: #2a2a4a;
+    --text-light: #f0f0f0;
+  }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== HEADER ===== */
+  .grass-header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 12px;
+    z-index: 1000;
+    background:
+      linear-gradient(180deg, var(--grass-top) 0%, var(--grass-top) 40%, #5a8a3c 40%, #5a8a3c 60%, #8b5e3c 60%, #8b5e3c 100%);
+    background-size: 16px 12px;
+  }
+  .grass-header::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: repeating-linear-gradient(90deg, #5a8a3c 0, #5a8a3c 2px, #6b9a4c 2px, #6b9a4c 4px);
+  }
+
+  nav {
+    position: fixed;
+    top: 12px; left: 0; right: 0;
+    z-index: 999;
+    background: rgba(26,26,46,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 2px solid var(--grass-top);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 56px;
+  }
+  nav a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 900;
+    font-size: 1.1rem;
+    color: var(--grass-top);
+    text-decoration: none;
+  }
+  nav a .block-icon {
+    display: inline-block;
+    width: 26px; height: 26px;
+    background: var(--dirt-brown);
+    border: 2px solid var(--grass-top);
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+  }
+  nav a .block-icon::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 40%;
+    background: var(--grass-top);
+  }
+  nav .back-link {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.85rem;
+    text-decoration: none;
+    font-weight: 500;
+    padding: 6px 14px;
+    border-radius: 6px;
+    transition: all 0.3s;
+  }
+  nav .back-link:hover {
+    color: var(--text-light);
+    background: rgba(255,255,255,0.06);
+  }
+
+  /* ===== GAME CONTAINER ===== */
+  .game-wrapper {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 100px 20px 40px;
+  }
+  .game-title {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    font-weight: 900;
+    margin-bottom: 4px;
+    text-align: center;
+  }
+  .game-title .hl {
+    background: linear-gradient(135deg, var(--grass-top), var(--gold-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .game-sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.9rem;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  /* ===== STATS BAR ===== */
+  .stats-bar {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .stat-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 10px 20px;
+    text-align: center;
+    min-width: 100px;
+  }
+  .stat-item .stat-label {
+    font-size: 0.7rem;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+  .stat-item .stat-value {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--gold-yellow);
+  }
+
+  /* ===== GAME GRID ===== */
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    max-width: 480px;
+    width: 100%;
+    perspective: 800px;
+    margin-bottom: 24px;
+  }
+
+  /* ===== CARD ===== */
+  .memory-card {
+    aspect-ratio: 1;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .memory-card.flipped {
+    transform: rotateY(180deg);
+  }
+  .memory-card.matched {
+    transform: rotateY(180deg);
+  }
+  .memory-card.matched .card-face-back {
+    box-shadow: 0 0 20px rgba(126,200,80,0.4);
+    border-color: var(--grass-top);
+  }
+  .memory-card .card-face {
+    position: absolute;
+    inset: 0;
+    border-radius: 12px;
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.2rem;
+    border: 2px solid rgba(255,255,255,0.1);
+  }
+  .memory-card .card-face-front {
+    background: linear-gradient(145deg, #2a2a4a, #1e1e3a);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .memory-card .card-face-front::after {
+    content: '?';
+    font-size: 2rem;
+    font-weight: 900;
+    color: rgba(126,200,80,0.3);
+  }
+  .memory-card .card-face-back {
+    background: linear-gradient(145deg, #1e2a3a, #16213e);
+    transform: rotateY(180deg);
+    border-color: rgba(126,200,80,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+  .memory-card:hover .card-face-front {
+    border-color: rgba(126,200,80,0.3);
+  }
+  .memory-card:not(.flipped):not(.matched):hover {
+    transform: scale(1.03);
+  }
+  .memory-card.disabled {
+    cursor: default;
+  }
+
+  @media (max-width: 420px) {
+    .game-grid { gap: 8px; }
+    .memory-card .card-face { font-size: 1.6rem; border-radius: 8px; }
+    .memory-card .card-face-front::after { font-size: 1.4rem; }
+    .stats-bar { gap: 12px; }
+    .stat-item { padding: 8px 14px; min-width: 80px; }
+    .stat-item .stat-value { font-size: 1.1rem; }
+  }
+
+  /* ===== BUTTONS ===== */
+  .game-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .btn {
+    padding: 12px 32px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    border: none;
+    font-family: inherit;
+    transition: all 0.3s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--grass-top), var(--grass-green));
+    color: #fff;
+    box-shadow: 0 4px 16px rgba(126,200,80,0.3);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(126,200,80,0.5);
+  }
+  .btn-secondary {
+    background: rgba(255,255,255,0.06);
+    color: var(--text-light);
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* ===== VICTORY OVERLAY ===== */
+  .victory-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.7);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+  }
+  .victory-overlay.show {
+    display: flex;
+    animation: fadeIn 0.5s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .victory-box {
+    background: linear-gradient(145deg, #1a2a1a, #16213e);
+    border: 2px solid var(--grass-top);
+    border-radius: 20px;
+    padding: 40px 48px;
+    text-align: center;
+    max-width: 420px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+    animation: victoryPop 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  @keyframes victoryPop {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .victory-box .trophy {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 12px;
+  }
+  .victory-box h2 {
+    font-size: 1.8rem;
+    font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .victory-box h2 .hl {
+    background: linear-gradient(135deg, var(--grass-top), var(--gold-yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .victory-box .victory-stats {
+    display: flex;
+    justify-content: center;
+    gap: 32px;
+    margin: 20px 0 24px;
+  }
+  .victory-box .victory-stat .v-label {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.4);
+  }
+  .victory-box .victory-stat .v-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--gold-yellow);
+  }
+  .victory-box .btn { margin-top: 8px; }
+
+  /* ===== CONFETTI ===== */
+  .confetti-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 2001;
+    overflow: hidden;
+  }
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    top: -10px;
+    animation: confettiFall linear forwards;
+  }
+  @keyframes confettiFall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ===== TIPS ===== */
+  .game-tip {
+    color: rgba(255,255,255,0.3);
+    font-size: 0.78rem;
+    text-align: center;
+    margin-top: auto;
+    padding-bottom: 16px;
+  }
+</style>
+</head>
+<body>
+
+<!-- Header -->
+<div class="grass-header"></div>
+<nav>
+  <a href="minecraft.html">
+    <span class="block-icon"></span>
+    我的世界
+  </a>
+  <a href="minecraft.html" class="back-link">← 返回指南</a>
+</nav>
+
+<!-- Game -->
+<div class="game-wrapper">
+  <h1 class="game-title">记忆<span class="hl">翻牌</span>挑战</h1>
+  <p class="game-sub">翻开卡片，找到所有配对的 Minecraft 物品！</p>
+
+  <!-- Stats -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-label">步数</div>
+      <div class="stat-value" id="moves">0</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">配对</div>
+      <div class="stat-value" id="matches">0 / 8</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-label">用时</div>
+      <div class="stat-value" id="timer">0s</div>
+    </div>
+  </div>
+
+  <!-- Grid -->
+  <div class="game-grid" id="gameGrid"></div>
+
+  <!-- Actions -->
+  <div class="game-actions">
+    <button class="btn btn-primary" onclick="resetGame()">🔄 重新开始</button>
+  </div>
+</div>
+
+<div class="game-tip">💡 点击卡片翻面，记住每个物品的位置，配对所有 8 对即可过关！</div>
+
+<!-- Victory -->
+<div class="victory-overlay" id="victoryOverlay">
+  <div class="victory-box">
+    <span class="trophy">🎉</span>
+    <h2><span class="hl">全部配对！</span></h2>
+    <p style="color:rgba(255,255,255,0.6);font-size:0.9rem;margin-bottom:16px;">
+      恭喜你完成了记忆翻牌挑战！
+    </p>
+    <div class="victory-stats">
+      <div class="victory-stat">
+        <div class="v-label">步数</div>
+        <div class="v-value" id="finalMoves">0</div>
+      </div>
+      <div class="victory-stat">
+        <div class="v-label">用时</div>
+        <div class="v-value" id="finalTime">0s</div>
+      </div>
+    </div>
+    <button class="btn btn-primary" onclick="closeVictory();resetGame();">🔄 再来一局</button>
+    <br>
+    <a href="minecraft.html" class="btn btn-secondary" style="margin-top:8px;">← 返回指南</a>
+  </div>
+</div>
+<div class="confetti-container" id="confettiContainer"></div>
+
+<script>
+  // ===== GAME DATA =====
+  const ITEMS = [
+    { emoji: '⛏️', name: '钻石镐' },
+    { emoji: '🗡️', name: '钻石剑' },
+    { emoji: '💎', name: '钻石' },
+    { emoji: '🟢', name: '绿宝石' },
+    { emoji: '🧨', name: 'TNT' },
+    { emoji: '🍎', name: '金苹果' },
+    { emoji: '👹', name: '苦力怕' },
+    { emoji: '🛡️', name: '盾牌' },
+  ];
+
+  let cards = [];
+  let flippedCards = [];
+  let matchedCount = 0;
+  let moves = 0;
+  let timer = 0;
+  let timerInterval = null;
+  let isProcessing = false;
+  let gameStarted = false;
+
+  const grid = document.getElementById('gameGrid');
+  const movesEl = document.getElementById('moves');
+  const matchesEl = document.getElementById('matches');
+  const timerEl = document.getElementById('timer');
+
+  // ===== SHUFFLE =====
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
+
+  // ===== INIT =====
+  function initGame() {
+    grid.innerHTML = '';
+    flippedCards = [];
+    matchedCount = 0;
+    moves = 0;
+    isProcessing = false;
+    gameStarted = false;
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    timer = 0;
+
+    movesEl.textContent = '0';
+    matchesEl.textContent = '0 / 8';
+    timerEl.textContent = '0s';
+
+    // Build card deck (8 pairs = 16 cards)
+    const deck = [];
+    ITEMS.forEach((item, idx) => {
+      deck.push({ id: idx, emoji: item.emoji, name: item.name, matched: false });
+      deck.push({ id: idx, emoji: item.emoji, name: item.name, matched: false });
+    });
+    cards = shuffle(deck);
+
+    // Render
+    cards.forEach((card, index) => {
+      const el = document.createElement('div');
+      el.className = 'memory-card';
+      el.dataset.index = index;
+      el.innerHTML = `
+        <div class="card-face card-face-front"></div>
+        <div class="card-face card-face-back">${card.emoji}</div>
+      `;
+      el.addEventListener('click', () => flipCard(index));
+      grid.appendChild(el);
+    });
+  }
+
+  // ===== FLIP =====
+  function flipCard(index) {
+    if (isProcessing) return;
+    const card = cards[index];
+    const el = grid.children[index];
+    if (!el || card.matched || flippedCards.includes(index)) return;
+
+    // Start timer on first flip
+    if (!gameStarted) {
+      gameStarted = true;
+      timerInterval = setInterval(() => {
+        timer++;
+        timerEl.textContent = timer + 's';
+      }, 1000);
+    }
+
+    el.classList.add('flipped');
+    flippedCards.push(index);
+
+    if (flippedCards.length === 2) {
+      moves++;
+      movesEl.textContent = moves;
+      checkMatch();
+    }
+  }
+
+  // ===== CHECK MATCH =====
+  function checkMatch() {
+    isProcessing = true;
+    const [i1, i2] = flippedCards;
+    const c1 = cards[i1];
+    const c2 = cards[i2];
+    const el1 = grid.children[i1];
+    const el2 = grid.children[i2];
+
+    if (c1.id === c2.id) {
+      // Match!
+      c1.matched = true;
+      c2.matched = true;
+      matchedCount++;
+      matchesEl.textContent = matchedCount + ' / 8';
+      el1.classList.add('matched');
+      el2.classList.add('matched');
+      flippedCards = [];
+      isProcessing = false;
+
+      if (matchedCount === 8) {
+        setTimeout(showVictory, 500);
+      }
+    } else {
+      // No match — flip back
+      setTimeout(() => {
+        el1.classList.remove('flipped');
+        el2.classList.remove('flipped');
+        flippedCards = [];
+        isProcessing = false;
+      }, 800);
+    }
+  }
+
+  // ===== VICTORY =====
+  function showVictory() {
+    if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+    document.getElementById('finalMoves').textContent = moves;
+    document.getElementById('finalTime').textContent = timer + 's';
+    document.getElementById('victoryOverlay').classList.add('show');
+    createConfetti();
+  }
+
+  function closeVictory() {
+    document.getElementById('victoryOverlay').classList.remove('show');
+    document.getElementById('confettiContainer').innerHTML = '';
+  }
+
+  // ===== CONFETTI =====
+  function createConfetti() {
+    const container = document.getElementById('confettiContainer');
+    container.innerHTML = '';
+    const colors = ['#7ec850', '#f7d94c', '#e74c3c', '#3b7dd8', '#ff6b35', '#9b59b6', '#1abc9c'];
+    for (let i = 0; i < 60; i++) {
+      const el = document.createElement('div');
+      el.className = 'confetti';
+      el.style.left = Math.random() * 100 + '%';
+      el.style.width = (6 + Math.random() * 8) + 'px';
+      el.style.height = (6 + Math.random() * 8) + 'px';
+      el.style.background = colors[Math.floor(Math.random() * colors.length)];
+      el.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+      el.style.animationDuration = (2 + Math.random() * 3) + 's';
+      el.style.animationDelay = (Math.random() * 2) + 's';
+      container.appendChild(el);
+    }
+  }
+
+  // ===== RESET =====
+  function resetGame() {
+    closeVictory();
+    initGame();
+  }
+
+  // Start
+  initGame();
+</script>
+</body>
+</html>
