@@ -1,4 +1,4 @@
-# Deploy trigger: 2026-05-16
+# Deploy trigger: 2026-05-16 (retry)
 name = "family-trip-2026"
 pages_build_output_dir = ""
 
