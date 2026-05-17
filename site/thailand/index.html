@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>泰国之旅 — 探索微笑之国的魅力</title>
+<style>
+/* ===== CSS Variables ===== */
+:root {
+  --gold: #D4A017;
+  --gold-light: #F5E6B8;
+  --gold-pale: #FDF8ED;
+  --teal: #007A78;
+  --teal-deep: #005F5D;
+  --teal-light: #E0F4F3;
+  --warm-white: #FFFBF5;
+  --card-bg: #FFFFFF;
+  --text-primary: #2D2720;
+  --text-secondary: #6B5E52;
+  --text-muted: #9B8D80;
+  --accent-red: #C44D34;
+  --accent-amber: #E8833A;
+  --accent-green: #4A9C6C;
+  --border: #E8DDD2;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.10);
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --font-display: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", -apple-system, sans-serif;
+  --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-bounce: 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ===== Reset & Base ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  font-family: var(--font-display);
+  background: var(--warm-white);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Thai Pattern Background ===== */
+.thai-pattern {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.025;
+  background-image:
+    repeating-linear-gradient(45deg, var(--teal) 0px, var(--teal) 1px, transparent 1px, transparent 20px),
+    repeating-linear-gradient(-45deg, var(--gold) 0px, var(--gold) 1px, transparent 1px, transparent 20px);
+}
+
+/* ===== Hero Section ===== */
+.hero {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(165deg, #006D6B 0%, #008783 20%, #009C91 40%, #00A893 55%, #C49A2C 85%, #D4A017 100%);
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 20% 80%, rgba(212,160,23,0.25) 0%, transparent 60%),
+    radial-gradient(ellipse at 75% 20%, rgba(0,122,120,0.20) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(255,255,255,0.06) 0%, transparent 70%);
+  z-index: 0;
+}
+/* Thai decorative overlay */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.03) 40px, rgba(255,255,255,0.03) 41px),
+    repeating-linear-gradient(90deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 41px);
+  z-index: 0;
+  pointer-events: none;
+}
+.hero-spire {
+  position: absolute;
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-spire::before {
+  content: '';
+  position: absolute;
+  width: 0; height: 0;
+  border-left: 60px solid transparent;
+  border-right: 60px solid transparent;
+  border-bottom: 120px solid rgba(255,255,255,0.06);
+}
+.hero-spire-1 { top: 5%; left: 8%; transform: scale(0.7); }
+.hero-spire-2 { top: 8%; right: 6%; transform: scale(0.5); }
+.hero-spire-3 { bottom: 12%; left: 12%; transform: scale(0.4); }
+.hero-spire-4 { bottom: 10%; right: 10%; transform: scale(0.55); }
+.hero-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero-glow-1 {
+  width: 300px; height: 300px;
+  top: -80px; left: -60px;
+  background: rgba(212,160,23,0.25);
+  animation: heroGlowPulse 8s ease-in-out infinite;
+}
+.hero-glow-2 {
+  width: 250px; height: 250px;
+  bottom: -60px; right: -40px;
+  background: rgba(0,122,120,0.20);
+  animation: heroGlowPulse 8s ease-in-out 4s infinite;
+}
+@keyframes heroGlowPulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+.hero-content {
+  position: relative;
+  z-index: 2;
+  padding: 60px 24px;
+  max-width: 700px;
+  animation: heroReveal 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes heroReveal {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-badge {
+  display: inline-block;
+  background: rgba(255,255,255,0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.25);
+  color: #fff;
+  padding: 8px 20px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  margin-bottom: 24px;
+}
+.hero-emoji {
+  font-size: 72px;
+  display: block;
+  margin-bottom: 16px;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15));
+  animation: heroFloat 6s ease-in-out infinite;
+}
+@keyframes heroFloat {
+  0%, 100% { transform: translateY(0) rotate(-3deg); }
+  50% { transform: translateY(-14px) rotate(3deg); }
+}
+.hero h1 {
+  font-size: clamp(34px, 7vw, 56px);
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 16px;
+  letter-spacing: 4px;
+  text-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  line-height: 1.3;
+}
+.hero h1 .accent {
+  display: inline-block;
+  background: linear-gradient(180deg, #FFE082 0%, #FFD54F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-subtitle {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: rgba(255,255,255,0.9);
+  font-weight: 400;
+  letter-spacing: 3px;
+  margin-bottom: 36px;
+  line-height: 1.6;
+}
+.hero-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  color: var(--teal-deep);
+  padding: 16px 36px;
+  border-radius: 50px;
+  font-size: 17px;
+  font-weight: 700;
+  text-decoration: none;
+  letter-spacing: 1px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+  transition: all var(--transition-bounce);
+  cursor: pointer;
+  border: none;
+}
+.hero-cta:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.20);
+  background: #FFFBF5;
+}
+.hero-cta:active {
+  transform: translateY(0) scale(0.98);
+}
+.hero-wave {
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 80px;
+  z-index: 3;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,40 C200,70 400,10 600,40 C800,70 1000,10 1200,40 C1300,55 1400,25 1440,40 L1440,80 L0,80Z' fill='%23FFFBF5'/%3E%3C/svg%3E") center/cover no-repeat;
+}
+
+/* ===== Scroll Indicator ===== */
+.scroll-indicator {
+  position: absolute;
+  bottom: 100px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  animation: scrollBounce 2s ease-in-out infinite;
+  cursor: pointer;
+}
+@keyframes scrollBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.7; }
+  50% { transform: translateX(-50%) translateY(10px); opacity: 1; }
+}
+.scroll-indicator span {
+  color: rgba(255,255,255,0.7);
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.scroll-arrow {
+  width: 28px; height: 28px;
+  border-right: 2px solid rgba(255,255,255,0.6);
+  border-bottom: 2px solid rgba(255,255,255,0.6);
+  transform: rotate(45deg);
+}
+
+/* ===== Main Container ===== */
+.main-container {
+  position: relative;
+  z-index: 1;
+  max-width: 840px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ===== Section Styles ===== */
+.section {
+  padding: 60px 0;
+}
+.section-header {
+  text-align: center;
+  margin-bottom: 44px;
+}
+.section-icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 10px;
+}
+.section-label {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+.section-title {
+  font-size: clamp(26px, 5vw, 36px);
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+.section-line {
+  width: 50px; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--teal));
+  margin: 0 auto;
+  border-radius: 2px;
+}
+.section-desc {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-top: 14px;
+  line-height: 1.7;
+}
+
+/* ===== Trip Overview Cards ===== */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 16px;
+}
+.overview-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px 18px;
+  text-align: center;
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.overview-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  transform: scaleX(0);
+  transition: transform var(--transition-smooth);
+  transform-origin: left;
+}
+.overview-card:hover::before {
+  transform: scaleX(1);
+}
+.overview-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold-light);
+}
+.overview-card .ov-icon {
+  font-size: 32px;
+  display: block;
+  margin-bottom: 10px;
+}
+.overview-card .ov-value {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--teal-deep);
+  margin-bottom: 4px;
+  letter-spacing: 1px;
+}
+.overview-card .ov-label {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ===== Daily Itinerary Accordion ===== */
+.itinerary-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.day-accordion {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+}
+.day-accordion:hover {
+  box-shadow: var(--shadow-md);
+}
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+  transition: background var(--transition-fast);
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+}
+.day-header:hover {
+  background: var(--gold-pale);
+}
+.day-num {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; height: 44px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-deep));
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+  border-radius: 50%;
+  flex-shrink: 0;
+  box-shadow: 0 3px 12px rgba(0,122,120,0.25);
+}
+.day-info {
+  flex: 1;
+  min-width: 0;
+}
+.day-city {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 600;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+.day-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+}
+.day-arrow {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-smooth);
+  color: var(--text-muted);
+  font-size: 18px;
+}
+.day-accordion.active .day-arrow {
+  transform: rotate(180deg);
+  color: var(--teal);
+}
+.day-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.day-accordion.active .day-body {
+  max-height: 500px;
+}
+.day-content {
+  padding: 0 22px 22px;
+}
+.day-activity {
+  display: flex;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--border);
+  align-items: flex-start;
+}
+.day-activity:last-child {
+  border-bottom: none;
+}
+.day-activity-icon {
+  font-size: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.day-activity-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+.day-activity-text strong {
+  color: var(--text-primary);
+}
+.day-tag {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  letter-spacing: 1px;
+}
+.day-tag-bangkok { background: #FFF3E0; color: #E65100; }
+.day-tag-chiangmai { background: #E8F5E9; color: #2E7D32; }
+.day-tag-phuket { background: #E3F2FD; color: #1565C0; }
+.day-tag-return { background: #FCE4EC; color: #C62828; }
+
+/* ===== Attractions Grid ===== */
+.attractions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+.attraction-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+  display: flex;
+  flex-direction: column;
+}
+.attraction-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-lg);
+}
+.attraction-card-top {
+  padding: 28px 22px 16px;
+  text-align: center;
+  position: relative;
+}
+.attraction-card-top::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  transform: translateX(-50%);
+  width: 40px; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--teal));
+  border-radius: 1px;
+}
+.attraction-icon {
+  font-size: 44px;
+  display: block;
+  margin-bottom: 14px;
+}
+.attraction-name {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+.attraction-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  padding: 0 4px;
+}
+.attraction-card-bottom {
+  padding: 16px 22px 22px;
+  text-align: center;
+}
+.attraction-btn {
+  display: inline-block;
+  padding: 10px 24px;
+  background: transparent;
+  border: 2px solid var(--teal);
+  color: var(--teal);
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  text-decoration: none;
+  font-family: inherit;
+}
+.attraction-btn:hover {
+  background: var(--teal);
+  color: #fff;
+}
+
+/* ===== Food Cards ===== */
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 18px;
+}
+.food-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px 20px;
+  text-align: center;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+  position: relative;
+  overflow: hidden;
+}
+.food-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(212,160,23,0.04) 0%, transparent 100%);
+  pointer-events: none;
+}
+.food-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--gold-light);
+}
+.food-icon {
+  font-size: 40px;
+  display: block;
+  margin-bottom: 12px;
+}
+.food-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+.food-en {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-style: italic;
+  letter-spacing: 0.5px;
+}
+
+/* ===== Practical Info ===== */
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.info-accordion {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+}
+.info-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 18px 22px;
+  cursor: pointer;
+  user-select: none;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  transition: background var(--transition-fast);
+}
+.info-header:hover {
+  background: var(--teal-light);
+}
+.info-icon {
+  font-size: 24px;
+  flex-shrink: 0;
+}
+.info-title {
+  flex: 1;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 1px;
+}
+.info-arrow {
+  flex-shrink: 0;
+  width: 24px; height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform var(--transition-smooth);
+  color: var(--text-muted);
+  font-size: 16px;
+}
+.info-accordion.active .info-arrow {
+  transform: rotate(180deg);
+  color: var(--teal);
+}
+.info-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.info-accordion.active .info-body {
+  max-height: 400px;
+}
+.info-content {
+  padding: 0 22px 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.8;
+}
+.info-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+.info-tag {
+  font-size: 12px;
+  padding: 4px 12px;
+  background: var(--gold-pale);
+  color: var(--gold);
+  border-radius: 20px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+/* ===== Travel Tips ===== */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+.tip-card {
+  background: var(--card-bg);
+  border-left: 3px solid var(--teal);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-smooth);
+  position: relative;
+}
+.tip-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateX(3px);
+}
+.tip-card:nth-child(odd) {
+  border-left-color: var(--teal);
+}
+.tip-card:nth-child(even) {
+  border-left-color: var(--gold);
+}
+.tip-num {
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--gold-light);
+  position: absolute;
+  top: 10px;
+  right: 16px;
+  opacity: 0.6;
+}
+.tip-icon {
+  font-size: 22px;
+  margin-bottom: 8px;
+  display: block;
+}
+.tip-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 6px;
+}
+.tip-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ===== Comment Section ===== */
+.comment-section {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 32px;
+  box-shadow: var(--shadow-sm);
+}
+.comment-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.comment-form input,
+.comment-form textarea {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: var(--font-display);
+  color: var(--text-primary);
+  background: var(--warm-white);
+  transition: border-color var(--transition-fast);
+  resize: vertical;
+}
+.comment-form input:focus,
+.comment-form textarea:focus {
+  outline: none;
+  border-color: var(--teal);
+  box-shadow: 0 0 0 3px rgba(0,122,120,0.1);
+}
+.comment-form textarea {
+  min-height: 100px;
+}
+.comment-submit {
+  align-self: flex-start;
+  padding: 12px 32px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-deep));
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all var(--transition-bounce);
+  font-family: inherit;
+}
+.comment-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,122,120,0.3);
+}
+.comment-submit:active {
+  transform: translateY(0);
+}
+.sample-comments {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.sample-comment {
+  display: flex;
+  gap: 14px;
+  padding: 16px;
+  background: var(--warm-white);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+.comment-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--teal));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.comment-body {
+  flex: 1;
+}
+.comment-author {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+.comment-date {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.comment-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ===== Back to Top ===== */
+.back-to-top {
+  position: fixed;
+  bottom: 30px; right: 30px;
+  width: 48px; height: 48px;
+  background: linear-gradient(135deg, var(--teal), var(--teal-deep));
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow: var(--shadow-md);
+  z-index: 100;
+  transition: all var(--transition-bounce);
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back-to-top.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.back-to-top:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: var(--shadow-lg);
+}
+.back-to-top:active {
+  transform: translateY(0) scale(0.95);
+}
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-muted);
+  font-size: 13px;
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+.footer .footer-deco {
+  display: block;
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+/* ===== Fade-in Animation ===== */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.fade-in-delay-1 { transition-delay: 0.1s; }
+.fade-in-delay-2 { transition-delay: 0.2s; }
+.fade-in-delay-3 { transition-delay: 0.3s; }
+
+/* ===== Toast Notification ===== */
+.toast {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--teal-deep);
+  color: #fff;
+  padding: 14px 28px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 600;
+  z-index: 200;
+  box-shadow: var(--shadow-lg);
+  animation: toastIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), toastOut 0.3s ease-in 2s forwards;
+  pointer-events: none;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+@keyframes toastOut {
+  from { opacity: 1; }
+  to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .hero { min-height: 80vh; }
+  .hero-wave { height: 50px; }
+  .section { padding: 40px 0; }
+  .overview-grid { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .overview-card { padding: 18px 10px; }
+  .overview-card .ov-value { font-size: 17px; }
+  .attractions-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; }
+  .food-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+  .tips-grid { grid-template-columns: 1fr; }
+  .comment-section { padding: 22px; }
+  .day-header { padding: 14px 16px; gap: 12px; }
+  .day-content { padding: 0 16px 18px; }
+  .info-header { padding: 14px 16px; }
+  .info-content { padding: 0 16px 18px; }
+}
+
+@media (max-width: 480px) {
+  .hero { min-height: 75vh; }
+  .hero h1 { font-size: 30px; letter-spacing: 2px; }
+  .hero-subtitle { font-size: 14px; letter-spacing: 1px; }
+  .hero-cta { padding: 14px 28px; font-size: 15px; }
+  .hero-wave { height: 36px; }
+  .scroll-indicator { bottom: 70px; }
+  .overview-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .overview-card { padding: 16px 8px; }
+  .overview-card .ov-value { font-size: 15px; }
+  .overview-card .ov-label { font-size: 12px; }
+  .attractions-grid { grid-template-columns: 1fr; gap: 12px; }
+  .food-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .section-title { font-size: 24px; }
+  .back-to-top { bottom: 20px; right: 16px; width: 42px; height: 42px; font-size: 18px; }
+}
+
+/* ===== Accessibility ===== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+:focus-visible {
+  outline: 2px solid var(--teal);
+  outline-offset: 2px;
+}
+</style>
+</head>
+<body>
+
+<!-- Subtle Thai Pattern Background -->
+<div class="thai-pattern" aria-hidden="true"></div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero" aria-label="Hero">
+  <div class="hero-glow hero-glow-1" aria-hidden="true"></div>
+  <div class="hero-glow hero-glow-2" aria-hidden="true"></div>
+  <div class="hero-spire hero-spire-1" aria-hidden="true"></div>
+  <div class="hero-spire hero-spire-2" aria-hidden="true"></div>
+  <div class="hero-spire hero-spire-3" aria-hidden="true"></div>
+  <div class="hero-spire hero-spire-4" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-badge">THAILAND TRAVEL</div>
+    <span class="hero-emoji" aria-hidden="true">&#x1F3DD;</span>
+    <h1>泰国<span class="accent">之旅</span></h1>
+    <p class="hero-subtitle">探索微笑之国的魅力</p>
+    <div style="margin-top:10px;margin-bottom:20px;display:inline-block;background:rgba(255,255,255,0.15);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.2);color:#fff;padding:10px 20px;border-radius:12px;font-size:13px;line-height:1.6;">
+      📅 适合 7~10 天 · 3~4 个家庭 · 带老人小孩<br>
+      ⚠️ 泰国暑假为雨季（5-10月），建议选择凉季（11月-次年2月）出行
+    </div>
+    <button class="hero-cta" onclick="document.getElementById('itinerary').scrollIntoView({behavior:'smooth'})" aria-label="浏览行程">
+      开始探索 &#x2192;
+    </button>
+  </div>
+  <div class="scroll-indicator" onclick="document.getElementById('itinerary').scrollIntoView({behavior:'smooth'})" aria-label="向下滚动">
+    <span>探索</span>
+    <div class="scroll-arrow"></div>
+  </div>
+  <div class="hero-wave" aria-hidden="true"></div>
+</section>
+
+<!-- ===== MAIN CONTENT ===== -->
+<div class="main-container">
+
+  <!-- Trip Overview -->
+  <section class="section fade-in" id="overview" aria-labelledby="overview-title">
+    <div class="section-header">
+      <span class="section-label">TRIP OVERVIEW</span>
+      <h2 class="section-title" id="overview-title">行程概览</h2>
+      <div class="section-line"></div>
+      <p class="section-desc">一次完美的泰国之旅，从这里开始规划</p>
+    </div>
+    <div class="overview-grid">
+      <div class="overview-card fade-in fade-in-delay-1">
+        <span class="ov-icon" aria-hidden="true">&#x1F4C5;</span>
+        <div class="ov-value">8天7晚</div>
+        <div class="ov-label">旅行天数</div>
+      </div>
+      <div class="overview-card fade-in fade-in-delay-1">
+        <span class="ov-icon" aria-hidden="true">&#x2600;</span>
+        <div class="ov-value">11月-次年4月</div>
+        <div class="ov-label">最佳季节</div>
+      </div>
+      <div class="overview-card fade-in fade-in-delay-2">
+        <span class="ov-icon" aria-hidden="true">&#x1F4B0;</span>
+        <div class="ov-value">5,000-15,000</div>
+        <div class="ov-label">预算/人 (CNY)</div>
+      </div>
+      <div class="overview-card fade-in fade-in-delay-2">
+        <span class="ov-icon" aria-hidden="true">&#x1F5E3;</span>
+        <div class="ov-value">泰语</div>
+        <div class="ov-label">语言</div>
+      </div>
+      <div class="overview-card fade-in fade-in-delay-3">
+        <span class="ov-icon" aria-hidden="true">&#x23F0;</span>
+        <div class="ov-value">UTC+7</div>
+        <div class="ov-label">时差 (北京-1h)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Daily Itinerary -->
+  <section class="section fade-in" id="itinerary" aria-labelledby="itinerary-title">
+    <div class="section-header">
+      <span class="section-label">DAILY ITINERARY</span>
+      <h2 class="section-title" id="itinerary-title">每日行程</h2>
+      <div class="section-line"></div>
+      <p class="section-desc">点击每一天查看详细安排</p>
+    </div>
+    <div class="itinerary-list">
+
+      <!-- Day 1 -->
+      <div class="day-accordion" role="region" aria-label="第1天行程">
+        <button class="day-header" aria-expanded="false">
+          <div class="day-num">1</div>
+          <div class="day-info">
+            <div class="day-city">&#x1F4CD; 曼谷</div>
+            <div class="day-title">大皇宫 · 玉佛寺 · 湄南河游船</div>
+          </div>
+          <span class="day-tag day-tag-bangkok">曼谷</span>
+          <span class="day-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="day-body">
+          <div class="day-content">
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F1F9;&#x1F1ED;</span>
+              <span class="day-activity-text"><strong>上午：</strong>抵达曼谷素万那普机场，办理入境手续（落地签或提前办妥电子签），乘机场快线或接机前往市区酒店入住</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F3DB;</span>
+              <span class="day-activity-text"><strong>下午：</strong>参观<strong>大皇宫 (Wat Phra Kaew)</strong>——泰国最神圣的佛教寺庙，欣赏精美的壁画和金碧辉煌的建筑群，瞻仰玉佛寺中由整块翡翠雕琢而成的玉佛</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F6A2;</span>
+              <span class="day-activity-text"><strong>傍晚：</strong>乘<strong>湄南河游船</strong>，欣赏两岸风光和日落，途经黎明寺（郑王庙）等著名地标</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F372;</span>
+              <span class="day-activity-text"><strong>晚餐：</strong>河畔餐厅品尝正宗泰式料理——冬阴功汤、泰式炒河粉、芒果糯米饭</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 2 -->
+      <div class="day-accordion" role="region" aria-label="第2天行程">
+        <button class="day-header" aria-expanded="false">
+          <div class="day-num">2</div>
+          <div class="day-info">
+            <div class="day-city">&#x1F4CD; 曼谷</div>
+            <div class="day-title">水上市场 · 卧佛寺 · 考山路</div>
+          </div>
+          <span class="day-tag day-tag-bangkok">曼谷</span>
+          <span class="day-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="day-body">
+          <div class="day-content">
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F6A3;</span>
+              <span class="day-activity-text"><strong>上午：</strong>前往<strong>丹嫩沙多水上市场</strong>或安帕瓦水上市场，乘坐小船穿梭于水上摊位之间，体验泰国传统水上生活，品尝船面和各种水果</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F634;</span>
+              <span class="day-activity-text"><strong>下午：</strong>参观<strong>卧佛寺 (Wat Pho)</strong>——著名的泰式按摩发源地，瞻仰长达46米的巨型卧佛，欣赏脚底108个精美的珍珠母镶嵌图案</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F389;</span>
+              <span class="day-activity-text"><strong>晚上：</strong>漫步<strong>考山路 (Khao San Road)</strong>——背包客的天堂，品尝街头美食、享受泰式按摩、体验曼谷的夜生活氛围</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 3 -->
+      <div class="day-accordion" role="region" aria-label="第3天行程">
+        <button class="day-header" aria-expanded="false">
+          <div class="day-num">3</div>
+          <div class="day-info">
+            <div class="day-city">&#x1F4CD; 清迈</div>
+            <div class="day-title">古城漫步 · 素贴山双龙寺</div>
+          </div>
+          <span class="day-tag day-tag-chiangmai">清迈</span>
+          <span class="day-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="day-body">
+          <div class="day-content">
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x2708;</span>
+              <span class="day-activity-text"><strong>上午：</strong>从曼谷飞往清迈（飞行约1小时），抵达后入住古城内或宁曼路附近的酒店</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F3F0;</span>
+              <span class="day-activity-text"><strong>下午：</strong><strong>清迈古城漫步</strong>——参观契迪龙寺 (Wat Chedi Luang) 和帕辛寺 (Wat Phra Singh)，在古城小巷中感受兰纳王朝的历史气息；经过塔佩门喂鸽子，感受古城墙的沧桑</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x26F0;</span>
+              <span class="day-activity-text"><strong>傍晚：</strong>前往<strong>素贴山 (Doi Suthep)</strong>，攀登306级台阶到达<strong>双龙寺</strong>，俯瞰清迈全景，欣赏金碧辉煌的佛塔在夕阳下闪耀</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 4 -->
+      <div class="day-accordion" role="region" aria-label="第4天行程">
+        <button class="day-header" aria-expanded="false">
+          <div class="day-num">4</div>
+          <div class="day-info">
+            <div class="day-city">&#x1F4CD; 清迈</div>
+            <div class="day-title">大象保护区 · 夜市</div>
+          </div>
+          <span class="day-tag day-tag-chiangmai">清迈</span>
+          <span class="day-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="day-body">
+          <div class="day-content">
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F418;</span>
+              <span class="day-activity-text"><strong>上午：</strong>参加<strong>大象保护区 (Elephant Nature Park)</strong>半日/一日游——给大象喂食、在河中为大象洗澡，了解大象救助和保护的故事（选择不骑象、无表演的道德保护区）</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F3B6;</span>
+              <span class="day-activity-text"><strong>下午：</strong>返回清迈市区，参观<strong>宁曼路 (Nimmanhaemin Road)</strong>——清迈的文艺街区，遍布独立咖啡馆、设计小店和艺术画廊</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F31F;</span>
+              <span class="day-activity-text"><strong>晚上：</strong>逛<strong>清迈夜市</strong>（周日夜市或长康路夜市）——品尝芒果糯米饭、泰北咖喱面、烤串和热带水果沙冰，挑选手工艺品和纪念品</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 5 -->
+      <div class="day-accordion" role="region" aria-label="第5天行程">
+        <button class="day-header" aria-expanded="false">
+          <div class="day-num">5</div>
+          <div class="day-info">
+            <div class="day-city">&#x1F4CD; 普吉岛</div>
+            <div class="day-title">海滩休闲 · 芭东海滩</div>
+          </div>
+          <span class="day-tag day-tag-phuket">普吉岛</span>
+          <span class="day-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="day-body">
+          <div class="day-content">
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x2708;</span>
+              <span class="day-activity-text"><strong>上午：</strong>从清迈飞往普吉岛（飞行约1.5小时），抵达后前往度假村或海滩酒店办理入住</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F3D6;</span>
+              <span class="day-activity-text"><strong>下午：</strong>在<strong>芭东海滩 (Patong Beach)</strong>享受阳光沙滩——游泳、晒日光浴、尝试水上摩托或香蕉船等水上运动，或只是在海滩边的躺椅上放松</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F378;</span>
+              <span class="day-activity-text"><strong>傍晚：</strong>在芭东海滩欣赏安达曼海的日落，之后前往<strong>邦古拉街 (Bangla Road)</strong>感受普吉岛的活力夜生活</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 6 -->
+      <div class="day-accordion" role="region" aria-label="第6天行程">
+        <button class="day-header" aria-expanded="false">
+          <div class="day-num">6</div>
+          <div class="day-info">
+            <div class="day-city">&#x1F4CD; 普吉岛</div>
+            <div class="day-title">皮皮岛一日游</div>
+          </div>
+          <span class="day-tag day-tag-phuket">普吉岛</span>
+          <span class="day-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="day-body">
+          <div class="day-content">
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F6A4;</span>
+              <span class="day-activity-text"><strong>全天：</strong><strong>皮皮岛 (Phi Phi Islands)</strong>一日游——乘快艇前往玛雅湾（电影《海滩》取景地），在碧绿的海水中浮潜，欣赏色彩斑斓的珊瑚礁和热带鱼群；前往猴子海滩与野生猕猴互动，参观维京洞穴，在竹岛的白色沙滩上享受午餐</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F4F7;</span>
+              <span class="day-activity-text"><strong>亮点：</strong>在皮皮雷 (Phi Phi Leh) 的悬崖峭壁间穿行，拍摄碧海蓝天与石灰岩峭壁的绝美照片，体验如明信片般的热带海岛风光</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 7 -->
+      <div class="day-accordion" role="region" aria-label="第7天行程">
+        <button class="day-header" aria-expanded="false">
+          <div class="day-num">7</div>
+          <div class="day-info">
+            <div class="day-city">&#x1F4CD; 普吉岛</div>
+            <div class="day-title">自由活动 · SPA体验</div>
+          </div>
+          <span class="day-tag day-tag-phuket">普吉岛</span>
+          <span class="day-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="day-body">
+          <div class="day-content">
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F3DD;</span>
+              <span class="day-activity-text"><strong>上午：</strong>自由安排——可选择前往<strong>卡塔海滩 (Kata Beach)</strong>或<strong>卡伦海滩 (Karon Beach)</strong>，比芭东海滩更安静；喜欢冒险的可以尝试丛林飞跃 (Zipline) 或 ATV越野</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F9D6;</span>
+              <span class="day-activity-text"><strong>下午：</strong>体验正宗<strong>泰式SPA</strong>——选择传统泰式按摩、精油按摩、草药球热敷或全身磨砂，让身体彻底放松；普吉岛拥有众多高品质SPA度假村，推荐选择带海景的SPA</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F355;</span>
+              <span class="day-activity-text"><strong>晚上：</strong>在酒店泳池边的餐厅享用告别晚宴，品尝海鲜大餐——普吉龙虾、老虎虾、咖喱蟹等安达曼海的美味</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Day 8 -->
+      <div class="day-accordion" role="region" aria-label="第8天行程">
+        <button class="day-header" aria-expanded="false">
+          <div class="day-num">8</div>
+          <div class="day-info">
+            <div class="day-city">&#x1F4CD; 普吉岛 &#x2192; 返程</div>
+            <div class="day-title">购物 · 返程</div>
+          </div>
+          <span class="day-tag day-tag-return">返程</span>
+          <span class="day-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="day-body">
+          <div class="day-content">
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F6CD;</span>
+              <span class="day-activity-text"><strong>上午：</strong>在酒店享用最后的泰式早餐，前往<strong>普吉镇 (Phuket Town)</strong>——漫步在五彩斑斓的中葡风格建筑之间，在当地的干货市场和手信店购买泰丝、香料、榴莲干等纪念品</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x2708;</span>
+              <span class="day-activity-text"><strong>下午：</strong>前往普吉国际机场，办理退税手续，带着满满的回忆和照片踏上归程</span>
+            </div>
+            <div class="day-activity">
+              <span class="day-activity-icon">&#x1F48C;</span>
+              <span class="day-activity-text"><strong>温馨提示：</strong>建议提前3小时抵达机场，普吉机场国际出发人流量较大，留足安检和过关时间</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Popular Attractions -->
+  <section class="section fade-in" id="attractions" aria-labelledby="attractions-title">
+    <div class="section-header">
+      <span class="section-label">POPULAR ATTRACTIONS</span>
+      <h2 class="section-title" id="attractions-title">热门景点</h2>
+      <div class="section-line"></div>
+      <p class="section-desc">泰国必去打卡地，每一个都值得细细品味</p>
+    </div>
+    <div class="attractions-grid">
+
+      <div class="attraction-card fade-in fade-in-delay-1">
+        <div class="attraction-card-top">
+          <span class="attraction-icon" aria-hidden="true">&#x1F3DB;</span>
+          <h3 class="attraction-name">大皇宫</h3>
+          <p class="attraction-desc">曼谷的标志性地标，金碧辉煌的皇家宫殿群，集泰国建筑、绘画和雕刻艺术之大成</p>
+        </div>
+        <div class="attraction-card-bottom">
+          <button class="attraction-btn" onclick="showToast('大皇宫位于曼谷市中心，开放时间 8:30-15:30，门票500泰铢，需穿着长裤和有袖上衣')">了解更多</button>
+        </div>
+      </div>
+
+      <div class="attraction-card fade-in fade-in-delay-1">
+        <div class="attraction-card-top">
+          <span class="attraction-icon" aria-hidden="true">&#x1F3F0;</span>
+          <h3 class="attraction-name">清迈古城</h3>
+          <p class="attraction-desc">四面环绕着古老城墙与护城河，内部遍布300多座寺庙，是兰纳文化的灵魂所在</p>
+        </div>
+        <div class="attraction-card-bottom">
+          <button class="attraction-btn" onclick="showToast('清迈古城呈正方形，面积约1.5平方公里，推荐骑自行车游览，塔佩门是最佳拍照点')">了解更多</button>
+        </div>
+      </div>
+
+      <div class="attraction-card fade-in fade-in-delay-2">
+        <div class="attraction-card-top">
+          <span class="attraction-icon" aria-hidden="true">&#x1F3D6;</span>
+          <h3 class="attraction-name">普吉海滩</h3>
+          <p class="attraction-desc">安达曼海上的一串明珠，从热闹的芭东到宁静的卡塔，满足你对热带海滩的所有想象</p>
+        </div>
+        <div class="attraction-card-bottom">
+          <button class="attraction-btn" onclick="showToast('芭东海滩最适合水上运动，卡塔海滩适合冲浪，卡伦海滩最安静适合家庭出游')">了解更多</button>
+        </div>
+      </div>
+
+      <div class="attraction-card fade-in fade-in-delay-2">
+        <div class="attraction-card-top">
+          <span class="attraction-icon" aria-hidden="true">&#x1F6A3;</span>
+          <h3 class="attraction-name">水上市场</h3>
+          <p class="attraction-desc">泰国最具特色的传统市集，小船满载着水果、小吃和手工艺品在水道上穿梭叫卖</p>
+        </div>
+        <div class="attraction-card-bottom">
+          <button class="attraction-btn" onclick="showToast('推荐丹嫩沙多和安帕瓦水上市场，建议早上前往，可体验到最地道的泰国水上生活')">了解更多</button>
+        </div>
+      </div>
+
+      <div class="attraction-card fade-in fade-in-delay-3">
+        <div class="attraction-card-top">
+          <span class="attraction-icon" aria-hidden="true">&#x1F3DD;</span>
+          <h3 class="attraction-name">皮皮岛</h3>
+          <p class="attraction-desc">由六个岛屿组成的群岛，以碧绿的海水、洁白的沙滩和壮观的石灰岩悬崖闻名于世</p>
+        </div>
+        <div class="attraction-card-bottom">
+          <button class="attraction-btn" onclick="showToast('从普吉岛乘快艇约1.5-2小时可达，玛雅湾是电影《海滩》的取景地，浮潜最佳季节为11月-次年4月')">了解更多</button>
+        </div>
+      </div>
+
+      <div class="attraction-card fade-in fade-in-delay-3">
+        <div class="attraction-card-top">
+          <span class="attraction-icon" aria-hidden="true">&#x26F0;</span>
+          <h3 class="attraction-name">素贴山</h3>
+          <p class="attraction-desc">清迈的圣山，山顶的双龙寺是泰北最神圣的寺庙之一，可俯瞰整个清迈谷地</p>
+        </div>
+        <div class="attraction-card-bottom">
+          <button class="attraction-btn" onclick="showToast('距离清迈市区约15公里，可乘双条车前往，306级台阶到达山顶，建议清晨或傍晚前往')">了解更多</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Food Guide -->
+  <section class="section fade-in" id="food" aria-labelledby="food-title">
+    <div class="section-header">
+      <span class="section-label">FOOD GUIDE</span>
+      <h2 class="section-title" id="food-title">美食推荐</h2>
+      <div class="section-line"></div>
+      <p class="section-desc">舌尖上的泰国，不可错过的地道美味</p>
+    </div>
+    <div class="food-grid">
+
+      <div class="food-card fade-in fade-in-delay-1">
+        <span class="food-icon" aria-hidden="true">&#x1F372;</span>
+        <h3 class="food-name">冬阴功汤</h3>
+        <div class="food-en">Tom Yum Kung</div>
+      </div>
+
+      <div class="food-card fade-in fade-in-delay-1">
+        <span class="food-icon" aria-hidden="true">&#x1F35C;</span>
+        <h3 class="food-name">泰式炒河粉</h3>
+        <div class="food-en">Pad Thai</div>
+      </div>
+
+      <div class="food-card fade-in fade-in-delay-1">
+        <span class="food-icon" aria-hidden="true">&#x1F969;</span>
+        <h3 class="food-name">绿咖喱</h3>
+        <div class="food-en">Green Curry</div>
+      </div>
+
+      <div class="food-card fade-in fade-in-delay-2">
+        <span class="food-icon" aria-hidden="true">&#x1F96D;</span>
+        <h3 class="food-name">芒果糯米饭</h3>
+        <div class="food-en">Mango Sticky Rice</div>
+      </div>
+
+      <div class="food-card fade-in fade-in-delay-2">
+        <span class="food-icon" aria-hidden="true">&#x1F375;</span>
+        <h3 class="food-name">泰式奶茶</h3>
+        <div class="food-en">Thai Milk Tea</div>
+      </div>
+
+      <div class="food-card fade-in fade-in-delay-2">
+        <span class="food-icon" aria-hidden="true">&#x1F957;</span>
+        <h3 class="food-name">青木瓜沙拉</h3>
+        <div class="food-en">Som Tam</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Practical Info -->
+  <section class="section fade-in" id="info" aria-labelledby="info-title">
+    <div class="section-header">
+      <span class="section-label">PRACTICAL INFO</span>
+      <h2 class="section-title" id="info-title">实用信息</h2>
+      <div class="section-line"></div>
+      <p class="section-desc">行前必读，确保旅途顺利无忧</p>
+    </div>
+    <div class="info-list">
+
+      <div class="info-accordion" role="region" aria-label="签证信息">
+        <button class="info-header" aria-expanded="false">
+          <span class="info-icon" aria-hidden="true">&#x1F6C2;</span>
+          <span class="info-title">签证 (Visa)</span>
+          <span class="info-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="info-body">
+          <div class="info-content">
+            <p>中国公民赴泰旅游可选择以下方式：</p>
+            <div class="info-tags">
+              <span class="info-tag">落地签 (VOA)</span>
+              <span class="info-tag">15天停留</span>
+              <span class="info-tag">费用2000泰铢</span>
+              <span class="info-tag">电子签 (E-Visa)</span>
+              <span class="info-tag">免签政策 (关注最新)</span>
+            </div>
+            <p style="margin-top:10px;">建议提前办理电子落地签 (E-VOA)，可大幅减少入境排队时间。入境时需携带：护照（有效期6个月以上）、往返机票、酒店预订确认函、2寸白底照片（落地签用）。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-accordion" role="region" aria-label="货币信息">
+        <button class="info-header" aria-expanded="false">
+          <span class="info-icon" aria-hidden="true">&#x1F4B1;</span>
+          <span class="info-title">货币 (Currency)</span>
+          <span class="info-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="info-body">
+          <div class="info-content">
+            <p>泰国使用<strong>泰铢 (THB)</strong>。1 人民币 ≈ 4.9-5.1 泰铢（汇率实时变动）。</p>
+            <div class="info-tags">
+              <span class="info-tag">SuperRich兑换</span>
+              <span class="info-tag">支付宝/微信广泛可用</span>
+              <span class="info-tag">携带少量现金</span>
+              <span class="info-tag">入境携带等值2万泰铢现金</span>
+            </div>
+            <p style="margin-top:10px;">推荐在SuperRich兑换（汇率最优）或直接使用ATM取款（手续费约220泰铢/笔）。大型商场、7-11、餐厅普遍接受支付宝/微信支付。建议携带少量现金用于夜市和小摊消费。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-accordion" role="region" aria-label="交通信息">
+        <button class="info-header" aria-expanded="false">
+          <span class="info-icon" aria-hidden="true">&#x1F698;</span>
+          <span class="info-title">交通 (Transport)</span>
+          <span class="info-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="info-body">
+          <div class="info-content">
+            <p>泰国城市交通方式多样：</p>
+            <div class="info-tags">
+              <span class="info-tag">Grab (东南亚版滴滴)</span>
+              <span class="info-tag">BTS轻轨 (曼谷)</span>
+              <span class="info-tag">突突车</span>
+              <span class="info-tag">双条车 (清迈)</span>
+              <span class="info-tag">城际航班 (亚航/泰航)</span>
+            </div>
+            <p style="margin-top:10px;">曼谷推荐使用BTS轻轨+地铁 (MRT)，避开地面拥堵；Grab网约车价格透明，支持支付宝支付；突突车需提前谈好价格（一般60-150泰铢短途）；清迈以双条车为主（30-60泰铢/人）；各城市间推荐乘坐国内航班，曼谷-清迈/普吉约1-1.5小时。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-accordion" role="region" aria-label="住宿信息">
+        <button class="info-header" aria-expanded="false">
+          <span class="info-icon" aria-hidden="true">&#x1F3E8;</span>
+          <span class="info-title">住宿 (Accommodation)</span>
+          <span class="info-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="info-body">
+          <div class="info-content">
+            <p>各城市推荐住宿区域：</p>
+            <div class="info-tags">
+              <span class="info-tag">曼谷：暹罗/素坤逸区</span>
+              <span class="info-tag">曼谷：河畔区</span>
+              <span class="info-tag">清迈：古城内/宁曼路</span>
+              <span class="info-tag">普吉：芭东/卡塔/卡伦</span>
+            </div>
+            <p style="margin-top:10px;">住宿费用参考：经济型 150-400元/晚，中档 400-800元/晚，豪华度假村 800-2000+元/晚。建议通过Agoda或Booking.com预订，泰国酒店业发达，性价比极高。旺季（11月-次年2月）建议提前2-3周预订。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-accordion" role="region" aria-label="网络信息">
+        <button class="info-header" aria-expanded="false">
+          <span class="info-icon" aria-hidden="true">&#x1F4F1;</span>
+          <span class="info-title">网络 (Internet)</span>
+          <span class="info-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="info-body">
+          <div class="info-content">
+            <p>推荐上网方式：</p>
+            <div class="info-tags">
+              <span class="info-tag">AIS/TrueMove/DTAC SIM卡</span>
+              <span class="info-tag">8天不限流量约60-100泰铢</span>
+              <span class="info-tag">机场即可购买</span>
+              <span class="info-tag">7-11也可办理</span>
+              <span class="info-tag">随身WiFi (多人共用)</span>
+            </div>
+            <p style="margin-top:10px;">抵达素万那普机场后直接在到达层购买旅游SIM卡，TrueMove和AIS信号覆盖最广。也可提前在淘宝购买泰国电话卡，价格更实惠。大多数酒店和咖啡馆提供免费WiFi。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-accordion" role="region" aria-label="安全信息">
+        <button class="info-header" aria-expanded="false">
+          <span class="info-icon" aria-hidden="true">&#x1F6E1;</span>
+          <span class="info-title">安全 (Safety)</span>
+          <span class="info-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="info-body">
+          <div class="info-content">
+            <p>泰国整体治安良好，旅行安全：</p>
+            <div class="info-tags">
+              <span class="info-tag">旅游警察热线 1155</span>
+              <span class="info-tag">避免深夜独行</span>
+              <span class="info-tag">注意保管财物</span>
+              <span class="info-tag">饮水买瓶装水</span>
+              <span class="info-tag">购买旅游保险</span>
+            </div>
+            <p style="margin-top:10px;">泰国设有专门的旅游警察（Tourist Police），可拨打1155获得英文/中文帮助。注意防晒和防蚊（登革热流行季），不要饮用自来水，尽量避免生食。建议购买覆盖医疗运送的旅行保险。</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-accordion" role="region" aria-label="礼仪信息">
+        <button class="info-header" aria-expanded="false">
+          <span class="info-icon" aria-hidden="true">&#x1F64F;</span>
+          <span class="info-title">礼仪 (Etiquette)</span>
+          <span class="info-arrow" aria-hidden="true">&#x25BC;</span>
+        </button>
+        <div class="info-body">
+          <div class="info-content">
+            <p>泰国文化礼仪须知：</p>
+            <div class="info-tags">
+              <span class="info-tag">入寺需遮肩及膝</span>
+              <span class="info-tag">脱鞋入内</span>
+              <span class="info-tag">不触碰他人头部</span>
+              <span class="info-tag">不指指点点</span>
+              <span class="info-tag">尊重王室</span>
+              <span class="info-tag">双手合十 (Wai) 问候</span>
+            </div>
+            <p style="margin-top:10px;">参观寺庙时：女士不可触碰僧侣，必须穿着覆盖肩膀和膝盖的衣物（部分寺庙提供免费披肩）；进入佛堂前需脱鞋；不可用脚指向佛像；公开场合不要高声喧哗。泰国人非常重视礼仪，保持微笑和礼貌会让你获得更好的旅行体验。</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Travel Tips -->
+  <section class="section fade-in" id="tips" aria-labelledby="tips-title">
+    <div class="section-header">
+      <span class="section-label">TRAVEL TIPS</span>
+      <h2 class="section-title" id="tips-title">旅行贴士</h2>
+      <div class="section-line"></div>
+      <p class="section-desc">经验之谈，让你的泰国之旅更加完美</p>
+    </div>
+    <div class="tips-grid">
+
+      <div class="tip-card fade-in fade-in-delay-1">
+        <span class="tip-num">01</span>
+        <span class="tip-icon" aria-hidden="true">&#x2614;</span>
+        <h3 class="tip-title">雨季出行准备</h3>
+        <p class="tip-text">5月至10月为雨季，多为短暂雷阵雨。随身携带折叠伞，选择快干衣物。雨后空气清新，反而是摄影的好时机。</p>
+      </div>
+
+      <div class="tip-card fade-in fade-in-delay-1">
+        <span class="tip-num">02</span>
+        <span class="tip-icon" aria-hidden="true">&#x1F48A;</span>
+        <h3 class="tip-title">常备药品清单</h3>
+        <p class="tip-text">携带腹泻药（肠炎宁/蒙脱石散）、藿香正气水、驱蚊液（含DEET）、防晒霜（SPF50+）、创可贴、晕船药。</p>
+      </div>
+
+      <div class="tip-card fade-in fade-in-delay-1">
+        <span class="tip-num">03</span>
+        <span class="tip-icon" aria-hidden="true">&#x1F4F1;</span>
+        <h3 class="tip-title">必备App推荐</h3>
+        <p class="tip-text">Grab（打车）、Google Maps（导航）、Google Translate（翻译）、Wongnai（泰版大众点评）、Agoda/Booking（住宿）。</p>
+      </div>
+
+      <div class="tip-card fade-in fade-in-delay-2">
+        <span class="tip-num">04</span>
+        <span class="tip-icon" aria-hidden="true">&#x1F4B8;</span>
+        <h3 class="tip-title">小费文化</h3>
+        <p class="tip-text">泰国不是强制小费国家，但给予良好服务的小费是受欢迎的。酒店行李员 20-50泰铢，按摩师 50-100泰铢，餐厅可留下找零。</p>
+      </div>
+
+      <div class="tip-card fade-in fade-in-delay-2">
+        <span class="tip-num">05</span>
+        <span class="tip-icon" aria-hidden="true">&#x1F6CD;</span>
+        <h3 class="tip-title">购物退税</h3>
+        <p class="tip-text">在有VAT Refund标志的商店购物满2000泰铢可办理退税。离境时在机场海关盖章、过安检后到退税窗口领取退款（约退6%）。</p>
+      </div>
+
+      <div class="tip-card fade-in fade-in-delay-2">
+        <span class="tip-num">06</span>
+        <span class="tip-icon" aria-hidden="true">&#x1F30F;</span>
+        <h3 class="tip-title">最佳旅行时间</h3>
+        <p class="tip-text">凉季（11月-次年2月）最佳，天气凉爽干燥；热季（3月-5月）气温可达40度；雨季（6月-10月）游客少、价格低。</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Comment Section -->
+  <section class="section fade-in" id="comments" aria-labelledby="comments-title">
+    <div class="section-header">
+      <span class="section-label">COMMENTS</span>
+      <h2 class="section-title" id="comments-title">留言交流</h2>
+      <div class="section-line"></div>
+      <p class="section-desc">分享你的泰国旅行经验或提问</p>
+    </div>
+    <div class="comment-section">
+      <form class="comment-form" onsubmit="handleComment(event)" aria-label="留言表单">
+        <input type="text" placeholder="你的昵称" required aria-label="昵称">
+        <textarea placeholder="写下你的留言或问题..." required aria-label="留言内容"></textarea>
+        <button type="submit" class="comment-submit">发布留言</button>
+      </form>
+      <div class="sample-comments">
+        <div class="sample-comment">
+          <div class="comment-avatar" aria-hidden="true">小</div>
+          <div class="comment-body">
+            <div class="comment-author">小明</div>
+            <div class="comment-date">2026年3月15日</div>
+            <p class="comment-text">刚从泰国回来，这个行程规划太准了！清迈的大象保护区真的是此行最棒的体验，大家一定要选不骑象的保护区。</p>
+          </div>
+        </div>
+        <div class="sample-comment">
+          <div class="comment-avatar" aria-hidden="true">旅</div>
+          <div class="comment-body">
+            <div class="comment-author">旅行达人Lucy</div>
+            <div class="comment-date">2026年4月2日</div>
+            <p class="comment-text">补充一点：曼谷的BTS真的很方便，建议买一张兔子卡 (Rabbit Card)，省去每次排队买票的麻烦。另外推荐IconSiam商场，负一楼的水上市场超级好逛！</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span class="footer-deco" aria-hidden="true">&#x1F3DD;</span>
+    <p>泰国之旅 · 探索微笑之国的魅力</p>
+    <p style="margin-top:4px;font-size:12px;">
+      <a href="../index.html" style="color:var(--teal);text-decoration:none;font-weight:600;">← 返回家庭出游主站</a>
+      <span style="color:var(--border);margin:0 8px;">|</span>
+      <span>017988.xyz/thailand</span>
+    </p>
+    <p style="margin-top:6px;font-size:11px;color:var(--text-muted);">
+      💡 泰国暑假（5-10月）为雨季，如考虑暑假出行建议同时查看
+      <a href="../index.html" style="color:var(--teal);">其他避暑目的地</a>
+    </p>
+  </footer>
+
+</div><!-- /main-container -->
+
+<!-- Back to Top Button -->
+<button class="back-to-top" id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="返回顶部">&#x2191;</button>
+
+<script>
+/* ===== Accordion Logic ===== */
+document.querySelectorAll('.day-accordion .day-header').forEach(function(header) {
+  header.addEventListener('click', function() {
+    var accordion = this.parentElement;
+    var isActive = accordion.classList.contains('active');
+
+    // Close all accordions
+    document.querySelectorAll('.day-accordion').forEach(function(item) {
+      item.classList.remove('active');
+      item.querySelector('.day-header').setAttribute('aria-expanded', 'false');
+    });
+
+    // Toggle clicked
+    if (!isActive) {
+      accordion.classList.add('active');
+      this.setAttribute('aria-expanded', 'true');
+    }
+  });
+});
+
+// Open first day by default
+document.querySelector('.day-accordion').classList.add('active');
+document.querySelector('.day-accordion .day-header').setAttribute('aria-expanded', 'true');
+
+/* ===== Practical Info Accordion ===== */
+document.querySelectorAll('.info-accordion .info-header').forEach(function(header) {
+  header.addEventListener('click', function() {
+    var accordion = this.parentElement;
+    var isActive = accordion.classList.contains('active');
+    accordion.classList.toggle('active');
+    this.setAttribute('aria-expanded', !isActive);
+  });
+});
+
+/* ===== Fade-in on Scroll ===== */
+function handleScrollAnimations() {
+  var elements = document.querySelectorAll('.fade-in');
+  var windowHeight = window.innerHeight;
+
+  elements.forEach(function(el) {
+    var rect = el.getBoundingClientRect();
+    var triggerPoint = windowHeight * 0.88;
+
+    if (rect.top < triggerPoint) {
+      el.classList.add('visible');
+    }
+  });
+}
+
+// Run on load and scroll
+window.addEventListener('load', handleScrollAnimations);
+window.addEventListener('scroll', handleScrollAnimations, { passive: true });
+
+// Trigger initial check after a short delay for hero animation to finish
+setTimeout(handleScrollAnimations, 300);
+
+/* ===== Back to Top Button ===== */
+var backToTopBtn = document.getElementById('backToTop');
+
+function toggleBackToTop() {
+  if (window.scrollY > 500) {
+    backToTopBtn.classList.add('visible');
+  } else {
+    backToTopBtn.classList.remove('visible');
+  }
+}
+
+window.addEventListener('scroll', toggleBackToTop, { passive: true });
+
+/* ===== Comment Handler ===== */
+function handleComment(event) {
+  event.preventDefault();
+  var form = event.target;
+  var name = form.querySelector('input').value.trim();
+  var text = form.querySelector('textarea').value.trim();
+
+  if (!name || !text) return;
+
+  // Create new comment element
+  var commentDiv = document.createElement('div');
+  commentDiv.className = 'sample-comment';
+  commentDiv.style.animation = 'fadeUp 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+
+  var initial = name.charAt(0);
+  var now = new Date();
+  var dateStr = now.getFullYear() + '年' + (now.getMonth() + 1) + '月' + now.getDate() + '日';
+
+  commentDiv.innerHTML =
+    '<div class="comment-avatar" aria-hidden="true">' + initial + '</div>' +
+    '<div class="comment-body">' +
+      '<div class="comment-author">' + escapeHtml(name) + '</div>' +
+      '<div class="comment-date">' + dateStr + '</div>' +
+      '<p class="comment-text">' + escapeHtml(text) + '</p>' +
+    '</div>';
+
+  var container = form.parentElement.querySelector('.sample-comments');
+  container.insertBefore(commentDiv, container.firstChild);
+
+  // Clear form
+  form.reset();
+
+  // Show toast
+  showToast('留言发布成功！感谢分享');
+
+  // Scroll to the new comment
+  commentDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function escapeHtml(str) {
+  var div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+/* ===== Toast Notification ===== */
+function showToast(message) {
+  // Remove existing toasts
+  var existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+
+  var toast = document.createElement('div');
+  toast.className = 'toast';
+  toast.textContent = message;
+  toast.setAttribute('role', 'status');
+  toast.setAttribute('aria-live', 'polite');
+  document.body.appendChild(toast);
+
+  // Auto remove after animation
+  setTimeout(function() {
+    if (toast.parentNode) toast.remove();
+  }, 2500);
+}
+
+/* ===== Smooth Anchor Scroll (for any hash links) ===== */
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
+  anchor.addEventListener('click', function(e) {
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+
+/* ===== Initialize ===== */
+// Set initial back to top state
+toggleBackToTop();
+</script>
+
+</body>
+</html>

@@ -5,11 +5,22 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>2026暑假 · 家庭出游计划</title>
 <style>
+:root {
+  --bg: #fdf8f0;
+  --card-bg: #fffcf5;
+  --text-primary: #5a3e2b;
+  --text-secondary: #8b7355;
+  --accent: #e8934a;
+  --accent-light: #fef0e0;
+  --accent-green: #7ab648;
+  --border: #e8d5b5;
+  --shadow: rgba(180, 140, 100, 0.12);
+}
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-  background: #f0f4f8;
-  color: #2d3748;
+  background: var(--bg);
+  color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
   min-height: 100vh;
@@ -28,27 +39,66 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 40%, #2c7a7b 100%);
+  background: linear-gradient(160deg, #fdf4e0 0%, #fce8d0 30%, #fde2c0 60%, #fdf4e0 100%);
   overflow: hidden;
 }
-.hero-bg {
+/* Polka dot pattern overlay */
+.hero::before {
+  content: '';
   position: absolute; inset: 0;
-  background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80') center/cover no-repeat;
-  opacity: 0.3;
-  animation: heroZoom 20s ease-in-out infinite alternate;
+  background-image: radial-gradient(#e8d5b5 1px, transparent 1px);
+  background-size: 24px 24px;
+  opacity: 0.4;
+  pointer-events: none;
 }
-@keyframes heroZoom {
-  from { transform: scale(1); }
-  to { transform: scale(1.1); }
+/* Hand-drawn squiggle lines */
+.hero-squiggle {
+  position: absolute;
+  pointer-events: none;
+  opacity: 0.15;
 }
-.hero-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(26,54,93,0.85) 0%, rgba(43,108,176,0.75) 50%, rgba(44,122,123,0.8) 100%);
+.hero-squiggle-top {
+  top: 20px; left: 5%; width: 90%;
+  height: 30px;
+}
+.hero-squiggle-bottom {
+  bottom: 80px; left: 10%; width: 80%;
+  height: 20px;
+}
+/* Hand-drawn sun */
+.hero-sun {
+  position: absolute;
+  top: 30px; right: 30px;
+  font-size: 64px;
+  opacity: 0.2;
+  animation: heroSunDrift 12s ease-in-out infinite alternate;
+  pointer-events: none;
+  user-select: none;
+}
+@keyframes heroSunDrift {
+  from { transform: rotate(-10deg) scale(1); }
+  to { transform: rotate(10deg) scale(1.1); }
+}
+/* Warm decorative circles */
+.hero-circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 2px solid #e8d5b5;
+  pointer-events: none;
+  opacity: 0.15;
+}
+.hero-circle-1 {
+  width: 180px; height: 180px;
+  top: -40px; left: -40px;
+}
+.hero-circle-2 {
+  width: 120px; height: 120px;
+  bottom: 40px; right: 20px;
 }
 .hero-content {
   position: relative; z-index: 2;
   padding: 40px 20px;
-  animation: fadeUp 1s ease-out;
+  animation: fadeUp 1s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
@@ -58,24 +108,31 @@ body {
   font-size: 56px;
   display: block;
   margin-bottom: 16px;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
+  filter: drop-shadow(0 4px 12px rgba(180,140,100,0.15));
   animation: float 6s ease-in-out infinite;
 }
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50% { transform: translateY(-10px) rotate(2deg); }
 }
 .hero h1 {
   font-size: clamp(28px, 5vw, 42px);
   font-weight: 800;
-  color: #fff;
+  color: var(--text-primary);
   margin-bottom: 12px;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
   letter-spacing: 2px;
+}
+.hero h1::after {
+  content: '';
+  display: block;
+  width: 60px; height: 3px;
+  background: var(--accent);
+  margin: 12px auto 0;
+  border-radius: 2px;
 }
 .hero p {
   font-size: clamp(15px, 2.5vw, 19px);
-  color: rgba(255,255,255,0.85);
+  color: var(--text-secondary);
   max-width: 500px;
   margin: 0 auto;
   line-height: 1.8;
@@ -84,7 +141,7 @@ body {
   position: absolute;
   bottom: -2px; left: 0; right: 0;
   height: 60px;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z' fill='%23f0f4f8'/%3E%3C/svg%3E") center/cover no-repeat;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z' fill='%23fdf8f0'/%3E%3C/svg%3E") center/cover no-repeat;
 }
 .scroll-indicator {
   position: absolute;
@@ -92,7 +149,7 @@ body {
   transform: translateX(-50%);
   z-index: 2;
   width: 24px; height: 40px;
-  border: 2px solid rgba(255,255,255,0.4);
+  border: 2px solid var(--border);
   border-radius: 12px;
   animation: scrollPulse 2s ease-in-out infinite;
 }
@@ -102,8 +159,9 @@ body {
   top: 6px; left: 50%;
   transform: translateX(-50%);
   width: 4px; height: 8px;
-  background: rgba(255,255,255,0.6);
+  background: var(--accent);
   border-radius: 2px;
+  opacity: 0.6;
   animation: scrollDot 2s ease-in-out infinite;
 }
 @keyframes scrollDot {
@@ -123,7 +181,7 @@ body {
   margin-bottom: 28px;
   opacity: 0;
   transform: translateY(20px);
-  transition: all 0.6s ease-out;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 .section.visible {
   opacity: 1;
@@ -136,12 +194,15 @@ body {
 .section-header h2 {
   font-size: 22px;
   font-weight: 700;
-  color: #1a365d;
+  color: var(--text-primary);
   margin-bottom: 4px;
+  padding-bottom: 8px;
+  border-bottom: 2px dashed var(--border);
+  display: inline-block;
 }
 .section-header p {
   font-size: 14px;
-  color: #718096;
+  color: var(--text-secondary);
 }
 
 /* ===== Tab Filter ===== */
@@ -153,28 +214,28 @@ body {
 }
 .tab-btn {
   padding: 8px 20px;
-  border: 2px solid #e2e8f0;
+  border: 2px solid var(--border);
   border-radius: 20px;
-  background: #fff;
-  color: #4a5568;
+  background: var(--card-bg);
+  color: var(--text-secondary);
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s;
   font-family: inherit;
 }
-.tab-btn:hover { border-color: #2b6cb0; color: #2b6cb0; }
+.tab-btn:hover { border-color: var(--accent); color: var(--accent); }
 .tab-btn.active {
-  background: #2b6cb0;
-  border-color: #2b6cb0;
+  background: var(--accent);
+  border-color: var(--accent);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(43,108,176,0.3);
+  box-shadow: 0 4px 12px rgba(232,147,74,0.3);
 }
 
 /* ===== Proposal Card ===== */
 .proposal-card {
-  background: linear-gradient(135deg, #ebf8ff, #e0edff);
-  border: 2px dashed #2b6cb0;
+  background: linear-gradient(135deg, var(--accent-light), #fdf0e0);
+  border: 2px dashed var(--accent);
   border-radius: 16px;
   padding: 24px 20px;
   text-align: center;
@@ -185,17 +246,17 @@ body {
 }
 .proposal-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(43,108,176,0.15);
-  border-color: #1a365d;
+  box-shadow: 0 8px 24px var(--shadow);
+  border-color: var(--text-primary);
 }
 .proposal-card .icon { font-size: 36px; display: block; margin-bottom: 8px; }
-.proposal-card .title { font-size: 17px; font-weight: 700; color: #1a365d; }
-.proposal-card .desc { font-size: 13px; color: #4a5568; margin-top: 4px; }
+.proposal-card .title { font-size: 17px; font-weight: 700; color: var(--text-primary); }
+.proposal-card .desc { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
 .proposal-card .badge-proposal {
   display: inline-block;
   margin-top: 10px;
   padding: 4px 14px;
-  background: #2b6cb0;
+  background: var(--accent);
   color: #fff;
   border-radius: 12px;
   font-size: 12px;
@@ -210,7 +271,7 @@ body {
   font-weight: 700;
 }
 .badge-new {
-  background: #ed8936;
+  background: var(--accent);
   color: #fff;
 }
 
@@ -224,14 +285,16 @@ body {
   align-items: center;
   gap: 12px;
   padding: 14px 16px;
-  background: #f7fafc;
+  background: #fcf7ee;
+  border: 1px solid var(--border);
   border-radius: 12px;
   text-decoration: none;
   color: inherit;
   transition: all 0.2s;
 }
 .dest-item:hover {
-  background: #ebf8ff;
+  background: var(--accent-light);
+  border-color: var(--accent);
   transform: translateX(4px);
 }
 .dest-item .dest-info {
@@ -241,25 +304,25 @@ body {
 .dest-item .dest-name {
   font-size: 15px;
   font-weight: 600;
-  color: #1a202c;
+  color: var(--text-primary);
   display: block;
   margin-bottom: 2px;
 }
 .dest-item .dest-desc {
   font-size: 12px;
-  color: #718096;
+  color: var(--text-secondary);
 }
 .dest-item .dest-arrow {
-  color: #cbd5e0;
+  color: #d4c5a0;
   font-size: 14px;
 }
 .dest-item:hover .dest-arrow {
-  color: #2b6cb0;
+  color: var(--accent);
 }
 
 .section-label {
   font-size: 12px;
-  color: #a0aec0;
+  color: var(--text-secondary);
   margin-bottom: 12px;
   text-align: center;
 }
@@ -273,34 +336,37 @@ body {
 .dest-grid.show-2 { grid-template-columns: 1fr 1fr; }
 
 .card {
-  background: #fff;
-  border-radius: 16px;
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 20px;
   padding: 24px 20px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 16px var(--shadow);
   margin-bottom: 28px;
 }
 .card-title {
   font-size: 17px;
   font-weight: 700;
-  color: #1a365d;
+  color: var(--text-primary);
   margin-bottom: 16px;
 }
 
 .dest-card {
   position: relative;
-  border-radius: 16px;
+  border-radius: 20px;
   overflow: hidden;
-  background: #fff;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  box-shadow: 0 4px 16px var(--shadow);
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
   text-decoration: none;
   color: inherit;
   display: block;
   cursor: pointer;
 }
 .dest-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px var(--shadow);
+  border-color: var(--accent);
 }
 .dest-img {
   width: 100%;
@@ -355,11 +421,11 @@ body {
   backdrop-filter: blur(8px);
 }
 .dest-tag-region {
-  background: rgba(0,0,0,0.45);
+  background: rgba(90,62,43,0.55);
   color: #fff;
 }
 .dest-tag-new {
-  background: rgba(237,137,54,0.9);
+  background: var(--accent);
   color: #fff;
 }
 .dest-body {
@@ -375,24 +441,25 @@ body {
 .dest-name {
   font-size: 16px;
   font-weight: 700;
-  color: #1a202c;
+  color: var(--text-primary);
   flex: 1;
 }
 .dest-arrow {
-  color: #cbd5e0;
+  color: #d4c5a0;
   font-size: 16px;
   transition: all 0.2s;
 }
 .dest-card:hover .dest-arrow {
-  color: #2b6cb0;
+  color: var(--accent);
   transform: translateX(4px);
 }
 .dest-desc {
   font-size: 13px;
-  color: #718096;
+  color: var(--text-secondary);
   line-height: 1.5;
   display: -webkit-box;
-
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
   overflow: hidden;
 }
 .dest-tags {
@@ -404,8 +471,8 @@ body {
 .dest-tag-feature {
   font-size: 11px;
   padding: 2px 8px;
-  background: #ebf8ff;
-  color: #2b6cb0;
+  background: var(--accent-light);
+  color: #b8860b;
   border-radius: 8px;
   font-weight: 500;
 }
@@ -415,26 +482,27 @@ body {
   position: relative;
   width: 100%;
   height: 380px;
-  border-radius: 16px;
-  background: linear-gradient(160deg, #0c1a32 0%, #132a4a 30%, #1a3a5c 60%, #1f4a6e 100%);
+  border-radius: 20px;
+  background: linear-gradient(160deg, #fdf4e4 0%, #f5e6c8 30%, #f0dbb8 60%, #faeed8 100%);
   overflow: hidden;
-  box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 4px 16px var(--shadow);
   user-select: none;
+  border: 2px solid var(--border);
 }
 /* Grid lines */
 .vis-map::before {
   content: '';
   position: absolute; inset: 0;
   background-image:
-    repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 12.5%),
-    repeating-linear-gradient(90deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 10%);
+    repeating-linear-gradient(0deg, rgba(139,115,85,0.06) 0px, rgba(139,115,85,0.06) 1px, transparent 1px, transparent 12.5%),
+    repeating-linear-gradient(90deg, rgba(139,115,85,0.06) 0px, rgba(139,115,85,0.06) 1px, transparent 1px, transparent 10%);
   pointer-events: none;
 }
-/* Decorative glow dots (ocean texture) */
+/* Decorative dots (warm texture) */
 .vis-map .ocean-dot {
   position: absolute;
-  width: 2px; height: 2px;
-  background: rgba(255,255,255,0.08);
+  width: 3px; height: 3px;
+  background: rgba(139,115,85,0.1);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -442,7 +510,7 @@ body {
 .vis-map .map-title {
   position: absolute;
   top: 14px; left: 16px;
-  color: rgba(255,255,255,0.25);
+  color: rgba(139,115,85,0.35);
   font-size: 11px;
   letter-spacing: 2px;
   pointer-events: none;
@@ -471,8 +539,8 @@ body {
 .map-dot .dot-core {
   width: 12px; height: 12px;
   border-radius: 50%;
-  border: 2px solid rgba(255,255,255,0.8);
-  box-shadow: 0 0 12px rgba(255,255,255,0.2);
+  border: 2px solid rgba(255,255,255,0.6);
+  box-shadow: 0 0 12px rgba(139,115,85,0.2);
   position: absolute;
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
@@ -480,7 +548,7 @@ body {
 }
 .map-dot:hover .dot-core {
   transform: translate(-50%, -50%) scale(1.6);
-  box-shadow: 0 0 20px rgba(255,255,255,0.4);
+  box-shadow: 0 0 20px rgba(139,115,85,0.3);
   z-index: 10;
 }
 .map-dot .dot-label {
@@ -488,13 +556,13 @@ body {
   left: 18px; top: 50%;
   transform: translateY(-50%);
   white-space: nowrap;
-  color: rgba(255,255,255,0.7);
+  color: var(--text-primary);
   font-size: 12px;
   font-weight: 500;
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.3s;
-  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  text-shadow: 0 1px 4px rgba(255,255,255,0.5);
 }
 .map-dot:hover .dot-label {
   opacity: 1;
@@ -504,11 +572,11 @@ body {
 /* Origin dot (Shanghai) */
 .map-dot-origin .dot-core {
   width: 10px; height: 10px;
-  background: #f6ad55;
+  background: var(--accent);
   border-color: rgba(255,255,255,0.6);
 }
 .map-dot-origin .dot-ring {
-  border: 2px dashed #f6ad55;
+  border: 2px dashed var(--accent);
   animation: none;
   width: 30px; height: 30px;
   opacity: 0.5;
@@ -535,17 +603,19 @@ body {
   align-items: center;
   gap: 4px;
   font-size: 11px;
-  color: #718096;
+  color: var(--text-secondary);
   padding: 3px 8px;
-  background: #f7fafc;
+  background: var(--card-bg);
+  border: 1px solid var(--border);
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.2s;
   text-decoration: none;
 }
 .map-legend-item:hover {
-  background: #ebf8ff;
-  color: #2b6cb0;
+  background: var(--accent-light);
+  color: var(--accent);
+  border-color: var(--accent);
 }
 .map-legend-dot {
   width: 8px; height: 8px;
@@ -556,8 +626,8 @@ body {
 /* Map tooltip */
 .map-tooltip {
   position: absolute;
-  background: rgba(0,0,0,0.85);
-  color: #fff;
+  background: var(--text-primary);
+  color: #fffcf5;
   padding: 8px 14px;
   border-radius: 8px;
   font-size: 13px;
@@ -569,28 +639,29 @@ body {
   backdrop-filter: blur(8px);
 }
 .map-tooltip.show { opacity: 1; }
-.map-tooltip a { color: #90cdf4; text-decoration: none; font-weight: 600; }
+.map-tooltip a { color: #f5cba0; text-decoration: none; font-weight: 600; }
 
 /* Map click hint */
 .map-hint {
   position: absolute;
   bottom: 14px; left: 50%;
   transform: translateX(-50%);
-  color: rgba(255,255,255,0.2);
+  color: rgba(139,115,85,0.3);
   font-size: 11px;
   pointer-events: none;
 }
 
 /* ===== Info Card ===== */
 .info-card {
-  background: #fff;
-  border-radius: 16px;
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 20px;
   padding: 24px 20px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 16px var(--shadow);
   text-align: center;
 }
 .info-card .icon { font-size: 32px; margin-bottom: 8px; display: block; }
-.info-card h3 { font-size: 17px; color: #1a365d; margin-bottom: 12px; }
+.info-card h3 { font-size: 17px; color: var(--text-primary); margin-bottom: 12px; }
 .info-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -598,71 +669,80 @@ body {
   text-align: center;
 }
 .info-item {
-  background: #f7fafc;
+  background: var(--accent-light);
   border-radius: 10px;
   padding: 12px 10px;
 }
-.info-item .label { font-size: 11px; color: #a0aec0; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
-.info-item .value { font-size: 14px; font-weight: 600; color: #2d3748; }
+.info-item .label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+.info-item .value { font-size: 14px; font-weight: 600; color: var(--text-primary); }
 
 /* ===== Comment Section ===== */
 .comment-card {
-  background: #fff;
-  border-radius: 16px;
+  background: var(--card-bg);
+  border: 2px solid var(--border);
+  border-radius: 20px;
   padding: 24px 20px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 16px var(--shadow);
 }
 .comment-card h3 {
   font-size: 17px;
   font-weight: 700;
-  color: #1a365d;
+  color: var(--text-primary);
   margin-bottom: 16px;
   text-align: center;
 }
 .msg-form { display: flex; flex-direction: column; gap: 10px; }
 .msg-form input, .msg-form textarea {
   font-family: inherit; font-size: 14px; padding: 12px 16px;
-  border: 2px solid #e2e8f0; border-radius: 10px; outline: none; resize: none;
-  transition: border-color 0.2s; background: #f7fafc;
+  border: 2px solid var(--border); border-radius: 10px; outline: none; resize: none;
+  transition: border-color 0.2s; background: #fcf9f2;
 }
-.msg-form input:focus, .msg-form textarea:focus { border-color: #2b6cb0; background: #fff; }
+.msg-form input:focus, .msg-form textarea:focus { border-color: var(--accent); background: #fff; }
 .msg-form textarea { min-height: 80px; }
 .msg-form .btn-submit {
   align-self: flex-end;
-  background: linear-gradient(135deg, #2b6cb0, #2c7a7b);
+  background: linear-gradient(135deg, var(--accent), #d4783a);
   color: #fff; border: none; padding: 10px 32px; border-radius: 10px;
   font-size: 14px; font-weight: 600; cursor: pointer;
   transition: all 0.2s; font-family: inherit;
 }
 .msg-form .btn-submit:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(43,108,176,0.3);
+  box-shadow: 0 4px 12px rgba(232,147,74,0.3);
 }
 .msg-form .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
-.msg-form .msg-tip { font-size: 12px; color: #a0aec0; text-align: right; }
+.msg-form .msg-tip { font-size: 12px; color: var(--text-secondary); text-align: right; }
 
 .msg-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; max-height: 420px; overflow-y: auto; }
-.msg-item { background: #f7fafc; border-radius: 12px; padding: 14px 16px; }
+.msg-item { background: #fcf7ee; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
 .msg-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
 .msg-avatar {
   width: 30px; height: 30px; border-radius: 50%;
-  background: linear-gradient(135deg, #2b6cb0, #2c7a7b);
+  background: linear-gradient(135deg, var(--accent), #d4783a);
   color: #fff; display: flex; align-items: center; justify-content: center;
   font-size: 13px; font-weight: 700; flex-shrink: 0;
 }
-.msg-name { font-size: 14px; font-weight: 600; color: #2d3748; }
-.msg-time { font-size: 11px; color: #a0aec0; margin-left: auto; }
-.msg-text { font-size: 14px; color: #4a5568; line-height: 1.6; padding-left: 40px; word-break: break-all; }
-.msg-empty { text-align: center; color: #cbd5e0; font-size: 14px; padding: 30px 0; }
-.msg-loading { text-align: center; color: #a0aec0; font-size: 13px; padding: 20px 0; }
+.msg-name { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.msg-time { font-size: 11px; color: var(--text-secondary); margin-left: auto; }
+.msg-text { font-size: 14px; color: #5a4a3a; line-height: 1.6; padding-left: 40px; word-break: break-all; }
+.msg-empty { text-align: center; color: #d4c5a0; font-size: 14px; padding: 30px 0; }
+.msg-loading { text-align: center; color: var(--text-secondary); font-size: 13px; padding: 20px 0; }
 
 /* ===== Footer ===== */
-.footer { text-align: center; padding: 32px 16px; color: #a0aec0; font-size: 13px; }
+.footer { text-align: center; padding: 32px 16px; color: var(--text-secondary); font-size: 13px; }
+.footer::before {
+  content: '';
+  display: block;
+  width: 40px; height: 2px;
+  background: var(--border);
+  margin: 0 auto 16px;
+  border-radius: 1px;
+}
 
 /* ===== Toast ===== */
 .toast {
   position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
-  background: #1a202c; color: #fff; padding: 12px 24px; border-radius: 10px;
+  background: var(--text-primary); color: #fffcf5; padding: 12px 24px; border-radius: 10px;
   font-size: 14px; z-index: 1000; opacity: 0;
   transition: all 0.3s;
   pointer-events: none;
@@ -693,8 +773,16 @@ body {
 
 <!-- ===== Hero ===== -->
 <section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
+  <!-- Decorative hand-drawn elements -->
+  <div class="hero-sun">☀️</div>
+  <div class="hero-circle hero-circle-1"></div>
+  <div class="hero-circle hero-circle-2"></div>
+  <svg class="hero-squiggle hero-squiggle-top" viewBox="0 0 1200 30" preserveAspectRatio="none">
+    <path d="M0,15 C100,0 200,30 300,15 C400,0 500,30 600,15 C700,0 800,30 900,15 C1000,0 1100,30 1200,15" fill="none" stroke="#8b7355" stroke-width="2" stroke-linecap="round"/>
+  </svg>
+  <svg class="hero-squiggle hero-squiggle-bottom" viewBox="0 0 1000 20" preserveAspectRatio="none">
+    <path d="M0,10 C80,0 160,20 250,10 C340,0 420,20 510,10 C600,0 680,20 770,10 C860,0 940,20 1000,10" fill="none" stroke="#8b7355" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
   <div class="hero-content">
     <span class="hero-emoji">🏖️</span>
     <h1>2026 暑假 · 家庭出游</h1>
@@ -704,10 +792,12 @@ body {
   <div class="hero-wave"></div>
 </section>
 
+<div class="container">
+
 <!-- 公告栏 -->
-<div class="card" style="border: 2px solid #e67e22; background: #fffaf0;">
-  <div class="card-title" style="color:#e67e22;">📢 各位家人，请先看这里</div>
-  <div style="font-size:14px;color:#555;line-height:1.9;">
+<div class="card" style="border-color: var(--accent); background: #fffaf0;">
+  <div class="card-title" style="color:var(--accent);">📢 各位家人，请先看这里</div>
+  <div style="font-size:14px;color:var(--text-secondary);line-height:1.9;">
     <p style="margin-bottom:10px;">
       目前目的地<strong style="color:#c0392b;">还没有最终确定</strong>，需要大家一起商量。以下是本次出行的前提条件，请大家先了解：
     </p>
@@ -719,7 +809,7 @@ body {
       <li><strong>📅 行程 7~10 天</strong> — 不长不短，大家都能安排得开</li>
       <li><strong>🍜 饮食要合口</strong> — 保证有适合老人孩子的餐食，最好中餐选择多</li>
     </ul>
-    <div style="background:#fff8e1;border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:13px;color:#8d6e00;">
+    <div style="background:var(--accent-light);border-radius:8px;padding:10px 14px;margin-bottom:10px;font-size:13px;color:#8d6e00;">
       💬 <strong>已收到的意见：</strong>大家普遍希望节奏慢一点、景点少一点，"吃吃躺躺逛逛"就很好；
       年长者舒适度很重要；倾向凉快的地方；预算适中即可。
     </div>
@@ -727,21 +817,21 @@ body {
       <strong>推荐目的地（5 个国内 + 5 个国外）：</strong>
     </p>
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;">
-      <span style="background:#e8f5e9;color:#2e7d32;padding:4px 12px;border-radius:12px;font-size:13px;">🇨🇳 新疆·北疆伊犁</span>
-      <span style="background:#e8f5e9;color:#2e7d32;padding:4px 12px;border-radius:12px;font-size:13px;">🇨🇳 威海</span>
-      <span style="background:#e8f5e9;color:#2e7d32;padding:4px 12px;border-radius:12px;font-size:13px;">🇨🇳 大连</span>
-      <span style="background:#e8f5e9;color:#2e7d32;padding:4px 12px;border-radius:12px;font-size:13px;">🇨🇳 青岛</span>
-      <span style="background:#e8f5e9;color:#2e7d32;padding:4px 12px;border-radius:12px;font-size:13px;">🇨🇳 烟台</span>
-      <span style="background:#e3f2fd;color:#1565c0;padding:4px 12px;border-radius:12px;font-size:13px;">🇲🇾 马来西亚·槟城</span>
-      <span style="background:#e3f2fd;color:#1565c0;padding:4px 12px;border-radius:12px;font-size:13px;">🇲🇾 马来西亚·兰卡威</span>
-      <span style="background:#e3f2fd;color:#1565c0;padding:4px 12px;border-radius:12px;font-size:13px;">🇵🇭 菲律宾·长滩岛</span>
-      <span style="background:#e3f2fd;color:#1565c0;padding:4px 12px;border-radius:12px;font-size:13px;">🇻🇳 越南·岘港</span>
-      <span style="background:#e3f2fd;color:#1565c0;padding:4px 12px;border-radius:12px;font-size:13px;">🇮🇩 印尼·巴厘岛</span>
+      <span style="background:#fdf0e0;color:#8b6914;padding:4px 12px;border-radius:12px;font-size:13px;">🇨🇳 新疆·北疆伊犁</span>
+      <span style="background:#fdf0e0;color:#8b6914;padding:4px 12px;border-radius:12px;font-size:13px;">🇨🇳 威海</span>
+      <span style="background:#fdf0e0;color:#8b6914;padding:4px 12px;border-radius:12px;font-size:13px;">🇨🇳 大连</span>
+      <span style="background:#fdf0e0;color:#8b6914;padding:4px 12px;border-radius:12px;font-size:13px;">🇨🇳 青岛</span>
+      <span style="background:#fdf0e0;color:#8b6914;padding:4px 12px;border-radius:12px;font-size:13px;">🇨🇳 烟台</span>
+      <span style="background:var(--accent-light);color:#b8860b;padding:4px 12px;border-radius:12px;font-size:13px;">🇲🇾 马来西亚·槟城</span>
+      <span style="background:var(--accent-light);color:#b8860b;padding:4px 12px;border-radius:12px;font-size:13px;">🇲🇾 马来西亚·兰卡威</span>
+      <span style="background:var(--accent-light);color:#b8860b;padding:4px 12px;border-radius:12px;font-size:13px;">🇵🇭 菲律宾·长滩岛</span>
+      <span style="background:var(--accent-light);color:#b8860b;padding:4px 12px;border-radius:12px;font-size:13px;">🇻🇳 越南·岘港</span>
+      <span style="background:var(--accent-light);color:#b8860b;padding:4px 12px;border-radius:12px;font-size:13px;">🇮🇩 印尼·巴厘岛</span>
     </div>
     <p style="margin-bottom:8px;">
       <strong>📣 请大家按以上条件，看看哪些目的地中意，再到留言板说说你的想法！</strong>
     </p>
-    <p style="font-size:13px;color:#999;">
+    <p style="font-size:13px;color:var(--text-secondary);">
       步骤：先看下方的「征求意见稿」了解方案对比 → 查看感兴趣的行程详情 → 在留言板发表意见
     </p>
   </div>
@@ -760,6 +850,17 @@ body {
       <span class="dest-arrow">→</span>
     </a>
     </div>
+  </div>
+
+  <!-- 目的地网格 -->
+  <div class="card">
+    <div class="card-title">🗺️ 所有目的地</div>
+    <div class="tab-bar">
+      <button class="tab-btn active" data-filter="all">全部</button>
+      <button class="tab-btn" data-filter="domestic">🇨🇳 国内</button>
+      <button class="tab-btn" data-filter="international">🌏 国外</button>
+    </div>
+    <div class="dest-grid" id="dest-grid"></div>
   </div>
 
   <!-- Map -->
@@ -843,21 +944,21 @@ body {
     <strong>成员：</strong>几个家庭，有老人和小孩<br>
     <strong>风格：</strong>慢节奏、不赶路、舒适为主<br>
     <strong>当前阶段：</strong>目的地意向征集<br>
-    <div style="margin-top:10px;font-size:13px;color:#999;">
+    <div style="margin-top:10px;font-size:13px;color:var(--text-secondary);">
       请各家庭先看征求意见稿，再查看感兴趣的行程，反馈目的地偏好。
     </div>
   </div>
 
   <!-- 我的世界 -->
-  <div class="card" style="border: 2px solid #7ec850; background: linear-gradient(135deg, #1a1a2e, #16213e);">
+  <div class="card" style="border-color: var(--accent-green); background: linear-gradient(135deg, #1a1a2e, #16213e);">
     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
       <div style="flex:1;min-width:200px;">
-        <div style="color:#7ec850;font-size:13px;font-weight:600;margin-bottom:4px;">🎮 FUN CORNER</div>
+        <div style="color:var(--accent-green);font-size:13px;font-weight:600;margin-bottom:4px;">🎮 FUN CORNER</div>
         <h3 style="color:#fff;font-size:20px;font-weight:700;margin:0 0 6px 0;">我的世界 · Minecraft</h3>
         <p style="color:rgba(255,255,255,0.6);font-size:14px;margin:0 0 12px 0;line-height:1.6;">
           一款风靡全球的沙盒游戏 — 探索无限世界、建造宏伟建筑、挑战危险怪物。
         </p>
-        <a href="minecraft.html" style="display:inline-block;padding:10px 28px;background:linear-gradient(135deg,#7ec850,#3a7d44);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;transition:all 0.3s;">
+        <a href="minecraft.html" style="display:inline-block;padding:10px 28px;background:linear-gradient(135deg,var(--accent-green),#3a7d44);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;transition:all 0.3s;">
           探索世界 →
         </a>
       </div>
@@ -881,6 +982,178 @@ body {
     </div>
   </div>
 
+</div>
+
+<!-- ===== 结伴出游攻略（全网搜索整合）===== -->
+<div class="card" id="sec-tips">
+  <div class="card-title">📖 家庭结伴游 · 全网攻略精选</div>
+  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:16px;line-height:1.7;">
+    以下内容整合自全网<strong>小红书、马蜂窝、携程</strong>等多平台家庭结伴游真实经验，
+    针对 <strong>3~4个家庭（10~15人）、7~10天、带老人小孩</strong> 的出行场景专门整理。
+  </p>
+
+  <!-- 住宿 -->
+  <div style="margin-bottom:18px;">
+    <div style="font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+      <span style="font-size:20px;">🏠</span> 住宿怎么选？<span style="font-size:12px;font-weight:400;color:var(--text-secondary);">（多家庭出游最关键一环）</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr;gap:10px;">
+      <div style="background:#f0f7f0;border-radius:12px;padding:14px 16px;border-left:3px solid var(--accent-green);">
+        <div style="font-weight:700;font-size:14px;margin-bottom:4px;">🌟 首选：包栋民宿/别墅</div>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+          整栋独享，孩子跑跳不怕吵到外人；有客厅厨房院子，大家一起聊天做饭烧烤。
+          人均分摊后往往比住酒店划算。<strong style="color:var(--text-primary);">预订前务必问清：</strong>
+          是否真正独栋？几间房/几卫浴？热水器够不够？有无厨房？停车位几个？
+          <span style="display:inline-block;background:#e8f5e9;padding:2px 10px;border-radius:8px;font-size:12px;margin-left:4px;">推荐平台：途家、美团民宿、小猪民宿</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div style="background:#fcf7ee;border-radius:12px;padding:12px 14px;border-left:3px solid var(--accent);">
+          <div style="font-weight:700;font-size:13px;">公寓式酒店</div>
+          <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">两室/三室一厅套房，有厨房和洗衣机，既有独立卧室又有共享空间，适合2~3个家庭</div>
+        </div>
+        <div style="background:#fcf7ee;border-radius:12px;padding:12px 14px;border-left:3px solid var(--accent);">
+          <div style="font-weight:700;font-size:13px;">度假村相邻房</div>
+          <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">同一酒店安排相邻房间，选择有泳池/儿童乐园的度假村，提前询问联通房</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 交通 -->
+  <div style="margin-bottom:18px;">
+    <div style="font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+      <span style="font-size:20px;">🚗</span> 交通怎么安排？
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:#f0f4f8;border-radius:12px;padding:12px 14px;">
+        <div style="font-weight:700;font-size:13px;">🚐 包大巴/中巴</div>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
+          8人以上首选！配司机，独立空间，<strong>建议选带厕所的车型</strong>。
+          真实案例：22大6小潮汕游包33座大巴，"南澳大桥堵4小时也不怕"。
+        </div>
+      </div>
+      <div style="background:#f0f4f8;border-radius:12px;padding:12px 14px;">
+        <div style="font-weight:700;font-size:13px;">🚙 租车自驾</div>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.6;">
+          推荐某嗨/神州平台，选机场店取还。多家庭租7座MPV（GL8等）。
+          <strong>异地还车</strong>可不走回头路。提前下载离线地图。
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 经验教训 -->
+  <div style="margin-bottom:14px;">
+    <div style="font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+      <span style="font-size:20px;">💡</span> 过来人的避坑经验
+    </div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;gap:10px;align-items:flex-start;background:#fff5f5;border-radius:10px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">🍽️</span>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          <strong>吃饭难题：</strong>人多找位子是最大痛点！提前1-2天电话预约餐厅告知人数。
+          备选方案：自助餐、打包回民宿吃。建议一餐在民宿烤肉/火锅，一餐外出体验。
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;background:#fff5f5;border-radius:10px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">🗣️</span>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          <strong>意见分歧：</strong>出发前统一预算、作息、节奏。行程预留自由时间，
+          允许"分头行动"——有人去景点，有人在民宿躺平。财务AA制专人记账。
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;background:#fff5f5;border-radius:10px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">🌡️</span>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          <strong>暑假旺季：</strong>热门景区8:30前第一批入园！暑假非必要不去热门景点，选小众替代。
+          很多景区夜间开放人少体验好。预订VIP快速票省排队时间。
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;align-items:flex-start;background:#fff5f5;border-radius:10px;padding:10px 14px;">
+        <span style="font-size:18px;flex-shrink:0;">📋</span>
+        <div style="font-size:13px;color:var(--text-secondary);line-height:1.6;">
+          <strong>组建模式：</strong>推荐"小组长制"，每户推举一人，分工：交通、住宿、餐饮、财务。
+          出发前开"家庭会议"，把规则定好。"把大家绑在一起的是感情，让旅途顺利的是规则。"
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 暑假推荐目的地排名 -->
+  <div>
+    <div style="font-size:15px;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+      <span style="font-size:20px;">🏆</span> 暑假家庭结伴游 · 目的地综合推荐榜
+    </div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;min-width:500px;">
+        <thead>
+          <tr style="background:var(--accent-light);">
+            <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);">排名</th>
+            <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);">目的地</th>
+            <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);">推荐天数</th>
+            <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);">人均预算</th>
+            <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);">核心优势</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 10px;font-weight:700;">🥇</td>
+            <td style="padding:8px 10px;">云南·滇东南<br><span style="font-size:11px;color:var(--text-muted);">昆明→弥勒→抚仙湖</span></td>
+            <td style="padding:8px 10px;">10天</td>
+            <td style="padding:8px 10px;">¥3,000-4,500</td>
+            <td style="padding:8px 10px;font-size:12px;line-height:1.5;">夏季凉爽不用空调，节奏慢不赶路，水果便宜自由，民宿包栋选择多</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 10px;font-weight:700;">🥇</td>
+            <td style="padding:8px 10px;">甘南+九寨沟<br><span style="font-size:11px;color:var(--text-muted);">兰州→扎尕那→九寨沟</span></td>
+            <td style="padding:8px 10px;">8-10天</td>
+            <td style="padding:8px 10px;">¥4,000-5,000</td>
+            <td style="padding:8px 10px;font-size:12px;line-height:1.5;">全程15-25°C避暑圣地，景色绝美，可包车/大巴，老少皆宜</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 10px;font-weight:700;">🥈</td>
+            <td style="padding:8px 10px;">贵州·贵阳/六盘水<br><span style="font-size:11px;color:var(--text-muted);">黄果树→荔波→凉都</span></td>
+            <td style="padding:8px 10px;">7-8天</td>
+            <td style="padding:8px 10px;">¥2,800-3,800</td>
+            <td style="padding:8px 10px;font-size:12px;line-height:1.5;">"中国凉都"夏季23°C，房车露营/民宿包栋，民族风情浓</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 10px;font-weight:700;">🥈</td>
+            <td style="padding:8px 10px;">河西走廊<br><span style="font-size:11px;color:var(--text-muted);">兰州→张掖→嘉峪关→敦煌</span></td>
+            <td style="padding:8px 10px;">7-10天</td>
+            <td style="padding:8px 10px;">¥3,500-5,000</td>
+            <td style="padding:8px 10px;font-size:12px;line-height:1.5;">自驾经典，孩子开阔眼界，草原丹霞戈壁全体验，驾驶难度低</td>
+          </tr>
+          <tr style="border-bottom:1px solid var(--border);">
+            <td style="padding:8px 10px;font-weight:700;">🥉</td>
+            <td style="padding:8px 10px;">山东·青岛/威海<br><span style="font-size:11px;color:var(--text-muted);">高铁直达</span></td>
+            <td style="padding:8px 10px;">5-7天</td>
+            <td style="padding:8px 10px;">¥3,000-4,800</td>
+            <td style="padding:8px 10px;font-size:12px;line-height:1.5;">海边避暑，高铁直达，亲子设施成熟，海鲜便宜，住宿选择多</td>
+          </tr>
+          <tr>
+            <td style="padding:8px 10px;font-weight:700;">🥉</td>
+            <td style="padding:8px 10px;">宁夏·中卫<br><span style="font-size:11px;color:var(--text-muted);">沙漠星星酒店</span></td>
+            <td style="padding:8px 10px;">6-8天</td>
+            <td style="padding:8px 10px;">¥4,000-6,000</td>
+            <td style="padding:8px 10px;font-size:12px;line-height:1.5;">小红书爆火，沙漠独特体验，星星酒店+黄河宿集，适合报亲子团</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:12px;padding:12px 16px;background:var(--accent-light);border-radius:12px;font-size:13px;color:var(--text-secondary);line-height:1.7;">
+      <strong>💬 多家庭出游黄金法则：</strong>"把大家绑在一起的是感情，让旅途顺利的是规则。" —
+      住宿优先包栋/相邻房源，交通人多就包大巴，吃饭提前订桌，每天1-2个景点不赶路，
+      允许分歧给自由时间，财务透明AA制，把意外当回忆的一部分。
+    </div>
+  </div>
+
+  <div style="margin-top:16px;text-align:center;">
+    <a href="proposal.html" style="display:inline-block;padding:10px 28px;background:var(--accent);color:#fff;border-radius:12px;text-decoration:none;font-weight:600;font-size:14px;transition:all 0.2s;">
+      查看完整征求意见稿 →
+    </a>
+  </div>
 </div>
 
 <div class="footer">✈️ 家庭出游计划 · 2026 年 暑假</div>
@@ -1193,7 +1466,7 @@ async function loadMsgs(retries) {
       setTimeout(() => loadMsgs(retries + 1), 2000 * (retries + 1));
       list.innerHTML = '<div class="msg-loading">⏳ 加载中…（重试 ' + (retries + 1) + '/3）</div>';
     } else {
-      list.innerHTML = '<div class="msg-empty" style="color:#e53e3e;">加载留言失败，请刷新重试</div>';
+      list.innerHTML = '<div class="msg-empty" style="color:#e53e3e;">留言加载失败（' + e.name + '），请刷新重试</div>';
     }
   }
 }
@@ -1243,15 +1516,14 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-  loadMsgs();
-  const ta = document.getElementById('msg-content');
-  if (ta) {
-    ta.addEventListener('input', function() {
-      document.getElementById('msg-count').textContent = this.value.length;
-    });
-  }
-});
+// DOM is already parsed (script at end of body) — load comments immediately
+loadMsgs();
+const ta = document.getElementById('msg-content');
+if (ta) {
+  ta.addEventListener('input', function() {
+    document.getElementById('msg-count').textContent = this.value.length;
+  });
+}
 </script>
 
 </body>
