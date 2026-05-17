@@ -1,1 +1,7 @@
 .vercel
+*.code-workspace
+.env
+.wrangler/
+.functions/
+_worker.bundle
+.edgeone/
