@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>在线视频下载 · 017988.xyz</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⬇</text></svg>">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+    background: #0f0f13;
+    color: #e8e8ed;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ===== Header ===== */
+  .header {
+    padding: 20px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid #1e1e2a;
+  }
+  .header .logo {
+    font-size: 22px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #ff4b4b, #ff9f43);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-decoration: none;
+  }
+  .header .sub {
+    color: #6b6b80;
+    font-size: 13px;
+    margin-left: auto;
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px 40px;
+    max-width: 780px;
+    margin: 0 auto;
+    width: 100%;
+  }
+  .hero h1 {
+    font-size: 32px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .hero p {
+    color: #8e8ea0;
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+  .hero p a {
+    color: #ff6b6b;
+    text-decoration: none;
+  }
+  .hero p a:hover {
+    text-decoration: underline;
+  }
+
+  /* ===== Input Area ===== */
+  .input-group {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    max-width: 640px;
+    margin-bottom: 8px;
+  }
+  .input-group input {
+    flex: 1;
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 2px solid #2a2a3a;
+    background: #1a1a24;
+    color: #e8e8ed;
+    font-size: 15px;
+    outline: none;
+    transition: border-color .25s;
+  }
+  .input-group input::placeholder {
+    color: #555568;
+  }
+  .input-group input:focus {
+    border-color: #ff4b4b;
+  }
+  .input-group button {
+    padding: 14px 28px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #ff4b4b, #c0392b);
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .2s;
+    white-space: nowrap;
+    min-width: 100px;
+  }
+  .input-group button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(255, 75, 75, 0.35);
+  }
+  .input-group button:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+  .hint {
+    font-size: 13px;
+    color: #555568;
+    align-self: flex-start;
+    margin-left: 4px;
+  }
+
+  /* ===== Loading ===== */
+  .loading-wrap {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .loading-wrap.active {
+    display: flex;
+  }
+  .spinner {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 4px solid #2a2a3a;
+    border-top-color: #ff4b4b;
+    animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading-wrap span {
+    color: #8e8ea0;
+    font-size: 14px;
+  }
+
+  /* ===== Error ===== */
+  .error-box {
+    display: none;
+    margin-top: 20px;
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: rgba(255, 75, 75, 0.12);
+    border: 1px solid rgba(255, 75, 75, 0.3);
+    color: #ff6b6b;
+    font-size: 14px;
+    width: 100%;
+    max-width: 640px;
+  }
+  .error-box.active {
+    display: block;
+  }
+
+  /* ===== Video Info ===== */
+  .info-card {
+    display: none;
+    margin-top: 32px;
+    background: #1a1a24;
+    border-radius: 16px;
+    border: 1px solid #2a2a3a;
+    overflow: hidden;
+    width: 100%;
+    max-width: 640px;
+  }
+  .info-card.active {
+    display: block;
+  }
+  .info-card .thumb-wrap {
+    width: 100%;
+    position: relative;
+    background: #000;
+  }
+  .info-card .thumb-wrap img {
+    width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    display: block;
+  }
+  .info-card .thumb-wrap .duration {
+    position: absolute;
+    bottom: 10px;
+    right: 12px;
+    background: rgba(0,0,0,0.75);
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .info-card .meta {
+    padding: 18px 20px 14px;
+  }
+  .info-card .meta h2 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.4;
+    margin-bottom: 6px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .info-card .meta .channel {
+    font-size: 13px;
+    color: #8e8ea0;
+  }
+
+  /* ===== Format Select ===== */
+  .format-section {
+    padding: 0 20px 20px;
+  }
+  .format-section h3 {
+    font-size: 14px;
+    color: #6b6b80;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+  .format-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 8px;
+  }
+  .format-card {
+    background: #14141e;
+    border: 1px solid #2a2a3a;
+    border-radius: 10px;
+    padding: 12px;
+    cursor: pointer;
+    transition: border-color .2s, background .2s;
+    text-align: center;
+  }
+  .format-card:hover {
+    border-color: #ff4b4b;
+    background: #1e1e2e;
+  }
+  .format-card.selected {
+    border-color: #ff4b4b;
+    background: rgba(255, 75, 75, 0.12);
+    box-shadow: 0 0 12px rgba(255, 75, 75, 0.15);
+  }
+  .format-card .qual {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .format-card .sub {
+    font-size: 12px;
+    color: #6b6b80;
+    margin-top: 2px;
+  }
+  .format-card .filesize {
+    font-size: 11px;
+    color: #555568;
+    margin-top: 4px;
+  }
+
+  /* ===== Download Button ===== */
+  .download-section {
+    padding: 0 20px 20px;
+  }
+  .download-btn {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    border: none;
+    background: linear-gradient(135deg, #ff4b4b, #c0392b);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform .15s, box-shadow .2s;
+  }
+  .download-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 24px rgba(255, 75, 75, 0.35);
+  }
+  .download-btn:disabled {
+    opacity: .5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  /* ===== Progress ===== */
+  .progress-wrap {
+    display: none;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 640px;
+  }
+  .progress-wrap.active {
+    display: block;
+  }
+  .progress-bar-bg {
+    width: 100%;
+    height: 6px;
+    background: #2a2a3a;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #ff4b4b, #ff9f43);
+    border-radius: 3px;
+    transition: width .3s;
+  }
+  .progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #8e8ea0;
+    margin-top: 6px;
+  }
+
+  /* ===== Footer ===== */
+  .footer {
+    text-align: center;
+    padding: 24px;
+    color: #444458;
+    font-size: 13px;
+    border-top: 1px solid #1e1e2a;
+  }
+
+  /* ===== Supported Sites ===== */
+  .sites {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 14px;
+    margin-top: 24px;
+    font-size: 13px;
+    color: #444458;
+  }
+  .sites span {
+    opacity: .7;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 520px) {
+    .hero { padding: 40px 16px 30px; }
+    .hero h1 { font-size: 24px; }
+    .input-group { flex-direction: column; }
+    .input-group button { min-width: unset; width: 100%; }
+    .format-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="/" class="logo">Video Downloader</a>
+  <span class="sub">⬇ 粘贴链接 · 一键下载</span>
+</div>
+
+<div class="hero">
+  <h1>在线视频下载</h1>
+  <p>
+    粘贴视频链接，即可获取高清下载 &nbsp;·&nbsp;
+    支持 <a href="https://github.com/yt-dlp/yt-dlp" target="_blank">yt-dlp</a> 所有站点
+  </p>
+
+  <div class="input-group">
+    <input type="url" id="urlInput" placeholder="粘贴视频链接，例如 https://www.youtube.com/watch?v=..." autofocus>
+    <button id="fetchBtn" onclick="fetchInfo()">获取信息</button>
+  </div>
+  <span class="hint">支持 YouTube、Bilibili、抖音、Twitter、Instagram 等 1700+ 站点</span>
+
+  <div class="error-box" id="errorBox"></div>
+
+  <div class="loading-wrap" id="loadingWrap">
+    <div class="spinner"></div>
+    <span>正在获取视频信息...</span>
+  </div>
+
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-bar-bg">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-text">
+      <span id="progressLabel">正在下载...</span>
+      <span id="progressPct">0%</span>
+    </div>
+  </div>
+
+  <div class="info-card" id="infoCard">
+    <div class="thumb-wrap">
+      <img id="thumbImg" src="" alt="thumbnail">
+      <span class="duration" id="durationSpan"></span>
+    </div>
+    <div class="meta">
+      <h2 id="videoTitle"></h2>
+      <span class="channel" id="channelName"></span>
+    </div>
+    <div class="format-section">
+      <h3>选择画质</h3>
+      <div class="format-grid" id="formatGrid"></div>
+    </div>
+    <div class="download-section">
+      <button class="download-btn" id="downloadBtn" onclick="startDownload()">⬇ 下载</button>
+    </div>
+  </div>
+
+  <div class="sites">
+    <span>YouTube</span><span>Bilibili</span><span>抖音</span><span>Twitter/X</span>
+    <span>Instagram</span><span>Facebook</span><span>TikTok</span><span>微博</span>
+    <span>小红书</span><span>知乎</span><span>腾讯视频</span><span>爱奇艺</span>
+  </div>
+</div>
+
+<div class="footer">
+  017988.xyz · 仅供个人学习使用，请遵守相关法律法规
+</div>
+
+<script>
+// ===== Config =====
+// ===== 后端 API 地址 =====
+// 部署后端后，将此处替换为实际地址
+// Railway 示例: 'https://your-app.up.railway.app'
+// 本地测试:    'http://localhost:8000'
+const API_BASE = 'http://localhost:8000';
+
+let currentVideoUrl = '';
+let selectedFormatId = '';
+
+// ===== Helper: format duration =====
+function fmtDuration(sec) {
+  if (!sec) return '--:--';
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = Math.floor(sec % 60);
+  if (h > 0) return h + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  return m + ':' + String(s).padStart(2,'0');
+}
+
+// ===== Helper: format filesize =====
+function fmtSize(bytes) {
+  if (!bytes || bytes <= 0) return '未知大小';
+  if (bytes < 1024*1024) return (bytes/1024).toFixed(1) + ' KB';
+  if (bytes < 1024*1024*1024) return (bytes/1024/1024).toFixed(1) + ' MB';
+  return (bytes/1024/1024/1024).toFixed(2) + ' GB';
+}
+
+// ===== Show/hide helpers =====
+function showError(msg) {
+  const el = document.getElementById('errorBox');
+  el.textContent = msg;
+  el.classList.add('active');
+}
+function hideError() {
+  document.getElementById('errorBox').classList.remove('active');
+}
+
+// ===== Fetch video info =====
+async function fetchInfo() {
+  const url = document.getElementById('urlInput').value.trim();
+  if (!url) {
+    showError('请粘贴视频链接');
+    return;
+  }
+  hideError();
+  document.getElementById('infoCard').classList.remove('active');
+  document.getElementById('loadingWrap').classList.add('active');
+  document.getElementById('fetchBtn').disabled = true;
+
+  try {
+    const res = await fetch(API_BASE + '/api/info', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url })
+    });
+    const data = await res.json();
+    if (!data.success) {
+      showError(data.error || '获取视频信息失败');
+      return;
+    }
+
+    currentVideoUrl = url;
+    renderInfo(data);
+  } catch (e) {
+    showError('网络请求失败：' + e.message);
+  } finally {
+    document.getElementById('loadingWrap').classList.remove('active');
+    document.getElementById('fetchBtn').disabled = false;
+  }
+}
+
+// ===== Render video info and formats =====
+function renderInfo(data) {
+  const v = data.video;
+  document.getElementById('thumbImg').src = v.thumbnail || '';
+  document.getElementById('videoTitle').textContent = v.title || '未知标题';
+  document.getElementById('channelName').textContent = v.channel || '';
+  document.getElementById('durationSpan').textContent = fmtDuration(v.duration);
+
+  const grid = document.getElementById('formatGrid');
+  grid.innerHTML = '';
+
+  let formats = v.formats || [];
+
+  // Priority format labels
+  const labelMap = {
+    '2160': '4K',
+    '1440': '2K',
+    '1080': '1080p',
+    '720': '720p',
+    '480': '480p',
+    '360': '360p',
+    '240': '240p',
+    '144': '144p',
+  };
+
+  // Group & deduplicate by resolution height
+  const seen = new Set();
+  const bestFormats = [];
+
+  // Sort by quality descending
+  formats.sort((a, b) => (b.height || 0) - (a.height || 0));
+
+  for (const f of formats) {
+    // Skip audio-only entries for video format grid
+    if (!f.vcodec || f.vcodec === 'none') continue;
+    const h = f.height || 0;
+    if (h < 144) continue;
+    const key = String(h) + (f.filesize || 0);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    bestFormats.push(f);
+  }
+
+  // Add audio-only option
+  const audioFormat = formats.find(f => (!f.vcodec || f.vcodec === 'none') && f.acodec && f.acodec !== 'none');
+  if (audioFormat) {
+    bestFormats.push({ audioOnly: true, format_id: audioFormat.format_id, ext: audioFormat.ext, filesize: audioFormat.filesize, tbr: audioFormat.tbr });
+  }
+
+  if (bestFormats.length === 0) {
+    // fallback: use format_id from data
+    grid.innerHTML = '<div style="grid-column:1/-1;color:#8e8ea0;font-size:14px;text-align:center;padding:12px;">暂无详细格式信息，将使用默认最高画质</div>';
+    selectedFormatId = 'bestvideo+bestaudio/best';
+    return;
+  }
+
+  let selected = false;
+  for (const f of bestFormats) {
+    const card = document.createElement('div');
+    card.className = 'format-card';
+
+    if (f.audioOnly) {
+      card.innerHTML = `
+        <div class="qual">🎵 音频</div>
+        <div class="sub">${(f.tbr||128).toFixed(0)}kbps · ${f.ext||'m4a'}</div>
+        <div class="filesize">${fmtSize(f.filesize)}</div>
+      `;
+      card.dataset.fid = f.format_id || 'bestaudio/best';
+    } else {
+      const label = labelMap[String(f.height)] || (f.height ? f.height + 'p' : '未知');
+      const fps = f.fps && f.fps > 30 ? ' ' + f.fps + 'fps' : '';
+      card.innerHTML = `
+        <div class="qual">${label}${fps}</div>
+        <div class="sub">${f.ext || ''} · ${f.vcodec ? f.vcodec.split('.')[0].replace('avc1','H.264').replace('vp9','VP9').replace('av01','AV1') : ''}</div>
+        <div class="filesize">${fmtSize(f.filesize)}</div>
+      `;
+      let fid = f.format_id;
+      // For DASH video-only formats, merge with best audio
+      if (f.acodec === 'none' || !f.acodec) {
+        fid = f.format_id + '+bestaudio/best';
+      }
+      card.dataset.fid = fid;
+    }
+
+    card.onclick = () => {
+      document.querySelectorAll('.format-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selectedFormatId = card.dataset.fid;
+      document.getElementById('downloadBtn').disabled = false;
+    };
+
+    // Select best quality by default
+    if (!selected) {
+      card.classList.add('selected');
+      selectedFormatId = card.dataset.fid;
+      selected = true;
+    }
+
+    grid.appendChild(card);
+  }
+
+  document.getElementById('infoCard').classList.add('active');
+  document.getElementById('downloadBtn').disabled = !selectedFormatId;
+}
+
+// ===== Start download =====
+function startDownload() {
+  if (!currentVideoUrl || !selectedFormatId) return;
+
+  const progressWrap = document.getElementById('progressWrap');
+  const progressFill = document.getElementById('progressFill');
+  const progressLabel = document.getElementById('progressLabel');
+  const progressPct = document.getElementById('progressPct');
+
+  progressWrap.classList.add('active');
+  progressFill.style.width = '0%';
+  progressLabel.textContent = '正在准备下载...';
+  progressPct.textContent = '0%';
+  document.getElementById('downloadBtn').disabled = true;
+
+  const params = new URLSearchParams({ url: currentVideoUrl, format: selectedFormatId });
+  const dlUrl = API_BASE + '/api/download?' + params.toString();
+
+  // Use fetch to stream the response
+  fetch(dlUrl)
+    .then(async (res) => {
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({ error: '下载失败' }));
+        throw new Error(err.error || '下载失败');
+      }
+
+      const contentDisposition = res.headers.get('Content-Disposition') || '';
+      const filename = contentDisposition.match(/filename\*?=(?:UTF-8'')?([^;\s]+)/i)?.[1]
+        || contentDisposition.match(/filename="?([^"]+)"?/i)?.[1]
+        || 'video.mp4';
+
+      const contentType = res.headers.get('Content-Type') || 'video/mp4';
+      const total = parseInt(res.headers.get('Content-Length') || '0', 10);
+      let loaded = 0;
+      const reader = res.body.getReader();
+      const chunks = [];
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        chunks.push(value);
+        loaded += value.length;
+        if (total) {
+          const pct = Math.round((loaded / total) * 100);
+          progressFill.style.width = pct + '%';
+          progressPct.textContent = pct + '%';
+          progressLabel.textContent = '正在下载... ' + (loaded / 1024 / 1024).toFixed(1) + ' MB';
+        } else {
+          progressLabel.textContent = '正在下载... ' + (loaded / 1024 / 1024).toFixed(1) + ' MB';
+          // Indeterminate animation
+          progressFill.style.width = Math.min(95, (loaded / (5 * 1024 * 1024)) * 100) + '%';
+        }
+      }
+
+      progressLabel.textContent = '下载完成，正在保存...';
+
+      const blob = new Blob(chunks, { type: contentType });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = decodeURIComponent(filename.replace(/\+/g, ' ')) || 'video.' + (contentType.includes('mp4') ? 'mp4' : 'mp4');
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+
+      progressFill.style.width = '100%';
+      progressPct.textContent = '100%';
+      progressLabel.textContent = '✅ 下载完成';
+      document.getElementById('downloadBtn').disabled = false;
+    })
+    .catch(err => {
+      showError('下载失败：' + err.message);
+      progressWrap.classList.remove('active');
+      document.getElementById('downloadBtn').disabled = false;
+    });
+}
+
+// ===== Enter key support =====
+document.getElementById('urlInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') fetchInfo();
+});
+</script>
+</body>
+</html>

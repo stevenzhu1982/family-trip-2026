@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新疆 · 北疆伊犁 · 推荐行程</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f4f8; color: #2d3748; padding: 0 0 60px; line-height: 1.8;
+  }
+  .container { max-width: 680px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  h1 { font-size: 22px; text-align: center; color: #A0522D; margin-bottom: 6px; font-weight: 700; line-height: 1.4; }
+  .subtitle { text-align: center; color: #999; font-size: 14px; margin-bottom: 28px; }
+  .section-title { font-size: 18px; color: #A0522D; font-weight: 700; margin-top: 28px; margin-bottom: 12px; padding-left: 12px; border-left: 4px solid #CD853F; }
+  .sub2-title { font-size: 15px; color: #CD853F; font-weight: 600; margin-top: 16px; margin-bottom: 8px; }
+  p { font-size: 15px; margin-bottom: 10px; }
+  .highlight { background: #fdf0e8; border-radius: 8px; padding: 14px 16px; margin: 16px 0; font-size: 14px; color: #5a2d0c; border-left: 4px solid #CD853F; }
+  .day-card { background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+  .day-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .day-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: #CD853F; color: #fff; font-size: 14px; font-weight: 700; border-radius: 50%; flex-shrink: 0; }
+  .day-title { font-size: 16px; font-weight: 700; color: #A0522D; }
+  .day-tag { display: inline-block; font-size: 11px; background: #fff3e0; color: #e67e22; padding: 1px 8px; border-radius: 10px; margin-left: auto; white-space: nowrap; font-weight: 600; }
+  .day-city { font-size: 12px; color: #999; margin-bottom: 6px; }
+  .day-item { font-size: 14px; padding: 3px 0; padding-left: 20px; position: relative; }
+  .day-item::before { content: ""; position: absolute; left: 4px; top: 11px; width: 6px; height: 6px; background: #bbb; border-radius: 50%; }
+  .day-item strong { color: #333; }
+  .day-meal { font-size: 13px; color: #888; padding-left: 20px; margin-top: 4px; }
+  .note-box { background: #fff8e6; border: 1px solid #f0db7a; border-radius: 8px; padding: 14px 16px; margin: 16px 0; font-size: 14px; color: #8a6d1f; }
+  table { width: 100%; border-collapse: collapse; margin: 12px 0 16px; font-size: 14px; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
+  th { background: #fdf0e8; color: #8B4513; font-weight: 600; }
+  tr:last-child td { border-bottom: none; }
+  hr { border: none; height: 1px; background: #e0e0e0; margin: 28px 0; }
+  .tag-terracotta { color: #CD853F; font-weight: 600; }
+  @media (max-width: 480px) {
+    body { padding: 10px 8px 40px; }
+    .container { padding: 20px 16px; }
+    h1 { font-size: 19px; } .section-title { font-size: 16px; }
+    p, .day-item, .highlight, .note-box { font-size: 14px; }
+    .day-card { padding: 12px 14px; }
+  }
+  .hero-bar {
+    background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 40%, #2c7a7b 100%);
+    padding: 36px 20px 32px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bar::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80') center/cover no-repeat;
+    opacity: 0.15;
+  }
+  .hero-bar h2 {
+    position: relative;
+    font-size: clamp(18px, 4vw, 24px);
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+  }
+  .hero-bar .sub {
+    position: relative;
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 4px;
+  }
+  .hero-bar .wave {
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 24px;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z' fill='%23f0f4f8'/%3E%3C/svg%3E") center/cover no-repeat;
+  }
+</style>
+</head>
+<body>
+<div class="hero-bar">
+  <h2>🇨🇳 新疆 · 北疆伊犁</h2>
+  <div class="sub">草原雪山 · 夏季避暑 · 7天6晚</div>
+  <div class="wave"></div>
+</div>
+<div class="container">
+  <h1>🇨🇳 新疆 · 北疆伊犁 · 暑假家庭游</h1>
+  <div class="subtitle">草原雪山 · 夏季避暑 · 7天6晚</div>
+
+  <div class="highlight">
+    <strong>设计思路：</strong>新疆伊犁被誉为"塞外江南"，7-8月水草丰美，草原雪山如同画卷。夏季气温20-30°C，凉爽舒适，是绝佳的避暑目的地。节奏舒缓，兼顾老人和孩子的需求。
+  </div>
+
+  <div class="section-title">推荐路线：北疆伊犁经典环线 · 7天6晚</div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">1</span><span class="day-title">抵达乌鲁木齐</span><span class="day-tag">乌鲁木齐初印象</span></div>
+    <div class="day-city">📍 乌鲁木齐</div>
+    <div class="day-item"><strong>白天：</strong>上海直飞乌鲁木齐（约5小时），入住酒店</div>
+    <div class="day-item"><strong>下午：</strong>前往<strong>国际大巴扎</strong>——世界规模最大的巴扎，体验维吾尔风情，选购特色干果、工艺品</div>
+    <div class="day-item"><strong>傍晚：</strong><strong>红山公园</strong>登高远眺，俯瞰乌鲁木齐全景，红山塔是城市地标</div>
+    <div class="day-meal">🍽 晚餐：大巴扎美食街——烤羊肉串、烤包子、手抓饭</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">2</span><span class="day-title">天山天池 → 飞伊宁</span><span class="day-tag">瑶池仙境</span></div>
+    <div class="day-city">📍 乌鲁木齐 → 天山天池 → 伊宁</div>
+    <div class="day-item"><strong>上午：</strong>前往<strong>天山天池</strong>（约1.5h车程），乘缆车上山（老人轻松不累），欣赏"瑶池"仙境，远眺博格达峰雪山</div>
+    <div class="day-item"><strong>下午：</strong>返回乌鲁木齐，乘飞机前往<strong>伊宁</strong>（约1.5h飞行），伊犁首府</div>
+    <div class="day-item"><strong>傍晚：</strong>抵达伊宁，入住酒店，市区晚餐</div>
+    <div class="day-meal">🍽 午餐：天池景区简餐；晚餐：伊宁特色拌面、烤羊排</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">3</span><span class="day-title">赛里木湖 · 果子沟大桥</span><span class="day-tag">大西洋最后一滴眼泪</span></div>
+    <div class="day-city">📍 伊宁 → 赛里木湖（约2h车程）</div>
+    <div class="day-item"><strong>全天：</strong>前往<strong>赛里木湖</strong>——被誉为"大西洋最后一滴眼泪"，湖水湛蓝清澈，四周雪山环绕</div>
+    <div class="day-item">环湖游览（全程约90km，区间车或包车环湖），景色震撼，随时停车拍照</div>
+    <div class="day-item">推荐停靠点：月亮湾、点将台、S弯公路、西海草原、松树头</div>
+    <div class="day-item">途经<strong>果子沟大桥</strong>——壮观的峡谷大桥，可停车观景拍照</div>
+    <div class="day-item">返回伊宁</div>
+    <div class="day-meal">🍽 午餐：赛里木湖高白鲑鱼（当地特产）；晚餐：伊宁清炖羊肉</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">4</span><span class="day-title">那拉提草原</span><span class="day-tag">空中草原 · 骑马</span></div>
+    <div class="day-city">📍 伊宁 → 那拉提（约3h车程）</div>
+    <div class="day-item"><strong>全天：</strong>前往<strong>那拉提草原</strong>——世界四大草原之一，被誉为"空中草原"</div>
+    <div class="day-item"><strong>核心体验：</strong>乘坐区间车游览（老人非常轻松），沿途雪山、森林、野花交相辉映</div>
+    <div class="day-item">游牧人家站——可体验骑马（有马夫牵，安全放心），孩子可骑小马</div>
+    <div class="day-item">河谷草原线——平坦开阔，适合散步拍照</div>
+    <div class="day-item">当晚住那拉提镇或草原附近民宿</div>
+    <div class="day-meal">🍽 午餐：草原哈萨克族风味（奶茶、手抓肉）；晚餐：民宿家常菜</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">5</span><span class="day-title">巴音布鲁克</span><span class="day-tag">九曲十八弯 · 天鹅湖</span></div>
+    <div class="day-city">📍 那拉提 → 巴音布鲁克（约2.5h车程）</div>
+    <div class="day-item"><strong>白天：</strong>前往<strong>巴音布鲁克草原</strong>——中国第二大草原，海拔约2500m</div>
+    <div class="day-item"><strong>天鹅湖：</strong>观赏野生天鹅和各类水鸟，环境优美，步道平坦</div>
+    <div class="day-item"><strong>傍晚：</strong><strong>九曲十八弯</strong>——开都河的壮丽弯道，日落时分能拍到"九个太阳"的奇观（必看！）</div>
+    <div class="day-item">景区内有区间车，全程轻松</div>
+    <div class="day-item">当晚住巴音布鲁克镇</div>
+    <div class="day-meal">🍽 午餐：巴音布鲁克野蘑菇拌面；晚餐：牦牛肉火锅</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">6</span><span class="day-title">喀赞其 · 六星街</span><span class="day-tag">蓝色小镇 · 慢生活</span></div>
+    <div class="day-city">📍 巴音布鲁克 → 伊宁（约4h车程）</div>
+    <div class="day-item"><strong>上午：</strong>从巴音布鲁克返回伊宁，沿途欣赏伊犁河谷风光</div>
+    <div class="day-item"><strong>下午：</strong><strong>喀赞其民俗街</strong>——蓝色的童话小镇，维吾尔族民居色彩斑斓，拍照特别好看</div>
+    <div class="day-item">坐"哈迪克"（马车）游览老街，节奏很慢，适合老人孩子</div>
+    <div class="day-item">品尝手工冰淇淋（伊犁特色，浓郁香甜）</div>
+    <div class="day-item"><strong>傍晚：</strong><strong>六星街</strong>——特色街区，文艺小店、音乐酒吧，晚餐在此解决</div>
+    <div class="day-meal">🍽 晚餐：六星街特色餐厅——大盘鸡、椒麻鸡、烤鸽子</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">7</span><span class="day-title">伊宁返程</span><span class="day-tag">满载而归</span></div>
+    <div class="day-city">📍 伊宁 → 乌鲁木齐 → 上海</div>
+    <div class="day-item">睡到自然醒，在伊宁市区采购伴手礼</div>
+    <div class="day-item">推荐购买：新疆干果（红枣、葡萄干、巴旦木）、薰衣草制品、地毯、民族乐器</div>
+    <div class="day-item">乘飞机经乌鲁木齐转机返回上海（或伊宁直飞部分城市）</div>
+    <div class="day-meal">🍽 午餐：最后一顿新疆美食——烤肉套餐</div>
+  </div>
+
+  <hr>
+  <div class="section-title">行程概览</div>
+
+  <table>
+    <tr><th style="width:18%;">天数</th><th>行程</th><th>住宿</th></tr>
+    <tr><td>Day 1</td><td>抵达乌鲁木齐 → 大巴扎 → 红山公园</td><td>乌鲁木齐</td></tr>
+    <tr><td>Day 2</td><td>天山天池 → 飞伊宁</td><td>伊宁</td></tr>
+    <tr><td>Day 3</td><td>赛里木湖 → 果子沟大桥</td><td>伊宁</td></tr>
+    <tr><td>Day 4</td><td>那拉提草原（空中草原）</td><td>那拉提镇</td></tr>
+    <tr><td>Day 5</td><td>巴音布鲁克（九曲十八弯）</td><td>巴音布鲁克</td></tr>
+    <tr><td>Day 6</td><td>喀赞其民俗街 → 六星街</td><td>伊宁</td></tr>
+    <tr><td>Day 7</td><td>伊宁返程</td><td>—</td></tr>
+  </table>
+
+  <hr>
+  <div class="section-title">实用信息</div>
+
+  <div class="highlight">
+    <strong>📋 关键信息</strong><br>
+    ✈️ <strong>航班：</strong>上海→乌鲁木齐直飞约5小时，乌鲁木齐→伊宁飞行约1.5小时<br>
+    💰 <strong>预算：</strong>约5000-9000元/人（含交通、住宿、餐饮、门票）<br>
+    🛂 <strong>签证：</strong>无需（国内游）<br>
+    🌡️ <strong>气候：</strong>夏季20-30°C，凉爽舒适
+  </div>
+
+  <div class="note-box"><strong>🚗 交通建议：</strong>新疆地域广阔，景点间车程较长（2-4小时）。建议<strong>包车</strong>（约600-1000元/天）或参加当地小团，灵活自由。备些零食在车上，孩子老人随时补充能量。</div>
+
+  <div class="note-box"><strong>🏨 住宿建议：</strong>伊宁市区住宿选择多，推荐住伊犁河附近或市区中心。那拉提和巴音布鲁克镇住宿条件较简单（民宿/经济型酒店），建议提前预订。</div>
+
+  <div class="note-box"><strong>🍽️ 美食推荐：</strong>新疆菜以牛羊肉为主——<strong>烤羊肉串</strong>（必吃）、<strong>大盘鸡</strong>、<strong>手抓饭</strong>、<strong>烤包子</strong>、<strong>拌面</strong>、<strong>手工冰淇淋</strong>。新疆水果也非常赞：西瓜、哈密瓜、葡萄、杏子，7-8月正当季！</div>
+
+  <div class="note-box"><strong>👕 穿衣指南：</strong>夏季20-30°C，但<strong>早晚温差大</strong>（尤其是草原），需带薄外套/冲锋衣。白天可穿短袖，但务必做好<strong>防晒</strong>（帽子、墨镜、防晒霜）。<strong>补水</strong>也很重要，随身带水杯。</div>
+
+  <div class="note-box"><strong>⚠️ 注意事项：</strong>新疆海拔不高（多数景点1000-2500m），不用担心高反。<strong>治安良好</strong>，不必担心安全问题。新疆与东部有时差（晚2小时），当地人作息较晚，早餐一般8-9点开始，晚餐常到20点以后。</div>
+
+  <div class="note-box"><strong>💡 特别提示：</strong>7-8月是伊犁最美季节——草原水草丰美，野花盛开，薰衣草（6月中-7月初）正当花期。<span class="tag-terracotta">赛里木湖晴天最美</span>，建议查看天气预报安排。新疆旅行拍照非常出片，记得带上相机！</div>
+
+  <hr>
+  <p style="text-align:center; color:#999; font-size:13px;">本文案为初步推荐，具体行程可根据各家庭需求灵活调整。</p>
+</div>
+</body>
+</html>

@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>永远怀念 · 朱雪梅</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: "Noto Serif SC", "Songti SC", "Georgia", serif;
+    background: #f5f0e8;
+    color: #3d3631;
+    min-height: 100vh;
+  }
+
+  /* === Hero === */
+  .hero {
+    background: linear-gradient(180deg, #1a1a1a 0%, #3a3530 50%, #5a5248 100%);
+    color: #e8ddd0;
+    text-align: center;
+    padding: 90px 20px 70px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+      radial-gradient(ellipse at 50% 30%, rgba(210,190,165,0.08) 0%, transparent 60%),
+      radial-gradient(ellipse at 50% 80%, rgba(210,190,165,0.04) 0%, transparent 50%);
+  }
+  .hero::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.015'%3E%3Ccircle cx='30' cy='30' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+
+  .hero-ornament {
+    font-size: 28px;
+    margin-bottom: 18px;
+    opacity: 0.35;
+    letter-spacing: 10px;
+  }
+
+  .hero h1 {
+    font-size: 46px;
+    font-weight: 400;
+    letter-spacing: 14px;
+    margin-bottom: 8px;
+    color: #f0e4d0;
+    text-shadow: 0 2px 30px rgba(0,0,0,0.4);
+  }
+  .hero .subtitle {
+    font-size: 15px;
+    color: #b8a898;
+    letter-spacing: 10px;
+    margin-bottom: 28px;
+    font-weight: 300;
+  }
+  .hero-candle {
+    font-size: 24px;
+    margin-top: 28px;
+    opacity: 0.4;
+    animation: flicker 3s ease-in-out infinite;
+  }
+  @keyframes flicker {
+    0%, 100% { opacity: 0.35; transform: scale(1); }
+    25% { opacity: 0.55; transform: scale(1.04); }
+    50% { opacity: 0.3; transform: scale(0.98); }
+    75% { opacity: 0.5; transform: scale(1.02); }
+  }
+
+  /* === Memorial message === */
+  .message-wrap {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 56px 24px 40px;
+  }
+  .message-wrap p {
+    font-size: 17px;
+    line-height: 2.1;
+    color: #555;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .message-wrap .name-tag {
+    text-align: center;
+    font-size: 20px;
+    color: #8a7a6a;
+    letter-spacing: 6px;
+    margin-bottom: 30px;
+  }
+  .message-wrap .signature {
+    text-align: right;
+    margin-top: 32px;
+    font-size: 15px;
+    color: #999;
+    font-style: italic;
+  }
+
+  .divider {
+    text-align: center;
+    color: #d5cdc0;
+    font-size: 22px;
+    margin: 0 auto 8px;
+    letter-spacing: 16px;
+    opacity: 0.5;
+  }
+
+  /* === Gallery === */
+  .gallery-wrap {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px 20px;
+  }
+  .gallery-title {
+    text-align: center;
+    font-size: 16px;
+    color: #b5a898;
+    letter-spacing: 8px;
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+
+  .gallery {
+    column-count: 4;
+    column-gap: 24px;
+    padding-bottom: 24px;
+  }
+
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 6px;
+    background: #e8e0d5;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    opacity: 0;
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 24px;
+    break-inside: avoid;
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+                box-shadow 0.5s ease;
+  }
+  .gallery-item:hover {
+    box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+    transform: translateY(-6px);
+    z-index: 2;
+  }
+  /* Aspect ratio variants applied to the media wrapper */
+  .gallery-item .media-wrap {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    border-radius: 6px;
+  }
+  .gallery-item .media-wrap img,
+  .gallery-item .media-wrap video {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+  }
+  /* Film-like filter: desaturated B&W default → color on hover */
+  .gallery-item .media-wrap img,
+  .gallery-item .media-wrap video {
+    filter: saturate(0.65) contrast(1.12) brightness(0.95) grayscale(0.6);
+    transition: filter 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .gallery-item:hover .media-wrap img,
+  .gallery-item:hover .media-wrap video {
+    filter: saturate(0.75) contrast(1.05) brightness(1.0) grayscale(0);
+    transform: scale(1.06);
+  }
+  /* Aspect ratio classes */
+  .gallery-item .media-wrap.ar-square {
+    aspect-ratio: 1 / 1;
+  }
+  .gallery-item .media-wrap.ar-portrait {
+    aspect-ratio: 4 / 5;
+  }
+  .gallery-item .media-wrap.ar-landscape {
+    aspect-ratio: 16 / 9;
+  }
+  .gallery-item .media-wrap.ar-wide {
+    aspect-ratio: 2 / 1;
+  }
+
+
+
+  /* === Gallery item animations === */
+  .gallery-item.anim-fadeUp {
+    animation: animFadeUp 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .gallery-item.anim-fadeLeft {
+    animation: animFadeLeft 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .gallery-item.anim-fadeRight {
+    animation: animFadeRight 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  .gallery-item.anim-zoomIn {
+    animation: animZoomIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+  @keyframes animFadeUp {
+    from { opacity: 0; transform: translateY(40px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  @keyframes animFadeLeft {
+    from { opacity: 0; transform: translateX(-40px) scale(0.97); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+  }
+  @keyframes animFadeRight {
+    from { opacity: 0; transform: translateX(40px) scale(0.97); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+  }
+  @keyframes animZoomIn {
+    from { opacity: 0; transform: scale(0.85); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  /* === Quote blocks === */
+  .quote-block {
+    break-inside: avoid;
+    margin-bottom: 24px;
+    padding: 20px 16px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.7;
+    letter-spacing: 2px;
+    color: #6a5a4a;
+    opacity: 0;
+    min-height: 90px;
+  }
+  .quote-block.qb-cream {
+    background: #f5ede0;
+    border: 1px solid #e8ddd0;
+    color: #8a7a6a;
+  }
+  .quote-block.qb-warm {
+    background: #faf0e6;
+    border: 1px solid #e8d5c0;
+    color: #9a7a5a;
+  }
+  .quote-block.qb-muted {
+    background: #f0ece6;
+    border: 1px solid #ddd8d0;
+    color: #7a7a7a;
+    font-style: italic;
+  }
+  .quote-block.qb-rose {
+    background: #f8ece8;
+    border: 1px solid #e8d8d0;
+    color: #8a6a6a;
+  }
+  .quote-block .qb-icon {
+    font-size: 18px;
+    opacity: 0.35;
+    margin-bottom: 6px;
+    letter-spacing: 4px;
+  }
+
+
+
+
+
+
+  /* Lightbox video */
+  .lightbox video {
+    max-width: 92vw;
+    max-height: 88vh;
+    border-radius: 3px;
+    box-shadow: 0 12px 60px rgba(0,0,0,0.6);
+    animation: zoomIn 0.3s ease;
+  }
+
+  
+
+  /* Video overlay */
+  .gallery-item .play-overlay {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 48px; height: 48px;
+    background: rgba(255,255,255,0.25);
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: rgba(255,255,255,0.8);
+    pointer-events: none;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(4px);
+  }
+  .gallery-item:hover .play-overlay {
+    background: rgba(255,255,255,0.35);
+    border-color: #fff;
+    color: #fff;
+    transform: translate(-50%, -50%) scale(1.15);
+  }
+  .gallery-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .gallery-item:hover video {
+    transform: scale(1.08);
+  }
+
+  /* Lightbox video */
+  .lightbox video {
+    max-width: 92vw;
+    max-height: 88vh;
+    border-radius: 3px;
+    box-shadow: 0 12px 60px rgba(0,0,0,0.6);
+    animation: zoomIn 0.3s ease;
+  }
+  /* === Lightbox === */
+  .lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.85);
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    backdrop-filter: blur(6px);
+  }
+  .lightbox.active {
+    display: flex;
+    animation: fadeIn 0.3s ease;
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .lightbox img {
+    max-width: 92vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 3px;
+    box-shadow: 0 12px 60px rgba(0,0,0,0.6);
+    animation: zoomIn 0.3s ease;
+  }
+  @keyframes zoomIn {
+    from { transform: scale(0.92); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  .lightbox .close {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    color: rgba(255,255,255,0.5);
+    font-size: 32px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-family: inherit;
+    transition: color 0.2s, transform 0.2s;
+    z-index: 10;
+  }
+  .lightbox .close:hover { color: #fff; transform: rotate(90deg); }
+
+  .lightbox .nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255,255,255,0.35);
+    font-size: 44px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 12px 18px;
+    transition: color 0.2s, opacity 0.2s;
+    z-index: 10;
+    opacity: 0;
+  }
+  .lightbox:hover .nav { opacity: 1; }
+  .lightbox .nav:hover { color: #fff; opacity: 1 !important; }
+  .lightbox .prev { left: 8px; }
+  .lightbox .next { right: 8px; }
+
+  .lightbox .counter {
+    position: absolute;
+    bottom: 20px;
+    color: rgba(255,255,255,0.35);
+    font-size: 13px;
+    letter-spacing: 2px;
+    z-index: 10;
+  }
+
+  /* === Footer === */
+  .footer {
+    text-align: center;
+    padding: 10px 20px 50px;
+    color: #c8bdb0;
+    font-size: 13px;
+    letter-spacing: 4px;
+  }
+
+  /* === Scrollbar === */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #f5f0e8; }
+  ::-webkit-scrollbar-thumb { background: #d5cdc0; border-radius: 3px; }
+  ::-webkit-scrollbar-thumb:hover { background: #b5a898; }
+
+  @media (max-width: 900px) {
+    .gallery { column-count: 3; column-gap: 16px; }
+    .gallery-item { margin-bottom: 16px; }
+    .quote-block { margin-bottom: 16px; padding: 16px 12px; font-size: 13px; min-height: 70px; }
+  }
+
+  @media (max-width: 600px) {
+    .hero { padding: 50px 16px 36px; }
+    .hero h1 { font-size: 28px; letter-spacing: 6px; }
+    .hero .subtitle { font-size: 12px; letter-spacing: 4px; }
+    .hero-ornament { font-size: 22px; margin-bottom: 12px; }
+    .hero-candle { font-size: 20px; margin-top: 20px; }
+    .message-wrap { padding: 28px 16px 16px; }
+    .message-wrap p { font-size: 14px; line-height: 1.85; }
+    .name-tag { font-size: 17px; }
+    .gallery { column-count: 2; column-gap: 6px; }
+    .gallery-item { margin-bottom: 6px; border-radius: 4px; }
+    .quote-block { margin-bottom: 6px; padding: 10px 8px; font-size: 11px; min-height: 54px; border-radius: 4px; }
+    .lightbox { padding: 0; }
+    .lightbox img, .lightbox video { border-radius: 0; }
+    .lightbox .nav {
+      opacity: 0.7; font-size: 24px; padding: 18px 8px;
+      background: rgba(0,0,0,0.15);
+    }
+    .lightbox .nav.prev { left: 0; }
+    .lightbox .nav.next { right: 0; }
+    .lightbox .close { font-size: 24px; top: 8px; right: 12px; padding: 8px; }
+    .lightbox .counter { font-size: 11px; bottom: 12px; }
+    .gallery-item:active { transform: scale(0.97); transition: transform 0.15s; }
+    .footer { font-size: 11px; letter-spacing: 2px; padding: 8px 16px 36px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-ornament">✺</div>
+    <h1>朱雪梅</h1>
+    <div class="subtitle">永 远 怀 念</div>
+    <div class="hero-candle">🕯</div>
+  </div>
+</div>
+
+<div class="message-wrap">
+  <div class="name-tag">— 致亲爱的二嬢嬢 —</div>
+
+  <p>
+    您就这样悄悄地走了，<br>
+    留下我们无尽的思念。
+  </p>
+
+  <p>
+    想起您的笑容，温暖如春；<br>
+    想起您的声音，亲切如昔。<br>
+    您的善良、您的温柔、您对这个家付出的点点滴滴，<br>
+    我们都一一记在心里，永远不会忘记。
+  </p>
+
+  <p>
+    每一张照片，都是一段珍贵的回忆；<br>
+    每一次翻看，仿佛您从未走远。
+  </p>
+
+  <p>
+    愿天堂没有病痛，<br>
+    愿您在另一个世界安好。<br>
+    我们永远想念您，永远爱您。
+  </p>
+
+  <div class="signature">—— 家人泣挽</div>
+</div>
+
+<div class="divider">✽ ✽ ✽</div>
+
+<div class="gallery-wrap">
+  <h2 class="gallery-title">珍 贵 回 忆</h2>
+  <div class="gallery" id="gallery"></div>
+</div>
+
+<div class="footer">永远怀念 · 2026.05.14</div>
+
+<!-- Lightbox v2 -->
+<div class="lightbox" id="lightbox">
+  <button class="close" onclick="closeLightbox()" aria-label="关闭">✕</button>
+  <button class="nav prev" onclick="changeImage(-1)" aria-label="上一张">‹</button>
+  <img id="lightbox-img" src="" alt="">
+  <button class="nav next" onclick="changeImage(1)" aria-label="下一张">›</button>
+  <div class="counter" id="lightbox-counter"></div>
+</div>
+
+<script>
+const mediaFiles = [
+  "IMG_6103.JPG", "_DSC8873.JPG", "IMG_6064.JPG", "pic 026.JPG", "P9300014.JPG", "微信图片_20231102093939.jpg",
+  "DSC_0045.JPG", "62dbb680802ec2e0cc86ee8c99a5f719.mp4", "微信图片_20231102133107.jpg", "微信图片_20231106081217.jpg", "P9300015.JPG", "ab7bc28d14789e77b33462452044bcff.mp4",
+  "413cf84cefe1c349eed9392313b9c5b6.mp4", "微信图片_20231102082608.jpg", "IMG_3773.JPG", "微信图片_202311132210513.jpg", "IMG_3764.JPG", "IMG_3774.JPG",
+  "IMG_6120.JPG", "P9290016.JPG", "微信图片_20231102093933.jpg", "pic 051.JPG", "DSC_0079.JPG", "pic 035.JPG",
+  "微信图片_20231102093920.jpg", "照片 003.jpg", "IMG_6074.JPG", "715dedc5da4c0fb5d48373b81993200c.mp4", "P5310009.JPG", "IMG_6075.JPG",
+  "微信图片_20231101104734.jpg", "照片 004.jpg", "PA010016.JPG", "P9290015.JPG", "IMG_6040.JPG", "P9300003.JPG",
+  "微信图片_20231102082652.jpg", "微信图片_202311132210511.jpg", "P9300016.JPG", "DSC_0114.JPG", "微信图片_20231106082348.jpg", "微信图片_20231107075018.jpg",
+  "DSC_0017.JPG", "微信图片_20231113075542.jpg", "微信图片_202311132205101.jpg", "照片 023.jpg", "DSC_0021.JPG", "微信图片_20231102093903.jpg",
+  "IMG_6116.JPG", "IMG_6033.JPG", "IMG_6095.JPG", "微信图片_20231113150511.jpg", "pic 037.JPG", "微信图片_20231106082349.jpg",
+  "pic 031.JPG", "微信图片_20231102093925.jpg", "pic 032.JPG", "微信图片_202311182105591.jpg", "照片 007.jpg", "微信图片_20231113105027.jpg",
+  "IMG_6125.JPG", "照片 005.jpg", "微信图片_20231107091426.jpg", "ea4119a3739ecd2af8db0974de8da4a7.mp4", "PIC_2336.JPG", "IMG_6121.JPG",
+  "IMG_8058.JPG", "IMG_6076.JPG", "微信图片_202311132209291.jpg", "DSC_0046.JPG", "pic 052.JPG", "P9300006.JPG",
+  "P9290005.JPG", "PA010013.JPG", "IMG_6057.JPG", "IMG_3840.JPG", "IMG_0193.JPG", "pic 025.JPG",
+  "微信图片_20231113221059.jpg", "P9290014.JPG", "IMG_6124.JPG", "IMG_6077.JPG", "微信图片_20230906084724.jpg", "微信图片_20231113143616.jpg",
+  "P9300010.JPG", "微信图片_20231106081226.jpg", "微信图片_20231113075536.jpg", "IMG_3986.MP4", "IMG_6038.JPG", "DSC_0014.JPG",
+  "DSC_0019.JPG", "pic 022.JPG", "_DSC8874.JPG", "IMG_6032.JPG", "微信图片_20231113151322.jpg", "pic 041.JPG",
+  "IMG_3984.MP4", "pic 036.JPG", "IMG_8058_1.JPG"
+];
+
+const gallery = document.getElementById('gallery');
+let currentIndex = 0;
+
+// Render gallery (shuffled + animations)
+const animClasses = ['anim-fadeUp', 'anim-fadeLeft', 'anim-fadeRight', 'anim-zoomIn'];
+
+// Quotes to intersperse
+const quotes = [["岁月无痕", "思念有声"], ["天上星", "人间花"], ["此情可待", "成追忆"], ["春风十里", "不如你"], ["花开一季", "思念一生"], ["你在天堂", "在我们心上"], ["时光慢些", "再慢些"], ["一别如斯", "梨花落尽"]];
+const qbClasses = ["qb-cream", "qb-warm", "qb-muted", "qb-rose"];
+
+// Assign random aspect ratio to each item
+const aspectRatios = mediaFiles.map(() => {
+  const r = Math.random();
+  if (r < 0.3) return 'ar-square';
+  if (r < 0.6) return 'ar-portrait';
+  if (r < 0.85) return 'ar-landscape';
+  return 'ar-wide';
+});
+
+// Generate gallery items interleaved with quote blocks
+let quoteIdx = 0;
+const totalItems = mediaFiles.length;
+const quoteInterval = Math.max(8, Math.floor(totalItems / quotes.length));
+
+for (let itemIdx = 0; itemIdx < totalItems; itemIdx++) {
+  // Insert a quote block every quoteInterval items, also at start
+  if ((itemIdx > 0 && itemIdx % quoteInterval === 0) || (itemIdx === 0 && totalItems > 3)) {
+    const qd = quotes[quoteIdx % quotes.length];
+    const qb = document.createElement('div');
+    qb.className = 'quote-block ' + qbClasses[quoteIdx % qbClasses.length];
+    qb.innerHTML = '<div class="qb-icon">&#10045;</div><div>' + qd[0] + '<br>' + qd[1] + '</div>';
+    qb.dataset.animClass = animClasses[Math.floor(Math.random() * animClasses.length)];
+    qb.dataset.animDelay = (Math.random() * 0.3 + 0.05).toFixed(2);
+    gallery.appendChild(qb);
+    quoteIdx++;
+  }
+
+  const name = mediaFiles[itemIdx];
+  const div = document.createElement('div');
+  div.className = 'gallery-item';
+
+  const wrap = document.createElement('div');
+  wrap.className = 'media-wrap ' + aspectRatios[itemIdx];
+
+  const isVideo = /\.(mp4|mov|avi)$/i.test(name);
+
+  if (isVideo) {
+    const video = document.createElement('video');
+    video.src = encodeURI(name);
+    video.muted = true;
+    video.loop = true;
+    video.preload = 'metadata';
+    video.playsInline = true;
+    wrap.appendChild(video);
+    const overlay = document.createElement('div');
+    overlay.className = 'play-overlay';
+    overlay.textContent = '\u25b6';
+    wrap.appendChild(overlay);
+    div.addEventListener('mouseenter', () => video.play());
+    div.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+  } else {
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.src = encodeURI(name);
+    img.alt = '';
+    wrap.appendChild(img);
+  }
+
+  div.appendChild(wrap);
+  div.dataset.animClass = animClasses[Math.floor(Math.random() * animClasses.length)];
+  div.dataset.animDelay = (Math.random() * 0.3 + 0.05).toFixed(2);
+  div.addEventListener('click', () => openLightbox(itemIdx));
+  gallery.appendChild(div);
+}
+
+// Scroll-triggered animations — activate on first visibility
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const el = entry.target;
+      // Add the random animation class and delay
+      el.style.animationDelay = el.dataset.animDelay + 's';
+      el.classList.add(el.dataset.animClass);
+      observer.unobserve(el);
+    }
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px 60px 0px' });
+
+document.querySelectorAll('.gallery-item, .quote-block').forEach(el => observer.observe(el));
+
+// Lightbox
+const lb = document.getElementById('lightbox');
+const lbImg = document.getElementById('lightbox-img');
+const lbCounter = document.getElementById('lightbox-counter');
+
+function openLightbox(idx) {
+  currentIndex = idx;
+  const name = mediaFiles[idx];
+  const isVideo = /\.(mp4|mov|avi)$/i.test(name);
+
+  const oldVideo = document.getElementById('lb-video');
+  if (oldVideo) oldVideo.remove();
+  lbImg.style.display = 'none';
+
+  if (isVideo) {
+    const video = document.createElement('video');
+    video.id = 'lb-video';
+    video.src = encodeURI(name);
+    video.controls = true;
+    video.autoplay = true;
+    video.style.maxWidth = '92vw';
+    video.style.maxHeight = '88vh';
+    video.style.borderRadius = '3px';
+    video.style.boxShadow = '0 12px 60px rgba(0,0,0,0.6)';
+    video.style.animation = 'zoomIn 0.3s ease';
+    lb.insertBefore(video, document.getElementById('lightbox-counter'));
+  } else {
+    lbImg.style.display = '';
+    lbImg.src = encodeURI(name);
+  }
+
+  lbCounter.textContent = (idx + 1) + ' / ' + mediaFiles.length;
+  lb.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  lb.classList.remove('active');
+  document.body.style.overflow = '';
+  const video = document.getElementById('lb-video');
+  if (video) { video.pause(); video.remove(); }
+  lbImg.style.display = '';
+}
+function changeImage(dir) {
+  currentIndex = (currentIndex + dir + mediaFiles.length) % mediaFiles.length;
+  const name = mediaFiles[currentIndex];
+  const isVideo = /\.(mp4|mov|avi)$/i.test(name);
+
+  const oldVideo = document.getElementById('lb-video');
+  if (oldVideo) oldVideo.remove();
+  lbImg.style.display = 'none';
+
+  if (isVideo) {
+    const video = document.createElement('video');
+    video.id = 'lb-video';
+    video.src = encodeURI(name);
+    video.controls = true;
+    video.autoplay = true;
+    video.style.maxWidth = '92vw';
+    video.style.maxHeight = '88vh';
+    video.style.borderRadius = '3px';
+    video.style.boxShadow = '0 12px 60px rgba(0,0,0,0.6)';
+    video.style.animation = 'zoomIn 0.3s ease';
+    lb.insertBefore(video, document.getElementById('lightbox-counter'));
+  } else {
+    lbImg.style.display = '';
+    lbImg.src = encodeURI(name);
+  }
+
+  lbCounter.textContent = (currentIndex + 1) + ' / ' + mediaFiles.length;
+}
+
+document.addEventListener('keydown', e => {
+  if (!lb.classList.contains('active')) return;
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') changeImage(-1);
+  if (e.key === 'ArrowRight') changeImage(1);
+});
+
+// Click backdrop to close
+lb.addEventListener('click', e => {
+  if (e.target === lb) closeLightbox();
+});
+
+// Touch swipe for lightbox navigation (mobile)
+let touchStartX = 0, touchStartY = 0;
+lb.addEventListener('touchstart', (e) => {
+  touchStartX = e.changedTouches[0].screenX;
+  touchStartY = e.changedTouches[0].screenY;
+}, { passive: true });
+lb.addEventListener('touchend', (e) => {
+  const dx = e.changedTouches[0].screenX - touchStartX;
+  const dy = e.changedTouches[0].screenY - touchStartY;
+  if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+    if (dx < 0) changeImage(1); else changeImage(-1);
+  }
+}, { passive: true });
+</script>
+
+</body>
+</html>

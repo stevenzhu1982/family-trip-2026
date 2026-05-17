@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>泰国 · 推荐行程</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f4f8; color: #2d3748; padding: 0 0 60px; line-height: 1.8;
+  }
+  .container { max-width: 680px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+  h1 { font-size: 22px; text-align: center; color: #c0392b; margin-bottom: 6px; font-weight: 700; line-height: 1.4; }
+  .subtitle { text-align: center; color: #999; font-size: 14px; margin-bottom: 28px; }
+  .section-title { font-size: 18px; color: #c0392b; font-weight: 700; margin-top: 28px; margin-bottom: 12px; padding-left: 12px; border-left: 4px solid #e74c3c; }
+  p { font-size: 15px; margin-bottom: 10px; }
+  .highlight { background: #fde8e8; border-radius: 8px; padding: 14px 16px; margin: 16px 0; font-size: 14px; color: #5a1a1a; border-left: 4px solid #e74c3c; }
+  .day-card { background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
+  .day-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .day-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: #e74c3c; color: #fff; font-size: 14px; font-weight: 700; border-radius: 50%; flex-shrink: 0; }
+  .day-title { font-size: 16px; font-weight: 700; color: #c0392b; }
+  .day-tag { display: inline-block; font-size: 11px; background: #fde8e8; color: #c0392b; padding: 1px 8px; border-radius: 10px; margin-left: auto; white-space: nowrap; font-weight: 600; }
+  .day-city { font-size: 12px; color: #999; margin-bottom: 6px; }
+  .day-item { font-size: 14px; padding: 3px 0; padding-left: 20px; position: relative; }
+  .day-item::before { content: ""; position: absolute; left: 4px; top: 11px; width: 6px; height: 6px; background: #bbb; border-radius: 50%; }
+  .day-item strong { color: #333; }
+  .day-meal { font-size: 13px; color: #888; padding-left: 20px; margin-top: 4px; }
+  .note-box { background: #fde8e8; border: 1px solid #f5a0a0; border-radius: 8px; padding: 14px 16px; margin: 16px 0; font-size: 14px; color: #5a1a1a; }
+  @media (max-width: 480px) {
+    body { padding: 10px 8px 40px; }
+    .container { padding: 20px 16px; }
+    h1 { font-size: 19px; } .section-title { font-size: 16px; }
+    p, .day-item, .highlight, .note-box { font-size: 14px; }
+    .day-card { padding: 12px 14px; }
+  }
+  .hero-bar {
+    background: linear-gradient(135deg, #8B0000 0%, #c0392b 40%, #e67e22 100%);
+    padding: 36px 20px 32px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bar::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?w=1200&q=80') center/cover no-repeat;
+    opacity: 0.12;
+  }
+  .hero-bar h2 {
+    position: relative;
+    font-size: clamp(18px, 4vw, 24px);
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: #fff;
+  }
+  .hero-bar .sub {
+    position: relative;
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 4px;
+  }
+  .hero-bar .wave {
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 24px;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z' fill='%23f0f4f8'/%3E%3C/svg%3E") center/cover no-repeat;
+  }
+</style>
+</head>
+<body>
+<div class="hero-bar">
+  <h2>🇹🇭 泰国</h2>
+  <div class="sub">清迈慢生活 · 曼谷经典 · 8天7晚</div>
+  <div class="wave"></div>
+</div>
+<div class="container">
+  <h1>🇹🇭 泰国 · 暑假家庭游<br>推荐行程方案</h1>
+  <div class="subtitle">清迈慢生活 + 曼谷经典 · 8天7晚</div>
+
+  <div class="highlight">
+    <strong>设计思路：</strong>泰国是中国人出境游最成熟的目的地之一，服务意识好、中文普及度高。选择清迈作为主要停留地（早晚凉爽，节奏慢），搭配曼谷经典景点。泰餐口味丰富，老人小孩都能找到爱吃的，而且性价比极高。
+  </div>
+
+  <div class="section-title">行程安排</div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">1</span><span class="day-title">抵达清迈</span><span class="day-tag">休整 · 夜市</span></div>
+    <div class="day-city">📍 清迈</div>
+    <div class="day-item"><strong>白天：</strong>抵达清迈机场，酒店入住（建议住古城内或宁曼路），休息调整</div>
+    <div class="day-item"><strong>傍晚：</strong>清迈夜市（Sunday Market或长康路夜市），品尝芒果糯米饭、烤串、水果沙冰</div>
+    <div class="day-meal">🍽 晚餐：夜市小吃（口味丰富，老人小孩都适合）</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">2</span><span class="day-title">清迈古城</span><span class="day-tag">寺庙 · 慢游</span></div>
+    <div class="day-city">📍 清迈</div>
+    <div class="day-item"><strong>上午：</strong>契迪龙寺（清迈最著名寺庙）、帕辛寺、清迈古城散步</div>
+    <div class="day-item"><strong>午餐：</strong>清迈咖喱面（Khao Soi）——泰北特色，不辣，孩子也爱吃</div>
+    <div class="day-item"><strong>下午：</strong>塔佩门喂鸽子（孩子最爱）、清迈艺术文化中心，累了就找家咖啡馆休息</div>
+    <div class="day-item"><strong>傍晚：</strong>宁曼路闲逛，各种小店和甜品店</div>
+    <div class="day-meal">🍽 晚餐：宁曼路泰式餐厅（推荐烤鱼、冬阴功）</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">3</span><span class="day-title">大象营 + 夜间动物园</span><span class="day-tag">亲子最爱</span></div>
+    <div class="day-city">📍 清迈</div>
+    <div class="day-item"><strong>上午：</strong>参加大象保护营半日游（不骑象，给大象喂食洗澡，孩子会非常开心）</div>
+    <div class="day-item"><strong>午餐：</strong>大象营提供简餐</div>
+    <div class="day-item"><strong>下午：</strong>回酒店午休</div>
+    <div class="day-item"><strong>傍晚：</strong>清迈夜间动物园（坐游览车看动物，孩子超爱，老人也不累）</div>
+    <div class="day-meal">🍽 晚餐：古城中餐厅或酒店晚餐</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">4</span><span class="day-title">素贴山 + 自由日</span><span class="day-tag">登高 · 放松</span></div>
+    <div class="day-city">📍 清迈</div>
+    <div class="day-item"><strong>上午：</strong>双龙寺（素贴山），可坐缆车上去，俯瞰清迈全景</div>
+    <div class="day-item"><strong>午餐：</strong>山顶简餐</div>
+    <div class="day-item"><strong>下午：</strong>自由活动——推荐泰式按摩（老人可以体验）、酒店泳池游泳、或继续逛古城</div>
+    <div class="day-item"><strong>傍晚：</strong>可选参加泰式烹饪课（学做泰餐，很有意思）</div>
+    <div class="day-meal">🍽 晚餐：自理，自由探索</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">5</span><span class="day-title">清迈 → 曼谷</span><span class="day-tag">转城市</span></div>
+    <div class="day-city">📍 清迈 → 曼谷（飞行约1h）</div>
+    <div class="day-item"><strong>上午：</strong>睡到自然醒，清迈自由活动</div>
+    <div class="day-item"><strong>下午：</strong>飞往曼谷（推荐泰航或曼谷航空），入住酒店（建议住暹罗区或河畔）</div>
+    <div class="day-item"><strong>傍晚：</strong>酒店周边散步，适应曼谷氛围</div>
+    <div class="day-meal">🍽 晚餐：酒店附近中餐厅或泰式火锅</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">6</span><span class="day-title">曼谷经典</span><span class="day-tag">大皇宫 · 河畔</span></div>
+    <div class="day-city">📍 曼谷</div>
+    <div class="day-item"><strong>上午：</strong>大皇宫 + 玉佛寺（必去，建议早点出发避开高温），卧佛寺</div>
+    <div class="day-item"><strong>午餐：</strong>河畔餐厅</div>
+    <div class="day-item"><strong>下午：</strong>乘湄南河游船（有空调），沿途看郑王庙等景点，老人坐船不累</div>
+    <div class="day-item"><strong>傍晚：</strong>Asiatique河滨夜市（干净、规划好，适合家庭）</div>
+    <div class="day-meal">🍽 晚餐：Asiatique夜市</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">7</span><span class="day-title">曼谷购物 · 自由</span><span class="day-tag">轻松 · 美食</span></div>
+    <div class="day-city">📍 曼谷</div>
+    <div class="day-item"><strong>上午：</strong>Siam Paragon暹罗百丽宫（高端商场，室内凉爽，有水族馆可逛）</div>
+    <div class="day-item"><strong>午餐：</strong>商场美食广场（干净卫生，选择多）</div>
+    <div class="day-item"><strong>下午：</strong>Central World / Big C采购伴手礼（榴莲干、芒果干、泰式药品）</div>
+    <div class="day-item"><strong>傍晚：</strong>酒店泳池放松，准备返程</div>
+    <div class="day-meal">🍽 晚餐：推荐尝试泰式海南鸡饭（老人小孩都爱吃）</div>
+  </div>
+
+  <div class="day-card">
+    <div class="day-header"><span class="day-num">8</span><span class="day-title">返程</span><span class="day-tag">回家</span></div>
+    <div class="day-city">📍 曼谷 → 国内</div>
+    <div class="day-item">退房，根据航班时间前往素万那普机场，办理退税，返回国内</div>
+    <div class="day-meal">🍽 飞机餐</div>
+  </div>
+
+  <hr>
+  <div class="section-title">温馨提示</div>
+  <div class="note-box"><strong>✈️ 机票：</strong>建议国内直飞清迈，曼谷返回（不走回头路）。北京/上海直飞清迈约4-5小时。</div>
+  <div class="note-box"><strong>🌡️ 天气提醒：</strong>7-8月是泰国雨季，但多为阵雨（下半小时就停）。清迈早晚25°C左右较舒适，中午较热，安排室内活动即可。</div>
+  <div class="note-box"><strong>🚗 交通：</strong>清迈推荐包车或Grab（东南亚滴滴），非常便宜；曼谷推荐地铁BTS / Grab。</div>
+  <div class="note-box"><strong>🍜 饮食：</strong>泰国菜口味丰富，有不辣的菜（芒果糯米饭、泰式炒河粉、烤鸡、海南鸡饭等），也有中餐厅，不用担心吃不惯。</div>
+  <div class="note-box"><strong>📋 签证：</strong>泰国对中国公民落地签（约2000泰铢），也可以提前办电子签证更方便。</div>
+  <div class="note-box"><strong>💰 预算参考（人均）：</strong><br>机票约2000-3500元 · 住宿7晚约1500-3000元 · 餐饮约1000-1800元 · 交通门票约500-1200元<br><span style="color:#c0392b;font-weight:600;">合计预估：5000–9500 元/人</span></div>
+  <hr>
+  <p style="text-align:center; color:#999; font-size:13px;">本文案为初步推荐，具体行程可根据各家庭需求灵活调整。</p>
+</div>
+</body>
+</html>
