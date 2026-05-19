@@ -3,209 +3,1751 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>新疆 · 北疆伊犁 · 推荐行程</title>
+<title>2026暑期 · 北疆伊犁之旅</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body {
-    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
-    background: #f0f4f8; color: #2d3748; padding: 0 0 60px; line-height: 1.8;
-  }
-  .container { max-width: 680px; margin: 0 auto; background: #fff; border-radius: 12px; padding: 32px 24px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-  h1 { font-size: 22px; text-align: center; color: #A0522D; margin-bottom: 6px; font-weight: 700; line-height: 1.4; }
-  .subtitle { text-align: center; color: #999; font-size: 14px; margin-bottom: 28px; }
-  .section-title { font-size: 18px; color: #A0522D; font-weight: 700; margin-top: 28px; margin-bottom: 12px; padding-left: 12px; border-left: 4px solid #CD853F; }
-  .sub2-title { font-size: 15px; color: #CD853F; font-weight: 600; margin-top: 16px; margin-bottom: 8px; }
-  p { font-size: 15px; margin-bottom: 10px; }
-  .highlight { background: #fdf0e8; border-radius: 8px; padding: 14px 16px; margin: 16px 0; font-size: 14px; color: #5a2d0c; border-left: 4px solid #CD853F; }
-  .day-card { background: #fafbfc; border: 1px solid #e8e8e8; border-radius: 10px; padding: 16px 18px; margin-bottom: 14px; }
-  .day-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .day-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; background: #CD853F; color: #fff; font-size: 14px; font-weight: 700; border-radius: 50%; flex-shrink: 0; }
-  .day-title { font-size: 16px; font-weight: 700; color: #A0522D; }
-  .day-tag { display: inline-block; font-size: 11px; background: #fff3e0; color: #e67e22; padding: 1px 8px; border-radius: 10px; margin-left: auto; white-space: nowrap; font-weight: 600; }
-  .day-city { font-size: 12px; color: #999; margin-bottom: 6px; }
-  .day-item { font-size: 14px; padding: 3px 0; padding-left: 20px; position: relative; }
-  .day-item::before { content: ""; position: absolute; left: 4px; top: 11px; width: 6px; height: 6px; background: #bbb; border-radius: 50%; }
-  .day-item strong { color: #333; }
-  .day-meal { font-size: 13px; color: #888; padding-left: 20px; margin-top: 4px; }
-  .note-box { background: #fff8e6; border: 1px solid #f0db7a; border-radius: 8px; padding: 14px 16px; margin: 16px 0; font-size: 14px; color: #8a6d1f; }
-  table { width: 100%; border-collapse: collapse; margin: 12px 0 16px; font-size: 14px; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0e0; }
-  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #eee; }
-  th { background: #fdf0e8; color: #8B4513; font-weight: 600; }
-  tr:last-child td { border-bottom: none; }
-  hr { border: none; height: 1px; background: #e0e0e0; margin: 28px 0; }
-  .tag-terracotta { color: #CD853F; font-weight: 600; }
-  @media (max-width: 480px) {
-    body { padding: 10px 8px 40px; }
-    .container { padding: 20px 16px; }
-    h1 { font-size: 19px; } .section-title { font-size: 16px; }
-    p, .day-item, .highlight, .note-box { font-size: 14px; }
-    .day-card { padding: 12px 14px; }
-  }
-  .hero-bar {
-    background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 40%, #2c7a7b 100%);
-    padding: 36px 20px 32px;
-    text-align: center;
-    color: #fff;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-bar::before {
-    content: '';
-    position: absolute; inset: 0;
-    background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1200&q=80') center/cover no-repeat;
-    opacity: 0.15;
-  }
-  .hero-bar h2 {
-    position: relative;
-    font-size: clamp(18px, 4vw, 24px);
-    font-weight: 800;
-    letter-spacing: 1px;
-    text-shadow: 0 2px 12px rgba(0,0,0,0.2);
-    border: none;
-    padding: 0;
-    margin: 0;
-    color: #fff;
-  }
-  .hero-bar .sub {
-    position: relative;
-    font-size: 13px;
-    opacity: 0.8;
-    margin-top: 4px;
-  }
-  .hero-bar .wave {
-    position: absolute;
-    bottom: -2px; left: 0; right: 0;
-    height: 24px;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z' fill='%23f0f4f8'/%3E%3C/svg%3E") center/cover no-repeat;
-  }
+/* ===== Reset & Base ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  background: #f7f5f0;
+  color: #2d3748;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 30%, #0f3460 60%, #1a1a2e 100%);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80') center/cover no-repeat;
+  opacity: 0.25;
+  animation: heroZoom 25s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.12); }
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(26,26,46,0.88) 0%, rgba(15,52,96,0.78) 50%, rgba(26,26,46,0.92) 100%);
+}
+.hero-particles {
+  position: absolute; inset: 0;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  width: 4px; height: 4px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+  animation: particleFloat linear infinite;
+}
+@keyframes particleFloat {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 40px 20px;
+  animation: fadeUp 1.2s ease-out;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.3);
+  letter-spacing: 4px;
+}
+.hero h1 span {
+  background: linear-gradient(to right, #f6d365, #fda085);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(16px, 2.5vw, 20px);
+  color: rgba(255,255,255,0.75);
+  max-width: 600px;
+  margin: 8px auto 0;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.hero-stat {
+  text-align: center;
+}
+.hero-stat .num {
+  font-size: 28px;
+  font-weight: 800;
+  color: #f6d365;
+  display: block;
+}
+.hero-stat .label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+.hero-wave {
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 70px;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,40 C240,70 480,10 720,40 C960,70 1200,10 1440,40 L1440,70 L0,70Z' fill='%23f7f5f0'/%3E%3C/svg%3E") center/cover no-repeat;
+}
+.scroll-indicator {
+  position: absolute;
+  bottom: 80px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.4);
+  font-size: 11px;
+  letter-spacing: 2px;
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+.scroll-indicator .mouse {
+  width: 22px; height: 34px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  position: relative;
+}
+.scroll-indicator .mouse::after {
+  content: '';
+  position: absolute;
+  top: 5px; left: 50%;
+  transform: translateX(-50%);
+  width: 3px; height: 8px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 2px;
+  animation: scrollDot 2s ease-in-out infinite;
+}
+@keyframes scrollDot {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+  50% { transform: translateX(-50%) translateY(12px); opacity: 0.2; }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* ===== Navigation ===== */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.3s;
+}
+.nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-link {
+  flex-shrink: 0;
+  padding: 14px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #718096;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-link:hover { color: #b8860b; }
+.nav-link.active { color: #b8860b; border-bottom-color: #b8860b; }
+
+/* ===== Container ===== */
+.container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+/* ===== Section ===== */
+.section {
+  padding: 48px 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+.section.visible { opacity: 1; transform: translateY(0); }
+.section-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.section-header .emoji {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 8px;
+}
+.section-header h2 {
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 800;
+  color: #1a1a2e;
+  letter-spacing: 2px;
+}
+.section-header p {
+  font-size: 14px;
+  color: #a0aec0;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+/* ===== Overview Cards ===== */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+.overview-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 18px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  transition: all 0.3s;
+}
+.overview-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.overview-card .icon { font-size: 28px; margin-bottom: 6px; display: block; }
+.overview-card .num {
+  font-size: 22px;
+  font-weight: 800;
+  color: #b8860b;
+}
+.overview-card .desc {
+  font-size: 13px;
+  color: #718096;
+  margin-top: 2px;
+}
+
+/* ===== Countdown ===== */
+.countdown-bar {
+  background: linear-gradient(135deg, #1a1a2e, #0f3460);
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  margin-top: 24px;
+  color: #fff;
+}
+.countdown-bar .label { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 8px; letter-spacing: 2px; }
+.countdown-grid { display: flex; justify-content: center; gap: 16px; }
+.countdown-item { min-width: 60px; }
+.countdown-item .num {
+  font-size: 32px;
+  font-weight: 800;
+  color: #f6d365;
+  line-height: 1;
+}
+.countdown-item .unit { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+/* ===== Itinerary Toggle ===== */
+.itin-toggle-wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+.itin-toggle {
+  display: inline-flex;
+  background: #e8e2d8;
+  border-radius: 30px;
+  padding: 4px;
+  gap: 4px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.06);
+}
+.itin-toggle-btn {
+  padding: 10px 28px;
+  border: none;
+  border-radius: 26px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  background: transparent;
+  color: #718096;
+}
+.itin-toggle-btn:hover { color: #4a5568; }
+.itin-toggle-btn.active {
+  background: linear-gradient(135deg, #b8860b, #f6d365);
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(184,134,11,0.3);
+}
+.itin-toggle-btn .days { font-size: 11px; opacity: 0.7; display: block; margin-top: -2px; font-weight: 400; }
+
+/* ===== Timeline / Itinerary ===== */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, #b8860b, #f6d365, #b8860b);
+  border-radius: 2px;
+}
+.day-card {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.day-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
+.day-marker {
+  position: absolute;
+  left: -33px;
+  top: 20px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #b8860b, #f6d365);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(184,134,11,0.3);
+  z-index: 1;
+}
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px;
+  background: linear-gradient(to right, #fdf8f0, #fff);
+  border-bottom: 1px solid #f0ebe4;
+}
+.day-header-left { flex: 1; }
+.day-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: #1a1a2e;
+}
+.day-sub {
+  font-size: 13px;
+  color: #b8860b;
+  font-weight: 600;
+  margin-top: 1px;
+}
+.day-tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #f6d365, #fda085);
+  color: #fff;
+  white-space: nowrap;
+}
+.day-arrow {
+  font-size: 14px;
+  color: #cbd5e0;
+  transition: transform 0.3s;
+}
+.day-card.open .day-arrow { transform: rotate(180deg); }
+.day-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+}
+.day-card.open .day-body {
+  max-height: 3000px;
+}
+.day-body-inner { padding: 18px 22px 22px; }
+.day-location {
+  font-size: 13px;
+  color: #a0aec0;
+  margin-bottom: 10px;
+}
+.day-location::before { content: '📍 '; }
+.day-item {
+  font-size: 14px;
+  padding: 4px 0;
+  padding-left: 20px;
+  position: relative;
+  color: #4a5568;
+}
+.day-item::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 12px;
+  width: 8px;
+  height: 8px;
+  background: #e2d9cc;
+  border-radius: 50%;
+}
+.day-item strong { color: #2d3748; }
+.day-meal {
+  font-size: 13px;
+  color: #b8860b;
+  padding-left: 20px;
+  margin-top: 6px;
+  background: #fdf8f0;
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-top: 8px;
+}
+.day-meal::before { content: '🍽 '; }
+.day-tip {
+  font-size: 13px;
+  color: #2d3748;
+  background: #f0f7ff;
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-top: 8px;
+  padding-left: 14px;
+}
+.day-tip::before { content: '💡 '; }
+.day-images {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin-top: 10px;
+}
+.day-img {
+  width: 100%;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  background: #f0ebe4;
+}
+@media (max-width: 500px) {
+  .day-images { grid-template-columns: 1fr 1fr; }
+}
+
+/* ===== Budget ===== */
+.budget-card {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+.budget-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.budget-table th {
+  background: linear-gradient(135deg, #1a1a2e, #0f3460);
+  color: #fff;
+  padding: 14px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.budget-table td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0ebe4;
+  color: #4a5568;
+}
+.budget-table tr:last-child td { border-bottom: none; }
+.budget-table tr.total td {
+  background: #fdf8f0;
+  font-weight: 700;
+  color: #b8860b;
+  font-size: 15px;
+}
+.budget-table .amount {
+  text-align: right;
+  font-weight: 600;
+  color: #2d3748;
+}
+.budget-table .amount.total-amount { color: #b8860b; font-size: 17px; }
+.budget-wide { display: none; }
+@media (min-width: 600px) {
+  .budget-wide { display: table-cell; }
+  .budget-narrow { display: none; }
+}
+
+/* ===== Packing List ===== */
+.packing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+.packing-cat {
+  background: #fff;
+  border-radius: 14px;
+  padding: 18px 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+.packing-cat h4 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid #f0ebe4;
+}
+.packing-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+  font-size: 13px;
+  color: #4a5568;
+  cursor: pointer;
+  user-select: none;
+}
+.packing-item input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border: 2px solid #d0c8bc;
+  border-radius: 4px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.2s;
+  position: relative;
+}
+.packing-item input[type="checkbox"]:checked {
+  background: #b8860b;
+  border-color: #b8860b;
+}
+.packing-item input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+.packing-item.checked { color: #cbd5e0; text-decoration: line-through; }
+
+/* ===== Info Cards ===== */
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 14px;
+}
+.info-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  transition: all 0.3s;
+}
+.info-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.08); }
+.info-card .icon { font-size: 28px; display: block; margin-bottom: 6px; }
+.info-card h4 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 6px; }
+.info-card p { font-size: 13px; color: #718096; line-height: 1.7; }
+.info-card ul { list-style: none; padding: 0; }
+.info-card li {
+  font-size: 13px;
+  color: #4a5568;
+  padding: 3px 0;
+  padding-left: 16px;
+  position: relative;
+}
+.info-card li::before {
+  content: '·';
+  position: absolute;
+  left: 2px;
+  color: #b8860b;
+  font-weight: 700;
+}
+
+/* ===== Route Map ===== */
+#route-map-container {
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+}
+#route-map-container h4 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin: 16px 20px; }
+#map {
+  width: 100%;
+  height: 480px;
+  border-radius: 0 0 16px 16px;
+}
+.leaflet-popup-content { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; font-size: 13px; line-height: 1.6; }
+.leaflet-popup-content strong { color: #1a1a2e; }
+.map-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 20px;
+  padding: 14px 20px;
+  background: #faf9f7;
+  border-top: 1px solid #f0ebe4;
+  font-size: 13px;
+  color: #4a5568;
+}
+.map-legend-item { display: flex; align-items: center; gap: 6px; }
+.map-legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+@media (max-width: 600px) {
+  #map { height: 340px; }
+}
+
+/* ===== Photo Gallery ===== */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.gallery-item {
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 1;
+}
+.gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 2; }
+.gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s;
+}
+.gallery-item:hover img { transform: scale(1.08); }
+.gallery-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 20px 12px 10px;
+  background: linear-gradient(transparent, rgba(0,0,0,0.6));
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+}
+@media (max-width: 500px) {
+  .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+  .gallery-item:nth-child(1) { grid-column: span 2; grid-row: span 1; }
+}
+
+/* ===== Tips ===== */
+.tip-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  margin-bottom: 14px;
+  border-left: 4px solid #b8860b;
+}
+.tip-box h4 { font-size: 15px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
+.tip-box p { font-size: 14px; color: #4a5568; }
+.tip-box ul { list-style: none; padding: 0; margin-top: 4px; }
+.tip-box li { font-size: 13px; color: #4a5568; padding: 2px 0; padding-left: 16px; position: relative; }
+.tip-box li::before { content: '•'; position: absolute; left: 2px; color: #b8860b; }
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 40px 20px 32px;
+  color: #a0aec0;
+  font-size: 13px;
+  border-top: 1px solid #e8e2d8;
+  margin-top: 20px;
+}
+.footer .family-note {
+  font-size: 15px;
+  color: #718096;
+  margin-bottom: 8px;
+}
+
+/* ===== Back to Top ===== */
+.back-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #b8860b, #f6d365);
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(184,134,11,0.3);
+  transition: all 0.3s;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  z-index: 99;
+}
+.back-top.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.back-top:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 24px rgba(184,134,11,0.4);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .hero { min-height: 75vh; }
+  .hero-stats { gap: 16px; }
+  .hero-stat .num { font-size: 22px; }
+  .nav-link { padding: 12px 12px; font-size: 12px; }
+  .container { padding: 0 14px; }
+  .section { padding: 32px 0; }
+  .timeline { padding-left: 32px; }
+  .day-marker { left: -26px; width: 22px; height: 22px; font-size: 10px; }
+  .day-header { padding: 14px 16px; }
+  .day-body-inner { padding: 14px 16px 16px; }
+  .day-title { font-size: 15px; }
+  .back-top { bottom: 16px; right: 16px; width: 38px; height: 38px; font-size: 15px; }
+  .overview-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===== Print ===== */
+@media print {
+  .hero { min-height: auto; padding: 40px 20px; }
+  .nav-bar { display: none; }
+  .back-top { display: none; }
+  .day-card { break-inside: avoid; }
+  .section { opacity: 1 !important; transform: none !important; }
+}
 </style>
 </head>
 <body>
-<div class="hero-bar">
-  <h2>🇨🇳 新疆 · 北疆伊犁</h2>
-  <div class="sub">草原雪山 · 夏季避暑 · 7天6晚</div>
-  <div class="wave"></div>
-</div>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="top">
+  <div class="hero-overlay"></div>
+  <div class="hero-particles" id="particles"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🏔️ 2026 暑期家庭游</div>
+    <h1>新疆 · <span>北疆伊犁</span></h1>
+    <p class="hero-sub" id="hero-subtitle">赛里木湖 · 那拉提草原 · 巴音布鲁克 · 七天六晚</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num" id="hero-days">7天</span><span class="label">行程天数</span></div>
+      <div class="hero-stat"><span class="num" id="hero-nights">6晚</span><span class="label">住宿</span></div>
+      <div class="hero-stat"><span class="num">20-30°C</span><span class="label">夏季气温</span></div>
+      <div class="hero-stat"><span class="num" id="hero-budget">~5000</span><span class="label">预算/人(起)</span></div>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <div class="mouse"></div>
+    <span>向下滚动</span>
+  </div>
+  <div class="hero-wave"></div>
+</section>
+
+<!-- ===== Nav ===== -->
+<nav class="nav-bar" id="navbar">
+  <div class="nav-inner">
+    <a href="#overview" class="nav-link active">📋 概览</a>
+    <a href="#itinerary" class="nav-link">🗓️ 行程</a>
+    <a href="#budget" class="nav-link">💰 预算</a>
+    <a href="#packing" class="nav-link">🎒 行李清单</a>
+    <a href="#info" class="nav-link">💡 实用信息</a>
+    <a href="#route" class="nav-link">🗺️ 路线图</a>
+    <a href="#photos" class="nav-link">📸 风景预览</a>
+  </div>
+</nav>
+
 <div class="container">
-  <h1>🇨🇳 新疆 · 北疆伊犁 · 暑假家庭游</h1>
-  <div class="subtitle">草原雪山 · 夏季避暑 · 7天6晚</div>
 
-  <div class="highlight">
-    <strong>设计思路：</strong>新疆伊犁被誉为"塞外江南"，7-8月水草丰美，草原雪山如同画卷。夏季气温20-30°C，凉爽舒适，是绝佳的避暑目的地。节奏舒缓，兼顾老人和孩子的需求。
-  </div>
+  <!-- ===== Overview ===== -->
+  <section class="section visible" id="overview">
+    <div class="section-header">
+      <span class="emoji">🏔️</span>
+      <h2>行程概览</h2>
+      <p>北疆伊犁 · 草原雪山之旅</p>
+    </div>
 
-  <div class="section-title">推荐路线：北疆伊犁经典环线 · 7天6晚</div>
+    <div class="overview-grid" id="overview-grid">
+      <!-- rendered by JS -->
+    </div>
 
-  <div class="day-card">
-    <div class="day-header"><span class="day-num">1</span><span class="day-title">抵达乌鲁木齐</span><span class="day-tag">乌鲁木齐初印象</span></div>
-    <div class="day-city">📍 乌鲁木齐</div>
-    <div class="day-item"><strong>白天：</strong>上海直飞乌鲁木齐（约5小时）；也可选择高铁（约24小时）或卧铺火车（约32小时），适合想体验沿途风景的家庭</div>
-    <div class="day-item"><strong>下午：</strong>前往<strong>国际大巴扎</strong>——世界规模最大的巴扎，体验维吾尔风情，选购特色干果、工艺品</div>
-    <div class="day-item"><strong>傍晚：</strong><strong>红山公园</strong>登高远眺，俯瞰乌鲁木齐全景，红山塔是城市地标</div>
-    <div class="day-meal">🍽 晚餐：大巴扎美食街——烤羊肉串、烤包子、手抓饭</div>
-  </div>
+    <!-- Countdown -->
 
-  <div class="day-card">
-    <div class="day-header"><span class="day-num">2</span><span class="day-title">天山天池 → 飞伊宁</span><span class="day-tag">瑶池仙境</span></div>
-    <div class="day-city">📍 乌鲁木齐 → 天山天池 → 伊宁</div>
-    <div class="day-item"><strong>上午：</strong>前往<strong>天山天池</strong>（约1.5h车程），乘缆车上山（老人轻松不累），欣赏"瑶池"仙境，远眺博格达峰雪山</div>
-    <div class="day-item"><strong>下午：</strong>返回乌鲁木齐，乘飞机前往<strong>伊宁</strong>（约1.5h飞行），伊犁首府</div>
-    <div class="day-item"><strong>傍晚：</strong>抵达伊宁，入住酒店，市区晚餐</div>
-    <div class="day-meal">🍽 午餐：天池景区简餐；晚餐：伊宁特色拌面、烤羊排</div>
-  </div>
+    <!-- Countdown -->
+    <div class="countdown-bar" id="countdown">
+      <div class="label">⏳ 距离出发还有</div>
+      <div class="countdown-grid">
+        <div class="countdown-item"><div class="num" id="cd-days">--</div><div class="unit">天</div></div>
+        <div class="countdown-item"><div class="num" id="cd-hours">--</div><div class="unit">时</div></div>
+        <div class="countdown-item"><div class="num" id="cd-mins">--</div><div class="unit">分</div></div>
+        <div class="countdown-item"><div class="num" id="cd-secs">--</div><div class="unit">秒</div></div>
+      </div>
+    </div>
+  </section>
 
-  <div class="day-card">
-    <div class="day-header"><span class="day-num">3</span><span class="day-title">赛里木湖 · 果子沟大桥</span><span class="day-tag">大西洋最后一滴眼泪</span></div>
-    <div class="day-city">📍 伊宁 → 赛里木湖（约2h车程）</div>
-    <div class="day-item"><strong>全天：</strong>前往<strong>赛里木湖</strong>——被誉为"大西洋最后一滴眼泪"，湖水湛蓝清澈，四周雪山环绕</div>
-    <div class="day-item">环湖游览（全程约90km，区间车或包车环湖），景色震撼，随时停车拍照</div>
-    <div class="day-item">推荐停靠点：月亮湾、点将台、S弯公路、西海草原、松树头</div>
-    <div class="day-item">途经<strong>果子沟大桥</strong>——壮观的峡谷大桥，可停车观景拍照</div>
-    <div class="day-item">返回伊宁</div>
-    <div class="day-meal">🍽 午餐：赛里木湖高白鲑鱼（当地特产）；晚餐：伊宁清炖羊肉</div>
-  </div>
+  <!-- ===== Itinerary ===== -->
+  <section class="section" id="itinerary">
+    <div class="section-header">
+      <span class="emoji">🗓️</span>
+      <h2>详细行程</h2>
+      <p>点击展开每天详情 · 量身定制的慢节奏家庭游</p>
+    </div>
 
-  <div class="day-card">
-    <div class="day-header"><span class="day-num">4</span><span class="day-title">那拉提草原</span><span class="day-tag">空中草原 · 骑马</span></div>
-    <div class="day-city">📍 伊宁 → 那拉提（约3h车程）</div>
-    <div class="day-item"><strong>全天：</strong>前往<strong>那拉提草原</strong>——世界四大草原之一，被誉为"空中草原"</div>
-    <div class="day-item"><strong>核心体验：</strong>乘坐区间车游览（老人非常轻松），沿途雪山、森林、野花交相辉映</div>
-    <div class="day-item">游牧人家站——可体验骑马（有马夫牵，安全放心），孩子可骑小马</div>
-    <div class="day-item">河谷草原线——平坦开阔，适合散步拍照</div>
-    <div class="day-item">当晚住那拉提镇或草原附近民宿</div>
-    <div class="day-meal">🍽 午餐：草原哈萨克族风味（奶茶、手抓肉）；晚餐：民宿家常菜</div>
-  </div>
+    <div class="itin-toggle-wrap">
+      <div class="itin-toggle">
+        <button class="itin-toggle-btn active" data-plan="7day" onclick="switchPlan('7day')">
+          经典 7 天 <span class="days">伊犁小环线</span>
+        </button>
+        <button class="itin-toggle-btn" data-plan="11day" onclick="switchPlan('11day')">
+          深度 11 天 <span class="days">独库公路+吐鲁番</span>
+        </button>
+      </div>
+    </div>
 
-  <div class="day-card">
-    <div class="day-header"><span class="day-num">5</span><span class="day-title">巴音布鲁克</span><span class="day-tag">九曲十八弯 · 天鹅湖</span></div>
-    <div class="day-city">📍 那拉提 → 巴音布鲁克（约2.5h车程）</div>
-    <div class="day-item"><strong>白天：</strong>前往<strong>巴音布鲁克草原</strong>——中国第二大草原，海拔约2500m</div>
-    <div class="day-item"><strong>天鹅湖：</strong>观赏野生天鹅和各类水鸟，环境优美，步道平坦</div>
-    <div class="day-item"><strong>傍晚：</strong><strong>九曲十八弯</strong>——开都河的壮丽弯道，日落时分能拍到"九个太阳"的奇观（必看！）</div>
-    <div class="day-item">景区内有区间车，全程轻松</div>
-    <div class="day-item">当晚住巴音布鲁克镇</div>
-    <div class="day-meal">🍽 午餐：巴音布鲁克野蘑菇拌面；晚餐：牦牛肉火锅</div>
-  </div>
+    <div class="timeline" id="timeline">
+      <!-- rendered by JS -->
+    </div>
+  </section>
 
-  <div class="day-card">
-    <div class="day-header"><span class="day-num">6</span><span class="day-title">喀赞其 · 六星街</span><span class="day-tag">蓝色小镇 · 慢生活</span></div>
-    <div class="day-city">📍 巴音布鲁克 → 伊宁（约4h车程）</div>
-    <div class="day-item"><strong>上午：</strong>从巴音布鲁克返回伊宁，沿途欣赏伊犁河谷风光</div>
-    <div class="day-item"><strong>下午：</strong><strong>喀赞其民俗街</strong>——蓝色的童话小镇，维吾尔族民居色彩斑斓，拍照特别好看</div>
-    <div class="day-item">坐"哈迪克"（马车）游览老街，节奏很慢，适合老人孩子</div>
-    <div class="day-item">品尝手工冰淇淋（伊犁特色，浓郁香甜）</div>
-    <div class="day-item"><strong>傍晚：</strong><strong>六星街</strong>——特色街区，文艺小店、音乐酒吧，晚餐在此解决</div>
-    <div class="day-meal">🍽 晚餐：六星街特色餐厅——大盘鸡、椒麻鸡、烤鸽子</div>
-  </div>
+  <!-- ===== Budget ===== -->
+  <section class="section" id="budget">
+    <div class="section-header">
+      <span class="emoji">💰</span>
+      <h2>预算参考</h2>
+      <p>以下为预估费用，实际以当时价格为准</p>
+    </div>
 
-  <div class="day-card">
-    <div class="day-header"><span class="day-num">7</span><span class="day-title">伊宁返程</span><span class="day-tag">满载而归</span></div>
-    <div class="day-city">📍 伊宁 → 乌鲁木齐 → 上海</div>
-    <div class="day-item">睡到自然醒，在伊宁市区采购伴手礼</div>
-    <div class="day-item">推荐购买：新疆干果（红枣、葡萄干、巴旦木）、薰衣草制品、地毯、民族乐器</div>
-    <div class="day-item">乘飞机经乌鲁木齐转机返回上海（或伊宁直飞部分城市）</div>
-    <div class="day-meal">🍽 午餐：最后一顿新疆美食——烤肉套餐</div>
-  </div>
+    <div class="budget-card" id="budget-table">
+      <!-- rendered by JS -->
+    </div>
+  </section>
 
-  <hr>
-  <div class="section-title">行程概览</div>
+  <!-- ===== Packing List ===== -->
+  <section class="section" id="packing">
+    <div class="section-header">
+      <span class="emoji">🎒</span>
+      <h2>行李清单</h2>
+      <p>点击勾选，轻松准备</p>
+    </div>
 
-  <table>
-    <tr><th style="width:18%;">天数</th><th>行程</th><th>住宿</th></tr>
-    <tr><td>Day 1</td><td>抵达乌鲁木齐 → 大巴扎 → 红山公园</td><td>乌鲁木齐</td></tr>
-    <tr><td>Day 2</td><td>天山天池 → 飞伊宁</td><td>伊宁</td></tr>
-    <tr><td>Day 3</td><td>赛里木湖 → 果子沟大桥</td><td>伊宁</td></tr>
-    <tr><td>Day 4</td><td>那拉提草原（空中草原）</td><td>那拉提镇</td></tr>
-    <tr><td>Day 5</td><td>巴音布鲁克（九曲十八弯）</td><td>巴音布鲁克</td></tr>
-    <tr><td>Day 6</td><td>喀赞其民俗街 → 六星街</td><td>伊宁</td></tr>
-    <tr><td>Day 7</td><td>伊宁返程</td><td>—</td></tr>
-  </table>
+    <div class="packing-grid">
+      <div class="packing-cat">
+        <h4>👕 衣物类</h4>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 短袖T恤 × 3-4件</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 长袖薄衫 × 1-2件</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 薄外套/防晒衣</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 冲锋衣/薄羽绒服（晚上用）</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 长裤 × 2条</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 短裤 × 1-2条</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 舒适运动鞋/徒步鞋</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 拖鞋/凉鞋</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 睡衣</label>
+      </div>
 
-  <hr>
-  <div class="section-title">实用信息</div>
+      <div class="packing-cat">
+        <h4>🧴 防护/洗漱</h4>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 防晒霜（SPF50+，必备！）</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 太阳帽 + 墨镜</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 补水面膜/保湿乳</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 唇膏（新疆干燥）</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 牙刷/牙膏/毛巾</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 洗发水/沐浴露（小瓶）</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 湿纸巾/纸巾</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 驱蚊液/驱蚊贴</label>
+      </div>
 
-  <div class="highlight">
-    <strong>📋 关键信息</strong><br>
-    ✈️/🚄 <strong>交通：</strong>上海→乌鲁木齐直飞约5小时（推荐），或高铁约24小时/卧铺火车约32小时；乌鲁木齐→伊宁飞行约1.5小时<br>
-    💰 <strong>预算：</strong>约5000-9000元/人（含交通、住宿、餐饮、门票）<br>
-    🛂 <strong>签证：</strong>无需（国内游）<br>
-    🌡️ <strong>气候：</strong>夏季20-30°C，凉爽舒适
-  </div>
+      <div class="packing-cat">
+        <h4>💊 药品/健康</h4>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 肠胃药（黄连素/蒙脱石散）</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 感冒药</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 创可贴/碘伏棉签</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 晕车药（山路多）</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 防过敏药</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 个人常备药</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 体温计</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 旅行保险单（打印件）</label>
+      </div>
 
-  <div class="note-box"><strong>🚗 交通建议：</strong>前往新疆可选飞机或火车（上海→乌鲁木齐高铁约24小时，卧铺约32小时）。新疆地域广阔，景点间车程较长（2-4小时）。建议<strong>包车</strong>（约600-1000元/天）或参加当地小团，灵活自由。备些零食在车上，孩子老人随时补充能量。</div>
+      <div class="packing-cat">
+        <h4>📱 数码/其他</h4>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 手机 + 充电器 + 充电宝</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 相机/GoPro</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 保温杯（路上喝热水）</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 零食（车上补给）</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 塑料袋/收纳袋</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 雨伞/雨衣</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> U型枕（飞机上用）</label>
+        <label class="packing-item"><input type="checkbox" onchange="packToggle(this)"> 儿童玩具/绘本（解闷）</label>
+      </div>
+    </div>
+  </section>
 
-  <div class="note-box"><strong>🏨 住宿建议：</strong>伊宁市区住宿选择多，推荐住伊犁河附近或市区中心。那拉提和巴音布鲁克镇住宿条件较简单（民宿/经济型酒店），建议提前预订。</div>
+  <!-- ===== Practical Info ===== -->
+  <section class="section" id="info">
+    <div class="section-header">
+      <span class="emoji">💡</span>
+      <h2>实用信息</h2>
+      <p>出行小贴士 · 全家安心</p>
+    </div>
 
-  <div class="note-box"><strong>🍽️ 美食推荐：</strong>新疆菜以牛羊肉为主——<strong>烤羊肉串</strong>（必吃）、<strong>大盘鸡</strong>、<strong>手抓饭</strong>、<strong>烤包子</strong>、<strong>拌面</strong>、<strong>手工冰淇淋</strong>。新疆水果也非常赞：西瓜、哈密瓜、葡萄、杏子，7-8月正当季！</div>
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="icon">🌡️</span>
+        <h4>天气 & 穿衣</h4>
+        <ul>
+          <li>白天 25-35°C，晚上 15-20°C</li>
+          <li>草原地区（那拉提/巴音布鲁克）晚上仅 8-12°C</li>
+          <li>洋葱式穿衣法：短袖+外套，热了脱冷了穿</li>
+          <li>必带：防晒衣、冲锋衣或薄羽绒</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <span class="icon">⏰</span>
+        <h4>时差 & 作息</h4>
+        <ul>
+          <li>新疆与东部时差约 2 小时</li>
+          <li>当地作息：早餐 8-9点，午餐 13-14点，晚餐 20-21点</li>
+          <li>日出约 6:30，日落约 21:00（看日落要等到晚上9点！）</li>
+          <li>建议前 1-2 天逐步适应时差</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <span class="icon">🍜</span>
+        <h4>美食推荐</h4>
+        <ul>
+          <li>必吃：烤羊肉串、大盘鸡、手抓饭、烤包子</li>
+          <li>特色：拌面（过油肉拌面）、椒麻鸡、馕包肉</li>
+          <li>小吃：手工冰淇淋、手工酸奶、烤全羊</li>
+          <li>水果：西瓜、哈密瓜、葡萄、杏子、蟠桃</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <span class="icon">🚗</span>
+        <h4>交通建议</h4>
+        <ul>
+          <li>全程包车（7座商务车，约 600-1000 元/天）</li>
+          <li>景点间车程 2-4 小时，备零食和水</li>
+          <li>山路较多，晕车药必备</li>
+          <li>包车可通过携程/飞猪/当地旅行社预订</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <span class="icon">🏨</span>
+        <h4>住宿提醒</h4>
+        <ul>
+          <li>伊宁市区选择多（推荐伊犁河附近）</li>
+          <li>那拉提/巴音布鲁克住宿条件较简单</li>
+          <li>暑期是旺季，建议提前 2-3 周预订</li>
+          <li>可预订可免费取消的房间保底</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <span class="icon">⚠️</span>
+        <h4>注意事项</h4>
+        <ul>
+          <li>新疆治安非常好，不必担心安全问题</li>
+          <li>尊重少数民族风俗习惯</li>
+          <li>多喝水防干燥，随身带水杯</li>
+          <li>身份证随身携带（沿途检查站较多）</li>
+          <li>买旅行保险（涵盖意外+医疗）</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-  <div class="note-box"><strong>👕 穿衣指南：</strong>夏季20-30°C，但<strong>早晚温差大</strong>（尤其是草原），需带薄外套/冲锋衣。白天可穿短袖，但务必做好<strong>防晒</strong>（帽子、墨镜、防晒霜）。<strong>补水</strong>也很重要，随身带水杯。</div>
+  <!-- ===== Route Map ===== -->
+  <section class="section" id="route">
+    <div class="section-header">
+      <span class="emoji">🗺️</span>
+      <h2>行程路线图</h2>
+      <p id="route-desc">全程约 1200 公里 · 伊犁经典小环线 · 可缩放拖动</p>
+    </div>
 
-  <div class="note-box"><strong>⚠️ 注意事项：</strong>新疆海拔不高（多数景点1000-2500m），不用担心高反。<strong>治安良好</strong>，不必担心安全问题。新疆与东部有时差（晚2小时），当地人作息较晚，早餐一般8-9点开始，晚餐常到20点以后。</div>
+    <div id="route-map-container">
+      <div id="map"></div>
+      <div class="map-legend">
+        <span style="font-weight:700;color:#1a1a2e;">图例：</span>
+        <span class="map-legend-item"><span class="map-legend-dot" style="background:#b8860b;"></span> 停留点（住宿）</span>
+        <span class="map-legend-item"><span class="map-legend-dot" style="background:#e53e3e;"></span> 途经景点</span>
+        <span class="map-legend-item"><span class="map-legend-dot" style="background:transparent;border:2px dashed #b8860b;"></span> 飞行段</span>
+        <span style="color:#a0aec0;font-size:12px;margin-left:auto;">🔄 拖动地图 · 点击标记查看详情</span>
+      </div>
+    </div>
+  </section>
 
-  <div class="note-box"><strong>💡 特别提示：</strong>7-8月是伊犁最美季节——草原水草丰美，野花盛开，薰衣草（6月中-7月初）正当花期。<span class="tag-terracotta">赛里木湖晴天最美</span>，建议查看天气预报安排。新疆旅行拍照非常出片，记得带上相机！</div>
+  <!-- ===== Gallery ===== -->
+  <section class="section" id="photos">
+    <div class="section-header">
+      <span class="emoji">📸</span>
+      <h2>风景预览</h2>
+      <p>先睹为快 · 新疆北疆必看美景</p>
+    </div>
+    <div class="gallery-grid">
+      <div class="gallery-item" style="background:linear-gradient(135deg,#1a365d,#2b6cb0);display:flex;align-items:center;justify-content:center;font-size:48px;color:rgba(255,255,255,0.6);">🏔️</div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#2c7a7b,#38a169);display:flex;align-items:center;justify-content:center;font-size:36px;color:rgba(255,255,255,0.6);">🌊</div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#d69e2e,#f6e05e);display:flex;align-items:center;justify-content:center;font-size:36px;color:rgba(255,255,255,0.6);">🌿</div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#e53e3e,#fc8181);display:flex;align-items:center;justify-content:center;font-size:36px;color:rgba(255,255,255,0.6);">🌅</div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#553c9a,#9f7aea);display:flex;align-items:center;justify-content:center;font-size:36px;color:rgba(255,255,255,0.6);">🐎</div>
+      <div class="gallery-item" style="background:linear-gradient(135deg,#744210,#d69e2e);display:flex;align-items:center;justify-content:center;font-size:36px;color:rgba(255,255,255,0.6);">🐫</div>
+    </div>
+    <p style="text-align:center;font-size:13px;color:#a0aec0;margin-top:12px;">🖼️ 此处可替换为实拍照片，给家人更直观的感受</p>
+  </section>
 
-  <hr>
-  <p style="text-align:center; color:#999; font-size:13px;">本文案为初步推荐，具体行程可根据各家庭需求灵活调整。</p>
+  <!-- ===== Tips Collection ===== -->
+  <section class="section" id="tips">
+    <div class="section-header">
+      <span class="emoji">📝</span>
+      <h2>出行温馨提示</h2>
+      <p>给各家庭的小贴士</p>
+    </div>
+
+    <div class="tip-box">
+      <h4>👴 带老人出行</h4>
+      <ul>
+        <li>行程节奏慢，每天 1-2 个主要景点，留有午休时间</li>
+        <li>景区优先选有区间车或缆车的，减少步行量</li>
+        <li>赛里木湖和那拉提都有区间车，老人坐着就能看风景</li>
+        <li>带好老人常用药和病历本（以备不时之需）</li>
+        <li>住宿选有电梯或低楼层的酒店</li>
+      </ul>
+    </div>
+
+    <div class="tip-box">
+      <h4>👶 带小孩出行</h4>
+      <ul>
+        <li>那拉提骑马（小马+马夫牵）是孩子最喜欢的项目</li>
+        <li>巴音布鲁克天鹅湖看天鹅，孩子会喜欢</li>
+        <li>车上备零食、iPad/绘本，长途车程不无聊</li>
+        <li>新疆水果多（西瓜、哈密瓜、葡萄），孩子爱吃</li>
+        <li>注意防晒补水，给孩子用小水壶随时喝水</li>
+      </ul>
+    </div>
+
+    <div class="tip-box">
+      <h4>📱 行前准备清单</h4>
+      <ul>
+        <li>☐ 预订机票（建议提前 1-2 个月，暑期价格浮动大）</li>
+        <li>☐ 预订酒店（可免费取消的优先）</li>
+        <li>☐ 预订包车（确定行程后尽早）</li>
+        <li>☐ 购买旅行保险</li>
+        <li>☐ 下载离线地图（部分路段信号差）</li>
+        <li>☐ 提前告知公司/学校请假</li>
+        <li>☐ 身份证检查（新疆检查站多）</li>
+      </ul>
+    </div>
+  </section>
+
 </div>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <p class="family-note">👨‍👩‍👧‍👦 2026 年暑假 · 多家庭北疆伊犁之旅</p>
+  <p>愿这次旅行，成为我们共同的美好回忆 🏔️</p>
+  <p style="margin-top:10px;font-size:11px;">攻略制作 · 持续更新中</p>
+  <p style="margin-top:10px;"><a href="index.html" style="color:#b8860b;font-weight:600;text-decoration:none;">← 返回首页</a> &nbsp;|&nbsp; <a href="proposal.html" style="color:#b8860b;font-weight:600;text-decoration:none;">📋 征求意见稿</a></p>
+</footer>
+
+<!-- ===== Back to Top ===== -->
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+/* ===== Particles ===== */
+(function() {
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 20; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random() * 100 + '%';
+    p.style.width = p.style.height = (2 + Math.random() * 4) + 'px';
+    p.style.animationDuration = (15 + Math.random() * 25) + 's';
+    p.style.animationDelay = (Math.random() * 15) + 's';
+    container.appendChild(p);
+  }
+})();
+
+/* ===== Toggle Day Cards ===== */
+function toggleDay(header) {
+  const card = header.closest('.day-card');
+  const isOpen = card.classList.contains('open');
+  document.querySelectorAll('.day-card').forEach(c => c.classList.remove('open'));
+  if (!isOpen) card.classList.add('open');
+}
+
+/* ===== Scroll Animations ===== */
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.section').forEach(el => observer.observe(el));
+
+/* ===== Nav Highlight ===== */
+const sections = document.querySelectorAll('.section');
+const navLinks = document.querySelectorAll('.nav-link');
+function updateNav() {
+  let current = '';
+  sections.forEach(s => {
+    const top = s.getBoundingClientRect().top;
+    if (top <= window.innerHeight * 0.3) current = s.id;
+  });
+  navLinks.forEach(l => {
+    l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+  });
+}
+window.addEventListener('scroll', updateNav);
+
+/* ===== Back to Top ===== */
+window.addEventListener('scroll', () => {
+  document.getElementById('backTop').classList.toggle('show', window.scrollY > 500);
+});
+
+/* ===== Countdown ===== */
+function updateCountdown() {
+  const target = new Date(2026, 6, 18).getTime();
+  const now = new Date().getTime();
+  const diff = Math.max(0, target - now);
+  document.getElementById('cd-days').textContent = Math.floor(diff / (1000*60*60*24));
+  document.getElementById('cd-hours').textContent = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+  document.getElementById('cd-mins').textContent = Math.floor((diff % (1000*60*60)) / (1000*60));
+  document.getElementById('cd-secs').textContent = Math.floor((diff % (1000*60)) / 1000);
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+/* ===== Packing Toggle ===== */
+function packToggle(cb) {
+  cb.parentElement.classList.toggle('checked', cb.checked);
+}
+
+/* ===== Smooth scroll for nav ===== */
+document.querySelectorAll('.nav-link').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const id = this.getAttribute('href').slice(1);
+    const el = document.getElementById(id);
+    if (el) {
+      const offset = document.getElementById('navbar').offsetHeight;
+      window.scrollTo({ top: el.offsetTop - offset - 10, behavior: 'smooth' });
+    }
+  });
+});
+
+/* ====================================================
+   ITINERARY DATA — 7天 & 11天
+   ==================================================== */
+const PLANS = {
+  '7day': {
+    label: '7天6晚',
+    nights: 6,
+    budgetLow: 5300,
+    budgetHigh: 9600,
+    days: [
+      { day: 1, title: '抵达乌鲁木齐 · 大巴扎初体验', sub: '上海 → 乌鲁木齐', tag: '初见新疆',
+        location: '乌鲁木齐',
+        items: [
+          '<strong>上午：</strong>上海浦东/虹桥机场出发，直飞乌鲁木齐地窝堡机场（飞行约5小时）。建议选早班机，中午抵达。',
+          '<strong>中午：</strong>入住市区酒店（推荐：友好北路或红山附近，交通便利），稍作休息',
+          '<strong>下午：</strong>前往<strong>国际大巴扎</strong>——世界规模最大的巴扎，浓郁的维吾尔族风情。逛手工艺品、干果市场，给孩子买小礼物',
+          '<strong>傍晚：</strong><strong>红山公园</strong>登高远眺，俯瞰乌鲁木齐全景和博格达峰雪山',
+          '<strong>晚上：</strong>早休息，适应新疆时差（比东部晚2小时）'
+        ],
+        meal: '晚餐推荐：大巴扎美食街 —— 烤羊肉串、烤包子、手抓饭、手工酸奶',
+        tip: '到达新疆后注意多喝水，当地气候干燥。大巴扎购物可以砍价，别不好意思！',
+        emojis: ['🏛️','🕌','⛰️'] },
+      { day: 2, title: '天山天池 · 飞往伊宁', sub: '乌鲁木齐 → 天山天池 → 伊宁', tag: '瑶池仙境',
+        location: '天山天池（1.5h车程）→ 伊宁（飞行1.5h）',
+        items: [
+          '<strong>上午：</strong>前往<strong>天山天池</strong>（约1.5h车程），乘区间车+缆车上山。天池古称"瑶池"，湖水碧蓝如翡翠，博格达峰雪山倒映湖中',
+          '<strong>推荐游览：</strong>天池湖边散步（步道平坦），拍摄雪山倒影。可乘游船（约45分钟），老人小孩都适合',
+          '<strong>下午：</strong>返回乌鲁木齐，乘飞机前往<strong>伊宁</strong>（飞行约1.5h）——伊犁哈萨克自治州首府，气候宜人',
+          '<strong>傍晚：</strong>抵达伊宁，入住伊犁河附近酒店，晚餐后河边散步'
+        ],
+        meal: '午餐：天池景区简餐 / 晚餐：伊宁特色拌面、烤羊排、卡瓦斯',
+        tip: '天池海拔约1900米，一般不会有高反。山上比市区凉，建议带件薄外套。' },
+      { day: 3, title: '赛里木湖 · 环湖之旅', sub: '伊宁 → 赛里木湖 → 果子沟大桥', tag: '大西洋最后一滴眼泪',
+        location: '伊宁 → 赛里木湖（约2h车程）→ 返回伊宁',
+        items: [
+          '<strong>全天：</strong>前往<strong>赛里木湖</strong>——被誉为"大西洋最后一滴眼泪"，湖水湛蓝清澈见底，四周雪山环绕',
+          '<strong>环湖游览：</strong>全程约90km，推荐包车环湖，随时停车拍照，湖水颜色随角度变化',
+          '<strong>推荐停靠点：</strong>',
+          '<span style="padding-left:16px;">① 月亮湾——第一眼看到赛湖的地方</span>',
+          '<span style="padding-left:16px;">② 点将台——登高俯瞰全景（台阶不多，老人可行）</span>',
+          '<span style="padding-left:16px;">③ S弯公路——网红弯道，雪山湖水背景</span>',
+          '<span style="padding-left:16px;">④ 西海草原——草原延伸到湖边</span>',
+          '<span style="padding-left:16px;">⑤ 松树头——徒步栈道</span>',
+          '<strong>途经：</strong><strong>果子沟大桥</strong>——壮观的峡谷大桥，停车观景台拍照',
+          '<strong>傍晚：</strong>返回伊宁市区'
+        ],
+        meal: '午餐：赛里木湖高白鲑鱼（当地特产） / 晚餐：伊宁清炖羊肉、馕包肉',
+        tip: '赛湖海拔约2000米，紫外线极强！务必做好防晒。湖边风大，带冲锋衣。一定要晴天前往！' },
+      { day: 4, title: '那拉提草原 · 空中草原', sub: '伊宁 → 那拉提（约3h车程）', tag: '世界四大草原',
+        location: '那拉提镇 · 那拉提草原',
+        items: [
+          '<strong>上午：</strong>从伊宁出发，前往<strong>那拉提草原</strong>（车程约3h，沿途伊犁河谷风光美不胜收）',
+          '<strong>下午：</strong>进入<strong>那拉提景区</strong>——空中草原，海拔1800-2500米',
+          '<strong>核心体验：</strong>乘区间车游览，沿途雪山、森林、野花、毡房交相辉映',
+          '<span style="padding-left:16px;">① <strong>空中草原线</strong>（必去）—— 海拔2200米高山草甸</span>',
+          '<span style="padding-left:16px;">② <strong>游牧人家站</strong>—— 骑马体验（马夫牵，孩子可骑小马，约80元/时）</span>',
+          '<span style="padding-left:16px;">③ <strong>河谷草原线</strong>—— 平坦开阔，适合散步拍照</span>',
+          '<strong>傍晚：</strong>住那拉提镇民宿，体验哈萨克族风情'
+        ],
+        meal: '午餐：哈萨克族风味（奶茶、手抓肉） / 晚餐：民宿家常菜',
+        tip: '那拉提早晚温差大（白天25°C，晚上可能12°C），务必带厚外套。骑马穿长裤。',
+        emojis: ['🌿','🐎','🏔️'] },
+      { day: 5, title: '巴音布鲁克 · 九曲十八弯', sub: '那拉提 → 巴音布鲁克（约2.5h）', tag: '九个太阳的奇观',
+        location: '巴音布鲁克草原（海拔约2500m）',
+        items: [
+          '<strong>上午：</strong>前往<strong>巴音布鲁克草原</strong>（约2.5h车程），穿越天山腹地，晕车药必备',
+          '<strong>下午：</strong>乘区间车游览景区',
+          '<strong>第一站：天鹅湖</strong>—— 观赏野生天鹅，步道平坦',
+          '<strong>第二站：喇嘛庙</strong>—— 藏传佛教寺庙',
+          '<strong>傍晚（重头戏）：</strong><strong>九曲十八弯</strong>—— 开都河蜿蜒流淌，日落时分能看到"九个太阳"的奇观！',
+          '<strong>晚上：</strong>住巴音布鲁克镇'
+        ],
+        meal: '午餐：野蘑菇拌面 / 晚餐：牦牛肉火锅',
+        tip: '海拔2500米，动作放缓。看日落等到晚9点，带厚外套（10°C以下），带驱蚊水。' },
+      { day: 6, title: '喀赞其 · 蓝色童话小镇', sub: '巴音布鲁克 → 伊宁（约4h车程）', tag: '蓝色童话 · 慢生活',
+        location: '伊宁 · 喀赞其民俗街 · 六星街',
+        items: [
+          '<strong>上午：</strong>从巴音布鲁克返回伊宁（约4h车程），沿途欣赏伊犁河谷风光',
+          '<strong>下午：</strong>前往<strong>喀赞其民俗街</strong>——"蓝色的童话小镇"，维吾尔族民居色彩斑斓',
+          '坐"哈迪克"（维吾尔族马车）穿梭老街，节奏很慢',
+          '品尝<strong>手工冰淇淋</strong>（伊犁特色，必吃！）',
+          '<strong>傍晚：</strong><strong>六星街</strong>——文艺街区，特色小店、咖啡馆、音乐酒吧'
+        ],
+        meal: '晚餐：六星街特色餐厅 —— 大盘鸡、椒麻鸡、烤鸽子、手工酸奶',
+        tip: '喀赞其适合傍晚前往，光线柔和拍照最美。冰淇淋推荐"伊孜海尔"。',
+        emojis: ['💙','🎵','🍦'] },
+      { day: 7, title: '伊宁返程 · 满载而归', sub: '伊宁 → 乌鲁木齐 → 上海', tag: '再见新疆',
+        location: '伊宁 · 乌鲁木齐',
+        items: [
+          '睡到自然醒（新疆的早晨可以慢慢来😊）',
+          '伊宁市区自由活动，采购伴手礼：',
+          '<span style="padding-left:16px;">🎁 <strong>新疆干果</strong>——红枣、葡萄干、巴旦木</span>',
+          '<span style="padding-left:16px;">🎁 <strong>薰衣草制品</strong>——精油、香包（推荐"解忧公主"）</span>',
+          '<span style="padding-left:16px;">🎁 <strong>手工艺品</strong>——地毯、花帽</span>',
+          '<span style="padding-left:16px;">🎁 <strong>美食伴手礼</strong>——馕（真空包装）、果酱</span>',
+          '乘飞机经乌鲁木齐转机返回上海'
+        ],
+        meal: '午餐：最后一顿新疆美食 —— 烤羊肉串套餐 + 手工酸奶 + 哈密瓜',
+        tip: '干果在大巴扎买更实惠，薰衣草制品在伊宁买最正宗。' }
+    ],
+    route: {
+      waypoints: [
+        { pos: [43.8256, 87.6168], day: 'Day 1', title: '乌鲁木齐', sub: '大巴扎 · 红山公园', type: 'stay' },
+        { pos: [43.8848, 88.0900], day: 'Day 2', title: '天山天池', sub: '瑶池仙境 · 缆车观景', type: 'spot' },
+        { pos: [43.9167, 81.3167], day: 'Day 2', title: '伊宁', sub: '塞外江南 · 伊犁首府', type: 'stay' },
+        { pos: [44.6000, 81.1667], day: 'Day 3', title: '赛里木湖', sub: '大西洋最后一滴眼泪', type: 'spot' },
+        { pos: [44.4333, 81.2833], day: 'Day 3', title: '果子沟大桥', sub: '壮观的峡谷大桥', type: 'spot' },
+        { pos: [43.4333, 83.8000], day: 'Day 4', title: '那拉提草原', sub: '空中草原 · 骑马体验', type: 'stay' },
+        { pos: [43.0333, 84.1500], day: 'Day 5', title: '巴音布鲁克', sub: '九曲十八弯 · 天鹅湖', type: 'stay' },
+        { pos: [43.9000, 81.3000], day: 'Day 6', title: '喀赞其 · 六星街', sub: '蓝色童话小镇', type: 'stay' },
+      ],
+      drive: [
+        [43.8256, 87.6168], [43.8848, 88.0900], [43.8256, 87.6168],
+        [43.9167, 81.3167], [44.6000, 81.1667], [44.4333, 81.2833],
+        [43.9167, 81.3167], [43.4333, 83.8000], [43.0333, 84.1500],
+        [43.9000, 81.3000]
+      ],
+      flight: [[43.8256, 87.6168], [43.9167, 81.3167]],
+      desc: '伊犁经典小环线 · 可缩放拖动'
+    }
+  },
+
+  '11day': {
+    label: '11天10晚',
+    nights: 10,
+    budgetLow: 7500,
+    budgetHigh: 12800,
+    days: [
+      { day: 1, title: '抵达乌鲁木齐 · 大巴扎初体验', sub: '上海 → 乌鲁木齐', tag: '初见新疆',
+        location: '乌鲁木齐',
+        items: [
+          '<strong>上午：</strong>上海直飞乌鲁木齐（约5小时），选早班机中午抵达',
+          '<strong>中午：</strong>入住市区酒店（推荐友好北路或红山附近）',
+          '<strong>下午：</strong>前往<strong>国际大巴扎</strong>——逛手工艺品、干果市场',
+          '<strong>傍晚：</strong><strong>红山公园</strong>登高俯瞰乌鲁木齐全景',
+          '<strong>晚上：</strong>早休息，适应时差（比东部晚2小时）'
+        ],
+        meal: '大巴扎美食街 —— 烤羊肉串、烤包子、手抓饭',
+        tip: '多喝水，气候干燥。大巴扎购物可以砍价。',
+        emojis: ['🏛️','🕌','⛰️'] },
+      { day: 2, title: '天山天池 · 飞往伊宁', sub: '乌鲁木齐 → 天山天池 → 伊宁', tag: '瑶池仙境',
+        location: '天山天池 → 伊宁（飞行1.5h）',
+        items: [
+          '<strong>上午：</strong><strong>天山天池</strong>（1.5h车程），缆车上山，古称"瑶池"',
+          '<strong>下午：</strong>返回乌鲁木齐，飞往<strong>伊宁</strong>（1.5h）',
+          '<strong>傍晚：</strong>抵达伊宁，入住伊犁河附近酒店'
+        ],
+        meal: '午餐：天池简餐 / 晚餐：伊宁拌面、烤羊排',
+        tip: '天池海拔1900米，一般无高反。山上较凉，带薄外套。' },
+      { day: 3, title: '赛里木湖 · 环湖之旅', sub: '伊宁 → 赛里木湖 → 果子沟大桥', tag: '大西洋最后一滴眼泪',
+        location: '赛里木湖（2h车程）',
+        items: [
+          '<strong>全天：</strong><strong>赛里木湖</strong>——"大西洋最后一滴眼泪"，湖水湛蓝雪山环绕',
+          '环湖90km，随时停车拍照',
+          '<span style="padding-left:16px;">① 月亮湾 ② 点将台 ③ S弯公路</span>',
+          '<span style="padding-left:16px;">④ 西海草原 ⑤ 松树头</span>',
+          '途经<strong>果子沟大桥</strong>——壮观峡谷大桥',
+          '返回伊宁'
+        ],
+        meal: '午餐：赛湖高白鲑鱼 / 晚餐：伊宁清炖羊肉',
+        tip: '海拔2000米，紫外线极强！防晒必做。湖边风大带冲锋衣。' },
+      { day: 4, title: '那拉提草原 · 空中草原', sub: '伊宁 → 那拉提（约3h车程）', tag: '世界四大草原',
+        location: '那拉提镇',
+        items: [
+          '<strong>上午：</strong>前往<strong>那拉提草原</strong>（3h车程）',
+          '<strong>下午：</strong>那拉提景区——<strong>空中草原线</strong>必去，区间车直达',
+          '<strong>游牧人家站：</strong>骑马体验（有马夫牵，孩子可骑小马）',
+          '住那拉提镇民宿'
+        ],
+        meal: '午餐：哈萨克奶茶、手抓肉 / 晚餐：民宿家常菜',
+        tip: '早晚温差大（白天25°C/晚上12°C），带厚外套。骑马穿长裤。',
+        emojis: ['🌿','🐎','🏔️'] },
+      { day: 5, title: '巴音布鲁克 · 九曲十八弯', sub: '那拉提 → 巴音布鲁克（约2.5h）', tag: '九个太阳的奇观',
+        location: '巴音布鲁克（海拔2500m）',
+        items: [
+          '<strong>上午：</strong>前往<strong>巴音布鲁克</strong>（2.5h山路，晕车药必备）',
+          '<strong>下午：</strong>天鹅湖 + 喇嘛庙',
+          '<strong>傍晚：</strong><strong>九曲十八弯</strong>——日落"九个太阳"奇观！',
+          '住巴音布鲁克镇'
+        ],
+        meal: '午餐：野蘑菇拌面 / 晚餐：牦牛肉火锅',
+        tip: '海拔2500米动作放缓。日落约9PM，带厚外套（10°C以下）。驱蚊水必备。' },
+      { day: 6, title: '独库公路 · 天山秘境', sub: '巴音布鲁克 → 独库公路 → 独山子', tag: '中国最美公路',
+        location: '独库公路北段（约5h车程）',
+        items: [
+          '<strong>全天：</strong>穿越<strong>独库公路北段</strong>——中国最美景观公路之一！',
+          '从巴音布鲁克出发，翻越天山山脉，沿途雪山、峡谷、森林、瀑布',
+          '途经<strong>乔尔玛烈士陵园</strong>——向筑路英雄致敬',
+          '傍晚抵达<strong>独山子</strong>，入住酒店',
+          '独库公路有"一天有四季"之说，十里不同天'
+        ],
+        meal: '午餐：乔尔玛服务区简餐 / 晚餐：独山子大盘鸡',
+        tip: '独库公路7-8月开放，但天气多变。备厚衣服，山顶可能下雪！晕车药必备。' },
+      { day: 7, title: '返回乌鲁木齐 · 休整', sub: '独山子 → 乌鲁木齐（约3h车程）', tag: '休整日',
+        location: '乌鲁木齐',
+        items: [
+          '<strong>上午：</strong>从独山子返回乌鲁木齐（约3h）',
+          '<strong>下午：</strong>自由活动——推荐<strong>新疆博物馆</strong>（免费，看楼兰干尸）',
+          '或去<strong>二道桥市场</strong>补购特产',
+          '在乌鲁木齐好好休整，为接下来的吐鲁番之旅做准备'
+        ],
+        meal: '午餐：乌鲁木齐烤全羊 / 晚餐：酒店附近自由安排',
+        tip: '新疆博物馆周一闭馆，注意安排时间。博物馆需提前预约。' },
+      { day: 8, title: '吐鲁番 · 火焰山 · 葡萄沟', sub: '乌鲁木齐 → 吐鲁番（约2h高铁）', tag: '火洲之旅',
+        location: '吐鲁番',
+        items: [
+          '<strong>上午：</strong>乘高铁前往<strong>吐鲁番</strong>（约2h），体验"火洲"风情',
+          '<strong>火焰山：</strong>西游记取景地，地表温度可达70°C！巨型温度计打卡',
+          '<strong>葡萄沟：</strong>绿荫蔽日，品尝新鲜葡萄（7-8月正当季）',
+          '晚上住吐鲁番，当地民宿非常有特色'
+        ],
+        meal: '午餐：吐鲁番葡萄架下大盘鸡 / 晚餐：烤全羊+维吾尔族歌舞表演',
+        tip: '吐鲁番极度炎热（40°C+），防晒+补水！火焰山建议早上去。葡萄沟的葡萄可以现摘现吃。' },
+      { day: 9, title: '吐鲁番深度 · 坎儿井 · 交河故城', sub: '吐鲁番一日游', tag: '千年历史',
+        location: '吐鲁番',
+        items: [
+          '<strong>上午：</strong><strong>坎儿井</strong>——与长城、运河齐名的中国古代三大工程之一，地下暗渠凉爽宜人',
+          '<strong>交河故城：</strong>世界文化遗产，2300年历史的古城遗址',
+          '<strong>下午：</strong><strong>吐峪沟大峡谷</strong>——火焰山中最壮美的峡谷，麻扎村（1700年古村）',
+          '返回吐鲁番市区，采购葡萄干等特产'
+        ],
+        meal: '午餐：吐峪沟农家菜 / 晚餐：吐鲁番烤包子、拌面',
+        tip: '交河故城面积大，有电瓶车。吐峪沟拍照绝美。葡萄干比内地便宜一半！' },
+      { day: 10, title: '返回乌鲁木齐 · 博物馆', sub: '吐鲁番 → 乌鲁木齐（约2h高铁）', tag: '文化之旅',
+        location: '乌鲁木齐',
+        items: [
+          '<strong>上午：</strong>乘高铁返回乌鲁木齐',
+          '<strong>下午：</strong><strong>新疆博物馆</strong>——楼兰干尸、"五星出东方"锦护膊等镇馆之宝',
+          '<strong>国际大巴扎</strong>最后采购，买伴手礼',
+          '<strong>晚上：</strong>欢送晚宴！'
+        ],
+        meal: '午餐：乌鲁木齐特色拌面 / 晚餐：欢送晚宴 —— 烤全羊+歌舞',
+        tip: '大巴扎晚上有灯光秀，非常美。记得留够时间去机场。' },
+      { day: 11, title: '乌鲁木齐返程 · 满载而归', sub: '乌鲁木齐 → 上海', tag: '再见新疆',
+        location: '乌鲁木齐',
+        items: [
+          '睡到自然醒',
+          '整理行李，检查是否有遗漏的伴手礼',
+          '乘飞机返回上海（飞行约5小时）',
+          '🏔️ 新疆再见！'
+        ],
+        meal: '午餐：机场最后一顿新疆美食',
+        tip: '提前2小时到机场。干果、薰衣草制品等需托运的提前打包好。' }
+    ],
+    route: {
+      waypoints: [
+        { pos: [43.8256, 87.6168], day: 'Day 1', title: '乌鲁木齐', sub: '大巴扎 · 红山公园', type: 'stay' },
+        { pos: [43.8848, 88.0900], day: 'Day 2', title: '天山天池', sub: '瑶池仙境 · 缆车观景', type: 'spot' },
+        { pos: [43.9167, 81.3167], day: 'Day 2', title: '伊宁', sub: '塞外江南 · 伊犁首府', type: 'stay' },
+        { pos: [44.6000, 81.1667], day: 'Day 3', title: '赛里木湖', sub: '大西洋最后一滴眼泪', type: 'spot' },
+        { pos: [44.4333, 81.2833], day: 'Day 3', title: '果子沟大桥', sub: '壮观的峡谷大桥', type: 'spot' },
+        { pos: [43.4333, 83.8000], day: 'Day 4', title: '那拉提草原', sub: '空中草原 · 骑马体验', type: 'stay' },
+        { pos: [43.0333, 84.1500], day: 'Day 5', title: '巴音布鲁克', sub: '九曲十八弯 · 天鹅湖', type: 'stay' },
+        { pos: [43.6333, 84.8500], day: 'Day 6', title: '独库公路', sub: '中国最美公路 · 天山穿越', type: 'spot' },
+        { pos: [44.3333, 84.8500], day: 'Day 6', title: '独山子', sub: '独库公路北端起点', type: 'stay' },
+        { pos: [43.8256, 87.6168], day: 'Day 7', title: '乌鲁木齐', sub: '休整 · 自由活动', type: 'stay' },
+        { pos: [42.9500, 89.2000], day: 'Day 8', title: '吐鲁番', sub: '火焰山 · 葡萄沟', type: 'stay' },
+        { pos: [42.9500, 89.2000], day: 'Day 9', title: '吐鲁番', sub: '坎儿井 · 交河故城', type: 'stay' },
+        { pos: [43.8256, 87.6168], day: 'Day 10', title: '乌鲁木齐', sub: '博物馆 · 欢送晚宴', type: 'stay' },
+      ],
+      drive: [
+        [43.8256, 87.6168], [43.8848, 88.0900], [43.8256, 87.6168],
+        [43.9167, 81.3167], [44.6000, 81.1667], [44.4333, 81.2833],
+        [43.9167, 81.3167], [43.4333, 83.8000], [43.0333, 84.1500],
+        [43.6333, 84.8500], [44.3333, 84.8500],
+        [43.8256, 87.6168],
+        [42.9500, 89.2000], [42.9500, 89.2000],
+        [43.8256, 87.6168]
+      ],
+      flight: [[43.8256, 87.6168], [43.9167, 81.3167]],
+      desc: '独库公路+吐鲁番深度游 · 可缩放拖动'
+    }
+  }
+};
+
+/* ===== Render Overview ===== */
+function renderOverview(planId) {
+  const p = PLANS[planId];
+  document.getElementById('hero-subtitle').textContent =
+    planId === '7day' ? '赛里木湖 · 那拉提草原 · 巴音布鲁克 · 七天六晚'
+                      : '独库公路 · 吐鲁番 · 赛里木湖 · 那拉提 · 十一天十晚';
+  document.getElementById('hero-days').textContent = p.label.split('天')[0] + '天';
+  document.getElementById('hero-nights').textContent = p.nights + '晚';
+  document.getElementById('hero-budget').textContent = '~' + (p.budgetLow/1000).toFixed(0) + 'k';
+
+  document.getElementById('overview-grid').innerHTML = `
+    <div class="overview-card">
+      <span class="icon">📅</span>
+      <span class="num">${p.label}</span>
+      <span class="desc">7月中下旬出发</span>
+    </div>
+    <div class="overview-card">
+      <span class="icon">👨‍👩‍👧‍👦</span>
+      <span class="num">多家庭</span>
+      <span class="desc">带上老人和孩子</span>
+    </div>
+    <div class="overview-card">
+      <span class="icon">🌡️</span>
+      <span class="num">20-30°C</span>
+      <span class="desc">凉爽舒适避暑</span>
+    </div>
+    <div class="overview-card">
+      <span class="icon">✈️</span>
+      <span class="num">上海→乌鲁木齐</span>
+      <span class="desc">飞行约5小时</span>
+    </div>
+    <div class="overview-card">
+      <span class="icon">🚗</span>
+      <span class="num">${planId === '7day' ? '包车环线' : '包车+高铁'}</span>
+      <span class="desc">${planId === '7day' ? '灵活自由' : '独库公路+高铁'}</span>
+    </div>
+    <div class="overview-card">
+      <span class="icon">💰</span>
+      <span class="num">${(p.budgetLow/1000).toFixed(0)}-${(p.budgetHigh/1000).toFixed(0)}k/人</span>
+      <span class="desc">全包预算</span>
+    </div>
+  `;
+}
+
+/* ===== Render Itinerary ===== */
+function renderItinerary(planId) {
+  const p = PLANS[planId];
+  const timeline = document.getElementById('timeline');
+  const subtitle = document.querySelector('#itinerary .section-header p');
+  subtitle.textContent = planId === '7day'
+    ? '点击展开每天详情 · 伊犁经典小环线 7 天 6 晚'
+    : '点击展开每天详情 · 独库公路+吐鲁番深度 11 天 10 晚';
+
+  timeline.innerHTML = p.days.map(d => {
+    const items = d.items.map(item => `<div class="day-item">${item}</div>`).join('');
+    const mealHtml = d.meal ? `<div class="day-meal">${d.meal}</div>` : '';
+    const tipHtml = d.tip ? `<div class="day-tip">${d.tip}</div>` : '';
+    const imgHtml = d.emojis
+      ? `<div class="day-images">${d.emojis.map(e =>
+          `<div class="day-img" style="background:linear-gradient(135deg,#f6d365,#fda085);display:flex;align-items:center;justify-content:center;font-size:24px;">${e}</div>`
+        ).join('')}</div>`
+      : '';
+
+    return `
+      <div class="day-card">
+        <div class="day-marker">${d.day}</div>
+        <div class="day-header" onclick="toggleDay(this)">
+          <div class="day-header-left">
+            <div class="day-title">${d.title}</div>
+            <div class="day-sub">${d.sub}</div>
+          </div>
+          <span class="day-tag">${d.tag}</span>
+          <span class="day-arrow">▼</span>
+        </div>
+        <div class="day-body">
+          <div class="day-body-inner">
+            <div class="day-location">${d.location}</div>
+            ${items}
+            ${mealHtml}
+            ${tipHtml}
+            ${imgHtml}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  // Open first day by default
+  const first = timeline.querySelector('.day-card');
+  if (first) first.classList.add('open');
+}
+
+/* ===== Render Budget ===== */
+function renderBudget(planId) {
+  const p = PLANS[planId];
+  const carDesc = planId === '7day' ? '7天，全车分摊' : '10天，全车分摊';
+  const hotelLabel = p.nights + '晚';
+  const mealLabel = (p.nights + 1) + '天';
+
+  const extraRow = planId === '11day' ? `
+    <tr>
+      <td>🚄 乌鲁木齐↔吐鲁番高铁</td>
+      <td class="budget-wide">往返</td>
+      <td class="amount">200-400 元</td>
+    </tr>` : '';
+
+  document.getElementById('budget-table').innerHTML = `
+    <table class="budget-table">
+      <thead>
+        <tr>
+          <th style="width:34%;">项目</th>
+          <th class="budget-wide" style="width:28%;">说明</th>
+          <th style="text-align:right;width:38%;">预估费用（人均）</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>✈️ 机票（上海↔乌鲁木齐）</td>
+          <td class="budget-wide">往返含税</td>
+          <td class="amount">2000-3500 元</td>
+        </tr>
+        <tr>
+          <td>✈️ 乌鲁木齐↔伊宁</td>
+          <td class="budget-wide">往返含税</td>
+          <td class="amount">500-1000 元</td>
+        </tr>
+        ${extraRow}
+        <tr>
+          <td>🚗 包车费用</td>
+          <td class="budget-wide">${carDesc}</td>
+          <td class="amount">${planId === '7day' ? '700-1200' : '1000-1600'} 元</td>
+        </tr>
+        <tr>
+          <td>🏨 住宿（${hotelLabel}）</td>
+          <td class="budget-wide">舒适型酒店/民宿</td>
+          <td class="amount">${planId === '7day' ? '800-1800' : '1400-2800'} 元</td>
+        </tr>
+        <tr>
+          <td>🍽️ 餐饮（${mealLabel}）</td>
+          <td class="budget-wide">含特色餐+日常</td>
+          <td class="amount">${planId === '7day' ? '600-1000' : '900-1500'} 元</td>
+        </tr>
+        <tr>
+          <td>🎫 门票+区间车</td>
+          <td class="budget-wide">主要景点</td>
+          <td class="amount">${planId === '7day' ? '400-600' : '600-900'} 元</td>
+        </tr>
+        <tr>
+          <td>🎁 其他+保险</td>
+          <td class="budget-wide">购物、保险、杂项</td>
+          <td class="amount">300-500 元</td>
+        </tr>
+        <tr class="total">
+          <td>📊 合计</td>
+          <td class="budget-wide"></td>
+          <td class="amount total-amount">${p.budgetLow}-${p.budgetHigh} 元/人</td>
+        </tr>
+      </tbody>
+    </table>
+  `;
+}
+
+/* ===== Switch Plan ===== */
+function switchPlan(planId) {
+  // Update toggle buttons
+  document.querySelectorAll('.itin-toggle-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.plan === planId);
+  });
+  // Render all sections
+  renderOverview(planId);
+  renderItinerary(planId);
+  renderBudget(planId);
+  updateMap(planId);
+  // Scroll to itinerary section
+  setTimeout(() => {
+    const el = document.getElementById('itinerary');
+    const offset = document.getElementById('navbar').offsetHeight;
+    window.scrollTo({ top: el.offsetTop - offset - 10, behavior: 'smooth' });
+  }, 100);
+}
+
+/* ===== Init ===== */
+renderOverview('7day');
+renderItinerary('7day');
+renderBudget('7day');
+
+/* ===== Leaflet JS ===== */
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+/* ===== Interactive Map ===== */
+const map = L.map('map', {
+  center: [43.8, 83.5],
+  zoom: 7,
+  zoomControl: true,
+  scrollWheelZoom: true
+});
+
+const tileLayer = L.tileLayer('https://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+  attribution: '&copy; 高德地图',
+  maxZoom: 18
+}).addTo(map);
+
+/* Layer groups for switching */
+let driveLayer, flightLayer, markerLayer, shMarker;
+
+/* Icon factories */
+const stayIcon = () => L.divIcon({
+  html: '<div style="width:16px;height:16px;background:linear-gradient(135deg,#b8860b,#f6d365);border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>',
+  iconSize: [16, 16], iconAnchor: [8, 8], className: ''
+});
+const spotIcon = () => L.divIcon({
+  html: '<div style="width:14px;height:14px;background:#e53e3e;border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3);"></div>',
+  iconSize: [14, 14], iconAnchor: [7, 7], className: ''
+});
+const flyIcon = L.divIcon({
+  html: '<div style="width:18px;height:18px;background:#e53e3e;border:2px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;">✈</div>',
+  iconSize: [18, 18], iconAnchor: [9, 9], className: ''
+});
+const shIcon = L.divIcon({
+  html: '<div style="width:20px;height:20px;background:linear-gradient(135deg,#1a365d,#2b6cb0);border:3px solid #fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;">🏠</div>',
+  iconSize: [20, 20], iconAnchor: [10, 10], className: ''
+});
+
+/* Shanghai marker (always shown) */
+shMarker = L.marker([31.2304, 121.4737], { icon: shIcon }).addTo(map)
+  .bindPopup('<strong>🏠 上海</strong><br>出发地 → 飞往乌鲁木齐');
+
+/* Draw map for a plan */
+function updateMap(planId) {
+  const route = PLANS[planId].route;
+
+  // Update route description
+  const routeDesc = document.getElementById('route-desc');
+  if (routeDesc) routeDesc.textContent = route.desc;
+
+  // Remove old layers
+  if (driveLayer) map.removeLayer(driveLayer);
+  if (flightLayer) map.removeLayer(flightLayer);
+  if (markerLayer) map.removeLayer(markerLayer);
+
+  // Drive route
+  driveLayer = L.polyline(route.drive, {
+    color: '#b8860b', weight: 3, opacity: 0.8, dashArray: '8, 10'
+  }).addTo(map);
+
+  // Animate
+  setTimeout(() => {
+    const el = driveLayer._path;
+    const len = el.getTotalLength ? el.getTotalLength() : 1200;
+    el.style.strokeDasharray = len;
+    el.style.strokeDashoffset = len;
+    el.style.transition = 'stroke-dashoffset 3s ease-in-out';
+    requestAnimationFrame(() => { el.style.strokeDashoffset = '0'; });
+  }, 100);
+
+  // Flight route
+  flightLayer = L.polyline(route.flight, {
+    color: '#e53e3e', weight: 2, opacity: 0.6, dashArray: '6, 8'
+  }).addTo(map);
+
+  // Markers
+  const markers = [];
+  route.waypoints.forEach(wp => {
+    const icon = wp.type === 'stay' ? stayIcon() : spotIcon();
+    const emoji = wp.type === 'stay' ? '🏨' : '📍';
+    const m = L.marker(wp.pos, { icon }).addTo(map);
+    m.bindPopup(`
+      <div style="min-width:150px;">
+        <div style="font-size:12px;color:#b8860b;font-weight:700;margin-bottom:2px;">${wp.day}</div>
+        <strong style="font-size:15px;">${emoji} ${wp.title}</strong>
+        <div style="font-size:13px;color:#718096;margin-top:2px;">${wp.sub}</div>
+      </div>
+    `);
+    markers.push(m);
+  });
+  markerLayer = L.layerGroup(markers);
+
+  // Fit bounds
+  const allPts = route.waypoints.map(w => w.pos);
+  allPts.push([31.2304, 121.4737]);
+  map.fitBounds(L.latLngBounds(allPts), { padding: [50, 50] });
+}
+
+/* Init map with 7-day route */
+updateMap('7day');
+
+/* Animate on scroll into view */
+const mapObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && driveLayer) {
+      const el = driveLayer._path;
+      const len = el.getTotalLength ? el.getTotalLength() : 1200;
+      el.style.strokeDasharray = len;
+      el.style.strokeDashoffset = '0';
+    }
+  });
+}, { threshold: 0.2 });
+mapObserver.observe(document.getElementById('route-map-container'));
+</script>
+
 </body>
 </html>
