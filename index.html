@@ -852,7 +852,7 @@ body {
   <div class="card-title" style="color:var(--accent);">📢 各位家人，目的地已确定</div>
   <div style="font-size:14px;color:var(--text-secondary);line-height:1.9;">
     <p style="margin-bottom:10px;">
-      本次暑假家庭出游现聚焦 <strong style="color:#8B6B4D;">3 个方案</strong> 进行最终对比选择 👇
+      本次暑假家庭出游现聚焦 <strong style="color:#8B6B4D;">3 个方案</strong> 进行最终对比选择 👇（已更新：亚庇+仙本那 / 吉隆坡+兰卡威+槟城）
     </p>
     <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0;">
       <a href="itinerary-xinjiang.html" style="display:block;padding:16px;background:linear-gradient(135deg,#A0522D,#CD853F);color:#fff;border-radius:16px;text-decoration:none;text-align:center;">
@@ -860,15 +860,15 @@ body {
         <div style="font-weight:700;font-size:15px;">新疆·北疆伊犁</div>
         <div style="font-size:11px;opacity:0.85;margin-top:2px;">草原雪山 · 避暑胜地 · 7天</div>
       </a>
-      <a href="itinerary-singapore-kk.html" style="display:block;padding:16px;background:linear-gradient(135deg,#1a365d,#2b6cb0);color:#fff;border-radius:16px;text-decoration:none;text-align:center;">
-        <div style="font-size:28px;margin-bottom:6px;">🇸🇬🇲🇾</div>
-        <div style="font-weight:700;font-size:15px;">新加坡+亚庇</div>
-        <div style="font-size:11px;opacity:0.85;margin-top:2px;">城市+海岛 · 美食天堂 · 8天</div>
-      </a>
-      <a href="itinerary-kl-langkawi.html" style="display:block;padding:16px;background:linear-gradient(135deg,#004d40,#00b894);color:#fff;border-radius:16px;text-decoration:none;text-align:center;">
+      <a href="itinerary-singapore-kk.html" style="display:block;padding:16px;background:linear-gradient(135deg,#1a365d,#0d9488);color:#fff;border-radius:16px;text-decoration:none;text-align:center;">
         <div style="font-size:28px;margin-bottom:6px;">🇲🇾</div>
-        <div style="font-weight:700;font-size:15px;">吉隆坡+兰卡威</div>
-        <div style="font-size:11px;opacity:0.85;margin-top:2px;">城市+海岛 · 免税购物 · 8天</div>
+        <div style="font-weight:700;font-size:15px;">亚庇+仙本那</div>
+        <div style="font-size:11px;opacity:0.85;margin-top:2px;">沙巴深度游 · 玻璃海 · 10天</div>
+      </a>
+      <a href="itinerary-kl-langkawi.html" style="display:block;padding:16px;background:linear-gradient(135deg,#004d40,#e84393);color:#fff;border-radius:16px;text-decoration:none;text-align:center;">
+        <div style="font-size:28px;margin-bottom:6px;">🇲🇾</div>
+        <div style="font-weight:700;font-size:15px;">吉隆坡+兰卡威+槟城</div>
+        <div style="font-size:11px;opacity:0.85;margin-top:2px;">三大精华 · 美食之都 · 11天</div>
       </a>
     </div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;">
@@ -890,7 +890,7 @@ body {
     <strong>风格：</strong>慢节奏、不赶路、舒适为主<br>
     <strong>当前阶段：</strong>三个方案最终对比 · 请投票选择<br>
     <div style="margin-top:10px;font-size:13px;color:var(--text-secondary);">
-      现聚焦三个方案：🇨🇳 <strong>新疆北疆伊犁</strong> vs 🇸🇬🇲🇾 <strong>新加坡+亚庇</strong> vs 🇲🇾 <strong>吉隆坡+兰卡威</strong>，请大家查看详细对比后在留言板投票！
+      现聚焦三个方案：🇨🇳 <strong>新疆北疆伊犁</strong> vs 🇲🇾 <strong>亚庇+仙本那</strong> vs 🇲🇾 <strong>吉隆坡+兰卡威+槟城</strong>，请大家查看详细对比后在留言板投票！
     </div>
   </div>
 
@@ -932,21 +932,21 @@ const DESTINATIONS = [
     page: 'itinerary-xinjiang.html'
   },
   {
-    id: 'singapore-kk', name: '新加坡+亚庇 · 城市海岛', flag: '🇸🇬🇲🇾',
-    region: 'overseas', desc: '8天7晚 · 环球影城 · 海岛浮潜',
-    features: ['美食天堂', '亲子满分', '城市+海岛'],
+    id: 'singapore-kk', name: '亚庇+仙本那 · 沙巴深度游', flag: '🇲🇾',
+    region: 'overseas', desc: '10天9晚 · 世界日落 · 玻璃海浮潜',
+    features: ['海岛', '海鲜便宜', '亲子友好'],
     img: 'https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=600&q=80',
-    color: '#2B6CB0',
-    latlng: [1.3521, 103.8198],
+    color: '#0d9488',
+    latlng: [5.9804, 116.0735],
     page: 'itinerary-singapore-kk.html'
   },
   {
-    id: 'kl-langkawi', name: '吉隆坡+兰卡威 · 都会海岛', flag: '🇲🇾',
-    region: 'overseas', desc: '8天7晚 · 天空之桥 · 免税购物',
-    features: ['免签', '性价比高', '美食多元'],
+    id: 'kl-langkawi', name: '吉隆坡+兰卡威+槟城 · 大马全景', flag: '🇲🇾',
+    region: 'overseas', desc: '11天10晚 · 天空之桥 · 美食之都',
+    features: ['全程免签', '性价比高', '美食天堂'],
     img: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80',
     color: '#00b894',
-    latlng: [3.1390, 101.6869],
+    latlng: [5.4141, 100.3288],
     page: 'itinerary-kl-langkawi.html'
   }
 ];
