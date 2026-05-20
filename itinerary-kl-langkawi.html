@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026暑期 · 吉隆坡+兰卡威+槟城之旅</title>
+<title>2026暑期 · 吉隆坡+马六甲+仙本那之旅</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <style>
 /* ===== Reset & Base ===== */
@@ -25,7 +25,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(135deg, #004d40 0%, #00897b 30%, #00b894 60%, #004d40 100%);
+  background: linear-gradient(135deg, #2d1b69 0%, #6c5ce7 30%, #0d9488 60%, #004d40 100%);
   overflow: hidden;
 }
 .hero::before {
@@ -41,7 +41,7 @@ body {
 }
 .hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(0,77,64,0.88) 0%, rgba(0,185,148,0.78) 50%, rgba(0,77,64,0.92) 100%);
+  background: linear-gradient(135deg, rgba(45,27,105,0.88) 0%, rgba(108,92,231,0.78) 50%, rgba(0,77,64,0.92) 100%);
 }
 .hero-content {
   position: relative; z-index: 2;
@@ -73,7 +73,7 @@ body {
   letter-spacing: 4px;
 }
 .hero h1 span {
-  background: linear-gradient(to right, #00b894, #4dd0b0);
+  background: linear-gradient(to right, #a78bfa, #0d9488);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -97,7 +97,7 @@ body {
 .hero-stat .num {
   font-size: 28px;
   font-weight: 800;
-  color: #00b894;
+  color: #a78bfa;
   display: block;
 }
 .hero-stat .label {
@@ -184,8 +184,8 @@ body {
   transition: all 0.2s;
   white-space: nowrap;
 }
-.nav-link:hover { color: #00897b; }
-.nav-link.active { color: #00897b; border-bottom-color: #00897b; }
+.nav-link:hover { color: #6c5ce7; }
+.nav-link.active { color: #6c5ce7; border-bottom-color: #6c5ce7; }
 
 /* ===== Container ===== */
 .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
@@ -242,7 +242,7 @@ body {
 .overview-card .num {
   font-size: 22px;
   font-weight: 800;
-  color: #00897b;
+  color: #6c5ce7;
 }
 .overview-card .desc {
   font-size: 13px;
@@ -252,7 +252,7 @@ body {
 
 /* ===== Countdown ===== */
 .countdown-bar {
-  background: linear-gradient(135deg, #004d40, #00897b);
+  background: linear-gradient(135deg, #2d1b69, #6c5ce7);
   border-radius: 16px;
   padding: 28px 24px;
   text-align: center;
@@ -265,7 +265,7 @@ body {
 .countdown-item .num {
   font-size: 32px;
   font-weight: 800;
-  color: #00b894;
+  color: #a78bfa;
   line-height: 1;
 }
 .countdown-item .unit { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
@@ -282,7 +282,7 @@ body {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(to bottom, #6c5ce7, #00b894, #6c5ce7);
+  background: linear-gradient(to bottom, #6c5ce7, #0d9488, #2b6cb0);
   border-radius: 2px;
 }
 .day-card {
@@ -304,7 +304,7 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #6c5ce7, #00b894);
+  background: linear-gradient(135deg, #6c5ce7, #0d9488);
   color: #fff;
   display: flex;
   align-items: center;
@@ -340,7 +340,7 @@ body {
   border-radius: 12px;
   font-size: 11px;
   font-weight: 700;
-  background: linear-gradient(135deg, #00b894, #00897b);
+  background: linear-gradient(135deg, #0d9488, #00695c);
   color: #fff;
   white-space: nowrap;
 }
@@ -383,10 +383,10 @@ body {
 .day-item strong { color: #2d3748; }
 .day-meal {
   font-size: 13px;
-  color: #00897b;
+  color: #6c5ce7;
   padding-left: 20px;
   margin-top: 8px;
-  background: #f0f7ff;
+  background: #f0fdfa;
   border-radius: 8px;
   padding: 8px 14px;
 }
@@ -409,10 +409,10 @@ body {
 /* ===== Budget ===== */
 .budget-wrap { overflow-x: auto; }
 .budget-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 560px; }
-.budget-table th { background: #004d40; color: #fff; padding: 10px 12px; text-align: center; font-weight: 600; }
+.budget-table th { background: #2d1b69; color: #fff; padding: 10px 12px; text-align: center; font-weight: 600; }
 .budget-table td { padding: 8px 12px; text-align: center; border-bottom: 1px solid #e8edf2; }
 .budget-table tr:nth-child(even) { background: #f7fafc; }
-.budget-table .total-row { background: #e0f2f1 !important; font-weight: 700; }
+.budget-table .total-row { background: #ebf8ff !important; font-weight: 700; }
 
 /* ===== Info Cards ===== */
 .info-grid-2 {
@@ -440,7 +440,7 @@ body {
 .packing-col { background: #fff; border-radius: 14px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
 .packing-col h4 { font-size: 14px; color: #1a365d; margin-bottom: 10px; }
 .packing-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #4a5568; padding: 3px 0; }
-.packing-item input { width: 16px; height: 16px; accent-color: #00897b; cursor: pointer; }
+.packing-item input { width: 16px; height: 16px; accent-color: #6c5ce7; cursor: pointer; }
 
 /* ===== Tips ===== */
 .tip-box {
@@ -449,13 +449,13 @@ body {
   padding: 20px 22px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.05);
   margin-bottom: 14px;
-  border-left: 4px solid #00897b;
+  border-left: 4px solid #6c5ce7;
 }
 .tip-box h4 { font-size: 15px; font-weight: 700; color: #1a365d; margin-bottom: 4px; }
 .tip-box p { font-size: 14px; color: #4a5568; }
 .tip-box ul { list-style: none; padding: 0; margin-top: 4px; }
 .tip-box li { font-size: 13px; color: #4a5568; padding: 2px 0; padding-left: 16px; position: relative; }
-.tip-box li::before { content: '•'; position: absolute; left: 2px; color: #00897b; }
+.tip-box li::before { content: '•'; position: absolute; left: 2px; color: #6c5ce7; }
 
 /* ===== Footer ===== */
 .footer {
@@ -480,12 +480,12 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #00897b, #00b894);
+  background: linear-gradient(135deg, #6c5ce7, #0d9488);
   color: #fff;
   border: none;
   font-size: 18px;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(0,137,123,0.3);
+  box-shadow: 0 4px 16px rgba(108,92,231,0.3);
   transition: all 0.3s;
   opacity: 0;
   transform: translateY(20px);
@@ -497,7 +497,7 @@ body {
   transform: translateY(0);
   pointer-events: auto;
 }
-.back-top:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(0,137,123,0.4); }
+.back-top:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(108,92,231,0.4); }
 
 /* ===== Responsive ===== */
 @media (max-width: 600px) {
@@ -571,9 +571,9 @@ body {
 <section class="hero">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">🇲🇾 吉隆坡 + 🇲🇾 兰卡威 + 🇲🇾 槟城</div>
-    <h1>吉隆坡都会 · 兰卡威海岛 · 槟城美食<br><span>一趟玩遍马来西亚三大精华</span></h1>
-    <p class="hero-sub">吉隆坡城市繁华，兰卡威海岛浪漫，槟城美食之都 —— 一次体验马来西亚三重魅力</p>
+    <div class="hero-badge">🇲🇾 吉隆坡 + 🇲🇾 马六甲 + 🇲🇾 仙本那</div>
+    <h1>吉隆坡都会 · 马六甲古城 · 仙本那秘境<br><span>一趟玩遍马来西亚三大精华</span></h1>
+    <p class="hero-sub">吉隆坡城市繁华，马六甲千年古城，仙本那玻璃海群岛 —— 一次体验马来西亚三重魅力</p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="num">11天</span><span class="label">建议行程</span></div>
       <div class="hero-stat"><span class="num">3地</span><span class="label">吉隆坡+兰卡威+槟城</span></div>
@@ -606,7 +606,7 @@ body {
   <div class="section-header">
     <span class="emoji">🗺️</span>
     <h2>行程概览</h2>
-    <p>吉隆坡3天 + 兰卡威3天 + 槟城4天 · 马来西亚全景深度游</p>
+    <p>吉隆坡3天 + 仙本那3天 + 亚庇3天 · 马来西亚西东联游</p>
   </div>
   <div class="overview-grid">
     <div class="overview-card"><span class="icon">✈️</span><div class="num">3段飞行</div><div class="desc">上海→吉隆坡5h<br>吉隆坡→兰卡威1h<br>槟城→上海约6h(经吉隆坡)</div></div>
@@ -930,7 +930,7 @@ body {
   </table>
   </div>
   <div style="margin-top:14px;font-size:13px;color:#a0aec0;text-align:center;">
-    * 价格随季节浮动，建议提前3-4个月订票。马来西亚消费水平适中，性价比高。
+    * 价格随季节浮动，建议提前3-4个月订票。仙本那海鲜消费低，一餐人均仅50-80元。
   </div>
 </section>
 
@@ -939,7 +939,7 @@ body {
   <div class="section-header">
     <span class="emoji">🎒</span>
     <h2>行李清单</h2>
-    <p>吉隆坡+兰卡威+槟城 · 三地不同场景</p>
+    <p>吉隆坡+马六甲+仙本那+亚庇 · 城市+海岛装备</p>
   </div>
   <div class="packing-grid">
     <div class="packing-col">
@@ -986,7 +986,7 @@ body {
   <div class="section-header">
     <span class="emoji">💡</span>
     <h2>实用贴士</h2>
-    <p>吉隆坡 + 兰卡威 + 槟城注意事项</p>
+    <p>吉隆坡 + 马六甲 + 仙本那注意事项</p>
   </div>
 
   <div class="tip-box">
@@ -996,12 +996,12 @@ body {
 
   <div class="tip-box">
     <h4>💰 货币与消费</h4>
-    <p>马来西亚使用令吉（MYR），1 MYR ≈ 1.6 CNY。吉隆坡消费约上海0.7倍，兰卡威更低约0.5倍，槟城约0.6倍。兰卡威是免税岛，巧克力、酒类、香水比吉隆坡便宜很多。槟城美食一餐人均15-30元，世界美食之都名不虚传！建议在吉隆坡ATM取现，汇率较好。</p>
+    <p>马来西亚使用令吉（MYR），1 MYR ≈ 1.6 CNY。吉隆坡消费约上海0.7倍。仙本那海鲜一餐人均50-80元，比国内便宜一半以上！建议在吉隆坡ATM取现，汇率较好。</p>
   </div>
 
   <div class="tip-box">
     <h4>🌤️ 气候与穿着</h4>
-    <p>7-8月旱季（25-33°C），体感炎热，建议薄短袖+防晒。云顶高原凉爽（18-22°C）需带外套。兰卡威海风习习，傍晚体感舒适。雨季偶尔有阵雨，带一把雨伞。</p>
+    <p>7-8月旱季（25-33°C），吉隆坡室内空调充足。仙本那同样炎热但海水清澈。亚庇海风习习体感舒适。雨季偶有阵雨，带一把雨伞。神山凉爽需带外套。</p>
   </div>
 
   <div class="tip-box">
@@ -1013,7 +1013,7 @@ body {
 
   <div class="tip-box">
     <h4>📱 通讯与网络</h4>
-    <p>提前在淘宝买马来西亚旅游SIM卡（约30-50元），或开通国际漫游。吉隆坡4G覆盖好，兰卡威部分区域信号较弱。</p>
+    <p>提前在淘宝买马来西亚旅游SIM卡（约30-50元），或开通国际漫游。吉隆坡4G覆盖好，仙本那镇上信号OK，出海部分区域无信号。</p>
   </div>
 
   <div class="tip-box">
@@ -1026,8 +1026,8 @@ body {
 
 <!-- ===== Footer ===== -->
 <div class="footer">
-  <div class="family-note">🇲🇾 吉隆坡+兰卡威+槟城 · 2026年暑假家庭出游方案</div>
-  <a href="proposal.html" style="color:#00897b;text-decoration:none;font-weight:600;">📋 返回详细对比方案页</a>
+  <div class="family-note">🇲🇾 吉隆坡+马六甲+仙本那 · 2026年暑假家庭出游方案</div>
+  <a href="proposal.html" style="color:#6c5ce7;text-decoration:none;font-weight:600;">📋 返回详细对比方案页</a>
   &nbsp;·&nbsp;
   <a href="index.html" style="color:#718096;text-decoration:none;">🏠 返回首页</a>
 </div>

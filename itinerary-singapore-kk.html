@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026暑期 · 亚庇+仙本那之旅</title>
+<title>2026暑期 · 吉隆坡+槟城+亚庇之旅</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <style>
 /* ===== Reset & Base ===== */
@@ -25,13 +25,13 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(135deg, #0c2340 0%, #1a4a6e 30%, #2d8ba8 60%, #0c2340 100%);
+  background: linear-gradient(135deg, #2d1b69 0%, #6c5ce7 30%, #e84393 60%, #2b6cb0 100%);
   overflow: hidden;
 }
 .hero::before {
   content: '';
   position: absolute; inset: 0;
-  background: url('https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=1600&q=80') center/cover no-repeat;
+  background: url('https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1600&q=80') center/cover no-repeat;
   opacity: 0.15;
   animation: heroZoom 25s ease-in-out infinite alternate;
 }
@@ -41,7 +41,7 @@ body {
 }
 .hero-overlay {
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(12,35,64,0.88) 0%, rgba(45,139,168,0.78) 50%, rgba(12,35,64,0.92) 100%);
+  background: linear-gradient(135deg, rgba(45,27,105,0.88) 0%, rgba(108,92,231,0.78) 50%, rgba(43,108,176,0.92) 100%);
 }
 .hero-content {
   position: relative; z-index: 2;
@@ -73,7 +73,7 @@ body {
   letter-spacing: 4px;
 }
 .hero h1 span {
-  background: linear-gradient(to right, #4fc3f7, #81d4fa);
+  background: linear-gradient(to right, #a78bfa, #e84393);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -97,7 +97,7 @@ body {
 .hero-stat .num {
   font-size: 28px;
   font-weight: 800;
-  color: #4fc3f7;
+  color: #a78bfa;
   display: block;
 }
 .hero-stat .label {
@@ -184,8 +184,8 @@ body {
   transition: all 0.2s;
   white-space: nowrap;
 }
-.nav-link:hover { color: #2b6cb0; }
-.nav-link.active { color: #2b6cb0; border-bottom-color: #2b6cb0; }
+.nav-link:hover { color: #6c5ce7; }
+.nav-link.active { color: #6c5ce7; border-bottom-color: #6c5ce7; }
 
 /* ===== Container ===== */
 .container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
@@ -210,7 +210,7 @@ body {
 .section-header h2 {
   font-size: clamp(22px, 3.5vw, 28px);
   font-weight: 800;
-  color: #1a365d;
+  color: #2d1b69;
   letter-spacing: 2px;
 }
 .section-header p {
@@ -242,7 +242,7 @@ body {
 .overview-card .num {
   font-size: 22px;
   font-weight: 800;
-  color: #2b6cb0;
+  color: #6c5ce7;
 }
 .overview-card .desc {
   font-size: 13px;
@@ -252,7 +252,7 @@ body {
 
 /* ===== Countdown ===== */
 .countdown-bar {
-  background: linear-gradient(135deg, #0c2340, #1a4a6e);
+  background: linear-gradient(135deg, #2d1b69, #6c5ce7);
   border-radius: 16px;
   padding: 28px 24px;
   text-align: center;
@@ -265,7 +265,7 @@ body {
 .countdown-item .num {
   font-size: 32px;
   font-weight: 800;
-  color: #4fc3f7;
+  color: #a78bfa;
   line-height: 1;
 }
 .countdown-item .unit { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
@@ -282,7 +282,7 @@ body {
   top: 0;
   bottom: 0;
   width: 3px;
-  background: linear-gradient(to bottom, #2b6cb0, #4fc3f7, #2b6cb0);
+  background: linear-gradient(to bottom, #6c5ce7, #e84393, #2b6cb0);
   border-radius: 2px;
 }
 .day-card {
@@ -304,14 +304,14 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2b6cb0, #4fc3f7);
+  background: linear-gradient(135deg, #6c5ce7, #a78bfa);
   color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
   font-weight: 700;
-  box-shadow: 0 2px 8px rgba(43,108,176,0.3);
+  box-shadow: 0 2px 8px rgba(108,92,231,0.3);
   z-index: 1;
 }
 .day-header {
@@ -326,11 +326,11 @@ body {
 .day-title {
   font-size: 16px;
   font-weight: 700;
-  color: #1a365d;
+  color: #2d1b69;
 }
 .day-sub {
   font-size: 13px;
-  color: #2b6cb0;
+  color: #6c5ce7;
   font-weight: 600;
   margin-top: 1px;
 }
@@ -340,7 +340,7 @@ body {
   border-radius: 12px;
   font-size: 11px;
   font-weight: 700;
-  background: linear-gradient(135deg, #4fc3f7, #2b6cb0);
+  background: linear-gradient(135deg, #a78bfa, #6c5ce7);
   color: #fff;
   white-space: nowrap;
 }
@@ -383,10 +383,10 @@ body {
 .day-item strong { color: #2d3748; }
 .day-meal {
   font-size: 13px;
-  color: #2b6cb0;
+  color: #6c5ce7;
   padding-left: 20px;
   margin-top: 8px;
-  background: #f0f7ff;
+  background: #f5f3ff;
   border-radius: 8px;
   padding: 8px 14px;
 }
@@ -394,20 +394,20 @@ body {
 .day-tip {
   font-size: 13px;
   color: #2d3748;
-  background: #f0fff4;
+  background: #faf5ff;
   border-radius: 8px;
   padding: 8px 14px;
   margin-top: 8px;
 }
 .day-tip::before { content: '💡 '; }
 .day-sg { border-left: 4px solid #e53e3e; }
-.day-kk { border-left: 4px solid #2b6cb0; }
+.day-kk { border-left: 4px solid #6c5ce7; }
 .day-sem { border-left: 4px solid #0d9488; }
 
 /* ===== Budget ===== */
 .budget-wrap { overflow-x: auto; }
 .budget-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 560px; }
-.budget-table th { background: #1a365d; color: #fff; padding: 10px 12px; text-align: center; font-weight: 600; }
+.budget-table th { background: #2d1b69; color: #fff; padding: 10px 12px; text-align: center; font-weight: 600; }
 .budget-table td { padding: 8px 12px; text-align: center; border-bottom: 1px solid #e8edf2; }
 .budget-table tr:nth-child(even) { background: #f7fafc; }
 .budget-table .total-row { background: #ebf8ff !important; font-weight: 700; }
@@ -426,7 +426,7 @@ body {
   text-align: center;
 }
 .info-card-sm .icon { font-size: 24px; }
-.info-card-sm h4 { font-size: 14px; color: #1a365d; margin: 6px 0 4px; }
+.info-card-sm h4 { font-size: 14px; color: #2d1b69; margin: 6px 0 4px; }
 .info-card-sm p { font-size: 13px; color: #718096; }
 
 /* ===== Packing ===== */
@@ -436,9 +436,9 @@ body {
   gap: 14px;
 }
 .packing-col { background: #fff; border-radius: 14px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
-.packing-col h4 { font-size: 14px; color: #1a365d; margin-bottom: 10px; }
+.packing-col h4 { font-size: 14px; color: #2d1b69; margin-bottom: 10px; }
 .packing-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #4a5568; padding: 3px 0; }
-.packing-item input { width: 16px; height: 16px; accent-color: #2b6cb0; cursor: pointer; }
+.packing-item input { width: 16px; height: 16px; accent-color: #6c5ce7; cursor: pointer; }
 
 /* ===== Tips ===== */
 .tip-box {
@@ -447,13 +447,13 @@ body {
   padding: 20px 22px;
   box-shadow: 0 2px 12px rgba(0,0,0,0.05);
   margin-bottom: 14px;
-  border-left: 4px solid #2b6cb0;
+  border-left: 4px solid #6c5ce7;
 }
-.tip-box h4 { font-size: 15px; font-weight: 700; color: #1a365d; margin-bottom: 4px; }
+.tip-box h4 { font-size: 15px; font-weight: 700; color: #2d1b69; margin-bottom: 4px; }
 .tip-box p { font-size: 14px; color: #4a5568; }
 .tip-box ul { list-style: none; padding: 0; margin-top: 4px; }
 .tip-box li { font-size: 13px; color: #4a5568; padding: 2px 0; padding-left: 16px; position: relative; }
-.tip-box li::before { content: '•'; position: absolute; left: 2px; color: #2b6cb0; }
+.tip-box li::before { content: '•'; position: absolute; left: 2px; color: #6c5ce7; }
 
 /* ===== Footer ===== */
 .footer {
@@ -478,12 +478,12 @@ body {
   width: 44px;
   height: 44px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #2b6cb0, #4fc3f7);
+  background: linear-gradient(135deg, #6c5ce7, #a78bfa);
   color: #fff;
   border: none;
   font-size: 18px;
   cursor: pointer;
-  box-shadow: 0 4px 16px rgba(43,108,176,0.3);
+  box-shadow: 0 4px 16px rgba(108,92,231,0.3);
   transition: all 0.3s;
   opacity: 0;
   transform: translateY(20px);
@@ -495,7 +495,7 @@ body {
   transform: translateY(0);
   pointer-events: auto;
 }
-.back-top:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(43,108,176,0.4); }
+.back-top:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(108,92,231,0.4); }
 
 /* ===== Responsive ===== */
 @media (max-width: 600px) {
@@ -569,9 +569,9 @@ body {
 <section class="hero">
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-badge">🇲🇾 马来西亚 · 沙巴</div>
-    <h1>亚庇日落 · 仙本那秘境<br><span>一趟玩遍沙巴两大精华</span></h1>
-    <p class="hero-sub">前半程亚庇世界级日落与萤火虫，后半程仙本那玻璃海群岛 —— 沙巴深度游</p>
+    <div class="hero-badge">🇲🇾 吉隆坡 + 🇲🇾 槟城 + 🇲🇾 亚庇</div>
+    <h1>吉隆坡都会 · 槟城美食 · 亚庇日落<br><span>一趟玩遍马来西亚三大精华</span></h1>
+    <p class="hero-sub">吉隆坡城市繁华，槟城美食之都，亚庇世界级日落 —— 一次体验三种魅力</p>
     <div class="hero-stats">
       <div class="hero-stat"><span class="num">10天</span><span class="label">建议行程</span></div>
       <div class="hero-stat"><span class="num">2地</span><span class="label">亚庇+仙本那</span></div>
@@ -603,7 +603,7 @@ body {
   <div class="section-header">
     <span class="emoji">🗺️</span>
     <h2>行程概览</h2>
-    <p>亚庇5天 + 仙本那5天 · 沙巴深度游</p>
+    <p>吉隆坡3天 + 槟城2天 + 亚庇4天 · 马来西亚西东联游</p>
   </div>
   <div class="overview-grid">
     <div class="overview-card"><span class="icon">✈️</span><div class="num">3段飞行</div><div class="desc">上海→亚庇约8h<br>亚庇→斗湖飞55min<br>斗湖→上海经转</div></div>
@@ -892,7 +892,7 @@ body {
   </table>
   </div>
   <div style="margin-top:14px;font-size:13px;color:#a0aec0;text-align:center;">
-    * 价格随季节浮动，建议提前3-4个月订票。仙本那海鲜消费低，一餐人均仅50-80元。
+    * 价格随季节浮动，建议提前3-4个月订票。马来西亚消费水平适中，性价比高。
   </div>
 </section>
 
@@ -901,7 +901,7 @@ body {
   <div class="section-header">
     <span class="emoji">🎒</span>
     <h2>行李清单</h2>
-    <p>亚庇+仙本那 · 热带海岛装备</p>
+    <p>吉隆坡+槟城+亚庇 · 城市+海岛装备</p>
   </div>
   <div class="packing-grid">
     <div class="packing-col">
@@ -948,7 +948,7 @@ body {
   <div class="section-header">
     <span class="emoji">💡</span>
     <h2>实用贴士</h2>
-    <p>亚庇 + 仙本那注意事项</p>
+    <p>吉隆坡 + 槟城 + 亚庇注意事项</p>
   </div>
 
   <div class="tip-box">
@@ -958,12 +958,12 @@ body {
 
   <div class="tip-box">
     <h4>💰 货币与消费</h4>
-    <p>马来西亚使用令吉（MYR），1 MYR ≈ 1.6 CNY。亚庇消费约上海0.6倍，仙本那更低约0.4倍。建议在亚庇市区ATM取现，汇率较好。仙本那海鲜一餐人均50-80元，比国内便宜一半以上！</p>
+    <p>马来西亚使用令吉（MYR），1 MYR ≈ 1.6 CNY。吉隆坡消费约上海0.7倍，槟城约0.6倍（美食一餐15-30元），亚庇约0.5倍。建议在吉隆坡ATM取现，汇率较好。</p>
   </div>
 
   <div class="tip-box">
     <h4>🌤️ 气候与穿着</h4>
-    <p>亚庇7-8月旱季（25-32°C），海风习习体感舒适。神山区域凉爽（20°C左右），需带外套。仙本那同样炎热（25-33°C），但海水清澈透亮，建议薄短袖+防晒。雨季偶有阵雨，带一把雨伞。</p>
+    <p>7-8月旱季（25-33°C），吉隆坡室内空调充足。槟城乔治市步行区有遮荫。亚庇海风习习体感舒适。雨季偶有阵雨，带一把雨伞。</p>
   </div>
 
   <div class="tip-box">
@@ -975,7 +975,7 @@ body {
 
   <div class="tip-box">
     <h4>📱 通讯与网络</h4>
-    <p>提前在淘宝买马来西亚旅游SIM卡（约30-50元），或开通国际漫游。亚庇市区4G覆盖好，仙本那镇上信号OK，出海部分区域无信号。</p>
+    <p>提前在淘宝买马来西亚旅游SIM卡（约30-50元），或开通国际漫游。吉隆坡和槟城4G覆盖好。亚庇市区信号OK。</p>
   </div>
 
   <div class="tip-box">
@@ -985,7 +985,7 @@ body {
 
   <div class="tip-box">
     <h4>✈️ 亚庇→仙本那交通</h4>
-    <p>亚庇到仙本那需先飞斗湖（55分钟），再包车到仙本那镇（1.5h）。建议订早班航班，留足下午时间到镇上。斗湖机场较小，建议提前2小时到。</p>
+    <p>吉隆坡到槟城飞行约1h，槟城到亚庇飞行约2.5h。跨城建议订直飞航班减少转车时间。吉隆坡机场到市区约1h（KLIA Ekspres 28分钟）。</p>
   </div>
 </section>
 
@@ -993,8 +993,8 @@ body {
 
 <!-- ===== Footer ===== -->
 <div class="footer">
-  <div class="family-note">🇲🇾 亚庇+仙本那 · 2026年暑假家庭出游方案</div>
-  <a href="proposal.html" style="color:#2b6cb0;text-decoration:none;font-weight:600;">📋 返回详细对比方案页</a>
+  <div class="family-note">🇲🇾 吉隆坡+槟城+亚庇 · 2026年暑假家庭出游方案</div>
+  <a href="proposal.html" style="color:#6c5ce7;text-decoration:none;font-weight:600;">📋 返回详细对比方案页</a>
   &nbsp;·&nbsp;
   <a href="index.html" style="color:#718096;text-decoration:none;">🏠 返回首页</a>
 </div>
