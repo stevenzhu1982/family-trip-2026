@@ -852,11 +852,11 @@ body {
   <div class="card-title" style="color:var(--accent);">📢 各位家人，目的地已确定</div>
   <div style="font-size:14px;color:var(--text-secondary);line-height:1.9;">
         <p style="margin-bottom:10px;">
-	      本次暑假家庭出游现聚焦 <strong style="color:#8B6B4D;">7 个方案</strong> 进行最终对比选择 👇（新增：北海道 / 云南 / 巴厘岛 / 清迈）
+	      本次暑假家庭出游现聚焦 <strong style="color:#8B6B4D;">8 个方案</strong> 进行最终对比选择 👇（新增：新加坡+吉隆坡+槟城 / 北海道 / 云南 / 巴厘岛 / 清迈）
 	    </p>
 	    <div style="text-align:center;margin:16px 0 8px;">
 	      <a href="proposal.html" style="display:block;padding:20px 28px;background:linear-gradient(135deg,#e74c3c,#f39c12);color:#fff;border-radius:20px;text-decoration:none;font-weight:800;font-size:20px;box-shadow:0 6px 24px rgba(231,76,60,0.4);letter-spacing:2px;animation:pulseGlow 2s ease-in-out infinite;border:2px solid rgba(255,255,255,0.2);">
-	        📋 先看这里：七个方案详细对比 → 点击投票选定
+	        📋 先看这里：八个方案详细对比 → 点击投票选定
 	      </a>
 	    </div>
 	    <style>
@@ -903,6 +903,11 @@ body {
 	        <div style="font-weight:700;font-size:13px;">清迈</div>
 	        <div style="font-size:10px;opacity:0.85;margin-top:2px;">泰北慢生活 · 7天</div>
 	      </a>
+	      <a href="itinerary-singapore-kl-penang.html" style="display:block;padding:14px;background:linear-gradient(135deg,#e74c3c,#6c5ce7);color:#fff;border-radius:16px;text-decoration:none;text-align:center;">
+	        <div style="font-size:24px;margin-bottom:4px;">🇸🇬</div>
+	        <div style="font-weight:700;font-size:13px;">新加坡+吉隆坡+槟城</div>
+	        <div style="font-size:10px;opacity:0.85;margin-top:2px;">三城联游 · 10天</div>
+	      </a>
 	    </div>
 	    <p style="font-size:13px;color:var(--text-secondary);margin-top:12px;text-align:center;">
 	      💬 查看详细对比后在留言板发表你的意见！
@@ -910,13 +915,13 @@ body {
 
 <!-- 出游信息 -->
   <div class="card info-card">
-    <div class="card-title">🏔️ 2026暑假 · 7个方案最终对比</div>
+    <div class="card-title">🏔️ 2026暑假 · 8个方案最终对比</div>
     <strong>时间：</strong>2026 年 7 月中下旬 ~ 8 月上旬<br>
     <strong>成员：</strong>几个家庭，有老人和小孩<br>
     <strong>风格：</strong>慢节奏、不赶路、舒适为主<br>
-    <strong>当前阶段：</strong>七个方案最终对比 · 请投票选择<br>
+    <strong>当前阶段：</strong>八个方案最终对比 · 请投票选择<br>
     <div style="margin-top:10px;font-size:13px;color:var(--text-secondary);">
-      现聚焦七个方案：🇨🇳 <strong>新疆北疆</strong> vs 🇲🇾 <strong>吉隆坡+槟城</strong> vs 🇲🇾 <strong>吉隆坡+仙本那</strong> vs 🇯🇵 <strong>北海道</strong> vs 🇨🇳 <strong>云南</strong> vs 🇮🇩 <strong>巴厘岛</strong> vs 🇹🇭 <strong>清迈</strong>，请大家查看详细对比后在留言板投票！
+      现聚焦八个方案：🇨🇳 <strong>新疆北疆</strong> vs 🇲🇾 <strong>吉隆坡+槟城</strong> vs 🇲🇾 <strong>吉隆坡+仙本那</strong> vs 🇯🇵 <strong>北海道</strong> vs 🇨🇳 <strong>云南</strong> vs 🇮🇩 <strong>巴厘岛</strong> vs 🇹🇭 <strong>清迈</strong> vs 🇸🇬🇲🇾 <strong>新加坡+吉隆坡+槟城</strong>，请大家查看详细对比后在留言板投票！
     </div>
   </div>
 
@@ -1003,7 +1008,17 @@ const DESTINATIONS = [
     page: 'itinerary-bali.html'
   },
   {
-    id: 'chiangmai', name: '清迈 · 泰北慢生活', flag: '🇹🇭',
+{
+    id: 'singapore-kl-penang', name: '新加坡+吉隆坡+槟城 · 三城联游', flag: '🇸🇬',
+    region: 'overseas', desc: '10天9晚 · 花园城市+都会+美食',
+    features: ['免签/ezlink', '三城联游', '亲子友好'],
+    img: 'https://images.unsplash.com/photo-1569336415962-a4bd9f609cd5?w=600&q=80',
+    color: '#e74c3c',
+    latlng: [1.3521, 103.8198],
+    page: 'itinerary-singapore-kl-penang.html'
+  },
+  {
+        id: 'chiangmai', name: '清迈 · 泰北慢生活', flag: '🇹🇭',
     region: 'overseas', desc: '7天6晚 · 慢节奏 · 寺庙夜市',
     features: ['免签', '物价低廉', '亲子友好'],
     img: 'https://images.unsplash.com/photo-1598935898639-81586f7d2129?w=600&q=80',

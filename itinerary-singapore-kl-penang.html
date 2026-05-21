@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026暑期 · 新加坡+吉隆坡+槟城之旅</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
+<style>
+/* ===== Reset & Base ===== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", "Helvetica Neue", sans-serif;
+  background: #f4f7fb;
+  color: #2d3748;
+  line-height: 1.8;
+  overflow-x: hidden;
+}
+
+/* ===== Hero ===== */
+.hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background: linear-gradient(135deg, #e74c3c 0%, #6c5ce7 30%, #e84393 60%, #2d1b69 100%);
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1569336415962-a4bd9f609cd5?w=1600&q=80') center/cover no-repeat;
+  opacity: 0.15;
+  animation: heroZoom 25s ease-in-out infinite alternate;
+}
+@keyframes heroZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.12); }
+}
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(231,76,60,0.88) 0%, rgba(108,92,231,0.78) 50%, rgba(45,27,105,0.92) 100%);
+}
+.hero-content {
+  position: relative; z-index: 2;
+  padding: 40px 20px;
+  animation: fadeUp 1.2s ease-out;
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-badge {
+  display: inline-block;
+  padding: 6px 20px;
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 20px;
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  letter-spacing: 3px;
+  margin-bottom: 20px;
+}
+.hero h1 {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.3);
+  letter-spacing: 4px;
+}
+.hero h1 span {
+  background: linear-gradient(to right, #a78bfa, #e84393);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub {
+  font-size: clamp(15px, 2.5vw, 19px);
+  color: rgba(255,255,255,0.75);
+  max-width: 600px;
+  margin: 8px auto 0;
+  font-weight: 300;
+  letter-spacing: 2px;
+}
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+.hero-stat { text-align: center; }
+.hero-stat .num {
+  font-size: 28px;
+  font-weight: 800;
+  color: #a78bfa;
+  display: block;
+}
+.hero-stat .label {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1px;
+  margin-top: 2px;
+}
+.hero-wave {
+  position: absolute;
+  bottom: -2px; left: 0; right: 0;
+  height: 70px;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 70' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,40 C240,70 480,10 720,40 C960,70 1200,10 1440,40 L1440,70 L0,70Z' fill='%23f4f7fb'/%3E%3C/svg%3E") center/cover no-repeat;
+}
+.scroll-indicator {
+  position: absolute;
+  bottom: 80px; left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.4);
+  font-size: 11px;
+  letter-spacing: 2px;
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+.scroll-indicator .mouse {
+  width: 22px; height: 34px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  position: relative;
+}
+.scroll-indicator .mouse::after {
+  content: '';
+  position: absolute;
+  top: 5px; left: 50%;
+  transform: translateX(-50%);
+  width: 3px; height: 8px;
+  background: rgba(255,255,255,0.5);
+  border-radius: 2px;
+  animation: scrollDot 2s ease-in-out infinite;
+}
+@keyframes scrollDot {
+  0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+  50% { transform: translateX(-50%) translateY(12px); opacity: 0.2; }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* ===== Navigation ===== */
+.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  transition: all 0.3s;
+}
+.nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0 16px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav-link {
+  flex-shrink: 0;
+  padding: 14px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #718096;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-link:hover { color: #6c5ce7; }
+.nav-link.active { color: #6c5ce7; border-bottom-color: #6c5ce7; }
+
+/* ===== Container ===== */
+.container { max-width: 860px; margin: 0 auto; padding: 0 20px; }
+
+/* ===== Section ===== */
+.section {
+  padding: 48px 0;
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+.section.visible { opacity: 1; transform: translateY(0); }
+.section-header {
+  text-align: center;
+  margin-bottom: 36px;
+}
+.section-header .emoji {
+  font-size: 36px;
+  display: block;
+  margin-bottom: 8px;
+}
+.section-header h2 {
+  font-size: clamp(22px, 3.5vw, 28px);
+  font-weight: 800;
+  color: #2d1b69;
+  letter-spacing: 2px;
+}
+.section-header p {
+  font-size: 14px;
+  color: #a0aec0;
+  margin-top: 4px;
+  letter-spacing: 1px;
+}
+
+/* ===== Overview Cards ===== */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 14px;
+}
+.overview-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 22px 18px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  transition: all 0.3s;
+}
+.overview-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+.overview-card .icon { font-size: 28px; margin-bottom: 6px; display: block; }
+.overview-card .num {
+  font-size: 22px;
+  font-weight: 800;
+  color: #6c5ce7;
+}
+.overview-card .desc {
+  font-size: 13px;
+  color: #718096;
+  margin-top: 2px;
+}
+
+/* ===== Countdown ===== */
+.countdown-bar {
+  background: linear-gradient(135deg, #2d1b69, #6c5ce7);
+  border-radius: 16px;
+  padding: 28px 24px;
+  text-align: center;
+  margin-top: 24px;
+  color: #fff;
+}
+.countdown-bar .label { font-size: 14px; color: rgba(255,255,255,0.6); margin-bottom: 8px; letter-spacing: 2px; }
+.countdown-grid { display: flex; justify-content: center; gap: 16px; }
+.countdown-item { min-width: 60px; }
+.countdown-item .num {
+  font-size: 32px;
+  font-weight: 800;
+  color: #a78bfa;
+  line-height: 1;
+}
+.countdown-item .unit { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 2px; }
+
+/* ===== Timeline / Itinerary ===== */
+.timeline {
+  position: relative;
+  padding-left: 40px;
+}
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 15px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, #6c5ce7, #e84393, #2b6cb0);
+  border-radius: 2px;
+}
+.day-card {
+  position: relative;
+  background: #fff;
+  border-radius: 16px;
+  padding: 0;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.day-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
+.day-marker {
+  position: absolute;
+  left: -33px;
+  top: 20px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c5ce7, #a78bfa);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  box-shadow: 0 2px 8px rgba(108,92,231,0.3);
+  z-index: 1;
+}
+.day-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 22px;
+  background: linear-gradient(to right, #f0f7ff, #fff);
+  border-bottom: 1px solid #e8edf2;
+}
+.day-header-left { flex: 1; }
+.day-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2d1b69;
+}
+.day-sub {
+  font-size: 13px;
+  color: #6c5ce7;
+  font-weight: 600;
+  margin-top: 1px;
+}
+.day-tag {
+  display: inline-block;
+  padding: 3px 12px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #a78bfa, #6c5ce7);
+  color: #fff;
+  white-space: nowrap;
+}
+.day-arrow {
+  font-size: 14px;
+  color: #cbd5e0;
+  transition: transform 0.3s;
+}
+.day-card.open .day-arrow { transform: rotate(180deg); }
+.day-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease, padding 0.3s ease;
+}
+.day-card.open .day-body { max-height: 3000px; }
+.day-body-inner { padding: 18px 22px 22px; }
+.day-location {
+  font-size: 13px;
+  color: #a0aec0;
+  margin-bottom: 10px;
+}
+.day-location::before { content: '📍 '; }
+.day-item {
+  font-size: 14px;
+  padding: 4px 0;
+  padding-left: 20px;
+  position: relative;
+  color: #4a5568;
+}
+.day-item::before {
+  content: '';
+  position: absolute;
+  left: 2px;
+  top: 12px;
+  width: 8px;
+  height: 8px;
+  background: #cbd5e0;
+  border-radius: 50%;
+}
+.day-item strong { color: #2d3748; }
+.day-meal {
+  font-size: 13px;
+  color: #6c5ce7;
+  padding-left: 20px;
+  margin-top: 8px;
+  background: #f5f3ff;
+  border-radius: 8px;
+  padding: 8px 14px;
+}
+.day-meal::before { content: '🍽 '; }
+.day-tip {
+  font-size: 13px;
+  color: #2d3748;
+  background: #faf5ff;
+  border-radius: 8px;
+  padding: 8px 14px;
+  margin-top: 8px;
+}
+.day-tip::before { content: '💡 '; }
+.day-sg { border-left: 4px solid #e74c3c; }
+.day-kk { border-left: 4px solid #6c5ce7; }
+.day-sem { border-left: 4px solid #0d9488; }
+
+/* ===== Budget ===== */
+.budget-wrap { overflow-x: auto; }
+.budget-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 560px; }
+.budget-table th { background: #2d1b69; color: #fff; padding: 10px 12px; text-align: center; font-weight: 600; }
+.budget-table td { padding: 8px 12px; text-align: center; border-bottom: 1px solid #e8edf2; }
+.budget-table tr:nth-child(even) { background: #f7fafc; }
+.budget-table .total-row { background: #ebf8ff !important; font-weight: 700; }
+
+/* ===== Info Cards ===== */
+.info-grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.info-card-sm {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  text-align: center;
+}
+.info-card-sm .icon { font-size: 24px; }
+.info-card-sm h4 { font-size: 14px; color: #2d1b69; margin: 6px 0 4px; }
+.info-card-sm p { font-size: 13px; color: #718096; }
+
+/* ===== Packing ===== */
+.packing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.packing-col { background: #fff; border-radius: 14px; padding: 18px; box-shadow: 0 2px 12px rgba(0,0,0,0.05); }
+.packing-col h4 { font-size: 14px; color: #2d1b69; margin-bottom: 10px; }
+.packing-item { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #4a5568; padding: 3px 0; }
+.packing-item input { width: 16px; height: 16px; accent-color: #6c5ce7; cursor: pointer; }
+
+/* ===== Tips ===== */
+.tip-box {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  margin-bottom: 14px;
+  border-left: 4px solid #6c5ce7;
+}
+.tip-box h4 { font-size: 15px; font-weight: 700; color: #2d1b69; margin-bottom: 4px; }
+.tip-box p { font-size: 14px; color: #4a5568; }
+.tip-box ul { list-style: none; padding: 0; margin-top: 4px; }
+.tip-box li { font-size: 13px; color: #4a5568; padding: 2px 0; padding-left: 16px; position: relative; }
+.tip-box li::before { content: '•'; position: absolute; left: 2px; color: #6c5ce7; }
+
+/* ===== Footer ===== */
+.footer {
+  text-align: center;
+  padding: 40px 20px 32px;
+  color: #a0aec0;
+  font-size: 13px;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 20px;
+}
+.footer .family-note {
+  font-size: 15px;
+  color: #718096;
+  margin-bottom: 8px;
+}
+
+/* ===== Back to Top ===== */
+.back-top {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c5ce7, #a78bfa);
+  color: #fff;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(108,92,231,0.3);
+  transition: all 0.3s;
+  opacity: 0;
+  transform: translateY(20px);
+  pointer-events: none;
+  z-index: 99;
+}
+.back-top.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.back-top:hover { transform: translateY(-3px); box-shadow: 0 6px 24px rgba(108,92,231,0.4); }
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .hero { min-height: 60vh; }
+  .hero h1 { font-size: clamp(22px, 6vw, 28px); }
+  .hero-sub { font-size: 14px; }
+  .hero-stats { gap: 12px; }
+  .hero-stat .num { font-size: 20px; }
+  .hero-stat .label { font-size: 11px; }
+  .nav-link { padding: 14px 12px; font-size: 12px; min-height: 44px; display: flex; align-items: center; }
+  .nav-inner { padding: 0 8px; }
+  .container { padding: 0 14px; }
+  .section { padding: 28px 0; }
+  .section-header { margin-bottom: 24px; }
+  .section-header .emoji { font-size: 28px; }
+  .section-header h2 { font-size: 20px; }
+  .timeline { padding-left: 28px; }
+  .day-marker { left: -22px; width: 20px; height: 20px; font-size: 9px; }
+  .day-header { padding: 14px 16px; }
+  .day-body-inner { padding: 14px 16px 16px; }
+  .day-title { font-size: 14px; }
+  .day-item { font-size: 13px; }
+  .day-meal { font-size: 12px; padding: 6px 12px; }
+  .day-tip { font-size: 12px; padding: 6px 12px; }
+  .back-top { bottom: 16px; right: 16px; width: 44px; height: 44px; }
+  .overview-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .overview-card { padding: 16px 12px; }
+  .overview-card .num { font-size: 18px; }
+  .info-grid-2 { grid-template-columns: 1fr; }
+  .packing-grid { grid-template-columns: 1fr; }
+  .tip-box { padding: 16px 16px; }
+  .tip-box h4 { font-size: 14px; }
+  .tip-box p, .tip-box li { font-size: 13px; }
+  .footer { padding: 28px 16px 24px; }
+  .footer .family-note { font-size: 13px; }
+}
+@media (max-width: 480px) {
+  .hero { min-height: 55vh; }
+  .hero-badge { font-size: 11px; padding: 4px 14px; }
+  .hero h1 { letter-spacing: 2px; }
+  .nav-link { padding: 12px 8px; font-size: 11px; }
+  .container { padding: 0 10px; }
+  .section { padding: 24px 0; }
+  .day-header { padding: 12px 14px; }
+  .day-body-inner { padding: 12px 14px 14px; }
+  .day-title { font-size: 13px; }
+  .day-sub { font-size: 12px; }
+  .day-tag { font-size: 10px; padding: 2px 10px; }
+  .day-location { font-size: 12px; }
+  .day-item { font-size: 13px; padding-left: 16px; }
+  .overview-card { padding: 12px 10px; }
+  .overview-card .icon { font-size: 22px; }
+  .overview-card .num { font-size: 16px; }
+  .countdown-bar { padding: 20px 16px; }
+  .countdown-grid { gap: 8px; }
+  .section-header h2 { font-size: 18px; }
+  .section-header .emoji { font-size: 24px; }
+}
+/* ===== Print ===== */
+@media print {
+  .hero { min-height: auto; padding: 40px 20px; }
+  .nav-bar { display: none; }
+  .back-top { display: none; }
+  .day-card { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Hero ===== -->
+<section class="hero">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">🇸🇬 新加坡 + 🇲🇾 吉隆坡 + 🇲🇾 槟城</div>
+    <h1>新加坡花园城市 · 吉隆坡都会 · 槟城美食<br><span>新马三城一次玩遍</span></h1>
+    <p class="hero-sub">新加坡滨海湾花园、吉隆坡双峰塔、槟城美食之都 —— 一次玩遍新马最精彩的三座城市</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">10天</span><span class="label">建议行程</span></div>
+      <div class="hero-stat"><span class="num">3城</span><span class="label">吉隆坡+马六甲+槟城</span></div>
+      <div class="hero-stat"><span class="num">🇸🇬🇲🇾🇲🇾</span><span class="label">新加坡+吉隆坡+槟城</span></div>
+      <div class="hero-stat"><span class="num">🎫</span><span class="label">免签/ezlink</span></div>
+    </div>
+  </div>
+  <div class="scroll-indicator"><div class="mouse"></div>向下滚动</div>
+  <div class="hero-wave"></div>
+</section>
+
+<!-- ===== Navigation ===== -->
+<nav class="nav-bar" id="nav-bar">
+  <div class="nav-inner">
+    <a href="#overview" class="nav-link active">概览</a>
+    <a href="#day1" class="nav-link">Day 1-3 新加坡</a>
+    <a href="#day4" class="nav-link">Day 4-6 吉隆坡</a>
+    <a href="#day7" class="nav-link">Day 7-10 槟城</a>
+	    <a href="#budget" class="nav-link">预算</a>
+    <a href="#packing" class="nav-link">行李清单</a>
+    <a href="#tips" class="nav-link">贴士</a>
+    <a href="proposal.html" class="nav-link" style="color:#e53e3e;">← 对比页</a>
+  </div>
+</nav>
+
+<div class="container">
+
+<!-- ===== Overview ===== -->
+<section class="section" id="overview">
+  <div class="section-header">
+    <span class="emoji">🗺️</span>
+    <h2>行程概览</h2>
+    <p>新加坡3天 + 吉隆坡3天 + 槟城4天 · 新马三城联游</p>
+  </div>
+  <div class="overview-grid">
+    <div class="overview-card"><span class="icon">✈️</span><div class="num">3段飞行</div><div class="desc">上海→新加坡5h<br>新加坡→吉隆坡飞1h<br>吉隆坡→槟城飞1h<br>槟城→上海直飞5h</div></div>
+    <div class="overview-card"><span class="icon">🌆</span><div class="num">新加坡</div><div class="desc">滨海湾 · Gardens by Bay<br>圣淘沙环球影城<br>花园城市漫游</div></div>
+    <div class="overview-card"><span class="icon">🏙️</span><div class="num">吉隆坡+槟城</div><div class="desc">双子塔 · 黑风洞<br>马六甲一日<br>槟城美食之都</div></div>
+  </div>
+
+  <div class="countdown-bar">
+    <div class="label">距离暑假出发还有</div>
+    <div class="countdown-grid">
+      <div class="countdown-item"><div class="num" id="cd-days">--</div><div class="unit">天</div></div>
+      <div class="countdown-item"><div class="num" id="cd-hours">--</div><div class="unit">时</div></div>
+      <div class="countdown-item"><div class="num" id="cd-mins">--</div><div class="unit">分</div></div>
+      <div class="countdown-item"><div class="num" id="cd-secs">--</div><div class="unit">秒</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Itinerary ===== -->
+<section class="section" id="itin">
+
+  <div class="section-header">
+    <span class="emoji">📋</span>
+    <h2>详细行程 · 10天9晚</h2>
+    <p>新加坡(红色) · 吉隆坡(紫色) · 槟城(粉色标记)</p>
+  </div>
+
+  <div class="timeline">
+
+        <!-- Day 1 - Singapore -->
+    <div class="day-card day-sg" id="day1">
+      <div class="day-marker">1</div>
+      <div class="day-header">
+        <div class="day-header-left">
+          <div class="day-title">🇸🇬 落地新加坡 · 滨海湾初探</div>
+          <div class="day-sub">Singapore · Marina Bay</div>
+        </div>
+        <span class="day-tag">新加坡</span>
+        <span class="day-arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="day-location">上海 → 新加坡樟宜机场（飞行约5h）</div>
+          <div class="day-item"><strong>白天：</strong>上海浦东出发，飞抵新加坡樟宜机场</div>
+          <div class="day-item"><strong>接机：</strong>专车接机，前往酒店办理入住</div>
+          <div class="day-item"><strong>下午/傍晚：</strong>滨海湾区域漫步——鱼尾狮公园、Helix Bridge</div>
+          <div class="day-item"><strong>晚上：</strong>滨海湾灯光秀（Spectra，每晚7:45/8:45免费）</div>
+          <div class="day-meal">推荐：松发肉骨茶、海南鸡饭、老巴刹沙爹</div>
+          <div class="day-tip">樟宜机场到市区约25分钟。新加坡地铁方便，建议买EZ-Link卡。滨海湾灯光秀必看！</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 2 - Singapore -->
+    <div class="day-card day-sg" id="day2">
+      <div class="day-marker">2</div>
+      <div class="day-header">
+        <div class="day-header-left">
+          <div class="day-title">🌿 Gardens by the Bay · 唐人街</div>
+          <div class="day-sub">Gardens by the Bay · Chinatown</div>
+        </div>
+        <span class="day-tag">新加坡</span>
+        <span class="day-arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="day-location">滨海湾花园 → 鱼尾狮公园 → 唐人街 → 牛车水 → Maxwell Food Centre</div>
+          <div class="day-item"><strong>上午：</strong>滨海湾花园（Gardens by the Bay）——花穹+云雾林冷室，超级树（Supertree）</div>
+          <div class="day-item">鱼尾狮公园（Merlion Park）——新加坡标志性打卡点</div>
+          <div class="day-item"><strong>中午：</strong>麦士威熟食中心（Maxwell Food Centre）——天天海南鸡饭、老伴豆花</div>
+          <div class="day-item"><strong>下午：</strong>牛车水（唐人街）——佛牙寺、牛车水街市</div>
+          <div class="day-item">新加坡河步行——克拉码头、驳船码头，彩色建筑适合拍照</div>
+          <div class="day-item"><strong>傍晚：</strong>超级树灯光秀（Garden Rhapsody，每晚7:45/8:45免费）</div>
+          <div class="day-meal">推荐：天天海南鸡饭、了凡油鸡饭面（全球最便宜米其林）、老伴豆花</div>
+          <div class="day-tip">Gardens by the Bay室内冷室很冷（18°C），带薄外套！新加坡全面禁口香糖，地铁内禁饮食。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 3 - Singapore -->
+    <div class="day-card day-sg" id="day3">
+      <div class="day-marker">3</div>
+      <div class="day-header">
+        <div class="day-header-left">
+          <div class="day-title">🎢 圣淘沙岛 · 环球影城</div>
+          <div class="day-sub">Sentosa · Universal Studios Singapore</div>
+        </div>
+        <span class="day-tag">新加坡</span>
+        <span class="day-arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="day-location">圣淘沙岛全天（含环球影城）</div>
+          <div class="day-item"><strong>全天：</strong>新加坡环球影城（Universal Studios Singapore）</div>
+          <div class="day-item">——变形金刚3D对决（必玩！）</div>
+          <div class="day-item">——木乃伊复仇记过山车</div>
+          <div class="day-item">——史瑞克4D影院（适合小孩）</div>
+          <div class="day-item">——马达加斯加漂流（适合全家）</div>
+          <div class="day-item"><strong>不去环球影城的选项：</strong>S.E.A.海洋馆（亚洲最大海洋馆）、巴拉湾海滩（亚洲大陆最南端）、西乐索海滩</div>
+          <div class="day-item"><strong>傍晚：</strong>圣淘沙时光之翼水幕秀（Wings of Time）</div>
+          <div class="day-meal">推荐：环球影城内马来西亚美食街、Vivo City怡丰城美食广场</div>
+          <div class="day-tip">圣淘沙岛可坐捷运（Sentosa Express）从Vivo City上岛。环球影城建议买Express Pass减少排队。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 4 - Singapore to KL -->
+    <div class="day-card day-kl" id="day4">
+      <div class="day-marker">4</div>
+      <div class="day-header">
+        <div class="day-header-left">
+          <div class="day-title">✈️ 新加坡→吉隆坡 · KLCC</div>
+          <div class="day-sub">Singapore → KL · KLCC</div>
+        </div>
+        <span class="day-tag">吉隆坡</span>
+        <span class="day-arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="day-location">新加坡 ✈️ 吉隆坡（飞行约1h）</div>
+          <div class="day-item"><strong>上午：</strong>新加坡飞吉隆坡（约1h），专车接机</div>
+          <div class="day-item"><strong>中午：</strong>入住吉隆坡市区酒店，稍作休息</div>
+          <div class="day-item"><strong>下午：</strong>KLCC区域——双子塔、KLCC公园、Suria商场</div>
+          <div class="day-item"><strong>傍晚：</strong>双子塔夜景拍照——最佳机位在公园水池前</div>
+          <div class="day-item"><strong>晚上：</strong>武吉免登（Bukit Bintang）商圈漫步</div>
+          <div class="day-meal">推荐：关夫人餐厅（Madam Kwan's）椰浆饭、十号胡同美食街</div>
+          <div class="day-tip">新加坡到吉隆坡飞行仅1h，也可选大巴（约4h）。吉隆坡Grab打车方便便宜。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 5 - KL -->
+    <div class="day-card day-kl" id="day5">
+      <div class="day-marker">5</div>
+      <div class="day-header">
+        <div class="day-header-left">
+          <div class="day-title">🚗 吉隆坡包车一日</div>
+          <div class="day-sub">KL City Tour · Batu Caves · Twin Towers</div>
+        </div>
+        <span class="day-tag">吉隆坡</span>
+        <span class="day-arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="day-location">包车一日：黑风洞 → 国家清真寺 → 独立广场 → 吉隆坡塔 → 双子塔</div>
+          <div class="day-item"><strong>上午：</strong>黑风洞（272级彩虹阶梯，印度教圣地，猴子超多）</div>
+          <div class="day-item"><strong>中午：</strong>国家清真寺、独立广场、苏丹阿都沙末大厦（建筑群非常漂亮）</div>
+          <div class="day-item"><strong>下午：</strong>吉隆坡塔观景台俯瞰全城</div>
+          <div class="day-item"><strong>傍晚：</strong>双子塔拍照打卡，KLCC公园漫步</div>
+          <div class="day-meal">推荐：茨厂街金莲记福建炒面、南香白咖啡、新峰肉骨茶</div>
+          <div class="day-tip">包车一天约300-400元，可坐6-7人，比分别打车划算。黑风洞穿运动鞋。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 6 - KL / Malacca -->
+    <div class="day-card day-kl" id="day6">
+      <div class="day-marker">6</div>
+      <div class="day-header">
+        <div class="day-header-left">
+          <div class="day-title">🏛️ 马六甲包车一日游</div>
+          <div class="day-sub">Melaka Day Trip · Dutch Square · Jonker Street</div>
+        </div>
+        <span class="day-tag">马六甲</span>
+        <span class="day-arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="day-location">吉隆坡 → 马六甲（车程约2h）包车一日</div>
+          <div class="day-item"><strong>上午：</strong>马六甲荷兰广场（红屋）— 东南亚最古老的荷兰建筑</div>
+          <div class="day-item">圣保罗山遗址——葡萄牙殖民时期教堂，俯瞰马六甲海峡</div>
+          <div class="day-item"><strong>中午：</strong>鸡场街（Jonker Street）— 古董街、美食街</div>
+          <div class="day-item"><strong>下午：</strong>马六甲海峡清真寺——建在海上的清真寺</div>
+          <div class="day-item"><strong>傍晚：</strong>返回吉隆坡酒店</div>
+          <div class="day-meal">推荐：鸡场街娘惹菜（Nyonya）、鸡粒饭、Cendol煎蕊</div>
+          <div class="day-tip">马六甲一天可往返吉隆坡，包车最方便。暑假炎热注意补水和防晒。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 7 - KL to Penang -->
+    <div class="day-card day-pg" id="day7">
+      <div class="day-marker">7</div>
+      <div class="day-header">
+        <div class="day-header-left">
+          <div class="day-title">✈️ 转战槟城 · 乔治市漫游</div>
+          <div class="day-sub">KL → Penang · George Town</div>
+        </div>
+        <span class="day-tag">槟城</span>
+        <span class="day-arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="day-location">吉隆坡 ✈️ 槟城（飞行约1h）</div>
+          <div class="day-item"><strong>上午：</strong>吉隆坡飞槟城（约1h），专车接机</div>
+          <div class="day-item"><strong>中午：</strong>入住槟城市区酒店，稍作休息</div>
+          <div class="day-item"><strong>下午：</strong>乔治市自由漫步——感受世界文化遗产城市魅力</div>
+          <div class="day-item">爱情巷（Love Lane）— 文艺街区</div>
+          <div class="day-item"><strong>傍晚：</strong>汕头街美食初体验</div>
+          <div class="day-meal">推荐：汕头街四大天王（炒粿条、鸭粥、粿汁、糖水）</div>
+          <div class="day-tip">吉隆坡飞槟城仅1h，完全不累。槟城机场到乔治市约30分钟车程。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 8 - Penang -->
+    <div class="day-card day-pg" id="day8">
+      <div class="day-marker">8</div>
+      <div class="day-header">
+        <div class="day-header-left">
+          <div class="day-title">🏛️ 槟城文化遗产日</div>
+          <div class="day-sub">Penang Heritage · Street Art · Kek Lok Si</div>
+        </div>
+        <span class="day-tag">槟城</span>
+        <span class="day-arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="day-location">极乐寺 → 七条路巴刹 → 街头艺术 → 姓周桥 → 升旗山</div>
+          <div class="day-item"><strong>上午：</strong>极乐寺——东南亚最大佛教寺庙，万佛塔壮观</div>
+          <div class="day-item">七条路巴刹——地道槟城早市，各种小吃</div>
+          <div class="day-item"><strong>中午：</strong>槟城街头艺术漫步——寻找铁塑漫画壁画，拍照打卡</div>
+          <div class="day-item">姓周桥（Chew Jetty）——水上百年木屋，华人下南洋的历史见证</div>
+          <div class="day-item"><strong>下午：</strong>升旗山（Penang Hill）— 乘百年缆车上山，俯瞰槟城全景</div>
+          <div class="day-meal">推荐：亚依淡叻沙（Assam Laksa）、煎蕊冰（Cendol）、炒粿条</div>
+          <div class="day-tip">槟城被称为"世界美食之都"，一餐15-30元吃撑！升旗山建议下午去，光线好视野佳。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 9 - Penang -->
+    <div class="day-card day-pg" id="day9">
+      <div class="day-marker">9</div>
+      <div class="day-header">
+        <div class="day-header-left">
+          <div class="day-title">🍜 槟城美食日 · 峇都菲令宜</div>
+          <div class="day-sub">Penang Food Crawl · Batu Ferringhi</div>
+        </div>
+        <span class="day-tag">槟城</span>
+        <span class="day-arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="day-location">多春茶室 → 侨生博物馆 → 纽冷夜市 → 峇都菲令宜海滩</div>
+          <div class="day-item"><strong>上午：</strong>多春茶室——碳烤面包+半熟蛋+白咖啡，槟城早餐标配</div>
+          <div class="day-item">侨生博物馆（Peranakan Mansion）— 峇峇娘惹文化，首饰家具精致绝伦</div>
+          <div class="day-item"><strong>下午：</strong>热带香料公园或蝴蝶公园（适合带小孩）</div>
+          <div class="day-item"><strong>傍晚：</strong>峇都菲令宜海滩（Batu Ferringhi）散步 + 海边夜市</div>
+          <div class="day-item">纽冷（New Lane）夜市——各种小吃集合</div>
+          <div class="day-meal">全天都是美食！炒粿条、亚参叻沙、煎蕊、娘惹粽、卤肉、咖喱面</div>
+          <div class="day-tip">槟城一餐人均15-30元就能吃撑！峇都菲令宜海边有海鲜大排档，奶油虾必点。</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 10 - Penang to Shanghai -->
+    <div class="day-card day-pg" id="day10">
+      <div class="day-marker">10</div>
+      <div class="day-header">
+        <div class="day-header-left">
+          <div class="day-title">🛫 返程 · 槟城直飞上海</div>
+          <div class="day-sub">Penang → Shanghai Direct</div>
+        </div>
+        <span class="day-tag">返程</span>
+        <span class="day-arrow">▼</span>
+      </div>
+      <div class="day-body">
+        <div class="day-body-inner">
+          <div class="day-location">槟城 → 上海（直飞约5h）</div>
+          <div class="day-item"><strong>上午：</strong>睡到自然醒，最后逛一次槟城早市</div>
+          <div class="day-item">采购伴手礼——白咖啡、豆蔻膏、榴莲糕、娘惹糕点</div>
+          <div class="day-item"><strong>中午：</strong>退房，专车送机</div>
+          <div class="day-item">槟城直飞上海（约5h），结束难忘的新马三城之旅！</div>
+          <div class="day-meal">飞机餐</div>
+          <div class="day-tip">槟城机场免税店可最后采购。建议提前3h到机场。</div>
+        </div>
+      </div>
+    </div>
+
+<!-- ===== Budget ===== -->
+<section class="section" id="budget">
+  <div class="section-header">
+    <span class="emoji">💰</span>
+    <h2>预算参考</h2>
+    <p>人均估算（以人民币计）</p>
+  </div>
+  <div class="budget-wrap">
+  	  <table class="budget-table">
+	    <tr><th>项目</th><th>新加坡段（3天）</th><th>吉隆坡段（3天）</th><th>槟城段（4天）</th><th>备注</th></tr>
+	    <tr><td>国际机票</td><td>3,500-5,000</td><td>-</td><td>上海→吉隆坡；槟城→上海直飞（暑期价）</td></tr>
+	    <tr><td>住宿（3晚+5晚）</td><td>1,500-2,700</td><td>2,000-3,500</td><td>吉隆坡500-900/晚；槟城400-700/晚（暑期旺季）</td></tr>
+	    <tr><td>餐饮</td><td>300-450</td><td>500-750</td><td>吉隆坡100-150/天；槟城100-150/天（美食天堂）</td></tr>
+	    <tr><td>门票活动</td><td>400-600</td><td>350-500</td><td>黑风洞/马六甲/升旗山/极乐寺/侨生博物馆</td></tr>
+	    <tr><td>当地交通</td><td>250-400</td><td>250-450</td><td>包车/Grab/槟城内交通</td></tr>
+	    <tr><td>马来西亚国内飞</td><td>-</td><td>400-800</td><td>吉隆坡→槟城亚航约1h</td></tr>
+	    <tr><td>签证</td><td>0</td><td>0</td><td>全程免签</td></tr>
+	    <tr class="total-row"><td>合计/人</td><td>5,950-9,150</td><td>3,500-6,000</td><td><strong>综合人均约 9k-15k</strong></td></tr>
+	  </table>
+  </div>
+  <div style="margin-top:14px;font-size:13px;color:#a0aec0;text-align:center;">
+    * 以上为暑期旺季参考价（不打折），新加坡消费较高。三城联游体验丰富，建议尽早订票锁定价格。
+  </div>
+</section>
+
+<!-- ===== Packing ===== -->
+<section class="section" id="packing">
+  <div class="section-header">
+    <span class="emoji">🎒</span>
+    <h2>行李清单</h2>
+    <p>新加坡+吉隆坡+槟城 · 三城装备清单</p>
+  </div>
+  <div class="packing-grid">
+    <div class="packing-col">
+      <h4>👕 衣物类</h4>
+      <label class="packing-item"><input type="checkbox"> T恤/短袖（各4-5件）</label>
+      <label class="packing-item"><input type="checkbox"> 薄长裤/裙子</label>
+      <label class="packing-item"><input type="checkbox"> 薄外套（新加坡室内空调冷）</label>
+      <label class="packing-item"><input type="checkbox"> 泳衣/水母衣（圣淘沙海滩/酒店泳池）</label>
+      <label class="packing-item"><input type="checkbox"> 防晒衣/遮阳帽</label>
+      <label class="packing-item"><input type="checkbox"> 舒适运动鞋+拖鞋/溯溪鞋</label>
+    </div>
+    <div class="packing-col">
+      <h4>🧴 日用及其他</h4>
+      <label class="packing-item"><input type="checkbox"> 高倍防晒霜（必带！）</label>
+      <label class="packing-item"><input type="checkbox"> 防蚊液/防蚊贴</label>
+      <label class="packing-item"><input type="checkbox"> 晕船药/常备药</label>
+      <label class="packing-item"><input type="checkbox"> 手机防水袋</label>
+      <label class="packing-item"><input type="checkbox"> 万能转换插头（英标，新加坡/马来通用）</label>
+      <label class="packing-item"><input type="checkbox"> 充电宝</label>
+    </div>
+    <div class="packing-col">
+      <h4>📄 证件类</h4>
+      <label class="packing-item"><input type="checkbox"> 护照（有效期6个月以上）</label>
+      <label class="packing-item"><input type="checkbox"> 新加坡电子入境卡（SG Arrival Card）</label>
+      <label class="packing-item"><input type="checkbox"> 机票行程单打印件</label>
+      <label class="packing-item"><input type="checkbox"> 酒店预订确认单</label>
+      <label class="packing-item"><input type="checkbox"> 环球影城门票打印件</label>
+      <label class="packing-item"><input type="checkbox"> 旅游保险单</label>
+    </div>
+    <div class="packing-col">
+      <h4>💊 药品类</h4>
+      <label class="packing-item"><input type="checkbox"> 肠胃药/止泻药</label>
+      <label class="packing-item"><input type="checkbox"> 感冒药/退烧药</label>
+      <label class="packing-item"><input type="checkbox"> 创可贴/消毒棉</label>
+      <label class="packing-item"><input type="checkbox"> 老人常用药（带足量）</label>
+      <label class="packing-item"><input type="checkbox"> 儿童专用药</label>
+      <label class="packing-item"><input type="checkbox"> 口罩/湿纸巾</label>
+    </div>
+  </div>
+</section>
+
+<!-- ===== Tips ===== -->
+<section class="section" id="tips">
+  <div class="section-header">
+    <span class="emoji">💡</span>
+    <h2>实用贴士</h2>
+    <p>新加坡 + 吉隆坡 + 槟城实用建议</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>📌 签证与入境</h4>
+    <p><strong>新加坡</strong>：免签（2024年起恢复免签），出发前3天在线填写SG Arrival Card即可。<br>
+    <strong>马来西亚</strong>：免签30天，出发前3天在线填写MDAC电子入境卡。<br>
+    <strong>建议</strong>：提前1个月预订机票和酒店，暑假旺季价格较高。</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>💰 货币与消费</h4>
+    <p><strong>新加坡</strong>：使用新加坡元（SGD），1 SGD ≈ 5.4 CNY。消费约为上海1.5倍（一餐30-80元）。建议刷信用卡为主。<br>
+    <strong>马来西亚</strong>：使用令吉（MYR），1 MYR ≈ 1.6 CNY。吉隆坡消费约上海0.7倍，槟城约0.6倍（美食一餐15-30元）。建议吉隆坡ATM取现。</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>🌤️ 气候与穿着</h4>
+    <p>新加坡和马来西亚7-8月均为旱季（25-33°C）。新加坡室内冷气超足（18-20°C），必带薄外套。吉隆坡室内空调充足。槟城海风习习体感舒适。偶有阵雨，带一把伞。</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>👨‍👩‍👧‍👦 家庭出行建议</h4>
+    <p><strong>老人：</strong>新加坡地铁无障碍设施完善，景点平坦不累。吉隆坡打车方便。槟城步行游览轻松。<br>
+    <strong>小孩：</strong>新加坡环球影城+Gardens by the Bay+圣淘沙+黑风洞看猴子+槟城升旗山缆车——孩子会超开心！<br>
+    <strong>多家庭：</strong>新加坡MRT+吉隆坡Grab+槟城Grab，各城交通方便。全程免签无门槛。</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>📱 通讯与网络</h4>
+    <p>提前在淘宝买新马通用旅游SIM卡（约50-80元），或开通国际漫游。新加坡4G/5G覆盖极好，免费WiFi多。吉隆坡和槟城市区信号OK。</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>🔌 电源</h4>
+    <p>新加坡和马来西亚均使用英标三脚插头（品字形），电压220-240V。建议带2-3个万能转换插头。多带一个排插更方便多人同时充电。</p>
+  </div>
+
+  <div class="tip-box">
+    <h4>✈️ 城际交通衔接</h4>
+    <p>新加坡→吉隆坡飞行约1h（也可选大巴约4h），吉隆坡→槟城飞行约1h。槟城→上海直飞约5h。建议城际航班订早班机，留足半天游玩时间。新加坡樟宜到市区约25分钟地铁。</p>
+  </div>
+</section>
+
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  <div class="family-note">🇸🇬🇲🇾 新加坡+吉隆坡+槟城 · 2026年暑假家庭出游方案</div>
+  <a href="proposal.html" style="color:#e74c3c;text-decoration:none;font-weight:600;">📋 返回详细对比方案页</a>
+  &nbsp;·&nbsp;
+  <a href="index.html" style="color:#718096;text-decoration:none;">🏠 返回首页</a>
+</div>
+
+<!-- ===== Back to Top ===== -->
+<button class="back-top" id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+// Back to top
+const bt = document.getElementById('back-top');
+window.addEventListener('scroll', () => {
+  bt.classList.toggle('show', window.scrollY > 400);
+});
+
+// Day card accordion
+document.querySelectorAll('.day-card').forEach(card => {
+  const header = card.querySelector('.day-header');
+  header.addEventListener('click', () => {
+    card.classList.toggle('open');
+  });
+  // Open first day by default
+  if (card === document.querySelector('.day-card')) {
+    card.classList.add('open');
+  }
+});
+
+// Nav link active tracking
+const navLinks = document.querySelectorAll('.nav-link');
+const sections = document.querySelectorAll('.section');
+window.addEventListener('scroll', () => {
+  let current = 'overview';
+  sections.forEach(sec => {
+    const top = sec.getBoundingClientRect().top;
+    if (top < 200) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+});
+
+// Countdown
+function updateCountdown() {
+  const target = new Date(2026, 6, 15); // July 15, 2026
+  const now = new Date();
+  const diff = target - now;
+  if (diff <= 0) {
+    document.getElementById('cd-days').textContent = '0';
+    document.getElementById('cd-hours').textContent = '0';
+    document.getElementById('cd-mins').textContent = '0';
+    document.getElementById('cd-secs').textContent = '0';
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-days').textContent = d;
+  document.getElementById('cd-hours').textContent = h;
+  document.getElementById('cd-mins').textContent = m;
+  document.getElementById('cd-secs').textContent = s;
+}
+updateCountdown();
+setInterval(updateCountdown, 1000);
+
+// Scroll animations
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.section').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
