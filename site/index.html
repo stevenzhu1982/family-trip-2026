@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2026暑假 · 家庭出游计划</title>
+<title>2026暑假 · 马来西亚亲子游</title>
 <style>
 :root {
   --bg: #fdf8f0;
@@ -39,100 +39,55 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  background: linear-gradient(160deg, #fdf4e0 0%, #fce8d0 30%, #fde2c0 60%, #fdf4e0 100%);
+  background: linear-gradient(160deg, #2d1b69 0%, #6c5ce7 30%, #e84393 60%, #2b6cb0 100%);
   overflow: hidden;
 }
-/* Polka dot pattern overlay */
 .hero::before {
   content: '';
   position: absolute; inset: 0;
-  background-image: radial-gradient(#e8d5b5 1px, transparent 1px);
-  background-size: 24px 24px;
-  opacity: 0.4;
-  pointer-events: none;
+  background: url('https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=1600&q=80') center/cover no-repeat;
+  opacity: 0.1;
+  animation: heroZoom 25s ease-in-out infinite alternate;
 }
-/* Hand-drawn squiggle lines */
-.hero-squiggle {
-  position: absolute;
-  pointer-events: none;
-  opacity: 0.15;
+@keyframes heroZoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.12); }
 }
-.hero-squiggle-top {
-  top: 20px; left: 5%; width: 90%;
-  height: 30px;
-}
-.hero-squiggle-bottom {
-  bottom: 80px; left: 10%; width: 80%;
-  height: 20px;
-}
-/* Hand-drawn sun */
-.hero-sun {
-  position: absolute;
-  top: 30px; right: 30px;
-  font-size: 64px;
-  opacity: 0.2;
-  animation: heroSunDrift 12s ease-in-out infinite alternate;
-  pointer-events: none;
-  user-select: none;
-}
-@keyframes heroSunDrift {
-  from { transform: rotate(-10deg) scale(1); }
-  to { transform: rotate(10deg) scale(1.1); }
-}
-/* Warm decorative circles */
-.hero-circle {
-  position: absolute;
-  border-radius: 50%;
-  border: 2px solid #e8d5b5;
-  pointer-events: none;
-  opacity: 0.15;
-}
-.hero-circle-1 {
-  width: 180px; height: 180px;
-  top: -40px; left: -40px;
-}
-.hero-circle-2 {
-  width: 120px; height: 120px;
-  bottom: 40px; right: 20px;
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(45,27,105,0.88) 0%, rgba(108,92,231,0.78) 50%, rgba(43,108,176,0.92) 100%);
 }
 .hero-content {
   position: relative; z-index: 2;
   padding: 40px 20px;
-  animation: fadeUp 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+  animation: fadeUp 1.2s ease-out;
 }
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .hero-emoji {
-  font-size: 56px;
+  font-size: 64px;
   display: block;
   margin-bottom: 16px;
-  filter: drop-shadow(0 4px 12px rgba(180,140,100,0.15));
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.2));
   animation: float 6s ease-in-out infinite;
 }
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(-2deg); }
-  50% { transform: translateY(-10px) rotate(2deg); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
 }
 .hero h1 {
   font-size: clamp(28px, 5vw, 42px);
   font-weight: 800;
-  color: var(--text-primary);
+  color: #fff;
   margin-bottom: 12px;
   letter-spacing: 2px;
-}
-.hero h1::after {
-  content: '';
-  display: block;
-  width: 60px; height: 3px;
-  background: var(--accent);
-  margin: 12px auto 0;
-  border-radius: 2px;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
 }
 .hero p {
   font-size: clamp(15px, 2.5vw, 19px);
-  color: var(--text-secondary);
+  color: rgba(255,255,255,0.8);
   max-width: 500px;
   margin: 0 auto;
   line-height: 1.8;
@@ -149,7 +104,7 @@ body {
   transform: translateX(-50%);
   z-index: 2;
   width: 24px; height: 40px;
-  border: 2px solid var(--border);
+  border: 2px solid rgba(255,255,255,0.4);
   border-radius: 12px;
   animation: scrollPulse 2s ease-in-out infinite;
 }
@@ -159,7 +114,7 @@ body {
   top: 6px; left: 50%;
   transform: translateX(-50%);
   width: 4px; height: 8px;
-  background: var(--accent);
+  background: #fff;
   border-radius: 2px;
   opacity: 0.6;
   animation: scrollDot 2s ease-in-out infinite;
@@ -205,136 +160,7 @@ body {
   color: var(--text-secondary);
 }
 
-/* ===== Tab Filter ===== */
-.tab-bar {
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-.tab-btn {
-  padding: 8px 20px;
-  border: 2px solid var(--border);
-  border-radius: 20px;
-  background: var(--card-bg);
-  color: var(--text-secondary);
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  font-family: inherit;
-}
-.tab-btn:hover { border-color: var(--accent); color: var(--accent); }
-.tab-btn.active {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-  box-shadow: 0 4px 12px rgba(232,147,74,0.3);
-}
-
-/* ===== Proposal Card ===== */
-.proposal-card {
-  background: linear-gradient(135deg, var(--accent-light), #fdf0e0);
-  border: 2px dashed var(--accent);
-  border-radius: 16px;
-  padding: 24px 20px;
-  text-align: center;
-  transition: all 0.3s;
-  cursor: pointer;
-  text-decoration: none;
-  display: block;
-}
-.proposal-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px var(--shadow);
-  border-color: var(--text-primary);
-}
-.proposal-card .icon { font-size: 36px; display: block; margin-bottom: 8px; }
-.proposal-card .title { font-size: 17px; font-weight: 700; color: var(--text-primary); }
-.proposal-card .desc { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
-.proposal-card .badge-proposal {
-  display: inline-block;
-  margin-top: 10px;
-  padding: 4px 14px;
-  background: var(--accent);
-  color: #fff;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
-}
-
-.badge {
-  display: inline-block;
-  padding: 2px 10px;
-  border-radius: 10px;
-  font-size: 11px;
-  font-weight: 700;
-}
-.badge-new {
-  background: var(--accent);
-  color: #fff;
-}
-
-.dest-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.dest-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
-  background: #fcf7ee;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  text-decoration: none;
-  color: inherit;
-  transition: all 0.2s;
-}
-.dest-item:hover {
-  background: var(--accent-light);
-  border-color: var(--accent);
-  transform: translateX(4px);
-}
-.dest-item .dest-info {
-  flex: 1;
-  min-width: 0;
-}
-.dest-item .dest-name {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--text-primary);
-  display: block;
-  margin-bottom: 2px;
-}
-.dest-item .dest-desc {
-  font-size: 12px;
-  color: var(--text-secondary);
-}
-.dest-item .dest-arrow {
-  color: #d4c5a0;
-  font-size: 14px;
-}
-.dest-item:hover .dest-arrow {
-  color: var(--accent);
-}
-
-.section-label {
-  font-size: 12px;
-  color: var(--text-secondary);
-  margin-bottom: 12px;
-  text-align: center;
-}
-
-/* ===== Destination Grid ===== */
-.dest-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-}
-.dest-grid.show-2 { grid-template-columns: 1fr 1fr; }
-
+/* ===== Card ===== */
 .card {
   background: var(--card-bg);
   border: 2px solid var(--border);
@@ -350,132 +176,74 @@ body {
   margin-bottom: 16px;
 }
 
-.dest-card {
-  position: relative;
+/* ===== Highlight ===== */
+.highlight {
+  background: linear-gradient(135deg, #2d1b69, #6c5ce7);
   border-radius: 20px;
-  overflow: hidden;
-  background: var(--card-bg);
-  border: 2px solid var(--border);
-  box-shadow: 0 4px 16px var(--shadow);
-  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  cursor: pointer;
+  padding: 28px 24px;
+  text-align: center;
+  color: #fff;
+  margin-bottom: 28px;
 }
-.dest-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 40px var(--shadow);
-  border-color: var(--accent);
-}
-.dest-img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  display: block;
-  transition: transform 0.4s;
-}
-.dest-card:hover .dest-img {
-  transform: scale(1.05);
-}
-.dest-img-placeholder {
-  width: 100%;
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 48px;
-}
-.dest-img-wrap {
-  position: relative;
-  width: 100%;
-  height: 160px;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.dest-img-wrap .dest-img-fallback {
-  position: absolute;
-  font-size: 56px;
-  opacity: 0.5;
-  user-select: none;
-  pointer-events: none;
-}
-.dest-img-wrap .dest-img {
-  position: relative;
-  z-index: 1;
-}
-.dest-overlay {
-  position: absolute;
-  top: 8px; left: 8px;
-  display: flex;
-  gap: 4px;
-}
-.dest-tag {
+.highlight .emoji { font-size: 40px; display: block; margin-bottom: 10px; }
+.highlight h3 { font-size: 22px; font-weight: 800; letter-spacing: 2px; margin-bottom: 8px; }
+.highlight p { font-size: 14px; opacity: 0.85; line-height: 1.7; }
+.highlight .btn {
   display: inline-block;
-  padding: 2px 10px;
-  border-radius: 10px;
-  font-size: 11px;
+  margin-top: 16px;
+  padding: 14px 36px;
+  background: #fff;
+  color: #2d1b69;
+  border-radius: 14px;
   font-weight: 700;
-  backdrop-filter: blur(8px);
-}
-.dest-tag-region {
-  background: rgba(90,62,43,0.55);
-  color: #fff;
-}
-.dest-tag-new {
-  background: var(--accent);
-  color: #fff;
-}
-.dest-body {
-  padding: 14px 16px 16px;
-}
-.dest-body-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-.dest-flag { font-size: 20px; }
-.dest-name {
   font-size: 16px;
-  font-weight: 700;
-  color: var(--text-primary);
-  flex: 1;
+  text-decoration: none;
+  transition: all 0.3s;
+  letter-spacing: 2px;
 }
-.dest-arrow {
-  color: #d4c5a0;
-  font-size: 16px;
-  transition: all 0.2s;
+.highlight .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
 }
-.dest-card:hover .dest-arrow {
-  color: var(--accent);
-  transform: translateX(4px);
+
+/* ===== Trip Info ===== */
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  text-align: center;
 }
-.dest-desc {
-  font-size: 13px;
-  color: var(--text-secondary);
-  line-height: 1.5;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
-}
-.dest-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  margin-top: 8px;
-}
-.dest-tag-feature {
-  font-size: 11px;
-  padding: 2px 8px;
+.info-item {
   background: var(--accent-light);
-  color: #b8860b;
-  border-radius: 8px;
-  font-weight: 500;
+  border-radius: 10px;
+  padding: 12px 10px;
 }
+.info-item .label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
+.info-item .value { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+
+/* ===== Day Preview ===== */
+.day-list { }
+.day-row {
+  display: flex; align-items: flex-start; gap: 12px; padding: 8px 0;
+  border-bottom: 1px solid #f0ebe5;
+}
+.day-row:last-child { border-bottom: none; }
+.day-num {
+  width: 32px; height: 32px; min-width: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #6c5ce7, #a78bfa);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+}
+.day-row.kl .day-num { background: linear-gradient(135deg, #2d1b69, #6c5ce7); }
+.day-row.pg .day-num { background: linear-gradient(135deg, #e84393, #fd79a8); }
+.day-row.flight .day-num { background: linear-gradient(135deg, #f39c12, #e74c3c); }
+.day-row.depart .day-num { background: linear-gradient(135deg, #636e72, #b2bec3); }
+.day-info { flex: 1; }
+.day-info .date { font-size: 11px; color: #a0aec0; font-weight: 400; }
+.day-info .title { font-size: 13px; font-weight: 600; color: #2d3748; }
+.day-info .desc { font-size: 12px; color: #718096; margin-top: 1px; }
 
 /* ===== Visual Map ===== */
 .vis-map {
@@ -489,7 +257,6 @@ body {
   user-select: none;
   border: 2px solid var(--border);
 }
-/* Grid lines */
 .vis-map::before {
   content: '';
   position: absolute; inset: 0;
@@ -498,7 +265,6 @@ body {
     repeating-linear-gradient(90deg, rgba(139,115,85,0.06) 0px, rgba(139,115,85,0.06) 1px, transparent 1px, transparent 10%);
   pointer-events: none;
 }
-/* Decorative dots (warm texture) */
 .vis-map .ocean-dot {
   position: absolute;
   width: 3px; height: 3px;
@@ -506,7 +272,6 @@ body {
   border-radius: 50%;
   pointer-events: none;
 }
-/* Map label top-left */
 .vis-map .map-title {
   position: absolute;
   top: 14px; left: 16px;
@@ -516,25 +281,10 @@ body {
   pointer-events: none;
   font-weight: 600;
 }
-/* Destination dot */
 .map-dot {
   position: absolute;
   transform: translate(-50%, -50%);
-  cursor: pointer;
   z-index: 2;
-}
-.map-dot .dot-ring {
-  width: 20px; height: 20px;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  animation: dotPulse 2s ease-in-out infinite;
-  opacity: 0.3;
-}
-@keyframes dotPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-  50% { transform: translate(-50%, -50%) scale(1.5); opacity: 0.1; }
 }
 .map-dot .dot-core {
   width: 12px; height: 12px;
@@ -545,11 +295,6 @@ body {
   top: 50%; left: 50%;
   transform: translate(-50%, -50%);
   transition: all 0.3s;
-}
-.map-dot:hover .dot-core {
-  transform: translate(-50%, -50%) scale(1.6);
-  box-shadow: 0 0 20px rgba(139,115,85,0.3);
-  z-index: 10;
 }
 .map-dot .dot-label {
   position: absolute;
@@ -564,32 +309,17 @@ body {
   transition: opacity 0.3s;
   text-shadow: 0 1px 4px rgba(255,255,255,0.5);
 }
-.map-dot:hover .dot-label {
-  opacity: 1;
-}
-.map-dot .dot-label-flag { margin-right: 2px; }
-
-/* Origin dot (Shanghai) */
+.map-dot:hover .dot-label { opacity: 1; }
 .map-dot-origin .dot-core {
   width: 10px; height: 10px;
   background: var(--accent);
   border-color: rgba(255,255,255,0.6);
 }
-.map-dot-origin .dot-ring {
-  border: 2px dashed var(--accent);
-  animation: none;
-  width: 30px; height: 30px;
-  opacity: 0.5;
-}
-
-/* Connecting lines via SVG */
 .map-lines {
   position: absolute; inset: 0;
   pointer-events: none;
   z-index: 1;
 }
-
-/* Map legend */
 .map-legend {
   display: flex;
   flex-wrap: wrap;
@@ -608,9 +338,8 @@ body {
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s;
   text-decoration: none;
+  transition: all 0.2s;
 }
 .map-legend-item:hover {
   background: var(--accent-light);
@@ -623,60 +352,7 @@ body {
   flex-shrink: 0;
 }
 
-/* Map tooltip */
-.map-tooltip {
-  position: absolute;
-  background: var(--text-primary);
-  color: #fffcf5;
-  padding: 8px 14px;
-  border-radius: 8px;
-  font-size: 13px;
-  pointer-events: none;
-  z-index: 100;
-  opacity: 0;
-  transition: opacity 0.2s;
-  white-space: nowrap;
-  backdrop-filter: blur(8px);
-}
-.map-tooltip.show { opacity: 1; }
-.map-tooltip a { color: #f5cba0; text-decoration: none; font-weight: 600; }
-
-/* Map click hint */
-.map-hint {
-  position: absolute;
-  bottom: 14px; left: 50%;
-  transform: translateX(-50%);
-  color: rgba(139,115,85,0.3);
-  font-size: 11px;
-  pointer-events: none;
-}
-
-/* ===== Info Card ===== */
-.info-card {
-  background: var(--card-bg);
-  border: 2px solid var(--border);
-  border-radius: 20px;
-  padding: 24px 20px;
-  box-shadow: 0 4px 16px var(--shadow);
-  text-align: center;
-}
-.info-card .icon { font-size: 32px; margin-bottom: 8px; display: block; }
-.info-card h3 { font-size: 17px; color: var(--text-primary); margin-bottom: 12px; }
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  text-align: center;
-}
-.info-item {
-  background: var(--accent-light);
-  border-radius: 10px;
-  padding: 12px 10px;
-}
-.info-item .label { font-size: 11px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2px; }
-.info-item .value { font-size: 14px; font-weight: 600; color: var(--text-primary); }
-
-/* ===== Comment Section ===== */
+/* ===== Comment ===== */
 .comment-card {
   background: var(--card-bg);
   border: 2px solid var(--border);
@@ -701,24 +377,23 @@ body {
 .msg-form textarea { min-height: 80px; }
 .msg-form .btn-submit {
   align-self: flex-end;
-  background: linear-gradient(135deg, var(--accent), #d4783a);
+  background: linear-gradient(135deg, #2d1b69, #6c5ce7);
   color: #fff; border: none; padding: 10px 32px; border-radius: 10px;
   font-size: 14px; font-weight: 600; cursor: pointer;
   transition: all 0.2s; font-family: inherit;
 }
 .msg-form .btn-submit:hover {
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(232,147,74,0.3);
+  box-shadow: 0 4px 12px rgba(45,27,105,0.3);
 }
 .msg-form .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
 .msg-form .msg-tip { font-size: 12px; color: var(--text-secondary); text-align: right; }
-
 .msg-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; max-height: 420px; overflow-y: auto; }
 .msg-item { background: #fcf7ee; border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; }
 .msg-header { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
 .msg-avatar {
   width: 30px; height: 30px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), #d4783a);
+  background: linear-gradient(135deg, #6c5ce7, #e84393);
   color: #fff; display: flex; align-items: center; justify-content: center;
   font-size: 13px; font-weight: 700; flex-shrink: 0;
 }
@@ -753,32 +428,18 @@ body {
 }
 
 /* ===== Responsive ===== */
-@media (min-width: 600px) {
-  .dest-grid { grid-template-columns: 1fr 1fr !important; }
-}
 @media (max-width: 600px) {
   .hero { min-height: 75vh; }
-  .hero-emoji { font-size: 44px; }
-  .tab-bar { gap: 6px; flex-wrap: wrap; }
-  .tab-btn { padding: 8px 16px; font-size: 13px; }
-  .dest-img { height: 140px; }
-  .dest-body { padding: 12px 14px 14px; }
-  .vis-map { height: 280px; }
+  .hero-emoji { font-size: 48px; }
   .info-grid { grid-template-columns: 1fr 1fr; }
-  .overview-grid { grid-template-columns: 1fr; }
-  .procon-table { min-width: 500px; }
+  .vis-map { height: 280px; }
 }
 @media (max-width: 480px) {
   .hero { min-height: 65vh; }
-  .hero-emoji { font-size: 36px; }
+  .hero-emoji { font-size: 40px; }
   .hero h1 { font-size: clamp(20px, 5vw, 22px); }
   .hero p { font-size: 14px; }
   .section-header h2 { font-size: 18px; }
-  .tab-btn { padding: 10px 14px; font-size: 13px; min-height: 44px; }
-  .dest-img-wrap, .dest-img-placeholder, .dest-img { height: 120px; }
-  .dest-body { padding: 10px 12px 12px; }
-  .dest-name { font-size: 14px; }
-  .dest-desc { font-size: 12px; }
   .info-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
   .info-item { padding: 10px 8px; }
   .vis-map { height: 220px; }
@@ -786,60 +447,29 @@ body {
   .msg-text { padding-left: 0; margin-top: 6px; }
   .msg-form input, .msg-form textarea { font-size: 16px; padding: 12px 14px; }
   .msg-form .btn-submit { width: 100%; text-align: center; padding: 12px 32px; min-height: 44px; font-size: 15px; }
-  .proposal-card { padding: 18px 16px; }
-  .proposal-card .icon { font-size: 28px; }
-  .dest-item { padding: 12px 14px; }
+  .highlight { padding: 20px 16px; }
+  .highlight .btn { display: block; padding: 14px 24px; font-size: 15px; }
   .container { padding: 0 12px; }
   .map-dot .dot-label { display: none; }
-  .procon-table-wrap { margin: 12px -12px; border-radius: 0; border-left: none; border-right: none; }
 }
 @media (max-width: 380px) {
   .hero { min-height: 60vh; }
-  .hero-emoji { font-size: 30px; }
+  .hero-emoji { font-size: 32px; }
   .hero h1 { font-size: 18px; }
-  .tab-btn { padding: 8px 10px; font-size: 12px; }
-  .dest-img-wrap, .dest-img-placeholder, .dest-img { height: 100px; }
   .info-grid { grid-template-columns: 1fr; }
   .vis-map { height: 180px; }
 }
-/* ===== Pro/Con Table ===== */
-.procon-table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 12px; border: 2px solid var(--border); }
-.procon-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 580px; }
-.procon-table th { padding: 10px 12px; text-align: center; border-bottom: 1px solid var(--border); vertical-align: middle; }
-.procon-table td { padding: 10px 12px; text-align: left; border-bottom: 1px solid var(--border); vertical-align: top; line-height: 1.5; }
-.procon-table th:nth-child(1) { background: #f0f4f8; color: #2d3748; font-weight: 700; width: 20%; }
-.procon-table th:nth-child(2) { background: #e6f5e6; color: #1a6b1a; }
-.procon-table th:nth-child(3) { background: #fde8e8; color: #a82828; }
-.procon-table td:nth-child(1) { font-weight: 600; color: #2d3748; background: #f7fafc; }
-.procon-table td:nth-child(2) { background: #fafffa; color: #1e5a1e; }
-.procon-table td:nth-child(3) { background: #fff5f5; color: #7b341e; }
-.procon-table tr:last-child td { border-bottom: none; }
-.procon-tag { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 10px; font-weight: 700; margin: 1px 2px; letter-spacing: 0.5px; }
-.tag-good { background: #d4edda; color: #0e5e1e; border: 1px solid #b8dfc6; }
-.tag-meh { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
-.tag-bad { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-.sub-dim { color: #888; font-weight: 400; font-size: 12px; }
-
 </style>
 </head>
 <body>
 
 <!-- ===== Hero ===== -->
 <section class="hero">
-  <!-- Decorative hand-drawn elements -->
-  <div class="hero-sun">☀️</div>
-  <div class="hero-circle hero-circle-1"></div>
-  <div class="hero-circle hero-circle-2"></div>
-  <svg class="hero-squiggle hero-squiggle-top" viewBox="0 0 1200 30" preserveAspectRatio="none">
-    <path d="M0,15 C100,0 200,30 300,15 C400,0 500,30 600,15 C700,0 800,30 900,15 C1000,0 1100,30 1200,15" fill="none" stroke="#8b7355" stroke-width="2" stroke-linecap="round"/>
-  </svg>
-  <svg class="hero-squiggle hero-squiggle-bottom" viewBox="0 0 1000 20" preserveAspectRatio="none">
-    <path d="M0,10 C80,0 160,20 250,10 C340,0 420,20 510,10 C600,0 680,20 770,10 C860,0 940,20 1000,10" fill="none" stroke="#8b7355" stroke-width="1.5" stroke-linecap="round"/>
-  </svg>
+  <div class="hero-overlay"></div>
   <div class="hero-content">
-    <span class="hero-emoji">🏖️</span>
-    <h1>2026 暑假 · 家庭出游</h1>
-    <p>几个家庭一起，带上老人和孩子<br>选一个心仪的目的地，出发！</p>
+    <span class="hero-emoji">🇲🇾</span>
+    <h1>2026 暑假 · 马来西亚亲子游</h1>
+    <p>吉隆坡 · 马六甲 · 槟城<br>几个家庭一起，带上老人和孩子</p>
   </div>
   <div class="scroll-indicator"></div>
   <div class="hero-wave"></div>
@@ -847,53 +477,99 @@ body {
 
 <div class="container">
 
-<!-- 公告栏 -->
-<div class="card" style="border-color: var(--accent); background: #fffaf0;">
-  <div class="card-title" style="color:var(--accent);">📢 各位家人，目的地已确定</div>
-  <div style="font-size:14px;color:var(--text-secondary);line-height:1.9;">
-    <p style="margin-bottom:10px;">
-      本次暑假家庭出游现聚焦 <strong style="color:#8B6B4D;">3 个方案</strong> 进行最终对比选择 👇
-    </p>
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:14px 0;">
-      <a href="itinerary-xinjiang.html" style="display:block;padding:16px;background:linear-gradient(135deg,#A0522D,#CD853F);color:#fff;border-radius:16px;text-decoration:none;text-align:center;">
-        <div style="font-size:28px;margin-bottom:6px;">🇨🇳</div>
-        <div style="font-weight:700;font-size:15px;">新疆·北疆伊犁</div>
-        <div style="font-size:11px;opacity:0.85;margin-top:2px;">草原雪山 · 避暑胜地 · 7天</div>
-      </a>
-      <a href="itinerary-singapore-kk.html" style="display:block;padding:16px;background:linear-gradient(135deg,#1a365d,#2b6cb0);color:#fff;border-radius:16px;text-decoration:none;text-align:center;">
-        <div style="font-size:28px;margin-bottom:6px;">🇸🇬🇲🇾</div>
-        <div style="font-weight:700;font-size:15px;">新加坡+亚庇</div>
-        <div style="font-size:11px;opacity:0.85;margin-top:2px;">城市+海岛 · 美食天堂 · 8天</div>
-      </a>
-      <a href="itinerary-kl-langkawi.html" style="display:block;padding:16px;background:linear-gradient(135deg,#004d40,#00b894);color:#fff;border-radius:16px;text-decoration:none;text-align:center;">
-        <div style="font-size:28px;margin-bottom:6px;">🇲🇾</div>
-        <div style="font-weight:700;font-size:15px;">吉隆坡+兰卡威</div>
-        <div style="font-size:11px;opacity:0.85;margin-top:2px;">城市+海岛 · 免税购物 · 8天</div>
-      </a>
-    </div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin:12px 0;">
-      <a href="proposal.html" style="display:inline-block;padding:12px 28px;background:linear-gradient(135deg,#A0522D,#CD853F);color:#fff;border-radius:30px;text-decoration:none;font-weight:700;font-size:15px;box-shadow:0 4px 14px rgba(160,82,45,0.3);">
-        📋 查看详细对比方案 👉
-      </a>
-    </div>
-    <p style="font-size:13px;color:var(--text-secondary);margin-top:6px;">
-      💬 去看看两个方案的详细对比，在留言板发表你的意见！
-    </p>
-  </div>
-</div>
-
-<!-- 出游信息 -->
-  <div class="card info-card">
-    <div class="card-title">🏔️ 2026暑假 · 家庭出游方案对比</div>
-    <strong>时间：</strong>2026 年 7 月中下旬 ~ 8 月上旬<br>
-    <strong>成员：</strong>几个家庭，有老人和小孩<br>
-    <strong>风格：</strong>慢节奏、不赶路、舒适为主<br>
-    <strong>当前阶段：</strong>三个方案最终对比 · 请投票选择<br>
-    <div style="margin-top:10px;font-size:13px;color:var(--text-secondary);">
-      现聚焦三个方案：🇨🇳 <strong>新疆北疆伊犁</strong> vs 🇸🇬🇲🇾 <strong>新加坡+亚庇</strong> vs 🇲🇾 <strong>吉隆坡+兰卡威</strong>，请大家查看详细对比后在留言板投票！
-    </div>
+  <!-- 行程入口 -->
+  <div class="highlight">
+    <span class="emoji">🗺️</span>
+    <h3>吉隆坡+马六甲+槟城 · 10天9晚</h3>
+    <p>2026年8月4日 — 8月13日 · 三段飞行 · 三座城市<br>
+    慢节奏 · 不赶路 · 适合老人小孩</p>
+    <a class="btn" href="itinerary-singapore-kk.html">📋 查看完整行程</a>
   </div>
 
+  <!-- 出游信息 -->
+  <div class="card">
+    <div class="card-title">🏔️ 行程概览</div>
+    <div class="info-grid" style="margin-bottom:16px;">
+      <div class="info-item"><div class="label">时间</div><div class="value">8月4日-13日</div></div>
+      <div class="info-item"><div class="label">天数</div><div class="value">10天9晚</div></div>
+      <div class="info-item"><div class="label">城市</div><div class="value">吉隆坡·马六甲·槟城</div></div>
+      <div class="info-item"><div class="label">成员</div><div class="value">多家庭·老小同行</div></div>
+    </div>
+    <p style="font-size:13px;color:var(--text-secondary);line-height:1.7;">
+      🇲🇾 <strong>吉隆坡</strong> — 双子塔 · 黑风洞 · 茨厂街 · 独立广场<br>
+      🏛️ <strong>马六甲</strong> — 荷兰红屋 · 鸡场街 · 海上清真寺<br>
+      🍜 <strong>槟城</strong> — 升旗山 · 极乐寺 · 乔治市美食
+    </p>
+  </div>
+
+  <!-- Quick day preview -->
+  <div class="card">
+    <div class="card-title">📅 行程速览</div>
+    <div class="day-list">
+      <div class="day-row flight">
+        <div class="day-num">1</div>
+        <div class="day-info">
+          <span class="date">8月4日</span>
+          <div class="title">✈️ 上海→吉隆坡</div>
+          <div class="desc">下午出发，晚间接机入住</div>
+        </div>
+      </div>
+      <div class="day-row kl">
+        <div class="day-num">2</div>
+        <div class="day-info">
+          <span class="date">8月5日</span>
+          <div class="title">🚗 吉隆坡包车一日</div>
+          <div class="desc">黑风洞·茨厂街·独立广场·双子塔</div>
+        </div>
+      </div>
+      <div class="day-row kl">
+        <div class="day-num">3</div>
+        <div class="day-info">
+          <span class="date">8月6日</span>
+          <div class="title">🏛️ 马六甲包车一日</div>
+          <div class="desc">荷兰红屋·鸡场街·海上清真寺</div>
+        </div>
+      </div>
+      <div class="day-row flight">
+        <div class="day-num">5</div>
+        <div class="day-info">
+          <span class="date">8月8日</span>
+          <div class="title">✈️ 吉隆坡→槟城</div>
+          <div class="desc">午后飞槟城，乔治市漫步</div>
+        </div>
+      </div>
+      <div class="day-row pg">
+        <div class="day-num">6</div>
+        <div class="day-info">
+          <span class="date">8月9日</span>
+          <div class="title">🏛️ 槟城一日游</div>
+          <div class="desc">极乐寺·升旗山·姓周桥</div>
+        </div>
+      </div>
+      <div class="day-row pg">
+        <div class="day-num">10</div>
+        <div class="day-info">
+          <span class="date">8月13日</span>
+          <div class="title">🛫 槟城→上海</div>
+          <div class="desc">上午返回，结束旅程</div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:12px;">
+      <a href="itinerary-singapore-kk.html" style="color:#6c5ce7;font-weight:600;font-size:14px;">查看完整10天行程 →</a>
+    </div>
+  </div>
+
+  <!-- 视觉地图 -->
+  <div class="card" style="padding:16px;">
+    <div class="card-title" style="margin-bottom:12px;">🗺️ 路线示意</div>
+    <div class="vis-map" id="vis-map">
+      <div class="map-title">上海 → 马来西亚</div>
+      <svg class="map-lines" id="map-lines"></svg>
+      <div style="position:absolute;bottom:14px;left:50%;transform:translateX(-50%);color:rgba(139,115,85,0.3);font-size:11px;pointer-events:none;">上海 → 吉隆坡 → 槟城</div>
+    </div>
+    <div class="map-legend" id="map-legend"></div>
+  </div>
 
   <!-- Comment -->
   <div class="section" id="sec-comment">
@@ -913,95 +589,22 @@ body {
 
 </div>
 
-
-<div class="footer">✈️ 家庭出游计划 · 2026 年 暑假</div>
+<div class="footer">✈️ 家庭出游计划 · 2026 年暑假 · 马来西亚</div>
 <div id="toast" class="toast"></div>
 
-<!-- ===== Custom Visual Map ===== -->
-
 <script>
-/* ===== Destination Data ===== */
-const DESTINATIONS = [
-  {
-    id: 'xinjiang', name: '北疆伊犁 · 草原雪山', flag: '🇨🇳',
-    region: 'domestic', desc: '7天6晚 · 避暑胜地 · 草原骑马',
-    features: ['气候凉爽', '风景壮丽', '中文无障碍'],
-    img: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&q=80',
-    color: '#CD853F',
-    latlng: [43.9, 81.3],
-    page: 'itinerary-xinjiang.html'
-  },
-  {
-    id: 'singapore-kk', name: '新加坡+亚庇 · 城市海岛', flag: '🇸🇬🇲🇾',
-    region: 'overseas', desc: '8天7晚 · 环球影城 · 海岛浮潜',
-    features: ['美食天堂', '亲子满分', '城市+海岛'],
-    img: 'https://images.unsplash.com/photo-1555400038-63f5ba517a47?w=600&q=80',
-    color: '#2B6CB0',
-    latlng: [1.3521, 103.8198],
-    page: 'itinerary-singapore-kk.html'
-  },
-  {
-    id: 'kl-langkawi', name: '吉隆坡+兰卡威 · 都会海岛', flag: '🇲🇾',
-    region: 'overseas', desc: '8天7晚 · 天空之桥 · 免税购物',
-    features: ['免签', '性价比高', '美食多元'],
-    img: 'https://images.unsplash.com/photo-1596422846543-75c6fc197f07?w=600&q=80',
-    color: '#00b894',
-    latlng: [3.1390, 101.6869],
-    page: 'itinerary-kl-langkawi.html'
-  }
-];
-
-/* ===== Render Destinations ===== */
-function renderDests(filter) {
-  const grid = document.getElementById('dest-grid');
-  const filtered = filter === 'all' ? DESTINATIONS : DESTINATIONS.filter(d => d.region === filter);
-
-  grid.innerHTML = filtered.map(d => {
-    const features = d.features.map(f => `<span class="dest-tag-feature">${f}</span>`).join('');
-    const regionLabel = d.region === 'domestic' ? '国内' : '国外';
-
-    return `
-      <a href="${d.page}" class="dest-card">
-        <div class="dest-img-wrap" style="background:${d.color}">
-          <span class="dest-img-fallback">${d.flag}</span>
-          <img class="dest-img" src="${d.img}" alt="${d.name}" loading="lazy"
-            onerror="this.style.display='none'">
-        </div>
-        <div class="dest-overlay">
-          <span class="dest-tag dest-tag-region">${regionLabel}</span>
-        </div>
-        <div class="dest-body">
-          <div class="dest-body-header">
-            <span class="dest-flag">${d.flag}</span>
-            <span class="dest-name">${d.name}</span>
-            <span class="dest-arrow">→</span>
-          </div>
-          <div class="dest-desc">${d.desc}</div>
-          <div class="dest-tags">${features}</div>
-        </div>
-      </a>
-    `;
-  }).join('');
-}
-
-renderDests('all');
-
-/* ===== Custom Visual Map ===== */
+/* ===== Visual Map ===== */
 (function initVisMap() {
   const mapEl = document.getElementById('vis-map');
   if (!mapEl) return;
 
-  // Map bounds: lat 0-50°N, lng 75-125°E
   const toPct = (lat, lng) => ({
-    top: 100 - (lat / 50 * 100),     // lat 0=bottom, 50=top
+    top: 100 - (lat / 50 * 100),
     left: (lng - 75) / 50 * 100
   });
 
-  // Origin: Shanghai
-  const origin = toPct(31.2, 121.5);
-
-  // Generate decorative ocean dots
-  for (let i = 0; i < 60; i++) {
+  // Ocean dots
+  for (let i = 0; i < 40; i++) {
     const dot = document.createElement('div');
     dot.className = 'ocean-dot';
     dot.style.left = (Math.random() * 96 + 2) + '%';
@@ -1010,81 +613,54 @@ renderDests('all');
     mapEl.appendChild(dot);
   }
 
-  // Draw connecting lines from origin to each destination
   const svg = document.getElementById('map-lines');
-  const mapRect = mapEl.getBoundingClientRect();
-
   function addLine(x1, y1, x2, y2, color) {
     const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
     line.setAttribute('x1', x1 + '%');
     line.setAttribute('y1', y1 + '%');
     line.setAttribute('x2', x2 + '%');
     line.setAttribute('y2', y2 + '%');
-    line.setAttribute('stroke', color || 'rgba(255,255,255,0.08)');
-    line.setAttribute('stroke-width', '1');
-    line.setAttribute('stroke-dasharray', '3,4');
+    line.setAttribute('stroke', color || 'rgba(108,92,231,0.25)');
+    line.setAttribute('stroke-width', '1.5');
+    line.setAttribute('stroke-dasharray', '4,4');
     svg.appendChild(line);
   }
 
-  DESTINATIONS.forEach((d, idx) => {
-    const pos = toPct(d.latlng[0], d.latlng[1]);
-    addLine(origin.left, origin.top, pos.left, pos.top, d.color + '33');
+  // Origin: Shanghai
+  const origin = toPct(31.2, 121.5);
 
-    // Dot element
+  // Destinations: just Malaysia focus
+  const points = [
+    { name: '吉隆坡', flag: '🇲🇾', lat: 3.139, lng: 101.6869, color: '#6c5ce7' },
+    { name: '槟城', flag: '🏝️', lat: 5.4164, lng: 100.3327, color: '#e84393' },
+  ];
+
+  points.forEach(p => {
+    const pos = toPct(p.lat, p.lng);
+    addLine(origin.left, origin.top, pos.left, pos.top, p.color + '44');
+
     const dot = document.createElement('div');
     dot.className = 'map-dot';
     dot.style.left = pos.left + '%';
     dot.style.top = pos.top + '%';
 
-    const ring = document.createElement('div');
-    ring.className = 'dot-ring';
-    ring.style.background = d.color;
-    dot.appendChild(ring);
-
     const core = document.createElement('div');
     core.className = 'dot-core';
-    core.style.background = d.color;
+    core.style.background = p.color;
     dot.appendChild(core);
 
     const label = document.createElement('div');
     label.className = 'dot-label';
-    label.innerHTML = `<span class="dot-label-flag">${d.flag}</span>${d.name}`;
+    label.innerHTML = `<span style="margin-right:2px;">${p.flag}</span>${p.name}`;
     dot.appendChild(label);
-
-    // Click → navigate
-    dot.addEventListener('click', (e) => {
-      e.stopPropagation();
-      window.location.href = d.page;
-    });
-
-    // Hover tooltip
-    dot.addEventListener('mouseenter', () => {
-      const tt = document.getElementById('map-tooltip');
-      tt.innerHTML = `<strong>${d.flag} ${d.name}</strong> · <a href="${d.page}">查看行程 →</a>`;
-      tt.classList.add('show');
-    });
-    dot.addEventListener('mousemove', (e) => {
-      const tt = document.getElementById('map-tooltip');
-      const r = mapEl.getBoundingClientRect();
-      let x = e.clientX - r.left + 16;
-      let y = e.clientY - r.top - 10;
-      if (x + 200 > r.width) x = e.clientX - r.left - 180;
-      if (y < 0) y = 10;
-      tt.style.left = x + 'px';
-      tt.style.top = y + 'px';
-    });
-    dot.addEventListener('mouseleave', () => {
-      document.getElementById('map-tooltip').classList.remove('show');
-    });
 
     mapEl.appendChild(dot);
 
-    // Legend item
+    // Legend
     const leg = document.getElementById('map-legend');
-    const item = document.createElement('a');
+    const item = document.createElement('div');
     item.className = 'map-legend-item';
-    item.href = d.page;
-    item.innerHTML = `<span class="map-legend-dot" style="background:${d.color}"></span>${d.flag} ${d.name}`;
+    item.innerHTML = `<span class="map-legend-dot" style="background:${p.color}"></span>${p.flag} ${p.name}`;
     leg.appendChild(item);
   });
 
@@ -1093,21 +669,18 @@ renderDests('all');
   originDot.className = 'map-dot map-dot-origin';
   originDot.style.left = origin.left + '%';
   originDot.style.top = origin.top + '%';
-  const or = document.createElement('div'); or.className = 'dot-ring'; originDot.appendChild(or);
   const oc = document.createElement('div'); oc.className = 'dot-core'; originDot.appendChild(oc);
   const ol = document.createElement('div'); ol.className = 'dot-label';
-  ol.innerHTML = '<span class="dot-label-flag">📍</span>上海（出发地）';
+  ol.innerHTML = '📍上海';
   originDot.appendChild(ol);
   mapEl.appendChild(originDot);
 
-  // Redraw lines on resize
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      // SVG lines are in %, so no recalculation needed
-    }, 200);
-  });
+  // Legend: origin
+  const leg = document.getElementById('map-legend');
+  const originItem = document.createElement('div');
+  originItem.className = 'map-legend-item';
+  originItem.innerHTML = '<span class="map-legend-dot" style="background:var(--accent)"></span>📍上海（出发）';
+  leg.appendChild(originItem);
 })();
 
 /* ===== Scroll Animations ===== */
@@ -1118,7 +691,6 @@ const observer = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.1 });
-
 document.querySelectorAll('.section').forEach(el => observer.observe(el));
 
 /* ===== Comments ===== */
@@ -1152,7 +724,7 @@ async function loadMsgs(retries) {
       setTimeout(() => loadMsgs(retries + 1), 2000 * (retries + 1));
       list.innerHTML = '<div class="msg-loading">⏳ 加载中…（重试 ' + (retries + 1) + '/3）</div>';
     } else {
-      list.innerHTML = '<div class="msg-empty" style="color:#e53e3e;">留言加载失败（' + e.name + '），请刷新重试</div>';
+      list.innerHTML = '<div class="msg-empty" style="color:#e53e3e;">留言加载失败，请刷新重试</div>';
     }
   }
 }
@@ -1202,7 +774,6 @@ function showToast(msg) {
   setTimeout(() => t.classList.remove('show'), 2500);
 }
 
-// DOM is already parsed (script at end of body) — load comments immediately
 loadMsgs();
 const ta = document.getElementById('msg-content');
 if (ta) {
