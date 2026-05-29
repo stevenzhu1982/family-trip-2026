@@ -2,278 +2,280 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>吉隆坡酒店对比 · 投票</title>
 <style>
 :root {
   --concorde: #6c5ce7;
   --hilton: #00b894;
-  --days: #fdcb6e;
-  --days-txt: #6a4e1a;
-  --bg: #f8f7fa;
+  --days: #f39c12;
+  --bg: #f5f3f8;
   --card-bg: #fff;
   --text: #2d3436;
   --text-light: #636e72;
   --border: #e0e0e0;
-  --shadow: 0 4px 20px rgba(0,0,0,0.06);
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
   background: var(--bg);
   color: var(--text);
-  line-height: 1.6;
-  padding-bottom: 60px;
+  line-height: 1.5;
+  padding-bottom: 70px;
 }
-.container { max-width: 860px; margin: 0 auto; padding: 0 16px; }
+.container { max-width: 860px; margin: 0 auto; padding: 0 12px; }
 
 /* Header */
 .header {
-  background: linear-gradient(135deg, #2d1b69 0%, #6c5ce7 50%, #e84393 100%);
+  background: linear-gradient(135deg, #2d1b69, #6c5ce7, #e84393);
   color: #fff;
   text-align: center;
-  padding: 36px 20px 28px;
+  padding: 28px 16px 22px;
 }
-.header h1 { font-size: 24px; font-weight: 800; letter-spacing: 1px; margin-bottom: 4px; }
-.header p { font-size: 14px; opacity: 0.8; }
+.header h1 { font-size: 26px; font-weight: 800; letter-spacing: 1px; }
+.header p { font-size: 14px; opacity: 0.85; margin-top: 4px; }
 
-/* Intro */
-.intro {
+/* Quick Compare Grid - BIG */
+.quick-compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+  margin: 16px 0;
+}
+.qc-card {
   background: var(--card-bg);
-  border-radius: 16px;
-  padding: 20px;
-  margin: 20px 0;
-  box-shadow: var(--shadow);
-  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 8px;
+  text-align: center;
+  border: 2px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
-.intro h2 { font-size: 17px; margin-bottom: 8px; color: #2d1b69; }
-.intro p { font-size: 13px; color: var(--text-light); line-height: 1.7; }
+.qc-card .qc-icon { font-size: 28px; }
+.qc-card .qc-value { font-size: 22px; font-weight: 800; margin: 2px 0; }
+.qc-card .qc-label { font-size: 12px; color: var(--text-light); }
+.qc-card .qc-hotel { font-size: 11px; font-weight: 600; margin-top: 2px; }
+.qc-concorde { border-color: #ddd; }
+.qc-concorde .qc-value { color: var(--concorde); }
+.qc-hilton { border-color: #ddd; }
+.qc-hilton .qc-value { color: var(--hilton); }
+.qc-days { border-color: #ddd; }
+.qc-days .qc-value { color: var(--days); }
 
-/* Hotel Cards */
+/* Star rating */
+.star-row { display: flex; justify-content: center; gap: 1px; margin: 2px 0; }
+.star-row .s { font-size: 16px; }
+.star-row .s.on { color: #f59e0b; }
+.star-row .s.off { color: #e0e0e0; }
+
+/* Hotel Card */
 .hotel-card {
   background: var(--card-bg);
-  border-radius: 20px;
-  box-shadow: var(--shadow);
-  margin-bottom: 20px;
+  border-radius: 18px;
+  margin-bottom: 18px;
+  border: 2px solid var(--border);
   overflow: hidden;
-  border: 2px solid transparent;
   transition: border-color 0.3s;
 }
 .hotel-card.highlight-concorde { border-color: var(--concorde); }
 .hotel-card.highlight-hilton { border-color: var(--hilton); }
 .hotel-card.highlight-days { border-color: var(--days); }
 
-.hotel-head {
-  padding: 18px 18px 14px;
+/* Hotel Header */
+.hotel-hd {
+  padding: 16px 16px 10px;
   display: flex;
   align-items: center;
   gap: 12px;
 }
-.hotel-head .badge {
-  width: 44px; height: 44px;
+.hotel-hd .badge {
+  width: 48px; height: 48px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  color: #fff;
-  font-weight: 800;
-  flex-shrink: 0;
+  font-size: 22px; font-weight: 800;
+  color: #fff; flex-shrink: 0;
 }
-.badge-concorde { background: linear-gradient(135deg, #6c5ce7, #a78bfa); }
-.badge-hilton { background: linear-gradient(135deg, #00b894, #55efc4); }
-.badge-days { background: linear-gradient(135deg, #fdcb6e, #f39c12); color: #6a4e1a !important; }
+.badge-ct { background: linear-gradient(135deg, #6c5ce7, #a78bfa); }
+.badge-hg { background: linear-gradient(135deg, #00b894, #55efc4); }
+.badge-dy { background: linear-gradient(135deg, #fdcb6e, #f39c12); color: #6a4e1a; }
+.hotel-hd .nm-group { flex: 1; }
+.hotel-hd .nm-group h3 { font-size: 17px; font-weight: 700; }
+.hotel-hd .nm-group .nm-en { font-size: 12px; color: var(--text-light); }
+.hotel-hd .star-big { color: #f59e0b; font-size: 15px; }
+.hotel-hd .price-big {
+  font-size: 14px; font-weight: 700; color: #e53e3e;
+  background: #fff5f5; padding: 4px 12px; border-radius: 8px;
+  white-space: nowrap;
+}
 
-.hotel-head .name-group { flex: 1; }
-.hotel-head .name-group h3 { font-size: 16px; font-weight: 700; }
-.hotel-head .name-group .name-en { font-size: 11px; color: var(--text-light); font-weight: 400; }
-.hotel-head .star { color: #f59e0b; font-size: 13px; }
-
-/* Room info badge */
-.room-highlight {
-  padding: 0 18px 12px;
+/* Room Tags */
+.room-tags {
+  padding: 0 16px 8px;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
 }
 .room-tag {
-  font-size: 11px;
-  padding: 3px 10px;
-  border-radius: 8px;
-  font-weight: 600;
+  font-size: 12px; padding: 3px 10px; border-radius: 8px; font-weight: 600;
 }
-.room-tag-green { background: #d4edda; color: #0e5e1e; }
-.room-tag-blue { background: #dbeafe; color: #1e40af; }
-.room-tag-purple { background: #ede9fe; color: #5b21b6; }
-.room-tag-yellow { background: #fef3c7; color: #92400e; }
-.room-tag-red { background: #fee2e2; color: #991b1b; }
+.rt-purple { background: #ede9fe; color: #5b21b6; }
+.rt-green { background: #d4edda; color: #0e5e1e; }
+.rt-blue { background: #dbeafe; color: #1e40af; }
+.rt-yellow { background: #fef3c7; color: #92400e; }
+.rt-red { background: #fce4ec; color: #880e4f; }
 
-/* Comparison table inside card */
-.comp-table { padding: 0 18px 14px; }
-.comp-row {
+/* Photo Gallery */
+.photo-gallery {
+  padding: 0 16px 12px;
   display: flex;
-  border-bottom: 1px solid #f0f0f0;
-  padding: 10px 0;
-  font-size: 13px;
+  gap: 6px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
 }
-.comp-row:last-child { border-bottom: none; }
-.comp-label {
-  width: 90px;
-  min-width: 90px;
+.photo-gallery::-webkit-scrollbar { height: 3px; }
+.photo-gallery::-webkit-scrollbar-thumb { background: #ccc; border-radius: 2px; }
+.photo-item {
+  flex: 0 0 auto;
+  width: 120px;
+  scroll-snap-align: start;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+.photo-item img {
+  width: 100%;
+  height: 85px;
+  object-fit: cover;
+  display: block;
+}
+.photo-item .ph-label {
+  font-size: 9px;
+  color: var(--text-light);
+  text-align: center;
+  padding: 2px;
+  background: #fafafa;
+}
+
+/* Detail table */
+.detail-table { padding: 0 16px 8px; }
+.dt-row {
+  display: flex;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+  font-size: 14px;
+}
+.dt-row:last-child { border-bottom: none; }
+.dt-label {
+  width: 78px;
+  min-width: 78px;
   color: var(--text-light);
   font-weight: 500;
+  font-size: 13px;
 }
-.comp-value { flex: 1; }
-.comp-value .good { color: #00b894; font-weight: 600; }
-.comp-value .bad { color: #e17055; }
-.comp-value .mid { color: #fdcb6e; font-weight: 600; }
+.dt-value { flex: 1; font-size: 13px; }
+.dt-value .good { color: #00b894; font-weight: 700; }
+.dt-value .bad { color: #e17055; }
+.dt-value .mid { color: #e17055; font-weight: 600; }
 
 /* Pros/Cons */
-.pros-cons { padding: 0 18px 16px; display: flex; flex-direction: column; gap: 8px; }
-.pros-cons .pc-item {
-  font-size: 12px;
-  line-height: 1.5;
-  padding: 6px 10px;
-  border-radius: 8px;
-}
+.pc-wrap { padding: 0 16px 12px; display: flex; flex-direction: column; gap: 6px; }
+.pc-item { font-size: 13px; line-height: 1.5; padding: 6px 10px; border-radius: 8px; }
 .pc-pro { background: #e8f8f5; color: #0e5e1e; }
 .pc-con { background: #fdf0ef; color: #991b1b; }
 
 /* Score row */
-.score-row {
+.scr-row {
   display: flex;
-  gap: 10px;
-  padding: 12px 18px;
+  padding: 10px 16px;
   background: #fafafa;
   border-top: 1px solid var(--border);
+  gap: 8px;
 }
-.score-item {
+.scr-item {
   flex: 1;
   text-align: center;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--text-light);
 }
-.score-item .num {
-  display: block;
-  font-size: 18px;
-  font-weight: 800;
-}
-.score-item .num.concorde-score { color: var(--concorde); }
-.score-item .num.hilton-score { color: var(--hilton); }
-.score-item .num.days-score { color: var(--days-txt); }
+.scr-item .num { display: block; font-size: 20px; font-weight: 800; }
+.scr-item .num.cd { color: var(--concorde); }
+.scr-item .num.hg { color: var(--hilton); }
+.scr-item .num.dy { color: var(--days); }
 
-/* Vote Bar */
+/* Vote Button */
 .vote-bar {
-  padding: 14px 18px;
+  padding: 12px 16px;
   border-top: 2px dashed var(--border);
-  display: flex;
-  align-items: center;
-  gap: 12px;
 }
 .vote-btn {
-  flex: 1;
-  padding: 10px;
+  width: 100%;
+  padding: 12px;
   border: 2px solid var(--border);
-  border-radius: 10px;
+  border-radius: 12px;
   background: var(--card-bg);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
   cursor: pointer;
-  transition: all 0.2s;
   font-family: inherit;
   color: var(--text-light);
   text-align: center;
+  transition: all 0.2s;
 }
 .vote-btn:hover { border-color: #2d1b69; color: #2d1b69; }
-.vote-btn:active { transform: scale(0.97); }
 .vote-btn.selected { color: #fff; border-color: transparent; }
-.vote-btn.selected-concorde { background: var(--concorde); }
-.vote-btn.selected-hilton { background: var(--hilton); }
-.vote-btn.selected-days { background: #f39c12; }
-.vote-btn .vote-count {
-  display: block;
-  font-size: 11px;
-  font-weight: 400;
-  margin-top: 2px;
-  opacity: 0.7;
-}
+.vote-btn.s-cd { background: var(--concorde); }
+.vote-btn.s-hg { background: var(--hilton); }
+.vote-btn.s-dy { background: var(--days); }
+.vote-btn .vc { display: block; font-size: 12px; font-weight: 400; margin-top: 2px; opacity: 0.7; }
 
-/* Result Section */
-.results {
-  background: var(--card-bg);
+/* Verdict */
+.verdict {
+  background: linear-gradient(135deg, #2d1b69, #6c5ce7);
   border-radius: 16px;
   padding: 20px;
-  margin: 20px 0;
-  box-shadow: var(--shadow);
+  color: #fff;
+  margin: 16px 0;
+}
+.verdict h3 { font-size: 18px; margin-bottom: 8px; }
+.verdict p { font-size: 14px; opacity: 0.9; line-height: 1.7; }
+
+/* Results */
+.results {
+  background: var(--card-bg);
+  border-radius: 18px;
+  padding: 20px;
+  margin: 16px 0;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
   border: 1px solid var(--border);
 }
-.results h3 { font-size: 16px; margin-bottom: 14px; text-align: center; color: #2d1b69; }
+.results h3 { font-size: 18px; margin-bottom: 14px; text-align: center; color: #2d1b69; }
+
 .bar-wrap { margin-bottom: 14px; }
-.bar-label { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 4px; }
-.bar-label .bar-name { font-weight: 600; }
-.bar-label .bar-pct { color: var(--text-light); }
-.bar-track {
-  height: 24px;
-  border-radius: 12px;
+.bl { display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 4px; }
+.bl .bn { font-weight: 700; }
+.bl .bp { color: var(--text-light); }
+.bt {
+  height: 28px;
+  border-radius: 14px;
   overflow: hidden;
-  position: relative;
+  background: #f0f0f0;
 }
-.bar-fill {
+.bf {
   height: 100%;
-  border-radius: 12px;
+  border-radius: 14px;
   transition: width 0.5s ease;
 }
-.bar-fill-concorde { background: linear-gradient(90deg, #6c5ce7, #a78bfa); }
-.bar-fill-hilton { background: linear-gradient(90deg, #00b894, #55efc4); }
-.bar-fill-days { background: linear-gradient(90deg, #fdcb6e, #f39c12); }
-.total-votes { text-align: center; font-size: 13px; color: var(--text-light); margin-top: 10px; }
+.bf-cd { background: linear-gradient(90deg, #6c5ce7, #a78bfa); }
+.bf-hg { background: linear-gradient(90deg, #00b894, #55efc4); }
+.bf-dy { background: linear-gradient(90deg, #fdcb6e, #f39c12); }
+.total-votes { text-align: center; font-size: 14px; color: var(--text-light); margin-top: 10px; }
 
-/* Name Input */
-.name-input-wrap {
-  display: flex;
-  gap: 8px;
-  margin: 12px 0 4px;
-}
-.name-input-wrap input {
-  flex: 1;
-  padding: 8px 12px;
-  border: 2px solid var(--border);
-  border-radius: 8px;
-  font-family: inherit;
-  font-size: 13px;
-  outline: none;
-}
-.name-input-wrap input:focus { border-color: #6c5ce7; }
-.name-input-wrap button {
-  padding: 8px 16px;
-  border: none;
-  border-radius: 8px;
-  background: #2d1b69;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 13px;
-}
-.name-input-wrap button:disabled { opacity: 0.3; }
-
-/* Voter list */
-.voter-list { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0; }
-.voter-item {
-  padding: 4px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: 600;
-  color: #fff;
-}
-.voter-item-concorde { background: var(--concorde); }
-.voter-item-hilton { background: #00b894; }
-.voter-item-days { background: #f39c12; }
-
-/* Bottom nav */
+/* Bottom Nav */
 .bottom-nav {
   position: fixed;
-  bottom: 16px;
+  bottom: 12px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -286,448 +288,330 @@ body {
   border: 1px solid var(--border);
 }
 .nav-btn {
-  padding: 8px 18px;
+  padding: 8px 16px;
   border: none;
   border-radius: 10px;
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
   background: transparent;
   color: var(--text-light);
   font-family: inherit;
+  transition: all 0.2s;
 }
 .nav-btn.active { background: #2d1b69; color: #fff; }
-.nav-btn:active { transform: scale(0.95); }
 
-/* Section anchors */
-.section-wrap { padding-top: 8px; }
-
-/* Toast */
-.toast {
-  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
-  background: #2d3436; color: #fff; padding: 10px 24px; border-radius: 10px;
-  font-size: 13px; z-index: 1000; opacity: 0;
-  transition: all 0.3s; pointer-events: none; white-space: nowrap;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
-
-/* Summary verdict */
-.verdict-box {
-  background: linear-gradient(135deg, #2d1b69, #6c5ce7);
-  border-radius: 16px;
-  padding: 20px;
-  color: #fff;
-  margin: 20px 0;
-}
-.verdict-box h3 { font-size: 17px; margin-bottom: 8px; }
-.verdict-box p { font-size: 13px; opacity: 0.88; line-height: 1.7; }
-
-/* Compare highlights */
-.compare-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 20px;
-}
-.compare-cell {
-  background: var(--card-bg);
-  border-radius: 12px;
-  padding: 12px;
-  text-align: center;
-  border: 1px solid var(--border);
-}
-.compare-cell .c-icon { font-size: 24px; margin-bottom: 4px; }
-.compare-cell .c-label { font-size: 10px; color: var(--text-light); }
-.compare-cell .c-value { font-size: 15px; font-weight: 700; margin-top: 2px; }
-
-@media (max-width: 600px) {
-  .compare-grid { grid-template-columns: 1fr 1fr 1fr; gap: 4px; }
-  .compare-cell { padding: 8px 4px; }
-  .compare-cell .c-value { font-size: 13px; }
-  .score-row { flex-wrap: wrap; }
-  .score-item { min-width: 30%; }
-}
-
-/* Share button */
+/* Share */
 .share-btn {
-  display: block;
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 12px;
   background: #2d1b69;
   color: #fff;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
   font-family: inherit;
   margin-top: 12px;
-  transition: all 0.2s;
 }
 .share-btn:hover { background: #4a30a0; }
-.share-btn:active { transform: scale(0.98); }
+.toast {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  background: #2d3436; color: #fff; padding: 12px 24px; border-radius: 12px;
+  font-size: 14px; z-index: 1000; opacity: 0;
+  transition: all 0.3s; pointer-events: none; white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(-4px); }
 
-/* Photo Gallery */
-.photo-gallery {
-  padding: 0 18px 14px;
-  display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  -webkit-overflow-scrolling: touch;
-}
-.photo-gallery::-webkit-scrollbar { height: 4px; }
-.photo-gallery::-webkit-scrollbar-thumb { background: #ddd; border-radius: 2px; }
-.photo-item {
-  flex: 0 0 auto;
-  width: calc(33.33% - 6px);
-  min-width: 140px;
-  scroll-snap-align: start;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #f5f5f5;
-}
-.photo-item img {
-  width: 100%;
-  height: 110px;
-  object-fit: cover;
-  display: block;
-}
-.photo-item .photo-label {
-  font-size: 10px;
-  color: var(--text-light);
-  text-align: center;
-  padding: 3px;
-  background: #fafafa;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-@media (max-width: 500px) {
-  .photo-item { width: calc(50% - 4px); min-width: 130px; }
-  .photo-item img { height: 100px; }
-}
-@media (max-width: 360px) {
-  .photo-item { width: calc(50% - 4px); min-width: 110px; }
-  .photo-item img { height: 85px; }
+@media (max-width: 480px) {
+  .quick-compare { gap: 5px; }
+  .qc-card { padding: 10px 4px; }
+  .qc-card .qc-value { font-size: 18px; }
+  .photo-item { width: 100px; }
+  .photo-item img { height: 75px; }
+  .dt-label { width: 68px; min-width: 68px; font-size: 12px; }
+  .dt-value { font-size: 12px; }
+  .hotel-hd .price-big { font-size: 12px; padding: 3px 8px; }
+  .bottom-nav { gap: 2px; }
+  .nav-btn { padding: 6px 10px; font-size: 11px; }
 }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <h1>🏨 吉隆坡酒店 · 大家来投票</h1>
-  <p>20人出行 · 8间房 · 8月4日–8月8日（4晚）· 含早餐</p>
+  <h1>🏨 吉隆坡酒店对比 &amp; 投票</h1>
+  <p>20人 · 8间双床房 · 8/4→8/8（4晚）· 含早餐 · 全部可免费取消</p>
 </div>
 
 <div class="container">
 
-  <!-- Intro -->
-  <div class="intro">
-    <h2>📋 投票说明</h2>
-    <p>
-      三家酒店都是双床房、含早餐、可免费取消。请根据以下对比信息，选择你认为最适合大家居住的酒店。
-      每人在 <strong>底部输入姓名</strong> 后即可投票，投票后可随时更改。
-      最终结果将在出发前确定，少数服从多数 🗳️
-    </p>
+  <!-- Quick Compare -->
+  <div class="quick-compare">
+    <div class="qc-card qc-concorde">
+      <div class="qc-icon">🏨</div>
+      <div class="qc-value">24㎡</div>
+      <div class="qc-label">房间面积</div>
+      <div class="qc-hotel" style="color:var(--concorde);">凯煌酒店</div>
+    </div>
+    <div class="qc-card qc-hilton" style="border-color:#00b894;">
+      <div class="qc-icon">🏨</div>
+      <div class="qc-value">39㎡</div>
+      <div class="qc-label">房间面积</div>
+      <div class="qc-hotel" style="color:var(--hilton);">希尔顿花园</div>
+    </div>
+    <div class="qc-card qc-days" style="border-color:#f39c12;">
+      <div class="qc-icon">🏨</div>
+      <div class="qc-value">28㎡</div>
+      <div class="qc-label">房间面积</div>
+      <div class="qc-hotel" style="color:var(--days);">温德姆戴斯</div>
+    </div>
+    <div class="qc-card qc-concorde">
+      <div class="qc-icon">⭐</div>
+      <div class="qc-value">8.5</div>
+      <div class="qc-label">综合评分</div>
+      <div class="qc-hotel" style="color:var(--concorde);">凯煌酒店</div>
+    </div>
+    <div class="qc-card qc-hilton" style="border-color:#00b894;">
+      <div class="qc-icon">⭐</div>
+      <div class="qc-value">8.4</div>
+      <div class="qc-label">综合评分</div>
+      <div class="qc-hotel" style="color:var(--hilton);">希尔顿花园</div>
+    </div>
+    <div class="qc-card qc-days" style="border-color:#f39c12;">
+      <div class="qc-icon">⭐</div>
+      <div class="qc-value">8.2</div>
+      <div class="qc-label">综合评分</div>
+      <div class="qc-hotel" style="color:var(--days);">温德姆戴斯</div>
+    </div>
+    <div class="qc-card qc-concorde">
+      <div class="qc-icon">📍</div>
+      <div class="qc-value"><span style="color:#f59e0b;">★★★★★</span></div>
+      <div class="qc-label">位置评分</div>
+      <div class="qc-hotel" style="color:var(--concorde);">凯煌酒店</div>
+    </div>
+    <div class="qc-card qc-hilton" style="border-color:#00b894;">
+      <div class="qc-icon">📍</div>
+      <div class="qc-value"><span style="color:#f59e0b;">★★★</span><span style="color:#ddd;">☆☆</span></div>
+      <div class="qc-label">位置评分</div>
+      <div class="qc-hotel" style="color:var(--hilton);">希尔顿花园</div>
+    </div>
+    <div class="qc-card qc-days" style="border-color:#f39c12;">
+      <div class="qc-icon">📍</div>
+      <div class="qc-value"><span style="color:#f59e0b;">★★</span><span style="color:#ddd;">☆☆☆</span></div>
+      <div class="qc-label">位置评分</div>
+      <div class="qc-hotel" style="color:var(--days);">温德姆戴斯</div>
+    </div>
+    <div class="qc-card qc-concorde">
+      <div class="qc-icon">💰</div>
+      <div class="qc-value" style="color:#e53e3e;">CNY 17,360</div>
+      <div class="qc-label">8间4晚总价</div>
+      <div class="qc-hotel" style="color:var(--concorde);">凯煌酒店</div>
+    </div>
+    <div class="qc-card qc-hilton" style="border-color:#00b894;">
+      <div class="qc-icon">💰</div>
+      <div class="qc-value" style="color:#e53e3e;">CNY 15,960</div>
+      <div class="qc-label">8间4晚总价</div>
+      <div class="qc-hotel" style="color:var(--hilton);">希尔顿花园</div>
+    </div>
+    <div class="qc-card qc-days" style="border-color:#f39c12;">
+      <div class="qc-icon">💰</div>
+      <div class="qc-value" style="color:#e53e3e;">CNY 12,660</div>
+      <div class="qc-label">8间4晚总价</div>
+      <div class="qc-hotel" style="color:var(--days);">温德姆戴斯</div>
+    </div>
   </div>
 
-  <!-- Quick comparison bars -->
-  <div class="compare-grid">
-    <div class="compare-cell">
-      <div class="c-icon">🛏️</div>
-      <div class="c-label">面积</div>
-      <div class="c-value" style="color:#6c5ce7;">24㎡</div>
-      <div class="c-label" style="font-size:9px;">凯煌</div>
-    </div>
-    <div class="compare-cell">
-      <div class="c-icon">🛏️</div>
-      <div class="c-label">面积</div>
-      <div class="c-value" style="color:#00b894;">39㎡</div>
-      <div class="c-label" style="font-size:9px;">希尔顿</div>
-    </div>
-    <div class="compare-cell">
-      <div class="c-icon">🛏️</div>
-      <div class="c-label">面积</div>
-      <div class="c-value" style="color:#f39c12;">28㎡</div>
-      <div class="c-label" style="font-size:9px;">戴斯</div>
-    </div>
-    <div class="compare-cell">
-      <div class="c-icon">⭐</div>
-      <div class="c-label">评分</div>
-      <div class="c-value" style="color:#6c5ce7;">8.5</div>
-      <div class="c-label" style="font-size:9px;">凯煌</div>
-    </div>
-    <div class="compare-cell">
-      <div class="c-icon">⭐</div>
-      <div class="c-label">评分</div>
-      <div class="c-value" style="color:#00b894;">8.5</div>
-      <div class="c-label" style="font-size:9px;">希尔顿</div>
-    </div>
-    <div class="compare-cell">
-      <div class="c-icon">⭐</div>
-      <div class="c-label">评分</div>
-      <div class="c-value" style="color:#f39c12;">8.2</div>
-      <div class="c-label" style="font-size:9px;">戴斯</div>
-    </div>
-    <div class="compare-cell">
-      <div class="c-icon">📍</div>
-      <div class="c-label">位置</div>
-      <div class="c-value" style="color:#6c5ce7;">★★★★★</div>
-      <div class="c-label" style="font-size:9px;">凯煌</div>
-    </div>
-    <div class="compare-cell">
-      <div class="c-icon">📍</div>
-      <div class="c-label">位置</div>
-      <div class="c-value" style="color:#00b894;">★★★☆☆</div>
-      <div class="c-label" style="font-size:9px;">希尔顿</div>
-    </div>
-    <div class="compare-cell">
-      <div class="c-icon">📍</div>
-      <div class="c-label">位置</div>
-      <div class="c-value" style="color:#f39c12;">★★☆☆☆</div>
-      <div class="c-label" style="font-size:9px;">戴斯</div>
-    </div>
-  </div>
-
-  <!-- ===== Hotel 1: Concorde ===== -->
+  <!-- ====== CONCORDE ====== -->
   <div class="hotel-card" id="hotel-concorde">
-    <div class="hotel-head">
-      <div class="badge badge-concorde">K</div>
-      <div class="name-group">
-        <h3>🏨 吉隆坡凯煌酒店 <span class="star">★★★★</span></h3>
-        <div class="name-en">Concorde Hotel Kuala Lumpur</div>
+    <div class="hotel-hd">
+      <div class="badge badge-ct">K</div>
+      <div class="nm-group">
+        <h3>吉隆坡凯煌酒店 <span class="star-big">★★★★</span></h3>
+        <div class="nm-en">Concorde Hotel Kuala Lumpur</div>
       </div>
+      <div class="price-big">CNY 17,360</div>
     </div>
-    <div class="room-highlight">
-      <span class="room-tag room-tag-purple">高级双床间 · 24㎡</span>
-      <span class="room-tag room-tag-green">含早餐</span>
-      <span class="room-tag room-tag-blue">免费取消</span>
-      <span class="room-tag room-tag-yellow">CNY 17,360</span>
+    <div class="room-tags">
+      <span class="room-tag rt-purple">🛏️ 高级双床间 · 24㎡</span>
+      <span class="room-tag rt-green">✅ 含早餐</span>
+      <span class="room-tag rt-blue">✅ 免费取消</span>
+      <span class="room-tag rt-yellow">🏊 有泳池+儿童池</span>
+      <span class="room-tag rt-red">🛁 有浴缸</span>
     </div>
+
+    <!-- Photos -->
     <div class="photo-gallery">
-      <div class="photo-item photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0221f12000asaemfpFD51_R_600_360_R5_Q70.jpg" alt="Concorde外观" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏛️ 酒店外观</div>
-      </div>
-      <div class="photo-item photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/02028120008763igjF3D6_R_600_360_R5_Q70.jpg" alt="Concorde夜景" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🌃 酒店夜景</div>
-      </div>
-      <div class="photo-item photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0236r224x96xdvz1a4784_R_600_360_R5_Q70.jpg" alt="Concorde双床房" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🛏️ 高级双床间</div>
-      </div>
-      <div class="photo-item photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0234t224x97pgkc4g20EB_R_600_360_R5_Q70.jpg" alt="Concorde双床房2" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🛏️ 双床间另一角</div>
-      </div>
-      <div class="photo-item photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0204g120008762142EEDB_R_600_360_R5_Q70.jpg" alt="Concorde浴室" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🚿 浴室</div>
-      </div>
-      <div class="photo-item photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0205a1200094gxewf9E5A_R_600_360_R5_Q70.jpg" alt="Concorde泳池" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏊 泳池</div>
-      </div>
-      <div class="photo-item photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0233q12000rklnld7872F_R_600_360_R5_Q70.jpg" alt="Concorde大堂" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏛️ 大堂</div>
-      </div>
-      <div class="photo-item photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/1mc7212000p0wuj5d0E08_R_600_360_R5_Q70.jpg" alt="Concorde餐厅" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🍳 餐厅</div>
-      </div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0221f12000asaemfpFD51_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🏛️ 外观</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/02028120008763igjF3D6_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🌃 夜景</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0236r224x96xdvz1a4784_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🛏️ 高级双床间</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0234t224x97pgkc4g20EB_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🛏️ 双床间另一角</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0204g120008762142EEDB_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🚿 浴室（有浴缸）</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0205a1200094gxewf9E5A_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🏊 室外泳池+儿童池</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0233q12000rklnld7872F_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🏛️ 大堂</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/1mc7212000p0wuj5d0E08_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🍳 餐厅自助早餐</div></div>
     </div>
-    <div class="comp-table">
-      <div class="comp-row"><span class="comp-label">📍 位置</span><span class="comp-value"><span class="good">金三角核心区</span> · 步行至双子塔10分钟 · Bukit Nanas单轨160m</span></div>
-      <div class="comp-row"><span class="comp-label">🛏️ 房型</span><span class="comp-value">高级双床间 · 24㎡ · 两张单人床 · 有浴缸</span></div>
-      <div class="comp-row"><span class="comp-label">🏊 泳池</span><span class="comp-value"><span class="good">室外泳池 + 儿童池</span> · 有滑道</span></div>
-      <div class="comp-row"><span class="comp-label">🍳 早餐</span><span class="comp-value">自助餐 · 马来/中式/西式 · 评价丰富 · 6:30–10:30</span></div>
-      <div class="comp-row"><span class="comp-label">👶 亲子</span><span class="comp-value">儿童泳池 · 婴儿床免费 · 儿童免费用餐(≤4岁) · 可加床(MYR120/晚)</span></div>
-      <div class="comp-row"><span class="comp-label">🆕 新旧</span><span class="comp-value"><span class="bad">设施偏旧</span> · 有年代感 · 部分房间2017年翻新</span></div>
-      <div class="comp-row"><span class="comp-label">🌃 周边</span><span class="comp-value">武吉免登购物区 · 阿罗街美食 · 双子塔 · <span class="good">夜间可自由逛街</span></span></div>
-      <div class="comp-row"><span class="comp-label">⭐ 评分</span><span class="comp-value">Trip.com 9.0 / Booking 8.5</span></div>
+
+    <!-- Detail -->
+    <div class="detail-table">
+      <div class="dt-row"><span class="dt-label">📍 位置</span><span class="dt-value"><span class="good">金三角核心区</span> · 步行至双子塔10分钟 · Bukit Nanas单轨160m · 武吉免登/阿罗街周边</span></div>
+      <div class="dt-row"><span class="dt-label">🛏️ 房型</span><span class="dt-value">高级双床间 <strong>24㎡</strong> · 两张单人床 · 有浴缸 · 部分房间可看塔</span></div>
+      <div class="dt-row"><span class="dt-label">🏊 泳池</span><span class="dt-value"><span class="good">大型绿洲室外泳池 + 独立儿童池</span> · 深度至2.4m · 池畔可用早餐</span></div>
+      <div class="dt-row"><span class="dt-label">🍳 早餐</span><span class="dt-value">自助餐 · 品种丰富（马来/中式/西式/印度） · 评价"早餐一流" · 6:30–10:30</span></div>
+      <div class="dt-row"><span class="dt-label">👨‍💼 服务</span><span class="dt-value"><span class="good">有中文前台</span> · 员工友善 · 可安排保母/托儿 · 机场接送可预约</span></div>
+      <div class="dt-row"><span class="dt-label">🆕 新旧</span><span class="dt-value"><span class="bad">设施偏旧</span> · "有年代感" · 部分房间2017翻新 · 空调噪音、偶有霉味</span></div>
+      <div class="dt-row"><span class="dt-label">🏙️ 周边</span><span class="dt-value"><span class="good">夜间可自由逛街</span> · 阿罗街美食街步行5分 · Pavilion商场10分</span></div>
+      <div class="dt-row"><span class="dt-label">⭐ 评分</span><span class="dt-value">Trip.com 8.8 · Booking 8.5 · FunTime 8.5（超31,000条评价）</span></div>
     </div>
-    <div class="pros-cons">
-      <div class="pc-item pc-pro">✅ <strong>优势：</strong>位置绝佳，出门就是市中心；有独立儿童泳池；房间有浴缸；周边热闹晚上可逛街</div>
-      <div class="pc-item pc-con">❌ <strong>劣势：</strong>房间仅24㎡偏小；设施老旧、空调噪音；WiFi信号弱；早餐需排队</div>
+
+    <div class="pc-wrap">
+      <div class="pc-item pc-pro">✅ <strong>核心优势：</strong>地理位置绝佳 · 有儿童泳池 · 有浴缸 · 早餐丰富 · 中文服务 · 夜间可自由逛街出行</div>
+      <div class="pc-item pc-con">❌ <strong>主要劣势：</strong>房间偏小（24㎡） · 设施老旧 · 空调噪音大 · WiFi弱 · 早餐高峰需排队</div>
     </div>
-    <div class="score-row">
-      <div class="score-item"><span class="num concorde-score">★★★★★</span>位置评分</div>
-      <div class="score-item"><span class="num concorde-score">★★★☆☆</span>设施新旧</div>
-      <div class="score-item"><span class="num concorde-score">★★★★☆</span>性价比</div>
+
+    <div class="scr-row">
+      <div class="scr-item"><span class="num cd">★★★★★</span>位置</div>
+      <div class="scr-item"><span class="num cd">★★★☆☆</span>设施新旧</div>
+      <div class="scr-item"><span class="num cd">★★★★☆</span>早餐</div>
+      <div class="scr-item"><span class="num cd">★★★★☆</span>性价比</div>
     </div>
+
     <div class="vote-bar">
-      <button class="vote-btn" data-hotel="concorde" onclick="vote('concorde')">
-        🗳️ 投凯煌一票
-        <span class="vote-count" id="count-concorde">0 票</span>
+      <button class="vote-btn" data-hotel="concorde" onclick="vote('concorde', this)">
+        🗳️ 投凯煌酒店
+        <span class="vc" id="count-concorde">0 票</span>
       </button>
     </div>
   </div>
 
-  <!-- ===== Hotel 2: Hilton ===== -->
+  <!-- ====== HILTON ====== -->
   <div class="hotel-card highlight-hilton" id="hotel-hilton">
-    <div class="hotel-head">
-      <div class="badge badge-hilton">H</div>
-      <div class="name-group">
-        <h3>🏨 希尔顿花园酒店南店 <span class="star">★★★</span></h3>
-        <div class="name-en">Hilton Garden Inn KL Jalan TAR South</div>
+    <div class="hotel-hd">
+      <div class="badge badge-hg">H</div>
+      <div class="nm-group">
+        <h3>希尔顿花园酒店南店 <span class="star-big">★★★</span></h3>
+        <div class="nm-en">Hilton Garden Inn KL Jalan TAR South</div>
       </div>
+      <div class="price-big">CNY 15,960</div>
     </div>
-    <div class="room-highlight">
-      <span class="room-tag room-tag-purple">豪华双床房塔景观 · <strong>39㎡</strong></span>
-      <span class="room-tag room-tag-green">含早餐</span>
-      <span class="room-tag room-tag-blue">免费取消</span>
-      <span class="room-tag room-tag-yellow">CNY 15,960</span>
-      <span class="room-tag room-tag-red" style="background:#fce4ec;color:#880e4f;">🏆 面积最大</span>
+    <div class="room-tags">
+      <span class="room-tag rt-purple">🛏️ 豪华双床房塔景 · <strong>39㎡</strong></span>
+      <span class="room-tag rt-green">✅ 含早餐</span>
+      <span class="room-tag rt-blue">✅ 免费取消</span>
+      <span class="room-tag rt-yellow">🌆 吉隆坡塔景观</span>
+      <span class="room-tag rt-red">🏆 面积最大</span>
     </div>
+
     <div class="photo-gallery">
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/200e0s000000ibxzfB90C_R_600_360_R5_Q70.jpg" alt="希尔顿外观" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏛️ 酒店外观</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0226612000alxvz0w750A_R_600_360_R5_Q70.jpg" alt="希尔顿外观2" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏛️ 外观夜景</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0236712000rctef3c9EC9_R_600_360_R5_Q70.jpg" alt="希尔顿双床房" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🛏️ 豪华双床房</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0235z224x958layxh071C_R_600_360_R5_Q70.jpg" alt="希尔顿双床房2" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🛏️ 双床房另一角</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0235b12000qobk5k4BCAC_R_600_360_R5_Q70.jpg" alt="希尔顿塔景" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🌆 吉隆坡塔景观</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0230112000n8qug09009D_R_600_360_R5_Q70.jpg" alt="希尔顿屋顶泳池" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏊 25楼屋顶泳池</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0231312000lo4u9l463A7_R_600_360_R5_Q70.jpg" alt="希尔顿大堂" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏛️ 大堂</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0231812000rw9pfce343D_R_600_360_R5_Q70.jpg" alt="希尔顿餐厅" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🍳 餐厅</div>
-      </div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/200e0s000000ibxzfB90C_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🏛️ 外观</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0226612000alxvz0w750A_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🌃 外观夜景</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0236712000rctef3c9EC9_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🛏️ 豪华双床房</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0235z224x958layxh071C_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🛏️ 房间另一角</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0235b12000qobk5k4BCAC_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🌆 吉隆坡塔景观</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0230112000n8qug09009D_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🏊 25楼屋顶泳池</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0231312000lo4u9l463A7_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🏛️ 大堂</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0231812000rw9pfce343D_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🍳 Garden Grille餐厅</div></div>
     </div>
-    <div class="comp-table">
-      <div class="comp-row"><span class="comp-label">📍 位置</span><span class="comp-value">秋杰区(TAR路) · SOGO商场旁 · Chow Kit单轨500m · <span class="bad">周边环境较乱</span></span></div>
-      <div class="comp-row"><span class="comp-label">🛏️ 房型</span><span class="comp-value"><span class="good">豪华双床房 · 39㎡</span> · 吉隆坡塔景观 · 两张单人床 · 无浴缸</span></div>
-      <div class="comp-row"><span class="comp-label">🏊 泳池</span><span class="comp-value"><span class="good">25楼屋顶泳池</span> · 可看双子塔/吉隆坡塔全景</span></div>
-      <div class="comp-row"><span class="comp-label">🍳 早餐</span><span class="comp-value">自助餐 · 希尔顿标准 · 品质稳定 · 评价不错</span></div>
-      <div class="comp-row"><span class="comp-label">👶 亲子</span><span class="comp-value">婴儿床可提供 · 屋顶泳池适合拍照 · <span class="bad">周边不适合夜间步行</span></span></div>
-      <div class="comp-row"><span class="comp-label">🆕 新旧</span><span class="comp-value"><span class="good">2022年开业，设施极新</span> · 现代设计 · 卫生标准高</span></div>
-      <div class="comp-row"><span class="comp-label">🌃 周边</span><span class="comp-value">SOGO商场 · 本地市场 · <span class="bad">晚上需打车到门口</span> · 不建议步行乱逛</span></div>
-      <div class="comp-row"><span class="comp-label">⭐ 评分</span><span class="comp-value">综合 8.5/10 · 清洁度好评 · 塔景成亮点</span></div>
+
+    <div class="detail-table">
+      <div class="dt-row"><span class="dt-label">📍 位置</span><span class="dt-value">秋杰区(TAR路) · SOGO商场旁 · Chow Kit单轨390m · <span class="bad">周边环境较乱</span></span></div>
+      <div class="dt-row"><span class="dt-label">🛏️ 房型</span><span class="dt-value"><span class="good">豪华双床房 <strong>39㎡</strong></span> · 吉隆坡塔景观 · 两张单人床 · 无浴缸（仅淋浴）</span></div>
+      <div class="dt-row"><span class="dt-label">🏊 泳池</span><span class="dt-value"><span class="good">25楼屋顶无边际泳池</span> · 可赏双子塔/吉隆坡塔全景 · 旁边有Sky Bar</span></div>
+      <div class="dt-row"><span class="dt-label">🍳 早餐</span><span class="dt-value">自助餐 · 希尔顿标准 · 有椰浆饭/印度煎饼 · 儿童5岁及以下免费 · 6:30–10:30</span></div>
+      <div class="dt-row"><span class="dt-label">👨‍💼 服务</span><span class="dt-value">中英双语前台 · 服务评价不错 · 但电梯需等 · <span class="bad">南楼住客不能用北楼健身房</span></span></div>
+      <div class="dt-row"><span class="dt-label">🆕 新旧</span><span class="dt-value"><span class="good">2022年新开业，设施极新</span> · 现代设计 · 卫生好 · 隔音一般（可听到隔壁洗澡）</span></div>
+      <div class="dt-row"><span class="dt-label">🏙️ 周边</span><span class="dt-value">SOGO商场 · 本地市场 · <span class="bad">晚上需打车到门口</span> · 不建议步行乱逛</span></div>
+      <div class="dt-row"><span class="dt-label">⭐ 评分</span><span class="dt-value">Trip.com 8.4（1,609评） · Kayak 8.1 · 清洁8.7 · 位置8.4 · 服务8.4</span></div>
     </div>
-    <div class="pros-cons">
-      <div class="pc-item pc-pro">✅ <strong>优势：</strong>39㎡超大空间；2022年新开业设施极新；屋顶泳池可赏塔景；性价比高</div>
-      <div class="pc-item pc-con">❌ <strong>劣势：</strong>秋杰区治安一般；夜晚不能自由逛街；无浴缸；周边环境较杂乱</div>
+
+    <div class="pc-wrap">
+      <div class="pc-item pc-pro">✅ <strong>核心优势：</strong>39㎡超大空间（三家中最大） · 2022年新开业设施极新 · 屋顶泳池赏塔景 · 性价比高</div>
+      <div class="pc-item pc-con">❌ <strong>主要劣势：</strong>秋杰区治安一般 · 夜晚不能自由逛街 · 无浴缸 · 隔音一般 · 周边环境较杂乱</div>
     </div>
-    <div class="score-row">
-      <div class="score-item"><span class="num hilton-score">★★★☆☆</span>位置评分</div>
-      <div class="score-item"><span class="num hilton-score">★★★★★</span>设施新旧</div>
-      <div class="score-item"><span class="num hilton-score">★★★★★</span>性价比</div>
+
+    <div class="scr-row">
+      <div class="scr-item"><span class="num hg">★★★☆☆</span>位置</div>
+      <div class="scr-item"><span class="num hg">★★★★★</span>设施新旧</div>
+      <div class="scr-item"><span class="num hg">★★★★☆</span>早餐</div>
+      <div class="scr-item"><span class="num hg">★★★★★</span>性价比</div>
     </div>
+
     <div class="vote-bar">
-      <button class="vote-btn" data-hotel="hilton" onclick="vote('hilton')">
-        🗳️ 投希尔顿一票
-        <span class="vote-count" id="count-hilton">0 票</span>
+      <button class="vote-btn" data-hotel="hilton" onclick="vote('hilton', this)">
+        🗳️ 投希尔顿花园
+        <span class="vc" id="count-hilton">0 票</span>
       </button>
     </div>
   </div>
 
-  <!-- ===== Hotel 3: Days Hotel ===== -->
+  <!-- ====== DAYS ====== -->
   <div class="hotel-card" id="hotel-days">
-    <div class="hotel-head">
-      <div class="badge badge-days">D</div>
-      <div class="name-group">
-        <h3>🏨 温德姆戴斯酒店 <span class="star">★★★</span></h3>
-        <div class="name-en">Days Hotel & Suites by Wyndham KL (Chan Sow Lin)</div>
+    <div class="hotel-hd">
+      <div class="badge badge-dy">D</div>
+      <div class="nm-group">
+        <h3>温德姆戴斯酒店 <span class="star-big">★★★</span></h3>
+        <div class="nm-en">Days Hotel & Suites by Wyndham KL (Chan Sow Lin)</div>
       </div>
+      <div class="price-big">CNY 12,660</div>
     </div>
-    <div class="room-highlight">
-      <span class="room-tag room-tag-purple">超豪华双床套房 · 28㎡</span>
-      <span class="room-tag room-tag-green">含早餐</span>
-      <span class="room-tag room-tag-blue">免费取消</span>
-      <span class="room-tag room-tag-yellow">CNY 12,660</span>
-      <span class="room-tag room-tag-red" style="background:#fce4ec;color:#880e4f;">💰 价格最低</span>
+    <div class="room-tags">
+      <span class="room-tag rt-purple">🛏️ 超豪华双床套房 · 28㎡</span>
+      <span class="room-tag rt-green">✅ 含早餐</span>
+      <span class="room-tag rt-blue">✅ 免费取消</span>
+      <span class="room-tag rt-yellow">🚇 地铁站旁</span>
+      <span class="room-tag rt-red">💰 价格最低</span>
     </div>
+
     <div class="photo-gallery">
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/1mc1w12000c5bgyqqD146_R_600_360_R5_Q70.jpg" alt="戴斯外观" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏛️ 酒店外观</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0202e120008nru9mhA23A_R_600_360_R5_Q70.jpg" alt="戴斯外观2" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏛️ 外观另一角</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0234n2224wpm8ugi8D00E_R_600_360_R5_Q70.jpg" alt="戴斯双床套房" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🛏️ 超豪华双床套房</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0236v12000rjt2y5315B6_R_600_360_R5_Q70.jpg" alt="戴斯套房客厅" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🛏️ 套房客厅区</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0230y12000rw5z5utB303_R_600_360_R5_Q70.jpg" alt="戴斯浴室" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🚿 浴室</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0234q224x98ymjbf92659_R_600_360_R5_Q70.jpg" alt="戴斯大堂" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏛️ 大堂</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/0231h224x98mgs2flA69F_R_600_360_R5_Q70.jpg" alt="戴斯餐厅" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🍳 餐厅</div>
-      </div>
-      <div class="photo-item">
-        <img src="https://dimg04.c-ctrip.com/images/1mc0h12000cghqq4o8ECD_R_600_360_R5_Q70.jpg" alt="戴斯健身房" loading="lazy" onerror="this.parentElement.style.display='none'">
-        <div class="photo-label">🏋️ 健身房</div>
-      </div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/1mc1w12000c5bgyqqD146_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🏛️ 外观</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0202e120008nru9mhA23A_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🏛️ 外观另一角</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0234n2224wpm8ugi8D00E_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🛏️ 超豪华双床套房</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0236v12000rjt2y5315B6_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🛋️ 套房客厅区</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0230y12000rw5z5utB303_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🚿 浴室</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0234q224x98ymjbf92659_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🏛️ 大堂</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/0231h224x98mgs2flA69F_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🍳 餐厅</div></div>
+      <div class="photo-item"><img src="https://dimg04.c-ctrip.com/images/1mc0h12000cghqq4o8ECD_R_600_360_R5_Q70.jpg" alt="" loading="lazy" onerror="this.parentElement.style.display='none'"><div class="ph-label">🏋️ 健身房</div></div>
     </div>
-    <div class="comp-table">
-      <div class="comp-row"><span class="comp-label">📍 位置</span><span class="comp-value">陈秀莲(Cheras) · <span class="good">地铁站步行即到</span> · <span class="bad">距市中心较远</span></span></div>
-      <div class="comp-row"><span class="comp-label">🛏️ 房型</span><span class="comp-value">超豪华双床套房 · 28㎡ · 两张单人床 · <span class="good">套房格局有客厅区</span></span></div>
-      <div class="comp-row"><span class="comp-label">🏊 泳池</span><span class="comp-value"><span class="bad">无泳池</span> · 有健身房</span></div>
-      <div class="comp-row"><span class="comp-label">🍳 早餐</span><span class="comp-value">自助餐 · <span class="bad">评价一般</span> · 种类较少 · 价格便宜(RM15)</span></div>
-      <div class="comp-row"><span class="comp-label">👶 亲子</span><span class="comp-value">空间适中 · 安静 · 周边有便利店 · 但无亲子设施</span></div>
-      <div class="comp-row"><span class="comp-label">🆕 新旧</span><span class="comp-value"><span class="mid">中等偏旧</span> · 部分房间需更新 · 但干净卫生</span></div>
-      <div class="comp-row"><span class="comp-label">🌃 周边</span><span class="comp-value">本地社区 · 便利店餐饮有 · <span class="bad">无旅游景点</span> · 清静但无聊</span></div>
-      <div class="comp-row"><span class="comp-label">⭐ 评分</span><span class="comp-value">Vio 8.2 / Traveloka 8.5</span></div>
+
+    <div class="detail-table">
+      <div class="dt-row"><span class="dt-label">📍 位置</span><span class="dt-value">陈秀莲(Cheras) · <span class="good">地铁站步行5分钟（有遮雨连廊）</span> · <span class="bad">距市中心景点3-4km</span></span></div>
+      <div class="dt-row"><span class="dt-label">🛏️ 房型</span><span class="dt-value">超豪华双床套房 <strong>28㎡</strong> · <span class="good">套房格局有独立客厅区</span> · 两张单人床</span></div>
+      <div class="dt-row"><span class="dt-label">🏊 泳池</span><span class="dt-value"><span class="bad">无泳池</span> · 有健身房 · 有商务中心</span></div>
+      <div class="dt-row"><span class="dt-label">🍳 早餐</span><span class="dt-value">自助餐 · <span class="bad">评价一般（种类少）</span> · 价格便宜（仅RM 15） · 6:30–10:00</span></div>
+      <div class="dt-row"><span class="dt-label">👨‍💼 服务</span><span class="dt-value"><span class="good">员工服务极佳</span> · 多位住客点名表扬 · 床品舒适 · 房间干净</span></div>
+      <div class="dt-row"><span class="dt-label">🆕 新旧</span><span class="dt-value"><span class="mid">中等偏旧</span> · 家具显年代 · 但卫生维护不错 · 部分房间需更新</span></div>
+      <div class="dt-row"><span class="dt-label">🏙️ 周边</span><span class="dt-value">本地社区 · 7-11/全家便利店步行可达 · 有街边小吃 · <span class="bad">无旅游景点/无夜生活</span></span></div>
+      <div class="dt-row"><span class="dt-label">⭐ 评分</span><span class="dt-value">Vio 8.2（4,881评） · Traveloka 8.5 · 床品/员工备受好评</span></div>
     </div>
-    <div class="pros-cons">
-      <div class="pc-item pc-pro">✅ <strong>优势：</strong>价格最低；地铁站旁边交通方便；套房有客厅区；安静不吵；床品舒适</div>
-      <div class="pc-item pc-con">❌ <strong>劣势：</strong>距景点远需坐地铁；无泳池；早餐差；周边无夜生活无景观</div>
+
+    <div class="pc-wrap">
+      <div class="pc-item pc-pro">✅ <strong>核心优势：</strong>价格最低（省约5,000元） · 地铁站旁交通方便 · 套房有客厅区 · 员工服务好 · 安静</div>
+      <div class="pc-item pc-con">❌ <strong>主要劣势：</strong>距景点远需坐地铁 · 无泳池 · 早餐差 · 周边无夜生活 · 设施偏旧</div>
     </div>
-    <div class="score-row">
-      <div class="score-item"><span class="num days-score">★★☆☆☆</span>位置评分</div>
-      <div class="score-item"><span class="num days-score">★★★☆☆</span>设施新旧</div>
-      <div class="score-item"><span class="num days-score">★★★★★</span>性价比</div>
+
+    <div class="scr-row">
+      <div class="scr-item"><span class="num dy">★★☆☆☆</span>位置</div>
+      <div class="scr-item"><span class="num dy">★★★☆☆</span>设施新旧</div>
+      <div class="scr-item"><span class="num dy">★★☆☆☆</span>早餐</div>
+      <div class="scr-item"><span class="num dy">★★★★★</span>性价比</div>
     </div>
+
     <div class="vote-bar">
-      <button class="vote-btn" data-hotel="days" onclick="vote('days')">
-        🗳️ 投戴斯一票
-        <span class="vote-count" id="count-days">0 票</span>
+      <button class="vote-btn" data-hotel="days" onclick="vote('days', this)">
+        🗳️ 投温德姆戴斯
+        <span class="vc" id="count-days">0 票</span>
       </button>
     </div>
   </div>
 
-  <!-- Quick Verdict -->
-  <div class="verdict-box">
-    <h3>⚖️ 一句话总结</h3>
+  <!-- Verdict -->
+  <div class="verdict">
+    <h3>⚖️ 总结：按你的需求选</h3>
     <p>
-      <strong>选凯煌</strong> → 要地段、要自由逛街、有小孩要浴缸 → 但接受设施旧房间小<br>
-      <strong>选希尔顿花园</strong> → 要空间大、设施新、屋顶泳池塔景 → 但接受晚上不能出门散步<br>
-      <strong>选温德姆戴斯</strong> → 要省钱、纯睡觉早出晚归 → 但接受没泳池没景观
+      <strong>🏨 选凯煌 →</strong> 要市中心位置、自由逛街、有儿童泳池+浴缸 → 但需接受设施旧、房间小<br>
+      <strong>🏨 选希尔顿 →</strong> 要超大空间、新设施、屋顶泳池塔景 → 但需接受晚上不能出门散步<br>
+      <strong>🏨 选戴斯 →</strong> 要省钱、纯睡觉早出晚归、地铁出行 → 但需接受没泳池、没景观
     </p>
   </div>
 
@@ -735,261 +619,142 @@ body {
   <div class="results" id="results">
     <h3>📊 实时投票结果</h3>
 
-    <div class="name-input-wrap">
-      <input type="text" id="voter-name" placeholder="输入你的称呼（如：小明）" maxlength="10">
-      <button onclick="confirmName()" id="name-btn">确认</button>
-    </div>
-    <div id="current-voter" style="font-size:12px;color:var(--text-light);margin-bottom:8px;"></div>
-
-    <div id="voter-list" class="voter-list"></div>
+    <p style="font-size:14px;color:var(--text-light);margin-bottom:12px;text-align:center;">
+      🗳️ <strong>无记名投票</strong> · 每个设备限投一票 · 点击下方酒店即可投票
+    </p>
 
     <div class="bar-wrap">
-      <div class="bar-label">
-        <span class="bar-name" style="color:#6c5ce7;">🏨 凯煌酒店</span>
-        <span class="bar-pct"><span id="pct-concorde">0</span>%（<span id="vcount-concorde">0</span>票）</span>
-      </div>
-      <div class="bar-track">
-        <div class="bar-fill bar-fill-concorde" id="bar-concorde" style="width:0%"></div>
-      </div>
+      <div class="bl"><span class="bn" style="color:var(--concorde);">🏨 凯煌酒店</span><span class="bp"><span id="pct-concorde">0</span>%（<span id="vcount-concorde">0</span>票）</span></div>
+      <div class="bt"><div class="bf bf-cd" id="bar-concorde" style="width:0%"></div></div>
     </div>
     <div class="bar-wrap">
-      <div class="bar-label">
-        <span class="bar-name" style="color:#00b894;">🏨 希尔顿花园</span>
-        <span class="bar-pct"><span id="pct-hilton">0</span>%（<span id="vcount-hilton">0</span>票）</span>
-      </div>
-      <div class="bar-track">
-        <div class="bar-fill bar-fill-hilton" id="bar-hilton" style="width:0%"></div>
-      </div>
+      <div class="bl"><span class="bn" style="color:var(--hilton);">🏨 希尔顿花园</span><span class="bp"><span id="pct-hilton">0</span>%（<span id="vcount-hilton">0</span>票）</span></div>
+      <div class="bt"><div class="bf bf-hg" id="bar-hilton" style="width:0%"></div></div>
     </div>
     <div class="bar-wrap">
-      <div class="bar-label">
-        <span class="bar-name" style="color:#f39c12;">🏨 温德姆戴斯</span>
-        <span class="bar-pct"><span id="pct-days">0</span>%（<span id="vcount-days">0</span>票）</span>
-      </div>
-      <div class="bar-track">
-        <div class="bar-fill bar-fill-days" id="bar-days" style="width:0%"></div>
-      </div>
+      <div class="bl"><span class="bn" style="color:var(--days);">🏨 温德姆戴斯</span><span class="bp"><span id="pct-days">0</span>%（<span id="vcount-days">0</span>票）</span></div>
+      <div class="bt"><div class="bf bf-dy" id="bar-days" style="width:0%"></div></div>
     </div>
 
     <div class="total-votes">共 <strong id="total-count">0</strong> 人已投票</div>
-    <button class="share-btn" onclick="shareResults()">📤 分享投票结果</button>
+    <button class="share-btn" onclick="shareResults()">📤 复制结果分享给大家</button>
   </div>
 
 </div>
 
 <!-- Bottom Nav -->
 <div class="bottom-nav">
-  <button class="nav-btn active" onclick="scrollTo('hotel-concorde')">🏨 凯煌</button>
-  <button class="nav-btn" onclick="scrollTo('hotel-hilton')">🏨 希尔顿</button>
-  <button class="nav-btn" onclick="scrollTo('hotel-days')">🏨 戴斯</button>
-  <button class="nav-btn" onclick="scrollTo('results')">📊 结果</button>
+  <button class="nav-btn active" onclick="sc('hotel-concorde')">🏨 凯煌</button>
+  <button class="nav-btn" onclick="sc('hotel-hilton')">🏨 希尔顿</button>
+  <button class="nav-btn" onclick="sc('hotel-days')">🏨 戴斯</button>
+  <button class="nav-btn" onclick="sc('results')">📊 结果</button>
 </div>
 
 <div id="toast" class="toast"></div>
 
 <script>
-/* ===== Vote System ===== */
-const STORAGE_KEY = 'hotel_vote_data';
-let voterName = localStorage.getItem('hotel_voter_name') || '';
-let voteData = loadVotes();
+/* ===== 无记名投票 - 实时汇总（D1后端） ===== */
+const API_URL = '/api/votes';
+const VOTER_KEY = 'hvote_voter_id';
+let voterId = localStorage.getItem(VOTER_KEY);
+if (!voterId) {
+  voterId = 'v_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+  localStorage.setItem(VOTER_KEY, voterId);
+}
+let myVote = '';
+let voteData = { concorde: 0, hilton: 0, days: 0 };
 
-function loadVotes() {
+function getTotal() { return voteData.concorde + voteData.hilton + voteData.days; }
+function getPct(n) { const t = getTotal(); return t === 0 ? 0 : Math.round(n / t * 100); }
+function getHN(k) { return { concorde: '凯煌', hilton: '希尔顿', days: '戴斯' }[k] || k; }
+
+async function loadVotes() {
   try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : { concorde: [], hilton: [], days: [] };
+    const res = await fetch(API_URL);
+    const data = await res.json();
+    if (data.success) {
+      voteData = data.counts;
+      updateUI();
+    }
+  } catch(e) {}
+}
+
+async function vote(hotel, btn) {
+  try {
+    const res = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ voter_id: voterId, hotel: hotel })
+    });
+    const data = await res.json();
+    if (data.success) {
+      myVote = hotel;
+      await loadVotes();
+      showToast('✅ 已投给 ' + getHN(hotel));
+    } else {
+      showToast('❌ 投票失败，请重试');
+    }
   } catch(e) {
-    return { concorde: [], hilton: [], days: [] };
+    showToast('❌ 网络错误');
   }
-}
-
-function saveVotes() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(voteData));
-}
-
-function getVoteCounts() {
-  return {
-    concorde: voteData.concorde.length,
-    hilton: voteData.hilton.length,
-    days: voteData.days.length
-  };
-}
-
-function getTotal() {
-  return voteData.concorde.length + voteData.hilton.length + voteData.days.length;
-}
-
-function getPct(n) {
-  const total = getTotal();
-  return total === 0 ? 0 : Math.round(n / total * 100);
-}
-
-function confirmName() {
-  const input = document.getElementById('voter-name');
-  const name = input.value.trim();
-  if (!name) { showToast('请先输入你的称呼'); return; }
-  voterName = name;
-  localStorage.setItem('hotel_voter_name', name);
-  document.getElementById('name-btn').disabled = true;
-  document.getElementById('name-btn').textContent = '已确认';
-  updateUI();
-  showToast('✅ 已确认，请点击酒店下方的按钮投票！');
-}
-
-function removePrevVote(name) {
-  for (const key of ['concorde', 'hilton', 'days']) {
-    voteData[key] = voteData[key].filter(n => n !== name);
-  }
-}
-
-function vote(hotel) {
-  if (!voterName) {
-    // Try from input
-    const input = document.getElementById('voter-name');
-    const name = input.value.trim();
-    if (!name) { showToast('请先在"投票结果"区域输入你的称呼并确认'); return; }
-    voterName = name;
-    localStorage.setItem('hotel_voter_name', name);
-    document.getElementById('name-btn').disabled = true;
-    document.getElementById('name-btn').textContent = '已确认';
-  }
-
-  // Remove previous vote
-  removePrevVote(voterName);
-
-  // Add new vote
-  voteData[hotel].push(voterName);
-  saveVotes();
-
-  updateUI();
-  showToast(`✅ 你已投票给 ${getHotelName(hotel)}`);
-}
-
-function getHotelName(key) {
-  const names = { concorde: '凯煌酒店', hilton: '希尔顿花园', days: '温德姆戴斯' };
-  return names[key] || key;
 }
 
 function updateUI() {
-  const counts = getVoteCounts();
-  const total = getTotal();
+  const c = voteData, t = getTotal();
 
-  // Update vote buttons
-  document.getElementById('count-concorde').textContent = counts.concorde + ' 票';
-  document.getElementById('count-hilton').textContent = counts.hilton + ' 票';
-  document.getElementById('count-days').textContent = counts.days + ' 票';
+  document.getElementById('count-concorde').textContent = c.concorde + (t > 0 ? ' 票' : '');
+  document.getElementById('count-hilton').textContent = c.hilton + (t > 0 ? ' 票' : '');
+  document.getElementById('count-days').textContent = c.days + (t > 0 ? ' 票' : '');
 
-  // Highlight selected
   document.querySelectorAll('.vote-btn').forEach(b => {
-    b.classList.remove('selected', 'selected-concorde', 'selected-hilton', 'selected-days');
-  });
-  if (voterName) {
-    for (const key of ['concorde', 'hilton', 'days']) {
-      if (voteData[key].includes(voterName)) {
-        const btn = document.querySelector(`.vote-btn[data-hotel="${key}"]`);
-        if (btn) {
-          btn.classList.add('selected', `selected-${key}`);
-          btn.textContent = `✅ 已投 · ${getHotelName(key)}`;
-          // Restore the count span
-          const span = btn.querySelector('.vote-count');
-          if (span) btn.appendChild(span);
-        }
-      }
-    }
-  }
-
-  // Update result bars
-  document.getElementById('vcount-concorde').textContent = counts.concorde;
-  document.getElementById('vcount-hilton').textContent = counts.hilton;
-  document.getElementById('vcount-days').textContent = counts.days;
-  document.getElementById('pct-concorde').textContent = getPct(counts.concorde);
-  document.getElementById('pct-hilton').textContent = getPct(counts.hilton);
-  document.getElementById('pct-days').textContent = getPct(counts.days);
-  document.getElementById('bar-concorde').style.width = getPct(counts.concorde) + '%';
-  document.getElementById('bar-hilton').style.width = getPct(counts.hilton) + '%';
-  document.getElementById('bar-days').style.width = getPct(counts.days) + '%';
-  document.getElementById('total-count').textContent = total;
-
-  // Voter list
-  const voterList = document.getElementById('voter-list');
-  let html = '';
-  for (const key of ['concorde', 'hilton', 'days']) {
-    voteData[key].forEach(name => {
-      html += `<span class="voter-item voter-item-${key}">${name} → ${getHotelName(key)}</span>`;
-    });
-  }
-  voterList.innerHTML = html;
-
-  // Current voter display
-  const el = document.getElementById('current-voter');
-  if (voterName) {
-    let voted = '';
-    for (const key of ['concorde', 'hilton', 'days']) {
-      if (voteData[key].includes(voterName)) {
-        voted = `你已投：${getHotelName(key)}（点击其他酒店可更改）`;
-      }
-    }
-    el.textContent = `👤 当前投票人：${voterName} · ${voted || '尚未投票'}`;
-  } else {
-    el.textContent = '';
-  }
-
-  // Reset vote button text for non-selected
-  document.querySelectorAll('.vote-btn').forEach(b => {
-    const key = b.dataset.hotel;
-    if (!b.classList.contains('selected')) {
-      b.innerHTML = `🗳️ 投${getHotelName(key)}一票<span class="vote-count" id="count-${key}">${counts[key]} 票</span>`;
+    b.classList.remove('selected', 's-cd', 's-hg', 's-dy');
+    const k = b.dataset.hotel;
+    if (k === myVote) {
+      b.classList.add('selected', 's-' + {concorde:'cd',hilton:'hg',days:'dy'}[k]);
+      b.innerHTML = '✅ 已投 · ' + getHN(k) + '<span class="vc" id="count-'+k+'">' + (c[k] > 0 ? c[k] + ' 票' : '') + '</span>';
+    } else {
+      b.innerHTML = '🗳️ 投' + getHN(k) + '<span class="vc" id="count-'+k+'">' + (c[k] > 0 ? c[k] + ' 票' : '') + '</span>';
     }
   });
+
+  document.getElementById('vcount-concorde').textContent = c.concorde;
+  document.getElementById('vcount-hilton').textContent = c.hilton;
+  document.getElementById('vcount-days').textContent = c.days;
+  document.getElementById('pct-concorde').textContent = getPct(c.concorde);
+  document.getElementById('pct-hilton').textContent = getPct(c.hilton);
+  document.getElementById('pct-days').textContent = getPct(c.days);
+  document.getElementById('bar-concorde').style.width = getPct(c.concorde) + '%';
+  document.getElementById('bar-hilton').style.width = getPct(c.hilton) + '%';
+  document.getElementById('bar-days').style.width = getPct(c.days) + '%';
+  document.getElementById('total-count').textContent = t;
 }
 
-function scrollTo(id) {
+function sc(id) {
   document.getElementById(id).scrollIntoView({ behavior: 'smooth', block: 'start' });
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-  // Find the clicked button
   document.querySelectorAll('.nav-btn').forEach(b => {
-    if (b.textContent.includes(id.replace('hotel-', '').replace('results', '结果'))) {
-      b.classList.add('active');
-    }
+    if (b.textContent.includes(id.replace('hotel-','').replace('results','结果'))) b.classList.add('active');
   });
 }
 
 function shareResults() {
-  const counts = getVoteCounts();
-  const total = getTotal();
-  const text = `🏨 吉隆坡酒店投票结果\n\n` +
-    `🏨 凯煌酒店：${counts.concorde}票 (${getPct(counts.concorde)}%)\n` +
-    `🏨 希尔顿花园：${counts.hilton}票 (${getPct(counts.hilton)}%)\n` +
-    `🏨 温德姆戴斯：${counts.days}票 (${getPct(counts.days)}%)\n\n` +
-    `共 ${total} 人已投票\n` +
-    `查看完整对比：${window.location.href}`;
-
-  if (navigator.share) {
-    navigator.share({ title: '吉隆坡酒店投票结果', text: text });
-  } else {
-    navigator.clipboard.writeText(text).then(() => {
-      showToast('📋 投票结果已复制到剪贴板，可粘贴发送给大家');
-    }).catch(() => {
-      window.prompt('复制以下内容发送给大家：', text);
-    });
+  const c = voteData, t = getTotal();
+  const txt = '🏨 吉隆坡酒店投票结果\n\n🏨 凯煌酒店：'+c.concorde+'票 ('+getPct(c.concorde)+'%)\n🏨 希尔顿花园：'+c.hilton+'票 ('+getPct(c.hilton)+'%)\n🏨 温德姆戴斯：'+c.days+'票 ('+getPct(c.days)+'%)\n\n共 '+t+' 人已投票\n查看详情：'+window.location.href;
+  if (navigator.share) navigator.share({ title: '吉隆坡酒店投票结果', text: txt });
+  else {
+    navigator.clipboard.writeText(txt).then(() => showToast('📋 已复制到剪贴板')).catch(() => window.prompt('复制以下内容发送：', txt));
   }
 }
 
 function showToast(msg) {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
+  t.textContent = msg; t.classList.add('show');
   setTimeout(() => t.classList.remove('show'), 3000);
 }
 
-// Init
-if (voterName) {
-  document.getElementById('voter-name').value = voterName;
-  document.getElementById('name-btn').disabled = true;
-  document.getElementById('name-btn').textContent = '已确认';
-  updateUI();
-} else {
-  updateUI();
-}
+// Load on page load & auto-refresh every 10s
+loadVotes();
+setInterval(loadVotes, 10000);
 </script>
 </body>
 </html>
