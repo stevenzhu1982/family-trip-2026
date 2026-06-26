@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>全球电视直播 · IPTV</title>
+<!-- hls.js for HLS playback -->
+<script src="https://cdn.jsdelivr.net/npm/hls.js@0.14.17/dist/hls.min.js"></script>
+<style>
+:root {
+  --bg: #fdf8f0;
+  --card-bg: #fffcf5;
+  --text-primary: #5a3e2b;
+  --text-secondary: #8b7355;
+  --accent: #e8934a;
+  --accent-light: #fef0e0;
+  --border: #e8d5b5;
+  --shadow: rgba(180, 140, 100, 0.12);
+  --dark-bg: #1a202c;
+  --dark-surface: #2d3748;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+.container { max-width: 960px; margin: 0 auto; padding: 0 12px; }
+
+/* ===== Hero ===== */
+.hero {
+  background: linear-gradient(135deg, #0f0f23, #1a1a3e 40%, #2d1b69 70%, #6c5ce7);
+  color: #fff;
+  padding: 32px 0 24px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, rgba(108,92,231,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse at 70% 50%, rgba(232,147,74,0.1) 0%, transparent 60%);
+}
+.hero-content { position: relative; z-index: 1; }
+.hero h1 { font-size: clamp(24px, 5vw, 36px); font-weight: 800; letter-spacing: 1px; }
+.hero h1 span { color: var(--accent); }
+.hero p { color: rgba(255,255,255,0.6); font-size: 13px; margin-top: 4px; }
+.hero .sub-badges {
+  display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;
+  margin-top: 12px;
+}
+.hero .sub-badges span {
+  font-size: 11px; padding: 3px 12px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.1);
+  color: rgba(255,255,255,0.7);
+  border: 1px solid rgba(255,255,255,0.08);
+}
+
+/* ===== Stats Bar ===== */
+.stats-bar {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 16px; background: var(--card-bg);
+  border-bottom: 1px solid var(--border);
+  font-size: 13px; color: var(--text-secondary); flex-wrap: wrap; gap: 4px;
+}
+.stats-bar strong { color: var(--text-primary); }
+#refreshBtn {
+  background: var(--accent); color: #fff; border: none;
+  padding: 6px 14px; border-radius: 8px; font-size: 12px;
+  cursor: pointer; transition: background 0.2s;
+}
+#refreshBtn:hover { background: #d4783a; }
+#refreshBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ===== Filters ===== */
+.filters {
+  display: flex; gap: 8px; padding: 10px 16px;
+  background: var(--card-bg); border-bottom: 1px solid var(--border);
+  flex-wrap: wrap; position: sticky; top: 0; z-index: 10;
+}
+.filters select, .filters input {
+  padding: 9px 12px; border: 2px solid var(--border);
+  border-radius: 10px; background: var(--card-bg);
+  font-size: 13px; color: var(--text-primary);
+  outline: none; transition: border-color 0.2s;
+  -webkit-appearance: none; appearance: none;
+}
+.filters select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b7355' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 10px center;
+  padding-right: 32px;
+}
+.filters select:focus, .filters input:focus { border-color: var(--accent); }
+.filters .filter-country { flex: 2; min-width: 130px; }
+.filters .filter-category { flex: 1; min-width: 110px; }
+.filters .filter-search {
+  flex: 3; min-width: 180px;
+  padding-left: 36px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238b7355' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: 10px center;
+}
+
+/* ===== Country Quick Picks ===== */
+.quick-picks {
+  display: flex; gap: 6px; padding: 8px 16px;
+  overflow-x: auto; -webkit-overflow-scrolling: touch;
+  background: var(--card-bg); border-bottom: 1px solid var(--border);
+  scrollbar-width: none;
+}
+.quick-picks::-webkit-scrollbar { display: none; }
+.quick-pick {
+  flex-shrink: 0; padding: 5px 14px; border-radius: 20px;
+  border: 2px solid var(--border); background: var(--card-bg);
+  font-size: 13px; cursor: pointer; transition: all 0.2s;
+  color: var(--text-secondary); white-space: nowrap;
+  display: flex; align-items: center; gap: 4px;
+}
+.quick-pick:hover { border-color: var(--accent); color: var(--text-primary); }
+.quick-pick.active {
+  background: var(--accent); border-color: var(--accent);
+  color: #fff; font-weight: 600;
+}
+
+/* ===== Loading ===== */
+.loading {
+  text-align: center; padding: 80px 20px;
+  color: var(--text-secondary);
+}
+.spinner {
+  width: 40px; height: 40px; margin: 0 auto 16px;
+  border: 4px solid var(--border); border-top-color: var(--accent);
+  border-radius: 50%; animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-progress {
+  font-size: 13px; color: var(--text-secondary); margin-top: 8px;
+}
+.loading-bar {
+  width: 240px; height: 4px; margin: 12px auto;
+  background: var(--border); border-radius: 4px; overflow: hidden;
+}
+.loading-bar-fill {
+  height: 100%; width: 0%; background: var(--accent);
+  border-radius: 4px; transition: width 0.3s;
+}
+
+/* ===== Channels ===== */
+.channel-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px; padding: 12px; padding-bottom: 120px;
+}
+.channel-card {
+  background: var(--card-bg); border: 2px solid var(--border);
+  border-radius: 14px; padding: 14px 10px;
+  cursor: pointer; transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center;
+  position: relative;
+}
+.channel-card:hover {
+  border-color: var(--accent); box-shadow: 0 4px 16px var(--shadow);
+  transform: translateY(-2px);
+}
+.channel-card:active { transform: scale(0.97); }
+.channel-card .logo-wrap {
+  width: 56px; height: 56px; border-radius: 10px;
+  background: #f5f5f5; display: flex; align-items: center;
+  justify-content: center; margin-bottom: 8px; overflow: hidden;
+  border: 1px solid #eee;
+}
+.channel-card .logo-wrap img {
+  width: 100%; height: 100%; object-fit: contain;
+}
+.channel-card .logo-wrap .logo-fallback {
+  font-size: 24px; color: var(--text-secondary);
+}
+.channel-card .name {
+  font-weight: 700; font-size: 13px; text-align: center;
+  margin-bottom: 2px; line-height: 1.3; display: -webkit-box;
+  -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.channel-card .country-tag {
+  font-size: 11px; color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.channel-card .badges {
+  display: flex; gap: 3px; flex-wrap: wrap; justify-content: center;
+}
+.channel-card .badge {
+  font-size: 10px; padding: 2px 8px; border-radius: 10px;
+  background: var(--accent-light); color: var(--accent);
+  font-weight: 600; line-height: 1.4;
+}
+.channel-card .hd-badge {
+  background: #e8faf4; color: #047857;
+}
+.channel-card .play-hint {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.5); border-radius: 12px;
+  opacity: 0; transition: opacity 0.2s; color: #fff;
+  font-size: 13px; font-weight: 600; gap: 6px;
+}
+.channel-card:hover .play-hint { opacity: 1; }
+.channel-card .no-stream {
+  opacity: 0.5; cursor: default;
+}
+
+/* ===== Empty state ===== */
+.empty-state {
+  text-align: center; padding: 60px 20px; color: var(--text-secondary);
+  grid-column: 1 / -1;
+}
+.empty-state .big-icon { font-size: 48px; margin-bottom: 12px; }
+.empty-state p { font-size: 14px; }
+
+/* ===== Player Panel (fixed bottom) ===== */
+.player-panel {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  z-index: 1000; transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+  box-shadow: 0 -4px 24px rgba(0,0,0,0.25);
+}
+.player-panel.hidden { transform: translateY(100%); }
+.player-header {
+  display: flex; align-items: center;
+  padding: 8px 14px; background: var(--dark-bg); color: #fff;
+  gap: 10px;
+}
+.player-header .ch-logo {
+  width: 32px; height: 32px; border-radius: 6px;
+  background: #444; object-fit: contain; flex-shrink: 0;
+}
+.player-header .ch-info { flex: 1; min-width: 0; }
+.player-header .ch-name { font-size: 14px; font-weight: 600; }
+.player-header .ch-meta { font-size: 11px; color: #a0aec0; }
+.player-header .player-status {
+  font-size: 11px; color: #68d391; white-space: nowrap;
+  display: flex; align-items: center; gap: 4px;
+}
+.player-header .player-status.error { color: #fc8181; }
+.player-header .player-status.buffering { color: var(--accent); }
+.player-header .player-actions {
+  display: flex; gap: 6px; align-items: center;
+}
+.player-header .player-actions button {
+  background: rgba(255,255,255,0.1); border: none; color: #fff;
+  width: 34px; height: 34px; border-radius: 8px; cursor: pointer;
+  font-size: 16px; transition: background 0.2s;
+  display: flex; align-items: center; justify-content: center;
+}
+.player-header .player-actions button:hover { background: rgba(255,255,255,0.2); }
+.player-header .player-actions .ext-link {
+  font-size: 12px; width: auto; padding: 0 10px; text-decoration: none;
+}
+#video-wrapper {
+  width: 100%; background: #000;
+  max-height: 45vh; position: relative;
+}
+#video-wrapper video {
+  width: 100%; max-height: 45vh; display: block;
+  background: #000;
+}
+.player-drag-handle {
+  display: none; width: 100%; padding: 6px 0;
+  text-align: center; cursor: grab;
+}
+.player-drag-handle::after {
+  content: ''; display: inline-block;
+  width: 36px; height: 4px; background: rgba(255,255,255,0.3);
+  border-radius: 4px;
+}
+
+/* ===== 国家国旗 emoji helper ===== */
+.flag { font-size: 1.1em; }
+
+/* ===== Health Badge ===== */
+.channel-card .health-dot {
+  position: absolute; top: 6px; right: 6px;
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid var(--card-bg); z-index: 1;
+}
+.health-dot.verified { background: #48bb78; }
+.health-dot.dead { background: #fc8181; }
+.health-dot.unknown { background: #cbd5e0; }
+.channel-card:not(.no-stream) .health-dot.verified { box-shadow: 0 0 4px rgba(72,187,120,0.6); }
+
+/* ===== Verify Bar ===== */
+.verify-bar {
+  display: none; padding: 6px 16px;
+  background: #f0fff4; border-bottom: 1px solid #c6f6d5;
+  font-size: 12px; color: #276749; align-items: center; gap: 8px;
+}
+.verify-bar.show { display: flex; }
+.verify-bar .vb-fill-wrap {
+  flex: 1; height: 6px; background: #c6f6d5; border-radius: 4px; overflow: hidden; max-width: 300px;
+}
+.verify-bar .vb-fill {
+  height: 100%; width: 0%; background: #48bb78; border-radius: 4px; transition: width 0.3s;
+}
+.verify-bar .vb-status { white-space: nowrap; font-weight: 600; }
+.verify-bar .vb-close {
+  background: none; border: none; cursor: pointer; font-size: 14px;
+  color: #276749; padding: 2px 6px; border-radius: 4px; margin-left: auto;
+}
+.verify-bar .vb-close:hover { background: #c6f6d5; }
+
+#verifyBtn {
+  background: #48bb78; color: #fff; border: none;
+  padding: 6px 14px; border-radius: 8px; font-size: 12px;
+  cursor: pointer; transition: background 0.2s; white-space: nowrap;
+}
+#verifyBtn:hover { background: #38a169; }
+#verifyBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+#verifyBtn.verifying { animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } }
+
+/* ===== Verify filter checkbox ===== */
+.verify-filter {
+  display: flex; align-items: center; gap: 4px;
+  font-size: 12px; color: var(--text-secondary); cursor: pointer;
+  white-space: nowrap; user-select: none;
+}
+.verify-filter input { accent-color: var(--accent); cursor: pointer; }
+
+/* ===== Toast ===== */
+.toast {
+  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%);
+  background: var(--dark-bg); color: #fff;
+  padding: 10px 20px; border-radius: 10px; font-size: 13px;
+  z-index: 2000; opacity: 0; transition: opacity 0.3s;
+  pointer-events: none; white-space: nowrap;
+}
+.toast.show { opacity: 1; }
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  .channel-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px; padding: 8px; padding-bottom: 100px;
+  }
+  .channel-card { padding: 10px 6px; border-radius: 12px; }
+  .channel-card .logo-wrap { width: 44px; height: 44px; }
+  .channel-card .name { font-size: 11px; }
+  .channel-card .badge { font-size: 9px; padding: 1px 6px; }
+  .channel-card .country-tag { font-size: 10px; }
+  .filters { padding: 8px 10px; gap: 6px; }
+  .filters select, .filters input { font-size: 12px; padding: 7px 10px; }
+  .filters .filter-search { min-width: 140px; }
+  .stats-bar { font-size: 11px; padding: 8px 12px; }
+  .player-header { padding: 6px 10px; }
+  .player-header .ch-name { font-size: 13px; }
+  #video-wrapper { max-height: 35vh; }
+  #video-wrapper video { max-height: 35vh; }
+}
+@media (max-width: 400px) {
+  .channel-grid { grid-template-columns: repeat(2, 1fr); }
+  .filters .filter-search { min-width: 100%; }
+}
+@media (hover: none) and (pointer: coarse) {
+  .channel-card .play-hint { display: none; }
+  .channel-card:active { transform: scale(0.97); }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== Hero ===== -->
+<div class="hero">
+  <div class="hero-content">
+    <h1>📺 全球 <span>电视</span>直播</h1>
+    <p>30,000+ 频道 · 190+ 国家/地区 · 免费公开 IPTV</p>
+    <div class="sub-badges">
+      <span>🔍 浏览频道</span>
+      <span>▶️ 在线播放</span>
+      <span>📋 复制链接</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Stats ===== -->
+<div class="stats-bar">
+  <span id="statsText">📡 加载数据中...</span>
+  <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">
+    <button id="verifyBtn" onclick="verifyAllStreams()" title="测试所有直播链接的可用性">🔍 测试链接</button>
+    <button id="refreshBtn" onclick="loadAllData()">🔄 刷新</button>
+  </div>
+</div>
+
+<!-- ===== Filters ===== -->
+<div class="filters" id="filters">
+  <select class="filter-country" id="countryFilter" onchange="applyFilters()">
+    <option value="">🌍 所有国家</option>
+  </select>
+  <select class="filter-category" id="categoryFilter" onchange="applyFilters()">
+    <option value="">🏷️ 全部分类</option>
+  </select>
+  <input class="filter-search" id="searchFilter" type="search"
+         placeholder="🔍 搜索频道名称..." oninput="applyFilters()">
+  <label class="verify-filter" id="hideDeadLabel" style="display:none;">
+    <input type="checkbox" id="hideDeadFilter" onchange="applyFilters()" checked>
+    隐藏失效
+  </label>
+</div>
+
+<!-- ===== Quick Country Picks ===== -->
+<div class="quick-picks" id="quickPicks"></div>
+
+<!-- ===== Verify Progress ===== -->
+<div class="verify-bar" id="verifyBar">
+  <span>🧪 测试链接中...</span>
+  <div class="vb-fill-wrap"><div class="vb-fill" id="verifyFill"></div></div>
+  <span class="vb-status" id="verifyStatus">0 / 0</span>
+  <button class="vb-close" onclick="closeVerifyBar()">✕</button>
+</div>
+
+<!-- ===== Loading ===== -->
+<div class="loading" id="loadingState">
+  <div class="spinner"></div>
+  <div>正在加载频道数据...</div>
+  <div class="loading-bar"><div class="loading-bar-fill" id="loadingBarFill"></div></div>
+  <div class="loading-progress" id="loadingProgress">准备中...</div>
+</div>
+
+<!-- ===== Channel Grid ===== -->
+<div class="container">
+  <div class="channel-grid" id="channelGrid"></div>
+</div>
+
+<!-- ===== Player Panel ===== -->
+<div class="player-panel hidden" id="playerPanel">
+  <div class="player-header">
+    <img class="ch-logo" id="playerLogo" src="" alt="" onerror="this.style.display='none'">
+    <div class="ch-info">
+      <div class="ch-name" id="playerName">选择频道</div>
+      <div class="ch-meta" id="playerMeta"></div>
+    </div>
+    <div class="player-status" id="playerStatus">⏸️ 已暂停</div>
+    <div class="player-actions">
+      <button onclick="togglePlayerMute()" id="muteBtn" title="静音">🔊</button>
+      <a id="vlcLink" href="#" target="_blank" rel="noopener"
+         class="ext-link" style="background:rgba(255,255,255,0.1);border:none;color:#fff;
+         border-radius:8px;cursor:pointer;font-size:12px;padding:0 10px;text-decoration:none;
+         display:flex;align-items:center;gap:4px;height:34px;"
+         title="在 VLC 中打开">🎬 VLC</a>
+      <button onclick="closePlayer()" title="关闭">✕</button>
+    </div>
+  </div>
+  <div id="video-wrapper">
+    <video id="playerVideo" controls autoplay playsinline></video>
+  </div>
+</div>
+
+<!-- ===== Toast ===== -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================================
+//  STATE
+// ============================================================
+const STATE = {
+  channels: [],
+  streams: [],
+  countries: [],
+  categories: [],
+  filtered: [],
+  loading: false,
+  currentChannel: null,    // { channel, stream }
+  hls: null,
+};
+
+// Country flag emoji map (common ones)
+const FLAG_MAP = {
+  CN:'🇨🇳',US:'🇺🇸',GB:'🇬🇧',JP:'🇯🇵',KR:'🇰🇷',FR:'🇫🇷',DE:'🇩🇪',IT:'🇮🇹',
+  ES:'🇪🇸',PT:'🇵🇹',RU:'🇷🇺',IN:'🇮🇳',BR:'🇧🇷',CA:'🇨🇦',AU:'🇦🇺',MY:'🇲🇾',
+  SG:'🇸🇬',TH:'🇹🇭',VN:'🇻🇳',PH:'🇵🇭',ID:'🇮🇩',HK:'🇭🇰',TW:'🇹🇼',NL:'🇳🇱',
+  SE:'🇸🇪',NO:'🇳🇴',DK:'🇩🇰',FI:'🇫🇮',CH:'🇨🇭',AT:'🇦🇹',BE:'🇧🇪',IE:'🇮🇪',
+  PL:'🇵🇱',CZ:'🇨🇿',SK:'🇸🇰',HU:'🇭🇺',RO:'🇷🇴',GR:'🇬🇷',TR:'🇹🇷',IL:'🇮🇱',
+  SA:'🇸🇦',AE:'🇦🇪',EG:'🇪🇬',ZA:'🇿🇦',AR:'🇦🇷',MX:'🇲🇽',CO:'🇨🇴',CL:'🇨🇱',
+  NZ:'🇳🇿',PK:'🇵🇰',BD:'🇧🇩',UA:'🇺🇦',KE:'🇰🇪',NG:'🇳🇬',
+};
+
+// "Popular" countries shown as quick picks
+const QUICK_COUNTRIES = [
+  { code: 'CN', name: '中国' },
+  { code: 'US', name: '美国' },
+  { code: 'GB', name: '英国' },
+  { code: 'JP', name: '日本' },
+  { code: 'KR', name: '韩国' },
+  { code: 'FR', name: '法国' },
+  { code: 'DE', name: '德国' },
+  { code: 'MY', name: '马来西亚' },
+  { code: 'SG', name: '新加坡' },
+  { code: 'TH', name: '泰国' },
+  { code: 'TW', name: '台湾' },
+  { code: 'HK', name: '香港' },
+  { code: 'RU', name: '俄罗斯' },
+  { code: 'IN', name: '印度' },
+  { code: 'BR', name: '巴西' },
+];
+
+// ============================================================
+//  STREAM VERIFICATION
+// ============================================================
+const VERIFY = {
+  queue: [],          // [{chId, url}]
+  inProgress: false,
+  concurrency: 12,
+  tested: 0,
+  dead: 0,
+  total: 0,
+  cache: {},          // url -> {ok, time, testedAt}
+  cacheKey: 'tv_stream_status_v2',
+  cacheTTL: 6 * 3600 * 1000, // 6 hours
+};
+
+function loadVerifyCache() {
+  try {
+    const raw = localStorage.getItem(VERIFY.cacheKey);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    if (data.version !== 2) return;
+    const age = Date.now() - data.updatedAt;
+    if (age > VERIFY.cacheTTL) { localStorage.removeItem(VERIFY.cacheKey); return; }
+    VERIFY.cache = data.results || {};
+  } catch(e) { /* ignore corrupt cache */ }
+}
+
+function saveVerifyCache() {
+  try {
+    const data = {
+      version: 2,
+      updatedAt: Date.now(),
+      results: VERIFY.cache,
+    };
+    localStorage.setItem(VERIFY.cacheKey, JSON.stringify(data));
+  } catch(e) {
+    // localStorage full — clear oldest entries
+    if (e.name === 'QuotaExceededError') {
+      const entries = Object.entries(VERIFY.cache);
+      if (entries.length > 100) {
+        entries.sort((a, b) => (a[1].testedAt || 0) - (b[1].testedAt || 0));
+        const drop = Math.floor(entries.length * 0.3);
+        entries.slice(0, drop).forEach(([k]) => delete VERIFY.cache[k]);
+        try { localStorage.setItem(VERIFY.cacheKey, JSON.stringify({ version: 2, updatedAt: Date.now(), results: VERIFY.cache })); } catch(e2) { /* give up */ }
+      }
+    }
+  }
+}
+
+function applyCachedStatusToChannels() {
+  const cache = VERIFY.cache;
+  for (const ch of STATE.channels) {
+    const stream = ch._primaryStream;
+    if (!stream) continue;
+    const result = cache[stream.url];
+    if (result) {
+      ch._verified = result.ok ? 'ok' : 'dead';
+      ch._verifyTime = result.testedAt;
+    } else {
+      ch._verified = 'unknown';
+    }
+  }
+}
+
+function getChannelDeadCount() {
+  return STATE.channels.filter(c => c._verified === 'dead').length;
+}
+function getChannelOkCount() {
+  return STATE.channels.filter(c => c._verified === 'ok').length;
+}
+function getChannelUnknownCount() {
+  return STATE.channels.filter(c => !c._verified || c._verified === 'unknown').length;
+}
+
+function showHideDeadFilter() {
+  const label = document.getElementById('hideDeadLabel');
+  if (!label) return;
+  const hasDead = getChannelDeadCount() > 0;
+  label.style.display = hasDead ? 'inline-flex' : 'none';
+}
+
+async function testSingleStream(url) {
+  const start = performance.now();
+  try {
+    const resp = await fetch(url, {
+      method: 'HEAD',
+      mode: 'no-cors',
+      signal: AbortSignal.timeout(6000),
+    });
+    const elapsed = Math.round(performance.now() - start);
+    // no-cors opaque response: resp.ok is false but resp.type is 'opaque'
+    // If fetch resolves at all, server is reachable
+    return { ok: true, time: elapsed, status: 0 };
+  } catch (e) {
+    const elapsed = Math.round(performance.now() - start);
+    return { ok: false, time: elapsed, status: 0 };
+  }
+}
+
+async function processVerifyBatch() {
+  if (!VERIFY.queue.length || !VERIFY.inProgress) return;
+
+  const batch = VERIFY.queue.splice(0, VERIFY.concurrency);
+  const promises = batch.map(async (item) => {
+    // Check if already cached recently
+    const cached = VERIFY.cache[item.url];
+    if (cached && (Date.now() - cached.testedAt) < VERIFY.cacheTTL) {
+      VERIFY.tested++;
+      return;
+    }
+    const result = await testSingleStream(item.url);
+    VERIFY.cache[item.url] = { ok: result.ok, time: result.time, testedAt: Date.now() };
+    VERIFY.tested++;
+    if (!result.ok) VERIFY.dead++;
+    // Update channel status
+    const ch = STATE.channels.find(c => c.id === item.chId);
+    if (ch) {
+      ch._verified = result.ok ? 'ok' : 'dead';
+      ch._verifyTime = Date.now();
+    }
+    // Throttled cache save
+    if (VERIFY.tested % 30 === 0) saveVerifyCache();
+  });
+
+  await Promise.allSettled(promises);
+  updateVerifyUI();
+  applyFilters();
+  showHideDeadFilter();
+
+  if (VERIFY.queue.length > 0) {
+    // Schedule next batch asynchronously
+    setTimeout(() => processVerifyBatch(), 50);
+  } else {
+    // Done
+    VERIFY.inProgress = false;
+    saveVerifyCache();
+    document.getElementById('verifyBtn').disabled = false;
+    document.getElementById('verifyBtn').classList.remove('verifying');
+    document.getElementById('verifyBtn').textContent = '🔍 重新测试';
+    document.getElementById('verifyBar').classList.remove('show');
+    showToast('✅ 链接测试完成！已测试 ' + VERIFY.tested + ' 个链接，' +
+      (VERIFY.dead > 0 ? VERIFY.dead + ' 个失效已隐藏' : '全部可用'), 3000);
+    updateStats();
+    showHideDeadFilter();
+  }
+}
+
+function updateVerifyUI() {
+  const fill = document.getElementById('verifyFill');
+  const status = document.getElementById('verifyStatus');
+  const pct = VERIFY.total > 0 ? Math.round((VERIFY.tested / VERIFY.total) * 100) : 0;
+  if (fill) fill.style.width = pct + '%';
+  if (status) status.textContent = `${VERIFY.tested} / ${VERIFY.total} (${pct}%)`;
+}
+
+function verifyAllStreams() {
+  if (VERIFY.inProgress) return;
+  if (VERIFY.queue.length > 0 && VERIFY.inProgress) return;
+
+  // Collect all unique stream URLs
+  const seen = new Set();
+  VERIFY.queue = [];
+  for (const ch of STATE.channels) {
+    const stream = ch._primaryStream;
+    if (!stream || !stream.url) continue;
+    const key = stream.url;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    VERIFY.queue.push({ chId: ch.id, url: stream.url });
+  }
+
+  VERIFY.total = VERIFY.queue.length;
+  VERIFY.tested = 0;
+  VERIFY.dead = 0;
+  VERIFY.inProgress = true;
+
+  // UI
+  const btn = document.getElementById('verifyBtn');
+  btn.disabled = true;
+  btn.classList.add('verifying');
+  btn.textContent = '⏳ 测试中...';
+  document.getElementById('verifyBar').classList.add('show');
+  updateVerifyUI();
+
+  // Start processing
+  processVerifyBatch();
+}
+
+function closeVerifyBar() {
+  document.getElementById('verifyBar').classList.remove('show');
+}
+
+function startBackgroundVerify() {
+  // Only verify channels that have no cached status
+  const toVerify = STATE.channels.filter(ch => {
+    const stream = ch._primaryStream;
+    if (!stream || !stream.url) return false;
+    return !VERIFY.cache[stream.url];
+  });
+  if (toVerify.length === 0) {
+    showHideDeadFilter();
+    return;
+  }
+
+  // Queue only unknown streams
+  const seen = new Set();
+  VERIFY.queue = [];
+  for (const ch of toVerify) {
+    if (!ch._primaryStream?.url || seen.has(ch._primaryStream.url)) continue;
+    seen.add(ch._primaryStream.url);
+    VERIFY.queue.push({ chId: ch.id, url: ch._primaryStream.url });
+  }
+
+  if (VERIFY.queue.length === 0) return;
+
+  VERIFY.total = VERIFY.queue.length;
+  VERIFY.tested = 0;
+  VERIFY.dead = 0;
+  VERIFY.inProgress = true;
+
+  const btn = document.getElementById('verifyBtn');
+  btn.disabled = true;
+  btn.classList.add('verifying');
+  btn.textContent = '⏳ 测试中...';
+  document.getElementById('verifyBar').classList.add('show');
+  updateVerifyUI();
+
+  processVerifyBatch();
+}
+
+// ============================================================
+//  DATA LOADING
+// ============================================================
+async function loadAllData() {
+  if (STATE.loading) return;
+  STATE.loading = true;
+  document.getElementById('refreshBtn').disabled = true;
+  showLoading(true);
+
+  try {
+    // Load all data in parallel
+    const [countries, categories, channels, streams] = await Promise.all([
+      fetchJSON('https://iptv-org.github.io/api/countries.json'),
+      fetchJSON('https://iptv-org.github.io/api/categories.json'),
+      fetchWithProgress('https://iptv-org.github.io/api/channels.json', '频道元数据'),
+      fetchWithProgress('https://iptv-org.github.io/api/streams.json', '直播流地址'),
+    ]);
+
+    STATE.countries = (countries || []).sort((a, b) => a.name.localeCompare(b.name));
+    STATE.categories = (categories || []).sort((a, b) => a.name.localeCompare(b.name));
+    STATE.channels = channels || [];
+    STATE.streams = streams || [];
+
+    // Build lookup: channelId -> streams[]
+    const streamMap = {};
+    for (const s of STATE.streams) {
+      if (!streamMap[s.channel]) streamMap[s.channel] = [];
+      streamMap[s.channel].push(s);
+    }
+
+    // Attach streams to channels (just first working one for simplicity)
+    for (const ch of STATE.channels) {
+      ch._streams = streamMap[ch.id] || [];
+      ch._primaryStream = ch._streams.find(s => s.status === 'online' && s.url) || ch._streams[0];
+    }
+
+    // Load verification cache and apply to channels
+    loadVerifyCache();
+    applyCachedStatusToChannels();
+
+    // Populate UI
+    populateFilters();
+    populateQuickPicks();
+    applyFilters();
+    updateStats();
+
+    // Start background verification for untested streams
+    setTimeout(startBackgroundVerify, 2000);
+
+  } catch (err) {
+    console.error('加载失败:', err);
+    showToast('⚠️ 数据加载失败: ' + err.message, 4000);
+    document.getElementById('channelGrid').innerHTML = `
+      <div class="empty-state">
+        <div class="big-icon">😵</div>
+        <p>数据加载失败</p>
+        <p style="font-size:12px;color:#999;margin-top:8px;">${err.message}</p>
+        <button onclick="loadAllData()" style="margin-top:16px;padding:10px 24px;
+          background:var(--accent);color:#fff;border:none;border-radius:10px;
+          font-size:14px;cursor:pointer;">🔄 重试</button>
+      </div>`;
+  }
+
+  STATE.loading = false;
+  document.getElementById('refreshBtn').disabled = false;
+  showLoading(false);
+}
+
+async function fetchJSON(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);
+  return res.json();
+}
+
+// Fetch with progress simulation
+async function fetchWithProgress(url, label) {
+  // We can't measure real progress with fetch, so simulate it
+  updateProgress(label, 10);
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`HTTP ${res.status}: ${url}`);
+
+  updateProgress(label, 40);
+
+  // Read the body
+  const reader = res.body.getReader();
+  const chunks = [];
+  let received = 0;
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    chunks.push(value);
+    received += value.length;
+    // Simulate progress between 40-90%
+    const pct = Math.min(40 + (received / 5000000) * 50, 90);
+    updateProgress(label, Math.round(pct));
+  }
+
+  updateProgress(label, 100);
+  const allBytes = new Uint8Array(received);
+  let pos = 0;
+  for (const chunk of chunks) {
+    allBytes.set(chunk, pos);
+    pos += chunk.length;
+  }
+
+  const text = new TextDecoder('utf-8').decode(allBytes);
+  return JSON.parse(text);
+}
+
+function updateProgress(label, pct) {
+  document.getElementById('loadingBarFill').style.width = pct + '%';
+  document.getElementById('loadingProgress').textContent = `${label}: ${pct}%`;
+}
+
+function showLoading(show) {
+  document.getElementById('loadingState').style.display = show ? 'block' : 'none';
+}
+
+function updateStats() {
+  const total = STATE.channels.length;
+  const withStreams = STATE.channels.filter(c => c._primaryStream).length;
+  const countries = STATE.countries.length;
+  const okCount = getChannelOkCount();
+  const deadCount = getChannelDeadCount();
+  let extra = '';
+  if (okCount > 0 || deadCount > 0) {
+    extra = ` · <span style="color:#48bb78;">✅${okCount}</span>` +
+      (deadCount > 0 ? `<span style="color:#fc8181;"> ❌${deadCount}</span>` : '');
+  }
+  document.getElementById('statsText').innerHTML =
+    `📡 <strong>${total.toLocaleString()}</strong> 频道 · ` +
+    `<strong>${withStreams.toLocaleString()}</strong> 可播放 · ` +
+    `<strong>${countries}</strong> 个国家/地区${extra}`;
+}
+
+// ============================================================
+//  FILTERS
+// ============================================================
+function populateFilters() {
+  const countrySel = document.getElementById('countryFilter');
+  const catSel = document.getElementById('categoryFilter');
+
+  // Countries
+  for (const c of STATE.countries) {
+    const opt = document.createElement('option');
+    opt.value = c.code;
+    const flag = FLAG_MAP[c.code] || '';
+    opt.textContent = `${flag} ${c.name}`;
+    countrySel.appendChild(opt);
+  }
+
+  // Categories (Chinese-friendly names)
+  const CAT_NAMES = {
+    'news': '📰 新闻', 'sports': '⚽ 体育', 'entertainment': '🎬 娱乐',
+    'music': '🎵 音乐', 'movies': '🎞️ 电影', 'documentary': '📽️ 纪实',
+    'kids': '👶 少儿', 'education': '📚 教育', 'religious': '⛪ 宗教',
+    'business': '💼 商业', 'general': '📺 综合', 'lifestyle': '🌿 生活',
+    'science': '🔬 科技', 'culture': '🎭 文化', 'travel': '✈️ 旅游',
+    'series': '📺 剧集', 'animation': '🎨 动画', 'comedy': '😂 喜剧',
+    'weather': '🌤️ 天气', 'shopping': '🛍️ 购物',
+  };
+  const seen = new Set();
+  for (const c of STATE.categories) {
+    if (seen.has(c.id)) continue;
+    seen.add(c.id);
+    const opt = document.createElement('option');
+    opt.value = c.id;
+    opt.textContent = CAT_NAMES[c.id] || c.name || c.id;
+    catSel.appendChild(opt);
+  }
+}
+
+function populateQuickPicks() {
+  const container = document.getElementById('quickPicks');
+  container.innerHTML = '<div class="quick-pick active" data-code="" onclick="selectQuickPick(this)">🌍 全部</div>';
+  for (const qc of QUICK_COUNTRIES) {
+    const div = document.createElement('div');
+    div.className = 'quick-pick';
+    div.dataset.code = qc.code;
+    div.textContent = `${FLAG_MAP[qc.code] || ''} ${qc.name}`;
+    div.onclick = () => selectQuickPick(div);
+    container.appendChild(div);
+  }
+}
+
+let _quickPickActive = null;
+
+function selectQuickPick(el) {
+  // Toggle off if same one clicked
+  if (_quickPickActive === el) {
+    el.classList.remove('active');
+    _quickPickActive = null;
+    document.getElementById('countryFilter').value = '';
+    applyFilters();
+    return;
+  }
+
+  if (_quickPickActive) _quickPickActive.classList.remove('active');
+  el.classList.add('active');
+  _quickPickActive = el;
+
+  const code = el.dataset.code;
+  document.getElementById('countryFilter').value = code || '';
+  applyFilters();
+}
+
+function applyFilters() {
+  const countryCode = document.getElementById('countryFilter').value;
+  const category = document.getElementById('categoryFilter').value;
+  const search = document.getElementById('searchFilter').value.trim().toLowerCase();
+
+  let filtered = STATE.channels;
+
+  if (countryCode) {
+    filtered = filtered.filter(c => c.country === countryCode);
+  }
+  if (category) {
+    filtered = filtered.filter(c => c.categories && c.categories.includes(category));
+  }
+  if (search) {
+    filtered = filtered.filter(c =>
+      c.name.toLowerCase().includes(search) ||
+      c.id.toLowerCase().includes(search)
+    );
+  }
+  // Filter out verified-dead streams
+  if (document.getElementById('hideDeadFilter')?.checked) {
+    filtered = filtered.filter(c => c._verified !== 'dead');
+  }
+
+  // Sort: channels with streams first, then by name
+  filtered.sort((a, b) => {
+    const aHas = a._primaryStream ? 1 : 0;
+    const bHas = b._primaryStream ? 1 : 0;
+    if (aHas !== bHas) return bHas - aHas;
+    return (a.name || '').localeCompare(b.name || '');
+  });
+
+  STATE.filtered = filtered;
+  renderChannels(filtered);
+}
+
+// ============================================================
+//  RENDER
+// ============================================================
+function renderChannels(channels) {
+  const grid = document.getElementById('channelGrid');
+
+  if (!channels.length) {
+    grid.innerHTML = `
+      <div class="empty-state">
+        <div class="big-icon">📺</div>
+        <p>没有找到匹配的频道</p>
+        <p style="font-size:12px;color:#999;margin-top:4px;">试试其他筛选条件</p>
+      </div>`;
+    updateStats();
+    return;
+  }
+
+  // Limit visible to prevent lag
+  const MAX_VISIBLE = 500;
+  const visible = channels.slice(0, MAX_VISIBLE);
+  const hiddenCount = channels.length - MAX_VISIBLE;
+
+  let html = '';
+  for (const ch of visible) {
+    const hasStream = !!ch._primaryStream;
+    const flag = FLAG_MAP[ch.country] || '';
+    const logo = ch.logo || ch.logo_url || '';
+    const cats = (ch.categories || []).slice(0, 2); // max 2 badges
+    const health = ch._verified || 'unknown';
+    const healthDot = hasStream ? `<span class="health-dot ${health}" title="${
+      health === 'ok' ? '已验证可用' : health === 'dead' ? '链接已失效' : '未测试'
+    }"></span>` : '';
+
+    html += `
+      <div class="channel-card ${hasStream ? '' : 'no-stream'}"
+           onclick="${hasStream ? `playChannel('${escapeJS(ch.id)}')` : 'showToast(\'❌ 该频道暂无可用直播流\', 2000)'}"
+           title="${escapeHTML(ch.name)}${hasStream ? '\n点击播放' : '\n暂无直播流'}">
+        ${healthDot}
+        <div class="logo-wrap">         ${logo ? `<img src="${escapeHTML(logo)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='<span class=logo-fallback>📺</span>'">`
+                 : '<span class="logo-fallback">📺</span>'}
+        </div>
+        <div class="name">${escapeHTML(ch.name)}</div>
+        <div class="country-tag">${flag} ${ch.country}</div>
+        <div class="badges">
+          ${cats.map(c => `<span class="badge">${escapeHTML(c)}</span>`).join('')}
+          ${ch._primaryStream && ch._primaryStream.height >= 720 ? `<span class="badge hd-badge">HD</span>` : ''}
+        </div>
+        ${hasStream ? '<div class="play-hint">▶️ 播放</div>' : ''}
+      </div>`;
+  }
+
+  if (hiddenCount > 0) {
+    html += `
+      <div class="empty-state" style="padding:20px;">
+        <p style="font-size:13px;">还有 <strong>${hiddenCount.toLocaleString()}</strong> 个频道未显示</p>
+        <p style="font-size:11px;color:#999;">请使用筛选条件缩小范围</p>
+      </div>`;
+  }
+
+  grid.innerHTML = html;
+  updateStats();
+}
+
+// ============================================================
+//  PLAYER
+// ============================================================
+function playChannel(channelId) {
+  const ch = STATE.channels.find(c => c.id === channelId);
+  if (!ch) return;
+
+  const stream = ch._primaryStream;
+  if (!stream) {
+    showToast('❌ 该频道暂无可用直播流', 2000);
+    return;
+  }
+
+  STATE.currentChannel = { channel: ch, stream };
+
+  // Update player UI
+  const panel = document.getElementById('playerPanel');
+  panel.classList.remove('hidden');
+
+  document.getElementById('playerName').textContent = ch.name;
+  const flag = FLAG_MAP[ch.country] || '';
+  document.getElementById('playerMeta').textContent =
+    `${flag} ${ch.country} · ${(ch.categories || []).join(', ') || '综合'}`;
+
+  const logo = ch.logo || ch.logo_url || '';
+  const logoEl = document.getElementById('playerLogo');
+  if (logo) {
+    logoEl.src = logo;
+    logoEl.style.display = '';
+  } else {
+    logoEl.style.display = 'none';
+  }
+
+  // Set VLC link
+  document.getElementById('vlcLink').href = stream.url;
+
+  setPlayerStatus('buffering', '⏳ 加载中...');
+  startPlayback(stream);
+}
+
+function startPlayback(stream) {
+  const video = document.getElementById('playerVideo');
+  const url = stream.url;
+
+  // Destroy any existing hls instance
+  if (STATE.hls) {
+    STATE.hls.destroy();
+    STATE.hls = null;
+  }
+
+  // Check User-Agent / Referrer requirements
+  const ua = stream.http_user_agent;
+  const ref = stream.http_referrer;
+
+  if (ua || ref) {
+    console.log(`Stream may need UA=${ua} or Referer=${ref}`);
+    // Show a subtle hint
+    document.getElementById('playerMeta').textContent +=
+      document.getElementById('playerMeta').textContent.includes('⚠️') ? '' : ' · ⚠️ 可能需要特殊UA';
+  }
+
+  if (url.endsWith('.m3u8') && Hls.isSupported()) {
+    const hls = new Hls({
+      enableWorker: true,
+      lowLatencyMode: true,
+      backbufferLength: 30,
+      maxBufferLength: 30,
+    });
+    STATE.hls = hls;
+    hls.loadSource(url);
+    hls.attachMedia(video);
+    hls.on(Hls.Events.MANIFEST_PARSED, () => {
+      video.play().catch(() => {});
+      setPlayerStatus('playing', '▶️ 播放中');
+    });
+    hls.on(Hls.Events.ERROR, (e, data) => {
+      if (data.fatal) {
+        setPlayerStatus('error', '❌ 播放失败');
+        console.error('HLS fatal error:', data);
+      }
+    });
+  } else if (url.endsWith('.m3u8') && video.canPlayType('application/vnd.apple.mpegurl')) {
+    // Native HLS support (Safari/iOS)
+    video.src = url;
+    video.play().catch(() => {});
+    setPlayerStatus('playing', '▶️ 播放中');
+  } else {
+    // Direct stream (MP4, etc.)
+    video.src = url;
+    video.play().catch(() => {
+      setPlayerStatus('error', '❌ 无法播放');
+    });
+    video.onerror = () => {
+      setPlayerStatus('error', '❌ 播放失败');
+    };
+    video.oncanplay = () => {
+      setPlayerStatus('playing', '▶️ 播放中');
+    };
+  }
+
+  video.onwaiting = () => setPlayerStatus('buffering', '⏳ 缓冲中...');
+  video.onplaying = () => setPlayerStatus('playing', '▶️ 播放中');
+  video.onpause = () => setPlayerStatus('paused', '⏸️ 已暂停');
+  video.onended = () => setPlayerStatus('paused', '⏹️ 已结束');
+}
+
+function setPlayerStatus(type, text) {
+  const el = document.getElementById('playerStatus');
+  el.className = 'player-status' + (type === 'error' ? ' error' : '') +
+    (type === 'buffering' ? ' buffering' : '');
+  el.textContent = text;
+}
+
+function closePlayer() {
+  if (STATE.hls) {
+    STATE.hls.destroy();
+    STATE.hls = null;
+  }
+  const video = document.getElementById('playerVideo');
+  video.pause();
+  video.src = '';
+  video.load();
+  document.getElementById('playerPanel').classList.add('hidden');
+  STATE.currentChannel = null;
+}
+
+function togglePlayerMute() {
+  const video = document.getElementById('playerVideo');
+  video.muted = !video.muted;
+  document.getElementById('muteBtn').textContent = video.muted ? '🔇' : '🔊';
+}
+
+// ============================================================
+//  UTILITIES
+// ============================================================
+function escapeHTML(str) {
+  if (!str) return '';
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function escapeJS(str) {
+  return str.replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'\\"');
+}
+
+let toastTimer = null;
+function showToast(msg, duration) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), duration || 2000);
+}
+
+// Keyboard shortcut: Escape to close player
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && !document.getElementById('playerPanel').classList.contains('hidden')) {
+    closePlayer();
+  }
+});
+
+// ============================================================
+//  INIT
+// ============================================================
+
+// Auto-update: fetch the latest TV page from GitHub on every load
+(async function() {
+  try {
+    var _ghResp = await fetch('https://raw.githubusercontent.com/stevenzhu1982/family-trip-2026/master/site/tv.html?_ts=' + Date.now());
+    if (_ghResp.ok && _ghResp.status === 200) {
+      var _ghText = await _ghResp.text();
+      if (_ghText.includes('verifyAllStreams') || _ghText.includes('global')) {
+        // Replace entire page with fresh version
+        document.open();
+        document.write(_ghText);
+        document.close();
+        return;
+      }
+    }
+  } catch(e) { /* offline, proceed with embedded version */ }
+  // If auto-update fails, use embedded version
+  loadAllData();
+})();
+</script>
+</body>
+</html>
