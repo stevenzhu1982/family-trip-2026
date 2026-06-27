@@ -557,7 +557,7 @@ function applyCachedStatusToChannels() {
     if (!stream) continue;
     const result = cache[stream.url];
     if (result) {
-      ch._verified = result.ok ? 'ok' : 'dead';
+      ch._verified = result.ok ? 'verified' : 'dead';
       ch._verifyTime = result.testedAt;
     } else {
       ch._verified = 'unknown';
@@ -569,7 +569,7 @@ function getChannelDeadCount() {
   return STATE.channels.filter(c => c._verified === 'dead').length;
 }
 function getChannelOkCount() {
-  return STATE.channels.filter(c => c._verified === 'ok').length;
+  return STATE.channels.filter(c => c._verified === 'verified').length;
 }
 function getChannelUnknownCount() {
   return STATE.channels.filter(c => !c._verified || c._verified === 'unknown').length;
@@ -618,7 +618,7 @@ async function processVerifyBatch() {
     // Update channel status
     const ch = STATE.channels.find(c => c.id === item.chId);
     if (ch) {
-      ch._verified = result.ok ? 'ok' : 'dead';
+      ch._verified = result.ok ? 'verified' : 'dead';
       ch._verifyTime = Date.now();
     }
     // Throttled cache save
@@ -637,12 +637,15 @@ async function processVerifyBatch() {
     // Done
     VERIFY.inProgress = false;
     saveVerifyCache();
+    // Re-sync ALL channels from cache so shared URLs get marked
+    applyCachedStatusToChannels();
     document.getElementById('verifyBtn').disabled = false;
     document.getElementById('verifyBtn').classList.remove('verifying');
     document.getElementById('verifyBtn').textContent = '🔍 重新测试';
     document.getElementById('verifyBar').classList.remove('show');
     showToast('✅ 链接测试完成！已测试 ' + VERIFY.tested + ' 个链接，' +
       (VERIFY.dead > 0 ? VERIFY.dead + ' 个失效已隐藏' : '全部可用'), 3000);
+    applyFilters();
     updateStats();
     showHideDeadFilter();
   }
@@ -1004,7 +1007,7 @@ function renderChannels(channels) {
     const cats = (ch.categories || []).slice(0, 2); // max 2 badges
     const health = ch._verified || 'unknown';
     const healthDot = hasStream ? `<span class="health-dot ${health}" title="${
-      health === 'ok' ? '已验证可用' : health === 'dead' ? '链接已失效' : '未测试'
+      health === 'verified' ? '已验证可用' : health === 'dead' ? '链接已失效' : '未测试'
     }"></span>` : '';
 
     html += `
