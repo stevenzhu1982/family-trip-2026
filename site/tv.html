@@ -960,9 +960,9 @@ function applyFilters() {
       c.id.toLowerCase().includes(search)
     );
   }
-  // Filter out verified-dead streams
+  // Filter out channels with no available stream (dead or no stream at all)
   if (document.getElementById('hideDeadFilter')?.checked) {
-    filtered = filtered.filter(c => c._verified !== 'dead');
+    filtered = filtered.filter(c => c._verified !== 'dead' && c._primaryStream);
   }
 
   // Sort: channels with streams first, then by name
