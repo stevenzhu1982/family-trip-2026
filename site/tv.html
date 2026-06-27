@@ -1205,24 +1205,8 @@ document.addEventListener('keydown', (e) => {
 //  INIT
 // ============================================================
 
-// Auto-update: fetch the latest TV page from GitHub on every load
-(async function() {
-  try {
-    var _ghResp = await fetch('https://raw.githubusercontent.com/stevenzhu1982/family-trip-2026/master/site/tv.html?_ts=' + Date.now());
-    if (_ghResp.ok && _ghResp.status === 200) {
-      var _ghText = await _ghResp.text();
-      if (_ghText.includes('verifyAllStreams') || _ghText.includes('global')) {
-        // Replace entire page with fresh version
-        document.open();
-        document.write(_ghText);
-        document.close();
-        return;
-      }
-    }
-  } catch(e) { /* offline, proceed with embedded version */ }
-  // If auto-update fails, use embedded version
-  loadAllData();
-})();
+// Start loading data directly (Cloudflare deploys the latest version)
+loadAllData();
 </script>
 </body>
 </html>
