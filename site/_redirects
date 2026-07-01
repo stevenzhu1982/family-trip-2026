@@ -1,3 +1,4 @@
-# TV page is served by _worker.js - no redirect needed
-# /TV https://stevenzhu1982.github.io/family-trip-2026/ 302
-# /tv.html https://stevenzhu1982.github.io/family-trip-2026/ 302
+# TV page removed - redirect to home
+/TV / 301
+/tv.html / 301
+/TV/ / 301
