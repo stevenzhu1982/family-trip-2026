@@ -94,7 +94,9 @@ body {
 }
 
 /* ===== Section ===== */
-.section { margin-bottom: 28px; }
+.section {
+  margin-bottom: 28px;
+}
 .section-header {
   text-align: center;
   margin-bottom: 20px;
@@ -475,8 +477,9 @@ summary {
 }
 
 </style>
+<link rel="stylesheet" href="assets/site-enhancements.css">
 </head>
-<body>
+<body class="page-home">
 <!-- ===== Hero ===== -->
 <section class="hero">
   <div class="hero-overlay"></div>
@@ -872,7 +875,7 @@ summary {
       </div>
 
       <!-- 资金 & 通讯 -->
-      <div style="font-size:13px;font-weight:700;color:#2d1b69;padding:6px 12px;margin:12px 4px 4px;">💰 资金 & 通讯</div>
+      <div class="checklist-section-label">💰 资金 & 通讯</div>
       <div class="cl-item">
         <div class="cl-check"></div>
         <div class="cl-content">
@@ -908,7 +911,7 @@ summary {
       </div>
 
       <!-- App & 行前准备 -->
-      <div style="font-size:13px;font-weight:700;color:#2d1b69;padding:6px 12px;margin:12px 4px 4px;">📱 App & 行前准备</div>
+      <div class="checklist-section-label">📱 App & 行前准备</div>
       <div class="cl-item">
         <div class="cl-check"></div>
         <div class="cl-content">
@@ -952,7 +955,7 @@ summary {
       </div>
 
       <!-- 行李 & 物品 -->
-      <div style="font-size:13px;font-weight:700;color:#2d1b69;padding:6px 12px;margin:12px 4px 4px;">🧳 行李 & 物品</div>
+      <div class="checklist-section-label">🧳 行李 & 物品</div>
       <div class="cl-item">
         <div class="cl-check"></div>
         <div class="cl-content">
@@ -995,7 +998,7 @@ summary {
       </div>
 
       <!-- 行前安排 & 出发当天 -->
-      <div style="font-size:13px;font-weight:700;color:#2d1b69;padding:6px 12px;margin:12px 4px 4px;">🏠 行前安排 & 出发当天</div>
+      <div class="checklist-section-label">🏠 行前安排 & 出发当天</div>
       <div class="cl-item">
         <div class="cl-check"></div>
         <div class="cl-content">
@@ -1131,7 +1134,7 @@ async function loadMsgs(retries) {
     }
     list.innerHTML = data.comments.map(m => {
       const date = (m.created_at || '').slice(0, 16).replace('T', ' ');
-      const initial = (m.name || '?').charAt(0);
+      const initial = escHtml((m.name || '?').charAt(0));
       return '<div class="msg-item">' +
         '<div class="msg-header">' +
           '<div class="msg-avatar">' + initial + '</div>' +
