@@ -6,6 +6,7 @@ import {
   createSessionCookie,
   hasValidSession,
 } from "../src/auth/session.js";
+import { isSameOrigin } from "../src/auth/http.js";
 
 const ENV = {
   SITE_PASSWORD: "local-test-password",
@@ -85,4 +86,24 @@ test("authenticated requests reach the application with security headers", async
 test("missing authentication secrets fails closed", async () => {
   const response = await onRequest(context(new Request("https://example.test/"), { env: {} }));
   assert.equal(response.status, 503);
+});
+
+test("same-origin browser submissions survive trusted proxy host rewriting", () => {
+  const proxiedRequest = new Request("https://internal.example.test/login", {
+    method: "POST",
+    headers: {
+      Origin: "https://preview.example.test",
+      "Sec-Fetch-Site": "same-origin",
+    },
+  });
+  assert.equal(isSameOrigin(proxiedRequest), true);
+
+  const crossSiteRequest = new Request("https://internal.example.test/login", {
+    method: "POST",
+    headers: {
+      Origin: "https://attacker.example",
+      "Sec-Fetch-Site": "cross-site",
+    },
+  });
+  assert.equal(isSameOrigin(crossSiteRequest), false);
 });
