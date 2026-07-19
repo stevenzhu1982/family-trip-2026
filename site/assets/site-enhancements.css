@@ -1,0 +1,167 @@
+/* Shared accessibility, responsive, and long-page refinements. */
+.page-home .section,
+.page-itinerary .day-card,
+.page-notes .card {
+  content-visibility: auto;
+}
+
+.page-home .section { contain-intrinsic-size: auto 640px; }
+.page-itinerary .day-card { contain-intrinsic-size: auto 900px; }
+.page-notes .card { contain-intrinsic-size: auto 520px; }
+
+.page-home .nav-card,
+.page-home .info-strip,
+.page-home .msg-form .btn-submit,
+.page-home .back-to-top,
+.page-itinerary .day-nav a,
+.page-itinerary .back-link,
+.page-itinerary .back-to-top,
+.page-itinerary .lightbox-nav,
+.page-itinerary .lightbox-close,
+.page-members .back-link,
+.page-members .group-header,
+.page-members .back-to-top,
+.page-notes .back-link,
+.page-notes .back-to-top,
+.page-notes .card a,
+.page-notes .card button,
+.page-notes .card label {
+  min-height: 44px;
+}
+
+.page-home .container a:not(.nav-card),
+.page-itinerary .container a,
+.page-notes .card a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.page-home .back-to-top,
+.page-itinerary .back-to-top,
+.page-notes .back-to-top {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+.page-home input[type="checkbox"] {
+  min-width: 20px;
+  min-height: 20px;
+}
+
+.page-itinerary .day-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 44px;
+  min-height: 44px;
+  margin-left: auto;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--card-bg);
+  color: var(--text-primary);
+  font: inherit;
+  font-size: 0.875rem !important;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.page-itinerary .day-toggle-icon { transition: transform 0.2s ease; }
+.page-itinerary .day-card.is-collapsed .day-toggle-icon { transform: rotate(-90deg); }
+
+.page-notes .card label {
+  display: flex;
+  align-items: center;
+}
+
+.page-home .checklist-section-label {
+  margin: 0.75rem 0.25rem 0.25rem;
+  padding: 0.375rem 0.75rem;
+  color: #2d1b69;
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
+
+.page-members .member-romanized {
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.page-members .member-group-count {
+  margin-left: 0.5rem;
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 400;
+}
+
+.page-members .member-group-note {
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.5rem;
+  background: #f7fafc;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+}
+
+.page-notes .travel-check-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  min-height: 44px;
+  padding: 0.375rem 0.625rem;
+  border-radius: 0.5rem;
+  background: #f7fafc;
+  color: #4a5568;
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 600px) {
+  .page-home .nav-card .info .desc { font-size: 0.75rem; }
+  .page-home .strip-action {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+
+  .page-itinerary .day-nav a {
+    width: 44px;
+    height: 44px;
+    font-size: 0.75rem;
+  }
+  .page-itinerary .day-title-area .date,
+  .page-itinerary .day-title-area .weather,
+  .page-itinerary .day-hotel,
+  .page-itinerary .food-card p,
+  .page-itinerary .food-card .price,
+  .page-members .member-table th,
+  .page-members .member-table td,
+  .page-members .member-table span,
+  .page-notes li,
+  .page-notes .alert p,
+  .page-notes .info-box p,
+  .page-notes .warn-box p,
+  .page-notes .good-box p {
+    font-size: 0.875rem !important;
+  }
+  .page-itinerary .day-toggle { display: inline-flex; }
+  .page-itinerary .day-card.is-collapsed { padding-bottom: 0.75rem; }
+  .page-members .member-table th,
+  .page-members .member-table td {
+    padding: 0.625rem 0.5rem;
+    line-height: 1.45;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-home .container { max-width: 1040px; }
+  .page-home .nav-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .page-itinerary .container,
+  .page-members .container { max-width: 1080px; }
+  .page-members .member-table th,
+  .page-members .member-table td { font-size: 0.875rem; }
+  .page-notes .container { max-width: 1000px; }
+}
