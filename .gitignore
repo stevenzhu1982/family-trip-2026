@@ -1,5 +1,12 @@
 # Tencent Cloud EdgeOne
 .env
+.env.*
+!.env.example
+.dev.vars
+.dev.vars.*
+node_modules/
+dist/
+npm-debug.log*
 .edgeone/*
 .tef_dist/*
 
@@ -27,6 +34,7 @@ site/_worker.bundle
 unpacked/
 logos/
 *.docx
+!site/trip-notes-2026.docx
 *.pptx
 *.svg
 *.png

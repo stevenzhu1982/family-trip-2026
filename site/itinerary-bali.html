@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026暑假 · 巴厘岛之旅</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f4f8;
+    color: #2d3748;
+    padding: 0 0 60px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+  .hero-bar {
+    background: linear-gradient(135deg, #d97706 0%, #e67e22 40%, #f59e0b 100%);
+    padding: 40px 20px 36px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bar::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80') center/cover no-repeat;
+    opacity: 0.1;
+  }
+  .hero-bar h1 { position: relative; font-size: clamp(20px,4vw,26px); font-weight: 800; letter-spacing: 2px; text-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+  .hero-bar .sub { position: relative; font-size: 14px; opacity: 0.8; margin-top: 6px; letter-spacing: 4px; }
+  .hero-bar .wave { position: absolute; bottom: -2px; left: 0; right: 0; height: 30px; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z' fill='%23f0f4f8'/%3E%3C/svg%3E") center/cover no-repeat; }
+  .container { max-width: 720px; margin: 24px auto; background: #fff; border-radius: 16px; padding: 32px 24px; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+  h2 { font-size: 18px; color: #e67e22; font-weight: 700; margin-top: 28px; margin-bottom: 12px; padding-left: 14px; border-left: 4px solid #e67e22; }
+  p { font-size: 15px; margin-bottom: 8px; color: #4a5568; }
+  .scroll-wrap { overflow-x: auto; margin: 12px 0 16px; border-radius: 10px; border: 1px solid #e2e8f0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 500px; }
+  th, td { padding: 10px 12px; text-align: center; border-bottom: 1px solid #edf2f7; vertical-align: top; line-height: 1.5; }
+  th { background: #ebf8ff; color: #1a365d; font-weight: 600; }
+  td { color: #4a5568; }
+  td:first-child { text-align: left; font-weight: 600; color: #2d3748; white-space: nowrap; }
+  .procon-wrap { display: flex; gap: 16px; margin: 16px 0; }
+  .procon-col { flex: 1; border-radius: 12px; padding: 18px 20px; }
+  .procon-col h4 { font-size: 15px; margin-bottom: 10px; font-weight: 700; text-align: center; }
+  .procon-col ul { list-style: none; padding: 0; margin: 0; }
+  .procon-col ul li { font-size: 14px; padding: 5px 0 5px 22px; position: relative; line-height: 1.6; }
+  .procon-pros { background: #f0faf0; border: 1px solid #b8e6b8; }
+  .procon-pros h4 { color: #1a7a1a; }
+  .procon-pros ul li::before { content: "✅"; position: absolute; left: 2px; top: 7px; }
+  .procon-cons { background: #fef0f0; border: 1px solid #f5b8b8; }
+  .procon-cons h4 { color: #b91c1c; }
+  .procon-cons ul li::before { content: "⚠️"; position: absolute; left: 2px; top: 7px; }
+  .back-link { text-align: center; margin-top: 24px; }
+  .back-link a { display: inline-block; padding: 10px 24px; background: linear-gradient(135deg,#d97706,#e67e22); color: #fff; border-radius: 20px; text-decoration: none; font-weight: 600; font-size: 14px; }
+  @media (max-width: 600px) {
+    .container { padding: 16px 14px; margin: 16px auto; }
+    .hero-bar { padding: 28px 16px 24px; }
+    h2 { font-size: 16px; }
+    p { font-size: 14px; }
+    table { font-size: 12px; min-width: 400px; }
+    th, td { padding: 8px 10px; }
+    .procon-wrap { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .container { padding: 14px 12px; }
+    h2 { font-size: 15px; }
+    p { font-size: 13px; }
+    table { min-width: 340px; font-size: 11px; }
+    th, td { padding: 6px 8px; }
+    .scroll-wrap { margin: 10px -12px; border-radius: 0; border-left: none; border-right: none; }
+    .back-link a { display: block; padding: 14px 24px; min-height: 44px; font-size: 15px; }
+    .procon-col { padding: 14px 16px; }
+    .procon-col ul li { font-size: 13px; }
+  }
+  @media (max-width: 380px) {
+    .hero-bar h1 { font-size: 16px; }
+    .container { padding: 12px 8px; }
+    h2 { font-size: 14px; }
+    table { min-width: 280px; font-size: 10px; }
+    th, td { padding: 4px 6px; }
+    .scroll-wrap { margin: 8px -8px; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="hero-bar">
+  <h1>🇮🇩 巴厘岛 · 神庙海浪之旅</h1>
+  <div class="sub">7月旱季 · 海岛度假 · 乌布梯田 · 8天7晚</div>
+  <div class="wave"></div>
+</div>
+<div class="container">
+  <h2>📋 行程概览</h2>
+  <p>7-8月是巴厘岛最舒适的季节——旱季！阳光好、降雨少，23-30°C体感舒适。</p>
+<p>乌布梯田、海神庙、情人崖、金巴兰日落……海岛度假感十足。SPA便宜（60-100元/次），亲子酒店选择多。</p>
+<p>巴厘岛对中国公民免签，适合想要享受海岛假期的家庭。</p>
+
+  <h2>📅 推荐行程</h2>
+  <div class="scroll-wrap">
+  <table>
+    <tr><th style="width:15%;">天数</th><th style="width:35%;">行程安排</th><th style="width:50%;">亮点</th></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 1</td><td>上海→巴厘岛</td><td style="text-align:left;">直飞约6h，抵达努拉莱伊机场，入住努沙杜瓦度假区</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 2</td><td>海神庙+情人崖</td><td style="text-align:left;">海神庙看日落、乌鲁瓦图情人崖、凯卡克火舞表演</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 3</td><td>乌布文化一日</td><td style="text-align:left;">乌布皇宫、圣猴森林、德格拉朗梯田、乌布市场</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 4</td><td>乌布+SPA</td><td style="text-align:left;">上午梯田徒步/ATV体验，下午做SPA（老人最爱）</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 5</td><td>蓝梦岛一日游</td><td style="text-align:left;">快艇到蓝梦岛，恶魔的眼泪、梦幻沙滩、浮潜（包船轻松）</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 6</td><td>南湾水上活动</td><td style="text-align:left;">香蕉船、玻璃底船看鱼（小孩超爱），金巴兰海滩吃海鲜烧烤</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 7</td><td>库塔+水明漾</td><td style="text-align:left;">库塔海滩冲浪入门、水明漾逛街、沙滩Massage</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 8</td><td>巴厘岛→上海</td><td style="text-align:left;">上午泳池放松，下午航班返回</td></tr>
+  </table>
+  </div>
+
+  <h2>💰 预算估算</h2>
+  <p style="font-size:14px;color:#888;margin-bottom:8px;">暑期旺季参考价（不打折），按人均计算</p>
+  <div class="scroll-wrap">
+  <table>
+    <tr><th style="width:40%;">项目</th><th style="width:60%;">费用/人（元）</th></tr>
+    <tr><td>国际机票</td><td>3,500-5,500（上海直飞约6h）</td></tr>
+    <tr><td>住宿（7晚）</td><td>2,500-4,000（350-570/晚，中档度假酒店）</td></tr>
+    <tr><td>餐饮</td><td>800-1,500（脏鸭餐、烤乳猪、海鲜，丰俭由人）</td></tr>
+    <tr><td>交通（当地）</td><td>400-800（包车一日约200-250元）</td></tr>
+    <tr><td>门票活动</td><td>600-1,000（蓝梦岛+SPA+水上活动）</td></tr>
+    <tr><td>签证</td><td>0（免签）</td></tr>
+    <tr><td><strong>合计/人</strong></td><td><strong>8,000-13,000</strong></td></tr>
+  </table>
+  </div>
+
+  <h2>⚖️ 优缺点分析</h2>
+  <div class="procon-wrap">
+    <div class="procon-col procon-pros">
+      <h4>✅ 优点</h4>
+      <ul><li>7月旱季最舒适，23-30°C</li>
+<li>免签，方便省心</li>
+<li>海岛度假感极强</li>
+<li>SPA便宜（60-100元/次）</li>
+<li>亲子酒店选择多</li>
+<li>沙滩玩水+浮潜，小孩开心</li></ul>
+    </div>
+    <div class="procon-col procon-cons">
+      <h4>⚠️ 注意事项</h4>
+      <ul><li>飞行6h，比其他的长</li>
+<li>景点间车程1-2h</li>
+<li>有小费文化需要适应</li>
+<li>部分道路窄小拥堵</li></ul>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="proposal.html">📋 查看全部8个方案对比</a>
+  </div>
+</div>
+</body>
+</html>

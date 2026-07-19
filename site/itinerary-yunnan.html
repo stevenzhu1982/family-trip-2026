@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026暑假 · 芒市+腾冲之旅</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f4f8;
+    color: #2d3748;
+    padding: 0 0 60px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+  .hero-bar {
+    background: linear-gradient(135deg, #0f766e 0%, #0d9488 40%, #14b8a6 100%);
+    padding: 40px 20px 36px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bar::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1200&q=80') center/cover no-repeat;
+    opacity: 0.1;
+  }
+  .hero-bar h1 { position: relative; font-size: clamp(20px,4vw,26px); font-weight: 800; letter-spacing: 2px; text-shadow: 0 2px 12px rgba(0,0,0,0.2); }
+  .hero-bar .sub { position: relative; font-size: 14px; opacity: 0.8; margin-top: 6px; letter-spacing: 4px; }
+  .hero-bar .wave { position: absolute; bottom: -2px; left: 0; right: 0; height: 30px; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z' fill='%23f0f4f8'/%3E%3C/svg%3E") center/cover no-repeat; }
+  .container { max-width: 720px; margin: 24px auto; background: #fff; border-radius: 16px; padding: 32px 24px; box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+  h2 { font-size: 18px; color: #0d9488; font-weight: 700; margin-top: 28px; margin-bottom: 12px; padding-left: 14px; border-left: 4px solid #0d9488; }
+  p { font-size: 15px; margin-bottom: 8px; color: #4a5568; }
+  .scroll-wrap { overflow-x: auto; margin: 12px 0 16px; border-radius: 10px; border: 1px solid #e2e8f0; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 500px; }
+  th, td { padding: 10px 12px; text-align: center; border-bottom: 1px solid #edf2f7; vertical-align: top; line-height: 1.5; }
+  th { background: #ebf8ff; color: #1a365d; font-weight: 600; }
+  td { color: #4a5568; }
+  td:first-child { text-align: left; font-weight: 600; color: #2d3748; white-space: nowrap; }
+  .procon-wrap { display: flex; gap: 16px; margin: 16px 0; }
+  .procon-col { flex: 1; border-radius: 12px; padding: 18px 20px; }
+  .procon-col h4 { font-size: 15px; margin-bottom: 10px; font-weight: 700; text-align: center; }
+  .procon-col ul { list-style: none; padding: 0; margin: 0; }
+  .procon-col ul li { font-size: 14px; padding: 5px 0 5px 22px; position: relative; line-height: 1.6; }
+  .procon-pros { background: #f0faf0; border: 1px solid #b8e6b8; }
+  .procon-pros h4 { color: #1a7a1a; }
+  .procon-pros ul li::before { content: "✅"; position: absolute; left: 2px; top: 7px; }
+  .procon-cons { background: #fef0f0; border: 1px solid #f5b8b8; }
+  .procon-cons h4 { color: #b91c1c; }
+  .procon-cons ul li::before { content: "⚠️"; position: absolute; left: 2px; top: 7px; }
+  .back-link { text-align: center; margin-top: 24px; }
+  .back-link a { display: inline-block; padding: 10px 24px; background: linear-gradient(135deg,#0f766e,#0d9488); color: #fff; border-radius: 20px; text-decoration: none; font-weight: 600; font-size: 14px; }
+  @media (max-width: 600px) {
+    .container { padding: 16px 14px; margin: 16px auto; }
+    .hero-bar { padding: 28px 16px 24px; }
+    h2 { font-size: 16px; }
+    p { font-size: 14px; }
+    table { font-size: 12px; min-width: 400px; }
+    th, td { padding: 8px 10px; }
+    .procon-wrap { flex-direction: column; }
+  }
+  @media (max-width: 480px) {
+    .container { padding: 14px 12px; }
+    h2 { font-size: 15px; }
+    p { font-size: 13px; }
+    table { min-width: 340px; font-size: 11px; }
+    th, td { padding: 6px 8px; }
+    .scroll-wrap { margin: 10px -12px; border-radius: 0; border-left: none; border-right: none; }
+    .back-link a { display: block; padding: 14px 24px; min-height: 44px; font-size: 15px; }
+    .procon-col { padding: 14px 16px; }
+    .procon-col ul li { font-size: 13px; }
+  }
+  @media (max-width: 380px) {
+    .hero-bar h1 { font-size: 16px; }
+    .container { padding: 12px 8px; }
+    h2 { font-size: 14px; }
+    table { min-width: 280px; font-size: 10px; }
+    th, td { padding: 4px 6px; }
+    .scroll-wrap { margin: 8px -8px; border-radius: 0; }
+  }
+</style>
+</head>
+<body>
+<div class="hero-bar">
+  <h1>🇨🇳 芒市+腾冲 · 傣乡温泉之旅</h1>
+  <div class="sub">傣乡风情 · 火山温泉 · 古镇慢生活 · 6天5晚</div>
+  <div class="wave"></div>
+</div>
+<div class="container">
+  <h2>📋 行程概览</h2>
+  <p>芒市是德宏州首府，浓郁的傣族边陲风情，金塔银塔交相辉映。腾冲是火山温泉之乡，和顺古镇宁静悠远，热海温泉神奇壮丽。7月气温芒市22-30°C，腾冲18-26°C，凉爽舒适。</p>
+<p>芒市勐焕大金塔（亚洲最大空心佛塔）+银塔、勐巴娜西珍奇园（散养孔雀）、树包塔；腾冲热海温泉（大滚锅煮鸡蛋）、和顺古镇（600年侨乡）、北海湿地、国殇墓园。国内旅行，中文无障碍。</p>
+<p>人均预算约5k-8k，性价比极高，适合喜欢民族文化+自然风光+温泉泡汤的家庭。</p>
+
+  <h2>📅 推荐行程</h2>
+  <div class="scroll-wrap">
+  <table>
+    <tr><th style="width:15%;">天数</th><th style="width:35%;">行程安排</th><th style="width:50%;">亮点</th></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 1</td><td>上海→芒市</td><td style="text-align:left;">经昆明转机约5-6h抵达芒市，入住酒店，傍晚逛傣族古镇夜市（泡鲁达+牛油果汁）</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 2</td><td>芒市一日</td><td style="text-align:left;">勐焕大金塔+银塔（经典地标）、树包塔、勐巴娜西珍奇园（散养孔雀）、团结大街棕榈树拍照</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 3</td><td>芒市→腾冲</td><td style="text-align:left;">大巴约3h到腾冲，下午逛和顺古镇（侨乡文化、和顺图书馆、野鸭湖、数数书局）</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 4</td><td>腾冲经典游</td><td style="text-align:left;">热海景区（大滚锅煮鸡蛋、温泉泡脚）、火山地热公园（热气球俯瞰火山口，视天气）</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 5</td><td>腾冲深度游</td><td style="text-align:left;">北海湿地（划草排、观鸟）、国殇墓园+滇西抗战纪念馆、洞山温泉泡汤</td></tr>
+    <tr><td style="text-align:center;font-weight:700;">Day 6</td><td>腾冲→上海</td><td style="text-align:left;">上午和顺古镇自由活动或大地茶海采茶体验，下午经昆明转机返回上海</td></tr>
+  </table>
+  </div>
+
+  <h2>💰 预算估算</h2>
+  <p style="font-size:14px;color:#888;margin-bottom:8px;">暑期旺季参考价（不打折），按人均计算</p>
+  <div class="scroll-wrap">
+  <table>
+    <tr><th style="width:40%;">项目</th><th style="width:60%;">费用/人（元）</th></tr>
+    <tr><td>机票</td><td>2,500-4,000（上海→芒市/腾冲经昆明转机）</td></tr>
+    <tr><td>住宿（5晚）</td><td>1,000-2,000（200-400/晚，性价比高）</td></tr>
+    <tr><td>餐饮</td><td>500-900（傣味+腾冲土锅子+铜瓢牛肉）</td></tr>
+    <tr><td>交通（当地）</td><td>400-700（包车+大巴+打车）</td></tr>
+    <tr><td>门票活动</td><td>300-500（金塔银塔+珍奇园+热海+和顺古镇）</td></tr>
+    <tr><td>签证</td><td>0（国内无需签证）</td></tr>
+    <tr><td><strong>合计/人</strong></td><td><strong>4,800-8,000</strong></td></tr>
+  </table>
+  </div>
+
+  <h2>⚖️ 优缺点分析</h2>
+  <div class="procon-wrap">
+    <div class="procon-col procon-pros">
+      <h4>✅ 优点</h4>
+      <ul><li>傣乡风情（金塔银塔）+火山温泉（热海）+古镇慢生活（和顺），体验独特</li>
+<li>国内省心，语言无障碍，无需签证</li>
+<li>游客少不拥挤，真正的小众目的地</li>
+<li>傣味+腾冲美食（铜瓢牛肉、土锅子）让人回味</li>
+<li>和顺古镇平坦适合老人，热海温泉煮鸡蛋新奇适合小孩</li>
+<li>医疗方便，国内医保可用</li></ul>
+    </div>
+    <div class="procon-col procon-cons">
+      <h4>⚠️ 注意事项</h4>
+      <ul><li>无直飞需经昆明转机</li>
+<li>暑期多阵雨，带伞，腾冲下雨偏凉需带外套</li>
+<li>芒市→腾冲大巴约3h，山路弯多</li>
+<li>热海景区需步行较多，穿舒适鞋</li></ul>
+    </div>
+  </div>
+
+  <div class="back-link">
+    <a href="proposal.html">📋 查看全部8个方案对比</a>
+  </div>
+</div>
+</body>
+</html>

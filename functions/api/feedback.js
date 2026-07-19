@@ -1,65 +1,65 @@
-export async function onRequest(context) {
-  const { request, env } = context;
+import {
+  isSameOrigin,
+  jsonResponse,
+  methodNotAllowed,
+  preflightResponse,
+} from "../../src/auth/http.js";
 
-  const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-  };
+const METHODS = "GET, POST, OPTIONS";
 
-  if (request.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
-  }
+export async function onRequest({ request, env }) {
+  if (request.method === "OPTIONS") return preflightResponse(request, METHODS);
+  if (!isSameOrigin(request)) return jsonResponse(request, { success: false, error: "Forbidden" }, { status: 403 });
 
   if (request.method === "GET") {
-    const { results } = await env.DB.prepare(
-      "SELECT * FROM feedback ORDER BY created_at DESC"
-    ).all();
-    return Response.json({ success: true, feedbacks: results }, { headers: corsHeaders });
-  }
-
-  if (request.method === "POST") {
     try {
-      const body = await request.json();
-      const { family_name, destinations, destination_other, adults, elderly, children, time_pref, accommodation, travel_style, special_needs } = body;
-
-      if (!family_name || !family_name.trim()) {
-        return Response.json(
-          { success: false, error: "请填写家庭名称" },
-          { status: 400, headers: corsHeaders }
-        );
-      }
-
-      const { success } = await env.DB.prepare(
-        `INSERT INTO feedback (family_name, destinations, destination_other, adults, elderly, children, time_pref, accommodation, travel_style, special_needs, created_at)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))`
-      ).bind(
-        family_name.trim(),
-        JSON.stringify(destinations || []),
-        (destination_other || "").trim(),
-        parseInt(adults) || 0,
-        parseInt(elderly) || 0,
-        parseInt(children) || 0,
-        JSON.stringify(time_pref || []),
-        accommodation || "",
-        travel_style || "",
-        (special_needs || "").trim()
-      ).run();
-
-      if (success) {
-        return Response.json({ success: true }, { headers: corsHeaders });
-      }
-      return Response.json(
-        { success: false, error: "提交失败，请重试" },
-        { status: 500, headers: corsHeaders }
-      );
-    } catch (e) {
-      return Response.json(
-        { success: false, error: "请求格式错误" },
-        { status: 400, headers: corsHeaders }
-      );
+      const { results } = await env.DB.prepare(
+        "SELECT id, family_name, destinations, destination_other, adults, elderly, children, time_pref, accommodation, travel_style, special_needs, created_at FROM feedback ORDER BY created_at DESC",
+      ).all();
+      return jsonResponse(request, { success: true, feedbacks: results });
+    } catch {
+      return jsonResponse(request, { success: false, error: "Unable to load feedback" }, { status: 500 });
     }
   }
 
-  return new Response("Method not allowed", { status: 405 });
+  if (request.method === "POST") {
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return jsonResponse(request, { success: false, error: "Invalid request body" }, { status: 400 });
+    }
+
+    const familyName = String(body.family_name || "").trim();
+    if (!familyName || familyName.length > 100) {
+      return jsonResponse(request, { success: false, error: "请填写有效的家庭名称" }, { status: 400 });
+    }
+    const destinations = Array.isArray(body.destinations) ? body.destinations.slice(0, 20) : [];
+    const timePreference = Array.isArray(body.time_pref) ? body.time_pref.slice(0, 20) : [];
+    const toCount = (value) => Math.max(0, Math.min(99, Number.parseInt(value, 10) || 0));
+
+    try {
+      const result = await env.DB.prepare(
+        `INSERT INTO feedback (family_name, destinations, destination_other, adults, elderly, children, time_pref, accommodation, travel_style, special_needs, created_at)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))`,
+      ).bind(
+        familyName,
+        JSON.stringify(destinations),
+        String(body.destination_other || "").trim().slice(0, 200),
+        toCount(body.adults),
+        toCount(body.elderly),
+        toCount(body.children),
+        JSON.stringify(timePreference),
+        String(body.accommodation || "").slice(0, 100),
+        String(body.travel_style || "").slice(0, 100),
+        String(body.special_needs || "").trim().slice(0, 1000),
+      ).run();
+      if (!result.success) throw new Error("insert failed");
+      return jsonResponse(request, { success: true });
+    } catch {
+      return jsonResponse(request, { success: false, error: "Unable to save feedback" }, { status: 500 });
+    }
+  }
+
+  return methodNotAllowed(request, METHODS);
 }

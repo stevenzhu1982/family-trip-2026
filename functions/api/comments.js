@@ -1,69 +1,54 @@
-export async function onRequest(context) {
-  const { request, env } = context;
-  const url = new URL(request.url);
+import {
+  isSameOrigin,
+  jsonResponse,
+  methodNotAllowed,
+  preflightResponse,
+} from "../../src/auth/http.js";
 
-  // CORS headers
-  const corsHeaders = {
-    "Access-Control-Allow-Origin": "*",
-    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-    "Access-Control-Allow-Headers": "Content-Type",
-  };
+const METHODS = "GET, POST, OPTIONS";
 
-  if (request.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
-  }
+export async function onRequest({ request, env }) {
+  if (request.method === "OPTIONS") return preflightResponse(request, METHODS);
+  if (!isSameOrigin(request)) return jsonResponse(request, { success: false, error: "Forbidden" }, { status: 403 });
 
   if (request.method === "GET") {
-    const { results } = await env.DB.prepare(
-      "SELECT id, name, content, created_at FROM comments ORDER BY created_at DESC"
-    ).all();
-    return Response.json({ success: true, comments: results }, { headers: corsHeaders });
-  }
-
-  if (request.method === "POST") {
     try {
-      const body = await request.json();
-      const name = (body.name || "").trim();
-      const content = (body.content || "").trim();
-
-      if (!name || !content) {
-        return Response.json(
-          { success: false, error: "请填写姓名和留言内容" },
-          { status: 400, headers: corsHeaders }
-        );
-      }
-      if (name.length > 20) {
-        return Response.json(
-          { success: false, error: "姓名不能超过20个字符" },
-          { status: 400, headers: corsHeaders }
-        );
-      }
-      if (content.length > 500) {
-        return Response.json(
-          { success: false, error: "留言内容不能超过500个字符" },
-          { status: 400, headers: corsHeaders }
-        );
-      }
-
-      const { success } = await env.DB.prepare(
-        "INSERT INTO comments (name, content, created_at) VALUES (?, ?, datetime('now'))"
-      ).bind(name, content).run();
-
-      if (success) {
-        return Response.json({ success: true }, { headers: corsHeaders });
-      } else {
-        return Response.json(
-          { success: false, error: "提交失败，请重试" },
-          { status: 500, headers: corsHeaders }
-        );
-      }
-    } catch (e) {
-      return Response.json(
-        { success: false, error: "请求格式错误" },
-        { status: 400, headers: corsHeaders }
-      );
+      const { results } = await env.DB.prepare(
+        "SELECT id, name, content, created_at FROM comments ORDER BY created_at DESC",
+      ).all();
+      return jsonResponse(request, { success: true, comments: results });
+    } catch {
+      return jsonResponse(request, { success: false, error: "Unable to load comments" }, { status: 500 });
     }
   }
 
-  return new Response("Method not allowed", { status: 405 });
+  if (request.method === "POST") {
+    let body;
+    try {
+      body = await request.json();
+    } catch {
+      return jsonResponse(request, { success: false, error: "Invalid request body" }, { status: 400 });
+    }
+
+    const name = String(body.name || "").trim();
+    const content = String(body.content || "").trim();
+    if (!name || !content) {
+      return jsonResponse(request, { success: false, error: "请填写姓名和留言内容" }, { status: 400 });
+    }
+    if (name.length > 20 || content.length > 500) {
+      return jsonResponse(request, { success: false, error: "留言内容过长" }, { status: 400 });
+    }
+
+    try {
+      const result = await env.DB.prepare(
+        "INSERT INTO comments (name, content, created_at) VALUES (?, ?, datetime('now'))",
+      ).bind(name, content).run();
+      if (!result.success) throw new Error("insert failed");
+      return jsonResponse(request, { success: true });
+    } catch {
+      return jsonResponse(request, { success: false, error: "Unable to save comment" }, { status: 500 });
+    }
+  }
+
+  return methodNotAllowed(request, METHODS);
 }

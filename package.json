@@ -1,0 +1,19 @@
+{
+  "name": "family-trip-2026",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "predev": "npm run build",
+    "dev": "wrangler pages dev dist",
+    "check": "node scripts/check-static-site.mjs",
+    "build": "node scripts/build-static.mjs && node scripts/check-static-site.mjs dist",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "wrangler": "4.112.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

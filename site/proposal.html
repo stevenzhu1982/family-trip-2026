@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年暑假 · 北疆伊犁之旅</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif;
+    background: #f0f4f8;
+    color: #2d3748;
+    padding: 0 0 60px;
+    line-height: 1.8;
+    overflow-x: hidden;
+  }
+
+  /* Hero mini */
+  .hero-bar {
+    background: linear-gradient(135deg, #1a365d 0%, #2b6cb0 40%, #2c7a7b 100%);
+    padding: 40px 20px 36px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bar::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&q=80') center/cover no-repeat;
+    opacity: 0.12;
+  }
+  .hero-bar h1 {
+    position: relative;
+    font-size: clamp(20px, 4vw, 26px);
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+  }
+  .hero-bar .sub {
+    position: relative;
+    font-size: 14px;
+    opacity: 0.8;
+    margin-top: 6px;
+    letter-spacing: 4px;
+  }
+  .hero-bar .wave {
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 30px;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0,30 C240,60 480,0 720,30 C960,60 1200,0 1440,30 L1440,60 L0,60Z' fill='%23f0f4f8'/%3E%3C/svg%3E") center/cover no-repeat;
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 24px auto;
+    background: #fff;
+    border-radius: 16px;
+    padding: 32px 24px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+  }
+  h1 {
+    display: none;
+  }
+  .subtitle {
+    display: none;
+  }
+  h2 {
+    font-size: 18px;
+    color: #1a365d;
+    font-weight: 700;
+    margin-top: 32px;
+    margin-bottom: 14px;
+    padding-left: 14px;
+    border-left: 4px solid #2b6cb0;
+  }
+  h3 {
+    font-size: 15px;
+    color: #2b6cb0;
+    font-weight: 600;
+    margin-top: 20px;
+    margin-bottom: 10px;
+  }
+  p { font-size: 15px; margin-bottom: 10px; color: #4a5568; }
+  .greeting { font-weight: 600; margin-bottom: 10px; color: #2d3748; }
+
+  .bullet-list { padding-left: 20px; margin-bottom: 10px; }
+  .bullet-list li {
+    font-size: 15px;
+    list-style: none;
+    position: relative;
+    padding-left: 16px;
+    margin-bottom: 6px;
+  }
+  .bullet-list li::before {
+    content: "▪";
+    position: absolute;
+    left: 0;
+    color: #2b6cb0;
+  }
+
+  .num-list { padding-left: 20px; margin-bottom: 10px; }
+  .num-list li {
+    font-size: 15px;
+    list-style: none;
+    margin-bottom: 8px;
+    counter-increment: item;
+  }
+  .num-list li::before {
+    content: counter(item) ".";
+    font-weight: 600;
+    color: #2b6cb0;
+    margin-right: 6px;
+  }
+  .num-list { counter-reset: item; }
+
+  /* Destination card */
+  .dest-card {
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    background: #fafbfc;
+    transition: all 0.2s;
+  }
+  .dest-card:hover {
+    border-color: #2b6cb0;
+    box-shadow: 0 4px 16px rgba(43,108,176,0.08);
+  }
+  .dest-card h4 {
+    font-size: 16px;
+    color: #1a365d;
+    margin-bottom: 6px;
+  }
+  .dest-tags { margin-bottom: 6px; }
+  .dest-tag {
+    display: inline-block;
+    font-size: 11px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-right: 4px;
+    font-weight: 600;
+  }
+  .tag-blue { background: #ebf8ff; color: #2b6cb0; }
+  .tag-green { background: #e8f8e8; color: #27ae60; }
+  .tag-orange { background: #fff3e0; color: #e67e22; }
+  .tag-red { background: #fde8e8; color: #c0392b; }
+  .tag-purple { background: #f0e8fd; color: #8e44ad; }
+
+  .dest-detail { font-size: 14px; color: #4a5568; margin-top: 4px; }
+  .dest-pros { font-size: 13px; color: #27ae60; margin-top: 2px; }
+  .dest-cons { font-size: 13px; color: #c0392b; margin-top: 2px; }
+
+  .scroll-wrap {
+    overflow-x: auto;
+    margin: 12px 0 16px;
+    border-radius: 10px;
+    border: 1px solid #e2e8f0;
+  }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 620px; }
+  th, td { padding: 10px 12px; text-align: left; border-bottom: 1px solid #edf2f7; vertical-align: top; line-height: 1.5; }
+  th { background: #ebf8ff; color: #1a365d; font-weight: 600; text-align: center; }
+  td { color: #4a5568; text-align: center; }
+  td:first-child { text-align: left; font-weight: 600; color: #2d3748; }
+  tr:last-child td { border-bottom: none; }
+
+  .separator {
+    border: none;
+    height: 2px;
+    background: linear-gradient(to right, transparent, #2b6cb0, transparent);
+    margin: 36px 0 28px;
+  }
+
+  /* ===== 优缺点分析 ===== */
+  .procon-wrap { display: flex; gap: 16px; margin: 16px 0; }
+  .procon-col { flex: 1; border-radius: 12px; padding: 18px 20px; }
+  .procon-col h4 { font-size: 15px; margin-bottom: 10px; font-weight: 700; text-align: center; }
+  .procon-col ul { list-style: none; padding: 0; margin: 0; }
+  .procon-col ul li { font-size: 14px; padding: 5px 0 5px 22px; position: relative; line-height: 1.6; margin-bottom: 0; }
+  .procon-col ul li::before { position: absolute; left: 2px; top: 7px; font-size: 14px; }
+  .procon-pros { background: #f0faf0; border: 1px solid #b8e6b8; }
+  .procon-pros h4 { color: #1a7a1a; }
+  .procon-pros ul li::before { content: "✅"; }
+  .procon-cons { background: #fef0f0; border: 1px solid #f5b8b8; }
+  .procon-cons h4 { color: #b91c1c; }
+  .procon-cons ul li::before { content: "⚠️"; }
+  .procon-table-wrap { overflow-x: auto; margin: 16px 0; border-radius: 10px; border: 1px solid #e2e8f0; }
+  .procon-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 620px; }
+  .procon-table th { padding: 10px 12px; text-align: center; border-bottom: 1px solid #edf2f7; vertical-align: middle; }
+  .procon-table td { padding: 10px 12px; text-align: center; border-bottom: 1px solid #edf2f7; vertical-align: top; line-height: 1.5; }
+  .procon-table th:first-child { background: #f0f4f8; color: #2d3748; font-weight: 700; width: 22%; }
+  .procon-table th:nth-child(2) { background: #e6f5e6; color: #1a6b1a; }
+  .procon-table th:nth-child(3) { background: #fde8e8; color: #a82828; }
+.procon-table th:nth-child(4) { background: #e0f0ef; color: #0d4f4f; }
+  .procon-table td:first-child { text-align: left; font-weight: 600; color: #2d3748; background: #f7fafc; }
+  .procon-table td:nth-child(2) { text-align: left; background: #fafffa; color: #1e5a1e; }
+  .procon-table td:nth-child(3) { text-align: left; background: #fff5f5; color: #7b341e; }
+.procon-table td:nth-child(4) { text-align: left; background: #f0faf8; color: #1a4a4a; }
+.procon-table th:nth-child(9) { background: #fef2f2; color: #b91c1c; }
+.procon-table td:nth-child(9) { text-align: left; background: #fef5f5; color: #7f1d1d; }
+  .procon-table tr:last-child td { border-bottom: none; }
+  .procon-tag { display: inline-block; font-size: 11px; padding: 1px 8px; border-radius: 10px; font-weight: 700; margin: 1px 2px; letter-spacing: 0.5px; }
+  .tag-good { background: #d4edda; color: #0e5e1e; border: 1px solid #b8dfc6; }
+  .tag-meh { background: #fff3cd; color: #856404; border: 1px solid #ffeaa7; }
+  .tag-bad { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+.sub-dim { color: #888; font-weight: 400; font-size: 12px; }
+  @media (max-width: 580px) {
+    .procon-wrap { flex-direction: column; }
+  }
+
+  .signature {
+    text-align: center;
+    color: #a0aec0;
+    font-size: 14px;
+    margin-bottom: 20px;
+  }
+
+  .feedback-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 20px;
+    font-size: 14px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #d0d0d0;
+  }
+  .feedback-table th {
+    background: #1a365d;
+    color: #fff;
+    text-align: center;
+    font-size: 15px;
+    padding: 12px;
+  }
+  .feedback-table td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e2e8f0;
+    vertical-align: middle;
+  }
+  .feedback-table .label-cell {
+    background: #f7fafc;
+    font-weight: 600;
+    text-align: center;
+    white-space: nowrap;
+    width: 22%;
+  }
+  .feedback-table tr:last-child td { border-bottom: none; }
+
+  .signature-line {
+    text-align: right;
+    margin-top: 24px;
+    font-size: 15px;
+    color: #2d3748;
+  }
+
+  .highlight-box {
+    background: #ebf8ff;
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin: 16px 0;
+    font-size: 14px;
+    color: #1a365d;
+    border-left: 4px solid #2b6cb0;
+  }
+
+  /* ===== 交互式回执表单 ===== */
+  .form-section { margin-top: 24px; }
+  .form-group { margin-bottom: 16px; }
+  .form-group label { display: block; font-size: 14px; font-weight: 600; color: #2d3748; margin-bottom: 6px; }
+  .form-group .hint { font-size: 12px; color: #a0aec0; font-weight: 400; margin-left: 4px; }
+
+  .form-input { width: 100%; padding: 12px 16px; font-size: 14px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; font-family: inherit; transition: all 0.2s; background: #f7fafc; }
+  .form-input:focus { border-color: #2b6cb0; background: #fff; }
+  .form-textarea { width: 100%; padding: 12px 16px; font-size: 14px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; font-family: inherit; resize: vertical; min-height: 60px; transition: all 0.2s; background: #f7fafc; }
+  .form-textarea:focus { border-color: #2b6cb0; background: #fff; }
+  .form-row { display: flex; gap: 12px; }
+  .form-row .form-group { flex: 1; }
+
+  .checkbox-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+  .checkbox-label, .radio-label { display: inline-flex; align-items: center; gap: 6px; font-size: 14px; cursor: pointer; padding: 8px 16px; border: 2px solid #e2e8f0; border-radius: 10px; transition: all 0.2s; user-select: none; background: #f7fafc; }
+  .checkbox-label:hover, .radio-label:hover { border-color: #2b6cb0; background: #ebf8ff; }
+  .checkbox-label input, .radio-label input { display: none; }
+  .checkbox-label.active, .radio-label.active { border-color: #2b6cb0; background: #ebf8ff; color: #1a365d; font-weight: 600; }
+  .checkbox-label.dest-opt { padding: 10px 18px; font-size: 15px; }
+
+  .btn-submit-fb { display: block; width: 100%; padding: 14px; background: linear-gradient(135deg, #1a365d, #2b6cb0); color: #fff; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; transition: all 0.2s; margin-top: 8px; font-family: inherit; }
+  .btn-submit-fb:hover { opacity: 0.92; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(43,108,176,0.3); }
+  .btn-submit-fb:disabled { opacity: 0.4; cursor: not-allowed; transform: none; }
+  .form-status { text-align: center; font-size: 14px; padding: 10px; margin-top: 8px; border-radius: 10px; display: none; }
+  .form-status.success { display: block; background: #e8f8e8; color: #27ae60; }
+  .form-status.error { display: block; background: #fde8e8; color: #c0392b; }
+
+  /* 已提交回执展示 */
+  .feedback-results { margin-top: 24px; }
+  .fb-card { background: #f7fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 18px; margin-bottom: 12px; }
+  .fb-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .fb-family-name { font-size: 15px; font-weight: 700; color: #1a365d; }
+  .fb-time { font-size: 12px; color: #a0aec0; margin-left: auto; }
+  .fb-dests { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 6px; }
+  .fb-dest-tag { font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #ebf8ff; color: #2b6cb0; font-weight: 600; }
+  .fb-detail { font-size: 13px; color: #4a5568; line-height: 1.7; }
+  .fb-detail strong { color: #2d3748; }
+  .fb-empty { text-align: center; color: #cbd5e0; font-size: 14px; padding: 30px 0; }
+  .fb-loading { text-align: center; color: #a0aec0; font-size: 13px; padding: 20px 0; }
+
+  .msg-form { display: flex; flex-direction: column; gap: 10px; }
+  .msg-form .row { display: flex; gap: 10px; }
+  .msg-form .row input { flex: 1; padding: 12px 16px; font-size: 14px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; font-family: inherit; background: #f7fafc; transition: all 0.2s; }
+  .msg-form textarea { padding: 12px 16px; font-size: 14px; border: 2px solid #e2e8f0; border-radius: 10px; outline: none; font-family: inherit; resize: none; min-height: 60px; background: #f7fafc; transition: all 0.2s; }
+  .msg-form .row input:focus, .msg-form textarea:focus { border-color: #2b6cb0; background: #fff; }
+
+  @media (max-width: 600px) {
+    .container { padding: 16px 14px; margin: 16px auto; }
+    .hero-bar { padding: 28px 16px 24px; }
+    .hero-bar h1 { font-size: 18px; }
+    .hero-bar .sub { font-size: 12px; letter-spacing: 2px; }
+    h2 { font-size: 16px; }
+    p, .bullet-list li, .num-list li, .dest-detail { font-size: 14px; }
+    .dest-card { padding: 14px 16px; }
+    table { font-size: 12px; min-width: 500px; }
+    th, td { padding: 8px 10px; }
+    .procon-table { min-width: 500px; }
+    .procon-table-wrap { margin: 12px -14px; border-radius: 0; border-left: none; border-right: none; }
+    .feedback-table .label-cell { font-size: 13px; }
+    .form-row { flex-direction: column; gap: 0; }
+    .msg-form .row { flex-direction: column; }
+    .checkbox-label, .radio-label { padding: 12px 16px; min-height: 44px; font-size: 15px; }
+    .btn-submit-fb { font-size: 16px; padding: 16px; min-height: 52px; }
+    .form-input, .form-textarea, .msg-form .row input, .msg-form textarea { font-size: 16px; }
+  }
+  @media (max-width: 480px) {
+    body { padding: 0 0 40px; }
+    .container { padding: 16px 12px; margin: 12px auto; border-radius: 12px; }
+    .hero-bar { padding: 24px 12px 20px; }
+    .hero-bar h1 { font-size: 16px; }
+    .hero-bar .sub { font-size: 11px; letter-spacing: 1px; }
+    h1 { font-size: 17px; }
+    h2 { font-size: 15px; padding-left: 10px; margin-top: 24px; }
+    h3 { font-size: 14px; }
+    p { font-size: 13px; }
+    .bullet-list li, .num-list li { font-size: 13px; }
+    .dest-card { padding: 12px 14px; }
+    .dest-card h4 { font-size: 14px; }
+    .dest-detail { font-size: 13px; }
+    .dest-pros, .dest-cons { font-size: 12px; }
+    table { font-size: 11px; min-width: 400px; }
+    th, td { padding: 6px 8px; }
+    .feedback-table .label-cell { font-size: 12px; }
+    .feedback-table th { font-size: 13px; padding: 10px; }
+    .form-row { flex-direction: column; gap: 0; }
+    .msg-form .row { flex-direction: column; }
+    .checkbox-grid { gap: 6px; }
+    .checkbox-label, .radio-label { padding: 10px 14px; min-height: 44px; font-size: 14px; }
+    .btn-submit-fb { font-size: 15px; padding: 14px; min-height: 48px; }
+    .form-input, .form-textarea { font-size: 16px; padding: 10px 14px; }
+    .msg-form .row input, .msg-form textarea { font-size: 16px; padding: 10px 14px; }
+    .procon-col { padding: 14px 16px; }
+    .procon-col ul li { font-size: 13px; }
+    .signature { font-size: 12px; }
+    .highlight-box { padding: 12px 14px; font-size: 13px; }
+    .scroll-wrap { margin: 10px -14px; border-radius: 0; }
+    .procon-table-wrap { margin: 10px -14px; border-radius: 0; }
+    .form-group { margin-bottom: 12px; }
+    .fb-card { padding: 12px 14px; }
+  }
+  @media (max-width: 380px) {
+    .container { padding: 12px 8px; }
+    .hero-bar h1 { font-size: 14px; }
+    h2 { font-size: 14px; }
+    table { min-width: 320px; font-size: 10px; }
+    th, td { padding: 4px 6px; }
+    .checkbox-label, .radio-label { padding: 8px 10px; font-size: 13px; }
+    .btn-submit-fb { font-size: 14px; padding: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero-bar">
+  <h1>📋 2026年暑假家庭游 · 征求意见稿</h1>
+  <div class="sub">8个方案详细对比 · 最终投票选择 · 北疆 vs 槟城 vs 仙本那 vs 北海道 vs 芒市+腾冲 vs 巴厘岛 vs 清迈 vs 新加坡+吉隆坡+槟城</div>
+  <div class="wave"></div>
+</div>
+
+<div class="container">
+
+  <h1>2026年暑假家庭出游 · 8个方案对比</h1>
+  <div class="subtitle">（8个方案：北疆 · 吉隆坡+槟城 · 吉隆坡+仙本那 · 北海道 · 芒市+腾冲 · 巴厘岛 · 清迈 · 新加坡+吉隆坡+槟城）</div>
+
+  <!-- 一 -->
+  <h2>一、活动倡议</h2>
+  <p class="greeting">各位家人朋友们：</p>
+  <p>大家好！趁着今年暑假，我想倡议咱们几个家庭一起组织一次家庭出游。平时大家都忙于工作和生活，难得有机会几家人凑在一起出行。这次特别希望带上家里的老人和孩子，一起创造一段美好的共同回忆。</p>
+  <p>以下是几个我觉得比较适合的目的地方案，各有特色，也综合考虑了老人和小孩的需求。请大家一起看看，选一个大家最中意的方向。</p>
+
+  <!-- 二 -->
+  <h2>二、目的地推荐方案</h2>
+  <p>经过前期讨论，现聚焦 <strong>7 个方向</strong>（国内2个、国外5个）进行最终对比选择，暑期（7–8月）都适合老人小孩出行：</p>
+
+  <!-- 对比表 -->
+  <h3>七个方案速览对比</h3>
+  <div class="scroll-wrap">
+  <table>
+    <tr>
+      <th style="width:11%;">目的地</th>
+      <th style="width:13%;">暑期气候</th>
+      <th style="width:13%;">上海交通</th>
+      <th style="width:9%;">签证</th>
+      <th style="width:11%;">预算/人</th>
+      <th style="width:12%;">特色亮点</th>
+      <th style="width:10%;">适合老人</th>
+      <th style="width:10%;">适合小孩</th>
+    </tr>
+    <tr>
+      <td style="text-align:left;font-weight:600;">🇨🇳 北疆伊犁</td>
+      <td><span style="color:#27ae60;">20-30°C</span>，凉爽</td>
+      <td>飞5h+转1h</td>
+      <td>无需</td>
+      <td>8k-13k</td>
+      <td>草原雪山湖泊</td>
+      <td>⭐⭐⭐</td>
+      <td>⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;font-weight:600;">🇲🇾 吉隆坡+槟城</td>
+      <td><span style="color:#27ae60;">吉隆坡25-33°C</span>（有空调）；槟城海风</td>
+      <td>飞5h+飞1h</td>
+      <td>免签</td>
+      <td>9k-15k</td>
+      <td>三城联游·美食之都</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;font-weight:600;">🇯🇵 北海道</td>
+      <td><span style="color:#27ae60;">18-28°C</span>，凉爽舒适</td>
+      <td>上海直飞3.5h</td>
+      <td>需签证</td>
+      <td>10k-16k</td>
+      <td>花海·温泉·海鲜</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;font-weight:600;">🇨🇳 芒市+腾冲</td>
+      <td><span style="color:#27ae60;">芒市22-30°C</span>，腾冲18-26°C凉爽</td>
+      <td>飞5-6h+经昆明转机</td>
+      <td>无需</td>
+      <td>5k-8k</td>
+      <td>金塔·古镇·温泉</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;font-weight:600;">🇮🇩 巴厘岛</td>
+      <td><span style="color:#27ae60;">23-30°C</span>，旱季舒适</td>
+      <td>上海直飞6h</td>
+      <td>免签</td>
+      <td>8k-13k</td>
+      <td>神庙·梯田·SPA</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;font-weight:600;">🇹🇭 清迈</td>
+      <td><span style="color:#27ae60;">25-33°C</span>，阵雨季</td>
+      <td>上海直飞4h</td>
+      <td>免签</td>
+      <td>6k-10k</td>
+      <td>慢生活·按摩·夜市</td>
+      <td>⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐</td>
+    </tr>
+    <tr>
+      <td style="text-align:left;font-weight:600;">🇸🇬🇲🇾 新加坡+吉隆坡+槟城</td>
+      <td><span style="color:#27ae60;">新25-32°C</span>（空调足）马25-33°C</td>
+      <td>飞5h+飞1h+飞1h</td>
+      <td>免签+MDAC</td>
+      <td>12k-20k</td>
+      <td>花园城市+都会+美食</td>
+      <td>⭐⭐⭐⭐⭐</td>
+      <td>⭐⭐⭐⭐⭐</td>
+    </tr>
+  </table>
+  </div>
+	  <p style="font-size:13px;color:var(--text-secondary);text-align:center;margin-bottom:16px;">👇 点击下方卡片查看各方案详细行程安排</p>
+<!-- === 国内 选项A 新疆·北疆伊犁 === -->
+  <div class="dest-card" style="border-left:4px solid #CD853F;">
+    <h4>🇨🇳 选项A · 新疆（北疆伊犁）<span style="display:inline-block;font-size:11px;background:#FFF3E0;color:#E67E22;padding:1px 8px;border-radius:8px;margin-left:6px;font-weight:600;">国内</span></h4>
+    <div class="dest-tags">
+      <span class="dest-tag tag-blue">夏季凉爽 20-30°C</span>
+      <span class="dest-tag tag-green">无需签证</span>
+      <span class="dest-tag tag-purple">草原雪山湖泊</span>
+      <span class="dest-tag tag-orange">水果美食丰富</span>
+    </div>
+    <div class="dest-detail">
+      <strong>草原避暑 · 风景震撼</strong><br>
+      北疆伊犁7-8月气温20-30°C，凉爽舒适。赛里木湖（大西洋最后一滴眼泪）、那拉提草原（空中草原）、巴音布鲁克（九曲十八弯落日），景色堪比瑞士。<br>
+      <strong>⏱ 行程：</strong>6天5晚 | <strong>✈️ 交通：</strong>上海→乌鲁木齐约5h + 转飞伊宁1h | <strong>💰 预算：</strong>人均8k-13k
+    </div>
+    <div class="dest-pros">✅ 完全中文 · 无需签证 · 气候凉爽 · 风景视觉震撼 · 水果自由</div>
+    <div class="dest-cons">⚠️ 飞行+车程较长(8-10h) · 景点间2-4h车程 · 旺季住宿需提前订</div>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a href="itinerary-xinjiang.html" style="display:inline-block;padding:6px 16px;background:#CD853F;color:#fff;border-radius:16px;text-decoration:none;font-size:12px;font-weight:600;">📖 查看详细行程</a>
+    </div>
+  </div>
+
+  <!-- === 国外 选项B 吉隆坡+马六甲+槟城 === -->
+  <div class="dest-card" style="border-left:4px solid #6c5ce7;">
+    <h4>🇲🇾 选项B · 吉隆坡+马六甲+槟城（三城联游）<span style="display:inline-block;font-size:11px;background:#E8F5E9;color:#2E7D32;padding:1px 8px;border-radius:8px;margin-left:6px;font-weight:600;">国外</span></h4>
+    <div class="dest-tags">
+      <span class="dest-tag tag-blue">三城联游</span>
+      <span class="dest-tag tag-green">免签</span>
+      <span class="dest-tag tag-orange">美食之都</span>
+      <span class="dest-tag tag-purple">千年古城</span>
+    </div>
+    <div class="dest-detail">
+      <strong>吉隆坡都会+马六甲古城+槟城美食，西马精华一次玩遍！</strong><br>
+      吉隆坡（3天）：双子塔、独立广场、黑风洞、马六甲古城一日游。槟城（5天）：世界美食之都、乔治市文化遗产、升旗山、极乐寺、美食日。槟城直飞上海，无需返回吉隆坡。<br>
+      <strong>⏱ 行程：</strong>9天8晚 | <strong>✈️ 交通：</strong>上海→吉隆坡直飞约5h + 吉隆坡→槟城约1h + 槟城→上海直飞约5h | <strong>💰 预算：</strong>人均9k-15k
+    </div>
+    <div class="dest-pros">✅ 全程免签 · 三城三种体验 · 槟城世界美食之都 · 马六甲千年古城 · 亲子满分</div>
+    <div class="dest-cons">⚠️ 暑假旺季住宿需提前订 · 槟城美食太多选择困难症 😂</div>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a href="itinerary-singapore-kk.html" style="display:inline-block;padding:6px 16px;background:#6c5ce7;color:#fff;border-radius:16px;text-decoration:none;font-size:12px;font-weight:600;">📖 查看详细行程</a>
+    </div>
+  </div>
+
+  <!-- === 国外 选项D 北海道 === -->
+  <div class="dest-card" style="border-left:4px solid #2563eb;">
+    <h4>🇯🇵 选项D · 北海道（花海温泉）<span style="display:inline-block;font-size:11px;background:#E8F5E9;color:#2E7D32;padding:1px 8px;border-radius:8px;margin-left:6px;font-weight:600;">国外</span></h4>
+    <div class="dest-tags">
+      <span class="dest-tag tag-blue">夏季凉爽 18-28°C</span>
+      <span class="dest-tag tag-orange">需签证</span>
+      <span class="dest-tag tag-purple">花海温泉</span>
+      <span class="dest-tag tag-green">海鲜牛奶</span>
+    </div>
+    <div class="dest-detail">
+      <strong>北海道 · 富良野花海+温泉泡汤</strong><br>
+      7月正是富良野·美瑛的薰衣草花海季！北海道18-28°C涼爽舒适，海鲜、牛奶、拉面美食丰富。适合全家老小的温泉度假胜地，可以租车自驾或包车，节奏慢。<br>
+      <strong>⏱ 行程：</strong>8天7晚 | <strong>✈️ 交通：</strong>上海→札幌直飞约3.5h | <strong>💰 预算：</strong>人均10k-16k
+    </div>
+    <div class="dest-pros">✅ 气候凉爽舒适 · 薰衣草花海季 · 海鲜牛奶自由 · 温泉泡汤 · 亲子友好</div>
+    <div class="dest-cons">⚠️ 需办签证(约300-500元) · 暑期旺季价高 · 部分景点需步行</div>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a href="itinerary-hokkaido.html" style="display:inline-block;padding:6px 16px;background:#2563eb;color:#fff;border-radius:16px;text-decoration:none;font-size:12px;font-weight:600;">📖 查看详细行程</a>
+    </div>
+  </div>
+
+  <!-- === 国内 选项E 芒市+腾冲（傣乡温泉） === -->
+  <div class="dest-card" style="border-left:4px solid #0d9488;">
+    <h4>🇨🇳 选项E · 芒市+腾冲（傣乡温泉）<span style="display:inline-block;font-size:11px;background:#E8F5E9;color:#2E7D32;padding:1px 8px;border-radius:8px;margin-left:6px;font-weight:600;">国内</span></h4>
+    <div class="dest-tags">
+      <span class="dest-tag tag-blue">傣乡风情</span>
+      <span class="dest-tag tag-green">无需签证</span>
+      <span class="dest-tag tag-purple">傣族文化</span>
+      <span class="dest-tag tag-orange">温泉地质</span>
+    </div>
+    <div class="dest-detail">
+      <strong>芒市傣乡边陲风情（金塔银塔）+腾冲火山温泉古镇，小众深度游！</strong><br>
+      芒市（2天）：勐焕大金塔+银塔、树包塔、勐巴娜西珍奇园（散养孔雀）、傣族美食。腾冲（3天）：和顺古镇、热海温泉煮鸡蛋、北海湿地划草排、国殇墓园。<br>
+      <strong>⏱ 行程：</strong>7天6晚 | <strong>✈️ 交通：</strong>上海→芒市经昆明转机(5-6h) + 芒市→腾冲大巴3h + 腾冲→上海经昆明 | <strong>💰 预算：</strong>人均5k-8k
+    </div>
+    <div class="dest-pros">✅ 国内省心 · 傣族文化独特 · 温泉地质奇观 · 游客少不拥挤</div>
+    <div class="dest-cons">⚠️ 无直飞需经转 · 芒市→腾冲大巴3h山路 · 暑期多阵雨</div>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a href="itinerary-yunnan.html" style="display:inline-block;padding:6px 16px;background:#0d9488;color:#fff;border-radius:16px;text-decoration:none;font-size:12px;font-weight:600;">📖 查看详细行程</a>
+    </div>
+  </div>
+
+  <!-- === 国外 选项F 巴厘岛 === -->
+  <div class="dest-card" style="border-left:4px solid #e67e22;">
+    <h4>🇮🇩 选项F · 巴厘岛（神庙海浪）<span style="display:inline-block;font-size:11px;background:#E8F5E9;color:#2E7D32;padding:1px 8px;border-radius:8px;margin-left:6px;font-weight:600;">国外</span></h4>
+    <div class="dest-tags">
+      <span class="dest-tag tag-blue">旱季舒适 23-30°C</span>
+      <span class="dest-tag tag-green">免签</span>
+      <span class="dest-tag tag-orange">海岛度假</span>
+      <span class="dest-tag tag-purple">SPA天堂</span>
+    </div>
+    <div class="dest-detail">
+      <strong>巴厘岛 · 7月旱季最舒适</strong><br>
+      7-8月是巴厘岛最舒适的季节（旱季），阳光好、降雨少。乌布梯田、海神庙、情人崖、金巴兰日落……亲子酒店选择多，SPA便宜，度假感十足。<br>
+      <strong>⏱ 行程：</strong>8天7晚 | <strong>✈️ 交通：</strong>上海→巴厘岛直飞约6h | <strong>💰 预算：</strong>人均8k-13k
+    </div>
+    <div class="dest-pros">✅ 7月旱季最舒适 · 免签 · 海岛度假感强 · SPA便宜 · 亲子酒店多</div>
+    <div class="dest-cons">⚠️ 飞行6h较长 · 景点间车程1-2h · 有小费文化</div>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a href="itinerary-bali.html" style="display:inline-block;padding:6px 16px;background:#e67e22;color:#fff;border-radius:16px;text-decoration:none;font-size:12px;font-weight:600;">📖 查看详细行程</a>
+    </div>
+  </div>
+
+  <!-- === 国外 选项G 清迈 === -->
+  <div class="dest-card" style="border-left:4px solid #e11d48;">
+    <h4>🇹🇭 选项G · 清迈（泰北慢生活）<span style="display:inline-block;font-size:11px;background:#E8F5E9;color:#2E7D32;padding:1px 8px;border-radius:8px;margin-left:6px;font-weight:600;">国外</span></h4>
+    <div class="dest-tags">
+      <span class="dest-tag tag-blue">雨季阵雨 25-33°C</span>
+      <span class="dest-tag tag-green">免签</span>
+      <span class="dest-tag tag-orange">慢生活</span>
+      <span class="dest-tag tag-purple">物价极低</span>
+    </div>
+    <div class="dest-detail">
+      <strong>清迈 · 泰北玫瑰慢生活</strong><br>
+      清迈是著名的慢生活之城。每天做按摩、逛寺庙、逛夜市、吃泰北美食，不赶景点，非常适合"不赶路、舒服为主"的需求。物价极低，住宿性价比超高。大象友好营和夜间动物园是孩子们的最爱。<br>
+      <strong>⏱ 行程：</strong>7天6晚 | <strong>✈️ 交通：</strong>上海→清迈直飞约4h | <strong>💰 预算：</strong>人均6k-10k
+    </div>
+    <div class="dest-pros">✅ 免签 · 物价极低 · 慢节奏不赶路 · 按摩便宜 · 大象友好营 · 亲子友好</div>
+    <div class="dest-cons">⚠️ 7月雨季(多为短时阵雨) · 白天较热(33°C) · 蚊虫较多</div>
+    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+      <a href="itinerary-chiangmai.html" style="display:inline-block;padding:6px 16px;background:#e11d48;color:#fff;border-radius:16px;text-decoration:none;font-size:12px;font-weight:600;">📖 查看详细行程</a>
+    </div>
+
+	  <!-- === 国外 选项H 新加坡+吉隆坡+槟城 === -->
+	  <div class="dest-card" style="border-left:4px solid #e74c3c;">
+	    <h4>🇸🇬🇲🇾 选项H · 新加坡+吉隆坡+槟城（三城联游）<span style="display:inline-block;font-size:11px;background:#E8F5E9;color:#2E7D32;padding:1px 8px;border-radius:8px;margin-left:6px;font-weight:600;">国外</span></h4>
+	    <div class="dest-tags">
+	      <span class="dest-tag tag-blue">花园城市</span>
+	      <span class="dest-tag tag-green">免签/ezlink</span>
+	      <span class="dest-tag tag-orange">三城联游</span>
+	      <span class="dest-tag tag-purple">亲子友好</span>
+	    </div>
+	    <div class="dest-detail">
+	      <strong>新加坡花园城市+吉隆坡都会+槟城美食，新马精华一次玩遍！</strong><br>
+	      新加坡（3天）：滨海湾花园、鱼尾狮、圣淘沙环球影城。吉隆坡（3天）：双子塔、独立广场、黑风洞、马六甲古城一日。槟城（4天）：世界美食之都、乔治市文化遗产、升旗山、极乐寺。<br>
+	      <strong>⏱ 行程：</strong>10天9晚 | <strong>✈️ 交通：</strong>上海→新加坡直飞约5h + 新加坡→吉隆坡飞约1h + 吉隆坡→槟城飞约1h + 槟城→上海直飞约5h | <strong>💰 预算：</strong>人均12k-20k
+	    </div>
+	    <div class="dest-pros">✅ 新马免签 · 三城三种体验 · 花园城市+都会+美食 · 新加坡亲子满分</div>
+	    <div class="dest-cons">⚠️ 新加坡物价高 · 三段飞行需衔接 · 暑假旺季需提前订</div>
+	    <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;">
+	      <a href="itinerary-singapore-kl-penang.html" style="display:inline-block;padding:6px 16px;background:#e74c3c;color:#fff;border-radius:16px;text-decoration:none;font-size:12px;font-weight:600;">📖 查看详细行程</a>
+	    </div>
+	  </div>
+	  <!-- 三 -->
+	  <h2>回顾：七个方案详细对比</h2>
+	  <p>本次出行以<strong>上海出发、有老人有小孩、多家庭结伴</strong>为特点，以下从各个维度逐一对比：</p>
+
+	  <div class="scroll-wrap" style="margin:16px 0;">
+		  <table class="procon-table" style="min-width:900px;">
+		    <tr>
+		      <th style="width:12%;">评估维度</th>
+		      <th style="width:12%;">🇨🇳 北疆</th>
+		      <th style="width:12%;">🇲🇾 吉隆坡+槟城</th>
+		      <th style="width:12%;">🇯🇵 北海道</th>
+		      <th style="width:12%;">🇨🇳 芒市+腾冲</th>
+		      <th style="width:12%;">🇮🇩 巴厘岛</th>
+		      <th style="width:12%;">🇹🇭 清迈</th>
+		      <th style="width:12%;">🇸🇬🇲🇾 新加坡+吉隆坡+槟城</th>
+		    </tr>
+		    <tr>
+		      <td>气候舒适度</td>
+		      <td><span class="procon-tag tag-good">优势</span> 凉爽20-30°C避暑</td>
+		      <td><span class="procon-tag tag-good">优势</span> 空调足海风习习</td>
+		      <td><span class="procon-tag tag-good">优势</span> 玻璃海透亮</td>
+		      <td><span class="procon-tag tag-good">优势</span> 18-28°C凉爽</td>
+		      <td><span class="procon-tag tag-good">优势</span> 芒市22-30°C，腾冲18-26°C</td>
+		      <td><span class="procon-tag tag-good">优势</span> 23-30°C旱季</td>
+		      <td><span class="procon-tag tag-meh">注意</span> 25-33°C阵雨</td>
+		      <td><span class="procon-tag tag-good">优势</span> 空调足+海风舒适</td>
+		    </tr>
+		    <tr>
+		      <td>交通疲劳度</td>
+		      <td><span class="procon-tag tag-meh">劣势</span> 飞5h+转+车程长</td>
+		      <td><span class="procon-tag tag-good">优势</span> 分段飞行不累</td>
+		      <td><span class="procon-tag tag-meh">注意</span> 吉→斗飞3h长</td>
+		      <td><span class="procon-tag tag-meh">注意</span> 无直飞需经昆明转轻松</td>
+		      <td><span class="procon-tag tag-meh">注意</span> 无直飞需经转</td>
+		      <td><span class="procon-tag tag-meh">注意</span> 飞6h较长</td>
+		      <td><span class="procon-tag tag-good">优势</span> 直飞4h</td>
+		      <td><span class="procon-tag tag-meh">注意</span> 三段飞行需衔接</td>
+		    </tr>
+		    <tr>
+		      <td>签证便利</td>
+		      <td><span class="procon-tag tag-good">优势</span> 国内无需</td>
+		      <td><span class="procon-tag tag-good">优势</span> 免签</td>
+		      <td><span class="procon-tag tag-good">优势</span> 免签</td>
+		      <td><span class="procon-tag tag-meh">需办</span> 约300-500</td>
+		      <td><span class="procon-tag tag-good">优势</span> 国内无需</td>
+		      <td><span class="procon-tag tag-good">优势</span> 免签</td>
+		      <td><span class="procon-tag tag-good">优势</span> 免签</td>
+		      <td><span class="procon-tag tag-good">优势</span> 新加坡+马来均免签</td>
+		    </tr>
+		    <tr>
+		      <td>饮食适应性</td>
+		      <td><span class="procon-tag tag-good">优势</span> 中餐丰富水果多</td>
+		      <td><span class="procon-tag tag-good">优势</span> 美食之都15-30元</td>
+		      <td><span class="procon-tag tag-good">优势</span> 海鲜一餐50</td>
+		      <td><span class="procon-tag tag-good">优势</span> 海鲜牛奶拉面</td>
+		      <td><span class="procon-tag tag-good">优势</span> 傣味+腾冲土锅子+铜瓢牛肉</td>
+		      <td><span class="procon-tag tag-good">优势</span> 选择多有中餐</td>
+		      <td><span class="procon-tag tag-good">优势</span> 泰北美食价低</td>
+		      <td><span class="procon-tag tag-good">优势</span> 三城三种美食体验</td>
+		    </tr>
+		    <tr>
+		      <td>适合老人</td>
+		      <td><span class="procon-tag tag-meh">注意</span> 车程长海拔高</td>
+		      <td><span class="procon-tag tag-good">高分</span> 平坦节奏慢医疗好</td>
+		      <td><span class="procon-tag tag-good">较好</span> 部分跳岛轻松</td>
+		      <td><span class="procon-tag tag-good">高分</span> 温泉路况好</td>
+		      <td><span class="procon-tag tag-good">较好</span> 和顺平坦+国内医保</td>
+		      <td><span class="procon-tag tag-good">较好</span> 度假感强不累</td>
+		      <td><span class="procon-tag tag-good">较好</span> 慢生活不赶路</td>
+		      <td><span class="procon-tag tag-good">高分</span> 设施完善节奏可控</td>
+		    </tr>
+		    <tr>
+		      <td>适合小孩</td>
+		      <td><span class="procon-tag tag-meh">注意</span> 车程长娱乐少</td>
+		      <td><span class="procon-tag tag-good">高分</span> 猴子缆车蝴蝶园</td>
+		      <td><span class="procon-tag tag-good">高分</span> 浮潜海龟萤火虫</td>
+		      <td><span class="procon-tag tag-good">高分</span> 动物园花田牧场</td>
+		      <td><span class="procon-tag tag-good">较好</span> 金塔新奇+温泉煮蛋+湿地划草排</td>
+		      <td><span class="procon-tag tag-good">高分</span> 亲子酒店海滩</td>
+		      <td><span class="procon-tag tag-good">高分</span> 大象营夜间动物园</td>
+		      <td><span class="procon-tag tag-good">高分</span> 环球影城+猴子+缆车</td>
+		    </tr>
+		    <tr>
+		      <td>预算/人</td>
+		      <td>8k-13k</td>
+		      <td>9k-15k</td>
+		      <td>11k-18k</td>
+		      <td>10k-16k</td>
+		      <td>5k-8k</td>
+		      <td>8k-13k</td>
+		      <td>6k-10k</td>
+		      <td>12k-20k</td>
+		    </tr>
+		  </table>
+		  </div>
+	  <div class="highlight-box">
+	    <strong>总结对比如下：</strong><br><br>
+	    🇨🇳 <strong>新疆北疆</strong> — 气候凉爽（20-30°C），风景震撼（草原雪山湖泊），中文零障碍。但交通较累（飞5h+转1h+车程2-4h/天）。预算8k-13k。<br><br>
+	    🇲🇾 <strong>吉隆坡+槟城</strong> — 西马文化美食之旅，吉隆坡都会+马六甲古城+槟城世界美食之都！全程免签，飞行时间短不累！预算9k-15k。<br><br>
+	    🇯🇵 <strong>北海道</strong> — 气候凉爽（18-28°C），7月富良野花海季+温泉泡汤+海鲜牛奶！适合全家的高端度假地。需办签证。预算10k-16k。<br><br>
+	    🇨🇳 <strong>芒市+腾冲</strong> — 芒市傣乡风情（金塔银塔）+腾冲火山温泉古镇，小众深度游！国内省心，游客少不拥挤。预算约5k-8k。<br><br>
+	    🇮🇩 <strong>巴厘岛</strong> — 7月旱季最舒适（23-30°C），免签！海岛度假感十足，SPA便宜，亲子酒店选择多。飞6h稍长。预算8k-13k。<br><br>
+	    🇹🇭 <strong>清迈</strong> — 泰北慢生活，物价极低！免签！大象营+夜间动物园+每日按摩，适合不赶路的家庭。7月阵雨季，白天较热。预算6k-10k。<br><br>
+    🇸🇬🇲🇾 <strong>新加坡+吉隆坡+槟城</strong> — 新马三城联游，新加坡花园城市+吉隆坡都会+槟城美食之都！全程免签，亲子设施完善。新加坡物价较高，三段飞行需衔接。预算12k-20k。<br><br>
+	    <strong>选择建议：</strong><br>
+	    • 想<strong>最佳气候+国内省心</strong> → <strong>芒市+腾冲</strong>（5k-8k）或 <strong>北疆</strong>（8k-13k）<br>
+	    • 想<strong>免签+美食+不折腾</strong> → <strong>吉隆坡+槟城</strong>（9k-15k）<br>
+	    • 想<strong>海岛度假+7月好天气</strong> → <strong>巴厘岛</strong>（8k-13k，7月旱季）<br>
+	    • 想<strong>凉爽花海+温泉泡汤</strong> → <strong>北海道</strong>（10k-16k，需签证）<br>
+	    • 想<strong>最省钱+慢生活</strong> → <strong>清迈</strong>（6k-10k）
+    • 想<strong>三城联游+亲子首选</strong> → <strong>新加坡+吉隆坡+槟城</strong>（12k-20k）
+	  </div>
+
+  <!-- 三 -->
+  <h2>统一考量（出行建议）</h2>
+  <p>不管最终选哪个目的地，考虑到老人和小孩同行，以下几点是通用的：</p>
+
+  <div class="scroll-wrap">
+  <table style="min-width:auto;">
+    <tr><th style="width:28%;">方面</th><th style="text-align:left;">注意事项</th></tr>
+    <tr><td>行程节奏</td><td style="text-align:left;">每天1–2个主要景点，留足午休和自由活动时间，不赶路</td></tr>
+    <tr><td>餐饮安排</td><td style="text-align:left;">保证有适合老人小孩的餐食，提前找好中餐厅或替代方案</td></tr>
+    <tr><td>健康准备</td><td style="text-align:left;">备常用药品（肠胃药、感冒药、创可贴等），购买旅行保险</td></tr>
+    <tr><td>住宿标准</td><td style="text-align:left;">选择交通便利、含早餐的舒适型酒店，减少步行距离</td></tr>
+    <tr><td>安全</td><td style="text-align:left;">看管好老人小孩，保管财物，选择治安好的区域</td></tr>
+  </table>
+  </div>
+
+  <!-- 四 -->
+  <h2>五、需要各家庭讨论的事项</h2>
+  <p>为了后续推进，希望大家一起商量以下几个问题：</p>
+  <ol class="num-list">
+    <li><strong>目的地偏好：</strong>以上8个方案，你选哪个？🇨🇳 北疆 vs 🇲🇾 槟城 vs 🇲🇾 仙本那 vs 🇯🇵 北海道 vs 🇨🇳 芒市+腾冲 vs 🇮🇩 巴厘岛 vs 🇹🇭 清迈 vs 🇸🇬🇲🇾 新加坡+吉隆坡+槟城？</li>
+    <li><strong>出行时间：</strong>7月中旬、7月底、8月上旬，哪个时间段更方便？</li>
+    <li><strong>行程天数：</strong>7天、10天，或其他安排？</li>
+    <li><strong>住宿标准：</strong>经济型、舒适型（如全季/亚朵同档）、高档型？</li>
+    <li><strong>预算范围：</strong>心理预期人均多少钱？（可参考各方案预估）</li>
+    <li><strong>出行方式：</strong>跟团、半自由行（找地接）、全程自游行，倾向哪种？</li>
+    <li><strong>特殊需求：</strong>是否有饮食禁忌、行动不便、小孩年龄较小等需要注意的情况？</li>
+    <li><strong>参与意愿：</strong>每个家庭初步能去几个人？是否确定参加？</li>
+  </ol>
+
+  <!-- 五 -->
+  <h2>六、下一步计划</h2>
+  <ul class="bullet-list">
+    <li>请各家庭在收到后一周内反馈初步意见（目的地偏好、参与意愿等）</li>
+    <li>根据大家的反馈，确定目的地和大致方向</li>
+    <li>方向确定后，由我来进一步细化行程和预算</li>
+    <li>出行前组织一次线下碰头会，商量具体细节和分工</li>
+  </ul>
+
+  <hr class="separator">
+
+  <!-- ===== 交互式回执表单 ===== -->
+  <div class="form-section">
+    <h2>📋 家庭出游意向回执</h2>
+    <p style="font-size:14px;color:#888;margin-bottom:16px;">请各家庭在线填写提交，提交后所有人可见。每家庭可重复提交以更新信息。</p>
+
+    <div class="form-group">
+      <label>家庭名称 <span style="color:#c0392b;">*</span></label>
+      <input type="text" class="form-input" id="fb-family-name" placeholder="例如：张家" maxlength="20">
+    </div>
+
+    <div class="form-group">
+      <label>目的地偏好 <span class="hint">（可多选）</span></label>
+      <div class="checkbox-grid" id="fb-destinations">
+        <label class="checkbox-label dest-opt" data-value="新疆北疆">🇨🇳 新疆·北疆伊犁</label>
+        <label class="checkbox-label dest-opt" data-value="吉隆坡+马六甲+槟城">🇲🇾 吉隆坡+马六甲+槟城</label>
+	        <label class="checkbox-label dest-opt" data-value="北海道">🇯🇵 北海道</label>
+	        <label class="checkbox-label dest-opt" data-value="芒市+腾冲">🇨🇳 芒市+腾冲</label>
+	        <label class="checkbox-label dest-opt" data-value="巴厘岛">🇮🇩 巴厘岛</label>
+	        <label class="checkbox-label dest-opt" data-value="清迈">🇹🇭 清迈</label>
+        <label class="checkbox-label dest-opt" data-value="新加坡+吉隆坡+槟城">🇸🇬🇲🇾 新加坡+吉隆坡+槟城</label>
+	      </div>
+	    </div>
+
+	    <div class="form-group">
+	      <label>其他想去的地方</label><label>其他想去的地方</label>
+      <input type="text" class="form-input" id="fb-dest-other" placeholder="如有其他想法，请填写">
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>成人 <span class="hint">（人数）</span></label>
+        <input type="number" class="form-input" id="fb-adults" value="0" min="0" max="20">
+      </div>
+      <div class="form-group">
+        <label>老人 <span class="hint">（人数）</span></label>
+        <input type="number" class="form-input" id="fb-elderly" value="0" min="0" max="20">
+      </div>
+      <div class="form-group">
+        <label>小孩 <span class="hint">（人数）</span></label>
+        <input type="number" class="form-input" id="fb-children" value="0" min="0" max="20">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>出行时间偏好 <span class="hint">（可多选）</span></label>
+      <div class="checkbox-grid" id="fb-time">
+        <label class="checkbox-label" data-value="7月中旬">7月中旬</label>
+        <label class="checkbox-label" data-value="7月底">7月底</label>
+        <label class="checkbox-label" data-value="8月上旬">8月上旬</label>
+        <label class="checkbox-label" data-value="都可以">都可以</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>住宿偏好</label>
+      <div class="checkbox-grid" id="fb-accommodation">
+        <label class="checkbox-label" data-value="经济型">经济型</label>
+        <label class="checkbox-label" data-value="舒适型">舒适型</label>
+        <label class="checkbox-label" data-value="高档型">高档型</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>出行方式偏好</label>
+      <div class="checkbox-grid" id="fb-travel-style">
+        <label class="checkbox-label" data-value="跟团">跟团</label>
+        <label class="checkbox-label" data-value="半自由行">半自由行</label>
+        <label class="checkbox-label" data-value="自由行">自由行</label>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>特殊需求 / 备注</label>
+      <textarea class="form-textarea" id="fb-special" placeholder="饮食禁忌、行动不便、小孩年龄较小等情况…" maxlength="500"></textarea>
+    </div>
+
+    <button class="btn-submit-fb" id="fb-submit" onclick="submitFeedback()">提交回执</button>
+    <div id="fb-status" class="form-status"></div>
+  </div>
+
+  <!-- ===== 已提交回执展示 ===== -->
+  <hr class="separator">
+  <div class="feedback-results">
+    <h2>📊 各家庭提交情况</h2>
+    <div id="fb-list">
+      <div class="fb-loading">加载中…</div>
+    </div>
+  </div>
+
+  <!-- ===== 留言板 ===== -->
+<div style="text-align:center;margin-bottom:16px;display:flex;flex-wrap:wrap;gap:8px;justify-content:center;">
+	  <a href="itinerary-xinjiang.html" style="display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#A0522D,#CD853F);color:#fff;border-radius:16px;text-decoration:none;font-weight:600;font-size:12px;">📖 新疆·北疆</a>
+	  <a href="itinerary-singapore-kk.html" style="display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#2d1b69,#e84393);color:#fff;border-radius:16px;text-decoration:none;font-weight:600;font-size:12px;">📖 吉隆坡+槟城</a>
+	  <a href="itinerary-hokkaido.html" style="display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#1e3a5f,#60a5fa);color:#fff;border-radius:16px;text-decoration:none;font-weight:600;font-size:12px;">📖 北海道</a>
+	  <a href="itinerary-yunnan.html" style="display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#0f766e,#0d9488);color:#fff;border-radius:16px;text-decoration:none;font-weight:600;font-size:12px;">📖 芒市+腾冲</a>
+	  <a href="itinerary-bali.html" style="display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#d97706,#f59e0b);color:#fff;border-radius:16px;text-decoration:none;font-weight:600;font-size:12px;">📖 巴厘岛</a>
+	  <a href="itinerary-chiangmai.html" style="display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#be123c,#fb7185);color:#fff;border-radius:16px;text-decoration:none;font-weight:600;font-size:12px;">📖 清迈</a>
+		  <a href="itinerary-singapore-kl-penang.html" style="display:inline-block;padding:8px 16px;background:linear-gradient(135deg,#e74c3c,#6c5ce7);color:#fff;border-radius:16px;text-decoration:none;font-weight:600;font-size:12px;">📖 新加坡+吉隆坡+槟城</a>
+	</div>
+
+  <hr class="separator">
+  <div class="form-section">
+    <h2>💬 讨论区</h2>
+    <p style="font-size:14px;color:#888;margin-bottom:16px;">有什么想法、建议，在这里留言讨论</p>
+
+    <div class="msg-form">
+      <div class="row">
+        <input type="text" id="msg-name" placeholder="你的称呼" maxlength="20">
+      </div>
+      <textarea id="msg-content" placeholder="说说你的想法…" maxlength="500"></textarea>
+      <button class="btn-submit-fb" id="msg-submit" onclick="submitMsg()">发表留言</button>
+      <div style="font-size:12px;color:#999;text-align:right;margin-top:4px;"><span id="msg-count">0</span>/500</div>
+    </div>
+    <div id="msg-list" style="margin-top:16px;">
+      <div class="fb-loading">加载中…</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ===== 复选框交互 ===== */
+document.querySelectorAll('.checkbox-label').forEach(el => {
+  el.addEventListener('click', function() {
+    this.classList.toggle('active');
+  });
+});
+
+/* ===== 回执 API ===== */
+const FB_API = '/api/feedback';
+
+function getSelected(parentId) {
+  return Array.from(document.querySelectorAll('#' + parentId + ' .checkbox-label.active'))
+    .map(el => el.dataset.value);
+}
+
+async function submitFeedback() {
+  const family_name = document.getElementById('fb-family-name').value.trim();
+  if (!family_name) { alert('请填写家庭名称'); return; }
+
+  const btn = document.getElementById('fb-submit');
+  const status = document.getElementById('fb-status');
+  btn.disabled = true;
+  btn.textContent = '提交中…';
+  status.className = 'form-status';
+
+  try {
+    const res = await fetch(FB_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        family_name,
+        destinations: getSelected('fb-destinations'),
+        destination_other: document.getElementById('fb-dest-other').value.trim(),
+        adults: parseInt(document.getElementById('fb-adults').value) || 0,
+        elderly: parseInt(document.getElementById('fb-elderly').value) || 0,
+        children: parseInt(document.getElementById('fb-children').value) || 0,
+        time_pref: getSelected('fb-time'),
+        accommodation: getSelected('fb-accommodation').join(','),
+        travel_style: getSelected('fb-travel-style').join(','),
+        special_needs: document.getElementById('fb-special').value.trim()
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      status.className = 'form-status success';
+      status.textContent = '✅ 提交成功！';
+      await loadFeedbacks();
+    } else {
+      status.className = 'form-status error';
+      status.textContent = '❌ ' + (data.error || '提交失败');
+    }
+  } catch (e) {
+    status.className = 'form-status error';
+    status.textContent = '❌ 网络错误，请重试';
+  }
+  btn.disabled = false;
+  btn.textContent = '提交回执';
+}
+
+async function loadFeedbacks() {
+  const list = document.getElementById('fb-list');
+  try {
+    const res = await fetch(FB_API);
+    const data = await res.json();
+    if (!data.success || !data.feedbacks || data.feedbacks.length === 0) {
+      list.innerHTML = '<div class="fb-empty">还没有家庭提交回执 ⏳</div>';
+      return;
+    }
+    list.innerHTML = data.feedbacks.map(f => {
+      const date = (f.created_at || '').slice(0, 16).replace('T', ' ');
+      const dests = JSON.parse(f.destinations || '[]');
+      const destHtml = dests.map(d => '<span class="fb-dest-tag">' + escHtml(d) + '</span>').join(' ');
+      const parts = [];
+      if (f.adults > 0) parts.push('成人' + f.adults + '人');
+      if (f.elderly > 0) parts.push('老人' + f.elderly + '人');
+      if (f.children > 0) parts.push('小孩' + f.children + '人');
+      const pplHtml = parts.length ? '<br><strong>参加人数：</strong>' + parts.join(' · ') : '';
+      const timePref = JSON.parse(f.time_pref || '[]');
+      const timeHtml = timePref.length ? '<br><strong>时间：</strong>' + timePref.join('、') : '';
+      const extraHtml = [];
+      if (f.accommodation) extraHtml.push('住宿：' + f.accommodation.replace(/,/g, '、'));
+      if (f.travel_style) extraHtml.push('出行：' + f.travel_style.replace(/,/g, '、'));
+      const extraHtml2 = extraHtml.length ? '<br><strong>偏好：</strong>' + extraHtml.join(' · ') : '';
+      const otherHtml = f.destination_other ? '<br><strong>其他想法：</strong>' + escHtml(f.destination_other) : '';
+      const noteHtml = f.special_needs ? '<br><strong>备注：</strong>' + escHtml(f.special_needs) : '';
+      return '<div class="fb-card">' +
+        '<div class="fb-card-header">' +
+          '<span class="fb-family-name">' + escHtml(f.family_name) + '</span>' +
+          '<span class="fb-time">' + date + '</span>' +
+        '</div>' +
+        '<div class="fb-dests">' + destHtml + '</div>' +
+        '<div class="fb-detail">' + pplHtml + timeHtml + extraHtml2 + otherHtml + noteHtml + '</div>' +
+      '</div>';
+    }).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="fb-empty" style="color:#e74c3c;">加载失败，请刷新重试</div>';
+  }
+}
+
+/* ===== 留言板 ===== */
+const MSG_API = '/api/comments';
+
+async function loadMsgs() {
+  const list = document.getElementById('msg-list');
+  try {
+    const res = await fetch(MSG_API);
+    const data = await res.json();
+    if (!data.success) throw new Error();
+    if (data.comments.length === 0) {
+      list.innerHTML = '<div class="fb-empty">还没有留言 🎉</div>';
+      return;
+    }
+    list.innerHTML = data.comments.map(m => {
+      const date = (m.created_at || '').slice(0, 16).replace('T', ' ');
+      return '<div class="fb-card">' +
+        '<div class="fb-card-header">' +
+          '<span style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;">' + escHtml(m.name.charAt(0)) + '</span>' +
+          '<span class="fb-family-name" style="font-size:13px;">' + escHtml(m.name) + '</span>' +
+          '<span class="fb-time">' + date + '</span>' +
+        '</div>' +
+        '<div class="fb-detail" style="padding-left:36px;">' + escHtml(m.content) + '</div>' +
+      '</div>';
+    }).join('');
+  } catch (e) {
+    list.innerHTML = '<div class="fb-empty" style="color:#e74c3c;">加载留言失败</div>';
+  }
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+async function submitMsg() {
+  const name = document.getElementById('msg-name').value.trim();
+  const content = document.getElementById('msg-content').value.trim();
+  const btn = document.getElementById('msg-submit');
+  if (!name) { alert('请填写你的称呼'); return; }
+  if (!content) { alert('请填写留言内容'); return; }
+  btn.disabled = true;
+  btn.textContent = '提交中…';
+  try {
+    const res = await fetch(MSG_API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, content })
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.getElementById('msg-name').value = '';
+      document.getElementById('msg-content').value = '';
+      document.getElementById('msg-count').textContent = '0';
+      await loadMsgs();
+    } else {
+      alert(data.error || '提交失败');
+    }
+  } catch (e) {
+    alert('网络错误，请重试');
+  }
+  btn.disabled = false;
+  btn.textContent = '发表留言';
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  loadFeedbacks();
+  loadMsgs();
+  const ta = document.getElementById('msg-content');
+  if (ta) {
+    ta.addEventListener('input', function() {
+      document.getElementById('msg-count').textContent = this.value.length;
+    });
+  }
+});
+</script>
+
+</body>
+</html>
