@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>游者手记｜马来西亚同行小册</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Sans+SC:wght@400;500;600;700;900&family=Noto+Serif+SC:wght@600;700;900&display=swap');
+    :root { --paper:#f7efd9; --paper-deep:#e7d8b6; --ink:#273640; --red:#a84f39; --olive:#59663b; --gold:#b38328; --line:#b49766; --mist:#efe2c6; }
+    * { box-sizing:border-box; }
+    body { margin:0; color:var(--ink); font-family:"Noto Sans SC",sans-serif; background:#d9c8a7; background-image:radial-gradient(rgba(72,48,27,.12) .04rem,transparent .06rem); background-size:.65rem .65rem; }
+    .book { width:min(100%,52rem); margin:0 auto; }
+    .page { min-height:100svh; position:relative; overflow:hidden; padding:2.2rem 1.55rem 1.8rem; background:var(--paper); background-image:radial-gradient(rgba(102,70,31,.075) .04rem,transparent .06rem),linear-gradient(115deg,transparent 0 48%,rgba(178,139,67,.035) 48% 51%,transparent 51%); background-size:.55rem .55rem,100% 100%; border-bottom:.22rem solid #d3bd91; }
+    .page::before { content:""; position:absolute; inset:.75rem; pointer-events:none; border:.08rem solid rgba(140,96,47,.35); border-radius:.25rem; }
+    .page > * { position:relative; }
+    .kicker { color:var(--red); font-size:.78rem; font-weight:800; letter-spacing:.13em; }
+    h1,h2,h3,p { margin-top:0; }
+    h1 { margin:.25rem 0 .3rem; color:var(--red); font-family:"Ma Shan Zheng","Noto Serif SC",serif; font-size:clamp(3rem,11vw,5.6rem); letter-spacing:.05em; line-height:1; }
+    h2 { margin:0 0 1rem; color:var(--red); font-family:"Noto Serif SC",serif; font-size:1.55rem; }
+    h3 { margin:0 0 .4rem; color:var(--olive); font-size:1.02rem; }
+    .lead { max-width:32rem; margin:.8rem 0 1.2rem; font-family:"Noto Serif SC",serif; font-size:1.13rem; line-height:1.85; }
+    .stamp { display:inline-block; transform:rotate(-5deg); padding:.45rem .75rem; border:.14rem double var(--red); color:var(--red); font-size:.74rem; font-weight:900; letter-spacing:.08em; }
+    .route { display:grid; grid-template-columns:repeat(3,1fr); gap:.45rem; margin:1.4rem 0; }
+    .route div { padding:.8rem .5rem; text-align:center; border:.08rem dashed var(--line); background:rgba(255,250,235,.55); font-family:"Noto Serif SC",serif; }
+    .route b { display:block; color:var(--red); font-size:1.15rem; }
+    .note { padding:.8rem 1rem; border-left:.35rem solid var(--gold); background:rgba(224,202,151,.35); font-size:.89rem; line-height:1.7; }
+    .grid { display:grid; gap:.7rem; }
+    .two { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .three { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .card { padding:.9rem; background:rgba(255,250,237,.7); border:.08rem solid rgba(130,91,43,.45); box-shadow:.18rem .23rem 0 rgba(126,91,49,.16); }
+    ul { margin:.35rem 0 0; padding-left:1.15rem; font-size:.9rem; line-height:1.66; }
+    li+li { margin-top:.18rem; }
+    .day { display:grid; grid-template-columns:3rem 1fr; gap:.55rem; padding:.65rem 0; border-bottom:.08rem dashed rgba(141,104,57,.55); }
+    .day:last-child { border:0; }
+    .date { color:var(--red); font-family:"Noto Serif SC",serif; font-weight:900; font-size:.9rem; }
+    .day b { font-size:.93rem; }
+    .day span { display:block; margin-top:.12rem; color:#4b5960; font-size:.82rem; line-height:1.5; }
+    .check { list-style:none; padding:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.45rem .75rem; }
+    .check li { padding:.45rem .2rem .45rem 1.55rem; position:relative; border-bottom:.06rem dashed rgba(141,104,57,.45); }
+    .check li::before { content:"□"; position:absolute; left:.2rem; color:var(--red); font-size:1.1rem; line-height:1; }
+    .phrase { padding:.55rem .6rem; border-bottom:.07rem dashed var(--line); font-size:.9rem; }
+    .phrase b { display:block; color:var(--red); font-family:"Noto Serif SC",serif; }
+    .callout { margin-top:.7rem; padding:.75rem .9rem; border:.11rem solid var(--red); color:#763523; background:#f3dfbf; font-weight:700; line-height:1.65; }
+    .small { font-size:.78rem; line-height:1.55; color:#566267; }
+    .footer { position:absolute; bottom:1.15rem; left:1.6rem; right:1.6rem; display:flex; justify-content:space-between; color:#806b48; font-size:.7rem; }
+    .cover { display:flex; min-height:100svh; flex-direction:column; justify-content:center; }
+    .cover .compass { position:absolute; right:-2.2rem; top:2rem; width:12rem; height:12rem; opacity:.3; transform:rotate(15deg); }
+    @media (max-width:32rem) { .page { padding:1.65rem 1.1rem 1.65rem; } .two,.three { grid-template-columns:1fr; } .check { grid-template-columns:1fr; } .footer { left:1.15rem; right:1.15rem; } }
+    @media print { @page { size:A4; margin:0; } body { background:none; } .book { width:100%; } .page { min-height:297mm; height:297mm; break-after:page; page-break-after:always; padding:18mm 15mm; border:0; } .page:last-child { break-after:auto; page-break-after:auto; } }
+  </style>
+</head>
+<body>
+  <main class="book">
+    <section class="page cover">
+      <svg class="compass" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="82" fill="none" stroke="#273640" stroke-width="4"/><circle cx="100" cy="100" r="62" fill="none" stroke="#273640" stroke-width="2" stroke-dasharray="3 5"/><path d="M100 30 116 84 170 100 116 116 100 170 84 116 30 100 84 84Z" fill="none" stroke="#a84f39" stroke-width="5"/><path d="m100 47 9 53-9 53-9-53z" fill="#a84f39"/><text x="94" y="22" font-size="17" fill="#273640">N</text><text x="177" y="105" font-size="17" fill="#273640">E</text></svg>
+      <span class="stamp">家庭旅行 · 公开同行版</span>
+      <p class="kicker">2026 夏 · 马来西亚</p>
+      <h1>游者手记</h1>
+      <p class="lead">给第一次出国、第一次到马来西亚的我们。把重要的准备、行程节奏和实用贴士，夹进这一册。</p>
+      <div class="route"><div><b>吉隆坡</b>城市与文化</div><div><b>马六甲</b>历史与海风</div><div><b>槟城</b>美食与山海</div></div>
+      <div class="note">本册不含航班号、具体起降时间、酒店地址/房号、订单、费用分摊、司机及同行者联系方式。此类信息请仅在私密行程页或群内查看。</div>
+      <div class="footer"><span>同行小册 · 8 页</span><span>第 1 页</span></div>
+    </section>
+
+    <section class="page">
+      <p class="kicker">先把旅行装进行李</p><h2>01｜出发前，完成这 8 件事</h2>
+      <ul class="check"><li>护照有效期至少 6 个月，且无破损</li><li>护照资料页、保险单留一份电子备份</li><li>抵达前 3 天内填写 MDAC，并保存确认页</li><li>备好往返机票、住宿证明等入境材料</li><li>开通国际漫游，用于收短信验证码</li><li>下载离线地图，标好集合点与景点</li><li>带英标三脚转换插头、充电宝与充电线</li><li>常用药随身带，慢病药多备 3 天</li></ul>
+      <div class="grid two" style="margin-top:1rem"><div class="card"><h3>入境要点</h3><ul><li>普通护照免签：单次不超过 30 天；180 天内累计不超过 90 天。</li><li>MDAC 仅使用马来西亚移民局官方页面填写，不收费。</li><li>如被问询，平静出示返程与住宿材料即可。</li></ul></div><div class="card"><h3>现金与支付</h3><ul><li>备少量马币应急，银行卡与现金分开存放。</li><li>机场换汇一般不占优；不要在非正规处换汇。</li><li>打车、购物、餐饮付款前确认金额与币种。</li></ul></div></div>
+      <div class="callout">护照不要托运；下飞机、上/下车、退房时，固定做一次“护照—手机—钱包”三件套检查。</div>
+      <div class="footer"><span>游者手记 · 出发前</span><span>第 2 页</span></div>
+    </section>
+
+    <section class="page">
+      <p class="kicker">10 天 9 晚 · 不赶路，但要懂节奏</p><h2>02｜这趟路，怎么走</h2>
+      <div class="grid two"><div class="card"><div class="day"><div class="date">D1</div><div><b>抵达吉隆坡</b><span>夜间抵达后以休息为主，不安排额外活动。</span></div></div><div class="day"><div class="date">D2</div><div><b>吉隆坡市区</b><span>城市地标、商场避暑与夜间美食。</span></div></div><div class="day"><div class="date">D3</div><div><b>马六甲一日</b><span>户外多、日晒强；宗教场所注意衣着。</span></div></div><div class="day"><div class="date">D4</div><div><b>吉隆坡文化日</b><span>步行相对多，按体力灵活调整。</span></div></div><div class="day"><div class="date">D5</div><div><b>经怡保前往槟城</b><span>全程最辛苦的一天；提前收好行李，少安排一站。</span></div></div></div>
+      <div class="card"><div class="day"><div class="date">D6</div><div><b>乔治市文化日</b><span>壁画街、老城与娘惹文化；热门点要排队。</span></div></div><div class="day"><div class="date">D7</div><div><b>升旗山与寺庙</b><span>尽量早出发，凉快、人也少。</span></div></div><div class="day"><div class="date">D8</div><div><b>浮罗山背田园</b><span>留意防晒、防蚊与补水。</span></div></div><div class="day"><div class="date">D9</div><div><b>自由日</b><span>海滩、美食、购物；午间安排室内休息。</span></div></div><div class="day"><div class="date">D10</div><div><b>返程</b><span>长途转场加机场手续，务必预留余量。</span></div></div></div></div>
+      <div class="note" style="margin-top:1rem">同行原则：不以“全员一起”为唯一目标。每晚约定次日集合时段、午休窗口和走散处理方式；体力不同，可以分组活动后再集合。</div>
+      <div class="footer"><span>游者手记 · 行程概览</span><span>第 3 页</span></div>
+    </section>
+
+    <section class="page">
+      <p class="kicker">热、湿、雨，都是旅行的一部分</p><h2>03｜天气、穿搭与行李贴士</h2>
+      <div class="grid three"><div class="card"><h3>白天很热</h3><p class="small">高温高湿，户外活动尽量早晚安排。10:00—16:00 多进商场、博物馆、餐厅休息。</p></div><div class="card"><h3>午后常有阵雨</h3><p class="small">折叠伞/轻雨衣随身放；多数短时阵雨不必取消行程，找地方等一等即可。</p></div><div class="card"><h3>室内空调很冷</h3><p class="small">车、商场和餐厅温度低；老人、小孩随身一件薄外套。</p></div></div>
+      <h3 style="margin-top:1.1rem">轻量但有用的行李</h3><ul class="check"><li>防晒霜、遮阳帽、太阳镜、防晒衣</li><li>透气快干衣物；舒适、防滑、走路不磨脚的鞋</li><li>水壶、补液盐或电解质冲剂、小风扇</li><li>折叠伞/轻雨衣、密封袋、防水手机袋</li><li>薄外套、长裤或围巾（寺庙、车内和空调场所）</li><li>驱蚊用品、创可贴、肠胃药、退烧/过敏药</li></ul>
+      <div class="callout">高温信号：头晕、恶心、乏力、心慌、异常出汗或无汗。立刻停止活动，到阴凉/空调处补水休息；不要硬撑“再走五分钟”。</div>
+      <div class="footer"><span>游者手记 · 天气与行李</span><span>第 4 页</span></div>
+    </section>
+
+    <section class="page">
+      <p class="kicker">吃得开心，也要舒服</p><h2>04｜吃喝、点餐与文化小贴士</h2>
+      <div class="grid two"><div class="card"><h3>好好吃，也慢慢试</h3><ul><li>前一两天先选卫生条件好、熟食为主的餐厅；再尝试街边小吃。</li><li>少量多样地试，肠胃不适就回到清淡饮食并补液。</li><li>榴莲、海鲜、辣食与冰饮一次别叠加太多。</li><li>饮用密封瓶装水；对水源敏感者避开不明冰块。</li></ul></div><div class="card"><h3>点餐更顺利</h3><ul><li>菜单常见马来、英语与华语；不确定就先问价格和辣度。</li><li>多人点餐先约定份量，避免“每人一份”导致过量。</li><li>付款、称重或海鲜计价前确认总价。</li><li>尊重宗教与饮食习惯，进入清真场所时注意礼仪。</li></ul></div></div>
+      <h3 style="margin-top:1.05rem">几句就够用</h3><div class="grid two"><div class="phrase"><b>Terima kasih</b>谢谢</div><div class="phrase"><b>Berapa?</b>多少钱？</div><div class="phrase"><b>Tidak pedas</b>不要辣</div><div class="phrase"><b>Air kosong</b>白水/白开水</div><div class="phrase"><b>Tolong</b>请帮忙</div><div class="phrase"><b>Tandas di mana?</b>洗手间在哪里？</div></div>
+      <div class="note" style="margin-top:1rem">槟城与怡保适合把“吃”当成行程的一部分：给一顿饭留出时间；排队和用餐高峰时，不必强求全团同一家店。</div>
+      <div class="footer"><span>游者手记 · 吃喝与沟通</span><span>第 5 页</span></div>
+    </section>
+
+    <section class="page">
+      <p class="kicker">带着家人旅行，安全感比打卡更重要</p><h2>05｜老人、孩子与水上活动</h2>
+      <div class="grid two"><div class="card"><h3>给长辈</h3><ul><li>慢病药随身带，按全程用量再多备几天；准备药物清单。</li><li>每天步数和景点数都可减，不跟体力硬较劲。</li><li>每 30—60 分钟主动补水；有不适马上休息。</li><li>不穿新鞋；路面湿滑、台阶和人群处尤其慢行。</li></ul></div><div class="card"><h3>给孩子</h3><ul><li>人多处牵手；约定走散后“原地等、找工作人员、不跟陌生人走”。</li><li>口袋放不含敏感信息的联系卡，或使用儿童手表。</li><li>每天留午休和自由玩耍时间；长途车备零食、绘本或耳机。</li><li>儿童药、驱蚊和防晒优先随身携带。</li></ul></div></div>
+      <div class="card" style="margin-top:.8rem"><h3>海滩、泳池、快艇、浮潜</h3><ul><li>只选正规运营方；听从工作人员指挥，穿合身救生衣。</li><li>孩子在泳池或海边必须由成人全程近距离看护。</li><li>不在天气恶劣、浪大、警示旗提示不宜下水时冒险。</li><li>身体不舒服、饮酒后、明显疲劳时，不参加水上项目。</li></ul></div>
+      <div class="callout">长途转场日不是“补景点日”。行李提前整理、备好零食水和晕车用品；抵达后只做最低限度安排，把体力留给后面几天。</div>
+      <div class="footer"><span>游者手记 · 亲子与安全</span><span>第 6 页</span></div>
+    </section>
+
+    <section class="page">
+      <p class="kicker">把意外变成可处理的小事</p><h2>06｜出行安全与应急处理</h2>
+      <div class="grid two"><div class="card"><h3>日常防范</h3><ul><li>包放身体前侧，护照、现金、卡、手机分开放。</li><li>不替陌生人看管或携带物品；不点击陌生付款链接。</li><li>夜间少走偏僻路；打车核对车辆与订单信息。</li><li>道路靠左行驶：过马路先重点看右方来车。</li></ul></div><div class="card"><h3>遗失或走散</h3><ul><li>先回忆最后一次确认地点，联系同行人和场所工作人员。</li><li>护照遗失：尽快报警并联系中国驻马使领馆。</li><li>银行卡遗失：立即在银行应用冻结/挂失。</li><li>走散：到约定集合点或明显安全处等待，不自行远走。</li></ul></div></div>
+      <div class="callout">紧急电话：马来西亚报警／急救／消防 <strong style="font-size:1.35rem">999</strong><br>中国外交部全球领事保护与服务应急热线：<strong>+86-10-12308</strong> 或 <strong>+86-10-65612308</strong></div>
+      <div class="note" style="margin-top:.85rem">紧急求助时，先说明：我在哪里（地图定位/地标）、发生什么、是否有人受伤、回拨电话。手机保持有电，地图截图留存。</div>
+      <div class="footer"><span>游者手记 · 安全与应急</span><span>第 7 页</span></div>
+    </section>
+
+    <section class="page">
+      <p class="kicker">落地后先让手机、地图和交通顺起来</p><h2>07｜机场、应用与市内移动</h2>
+      <div class="grid two"><div class="card"><h3>抵达机场后</h3><ul><li>先连网、开机、给家人报平安，再取行李和办入境手续。</li><li>留意自己所在航站楼；接送、铁路、巴士和网约车的集合区可能不同，按机场标识走。</li><li>网约车须到指定上车区；不要跟随主动招揽的陌生人离开公共区域。</li><li>团队接送时，以私密群里的当日通知为准，不在本册写具体集合信息。</li></ul></div><div class="card"><h3>建议预装</h3><ul><li><strong>Grab</strong>：网约车、外卖；可先看价格、车型和上车点，部分情形支持现金或多种无现金支付。</li><li><strong>Google 地图</strong>：下载吉隆坡、马六甲、槟城离线区域；收藏住处和景点。</li><li><strong>翻译工具</strong>：提前下载马来语/英语离线包，点餐和问路更从容。</li><li><strong>航空公司应用</strong>：仅用于查看航班动态与办理官方服务，不在群内转发个人订单截图。</li></ul></div></div>
+      <div class="grid two" style="margin-top:.8rem"><div class="card"><h3>市内交通的实用做法</h3><ul><li>马来西亚官方旅游信息列有 MRT、LRT、KTM、单轨等城市轨道；但带老人孩子、雨天或多人同行时，点对点车辆往往更省体力。</li><li>使用网约车时：核对车牌/车型/司机姓名；上车前后都不展示护照或大额现金。</li><li>高峰、下雨、景区散场时供车可能紧张；别卡着集合时间才叫车。</li></ul></div><div class="card"><h3>关于现金、卡与小费</h3><ul><li>移动支付普及，但小摊、公共厕所、小额消费仍可能更适合现金；备好零钱。</li><li>刷卡或扫码前核对金额；不要把银行卡、密码或验证码交给他人操作。</li><li>服务费/税费是否已列在账单上先看清；小费不是强制项目，按体验和个人意愿即可。</li></ul></div></div>
+      <div class="note" style="margin-top:.85rem">旅行者经验中最一致的一条：把“上车点截图 + 车辆信息 + 预计到达时间”发给同行人。既能减少找车焦虑，也便于走散时互相定位。</div>
+      <div class="footer"><span>游者手记 · 机场与交通</span><span>第 8 页</span></div>
+    </section>
+
+    <section class="page">
+      <p class="kicker">把热门点留给早晨，把从容留给自己</p><h2>08｜城市游玩、排队与拍照贴士</h2>
+      <div class="grid three"><div class="card"><h3>吉隆坡</h3><ul><li>城市地标与大型商场可搭配安排：上午户外、午间避暑、傍晚再逛夜景。</li><li>热门观景与展馆若需预约，以官方售票页面为准；不要购买来历不明的“免排队票”。</li><li>人流区手机不挂在外侧口袋，拍照后立即收好。</li></ul></div><div class="card"><h3>马六甲</h3><ul><li>老城适合慢走、看建筑与河边风景；石板路、雨后地面可能滑。</li><li>宗教场所遵守服装和拍摄规则；必要时使用现场提供的遮盖衣物。</li><li>一日往返车程较长，不要把每个打卡点都排满。</li></ul></div><div class="card"><h3>槟城</h3><ul><li>乔治市可步行或短程分段游览；壁画热门点可能排队，先到先拍、错峰更好。</li><li>升旗山尽量早去，既避热也避开客流；山上天气变化快，带薄外套和雨具。</li><li>海边/水上活动提前确认当天海况与运营状态。</li></ul></div></div>
+      <h3 style="margin-top:1rem">小红书等旅行者平台常见的“少踩坑”做法</h3><ul class="check"><li>把每日“必去”压到 1—2 个，其余作为可选；雨天立刻切换到室内备选。</li><li>热门景点与网红餐厅会排队：先拿号、再附近散步；不必全团都等同一家。</li><li>拍摄时不要占用通道、攀爬设施或进入宗教场所禁拍区。</li><li>景点、餐厅、商店的营业时间和临时关闭情况，当天再用官方页面/地图确认。</li><li>用地图把想去的店分组收藏，按区域吃逛，减少在烈日下跨区折返。</li><li>跟随网络推荐时，优先看近期评价与地址，警惕“导游带去才有优惠”之类说法。</li></ul>
+      <div class="callout">不把“网红同款”当成必做任务。对亲子团和多家庭团来说，遮阴、洗手间、座位、回程交通，往往比多拍一处更重要。</div>
+      <div class="footer"><span>游者手记 · 城市玩法</span><span>第 9 页</span></div>
+    </section>
+
+    <section class="page cover">
+      <p class="kicker">最后一页，写给同行的我们</p><h2>尾页｜轻松同行的约定</h2>
+      <div class="grid two"><div class="card"><h3>每天出发前</h3><ul><li>证件、手机、钱包、充电宝、雨具、水。</li><li>确认集合时间、地点与当天体力安排。</li><li>防晒、薄外套、常用药按需补齐。</li></ul></div><div class="card"><h3>每天回到住处</h3><ul><li>给手机、充电宝充电；补水、洗晒衣物。</li><li>确认次日天气、衣着和集合安排。</li><li>照片备份，重要证件继续放妥。</li></ul></div></div>
+      <div class="note" style="margin-top:1rem">这是一趟家庭旅行，不是竞速赛。有人想慢一点、早一点回去、少走一个景点，都很正常。彼此照应、及时沟通，才是最好的行程。</div>
+      <p class="lead" style="margin-top:2rem">愿我们带着好奇出发，带着故事回家。</p>
+      <p class="small">政策与服务信息可能变化。出发前请以马来西亚移民局、中国领事服务网和航空公司等官方最新通知为准。本册为公开同行版，未收录敏感行程资料。</p>
+      <div class="footer"><span>游者手记 · 一路平安</span><span>第 10 页</span></div>
+    </section>
+  </main>
+</body>
+</html>

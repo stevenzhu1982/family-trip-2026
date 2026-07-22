@@ -81,6 +81,8 @@ test("authenticated requests reach the application with security headers", async
   assert.equal(response.headers.get("Cache-Control"), "private, no-store");
   assert.equal(response.headers.get("X-Content-Type-Options"), "nosniff");
   assert.equal(response.headers.get("X-Frame-Options"), "DENY");
+  assert.match(response.headers.get("Content-Security-Policy"), /object-src 'none'/);
+  assert.equal(response.headers.get("Permissions-Policy"), "camera=(), microphone=(), geolocation=()");
 });
 
 test("missing authentication secrets fails closed", async () => {

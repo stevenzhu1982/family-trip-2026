@@ -980,10 +980,10 @@ async function loadFeedbacks() {
       if (f.children > 0) parts.push('小孩' + f.children + '人');
       const pplHtml = parts.length ? '<br><strong>参加人数：</strong>' + parts.join(' · ') : '';
       const timePref = JSON.parse(f.time_pref || '[]');
-      const timeHtml = timePref.length ? '<br><strong>时间：</strong>' + timePref.join('、') : '';
+      const timeHtml = timePref.length ? '<br><strong>时间：</strong>' + timePref.map(escHtml).join('、') : '';
       const extraHtml = [];
-      if (f.accommodation) extraHtml.push('住宿：' + f.accommodation.replace(/,/g, '、'));
-      if (f.travel_style) extraHtml.push('出行：' + f.travel_style.replace(/,/g, '、'));
+      if (f.accommodation) extraHtml.push('住宿：' + escHtml(f.accommodation.replace(/,/g, '、')));
+      if (f.travel_style) extraHtml.push('出行：' + escHtml(f.travel_style.replace(/,/g, '、')));
       const extraHtml2 = extraHtml.length ? '<br><strong>偏好：</strong>' + extraHtml.join(' · ') : '';
       const otherHtml = f.destination_other ? '<br><strong>其他想法：</strong>' + escHtml(f.destination_other) : '';
       const noteHtml = f.special_needs ? '<br><strong>备注：</strong>' + escHtml(f.special_needs) : '';
