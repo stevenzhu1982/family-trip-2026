@@ -790,7 +790,7 @@ summary {
   <div class="card">
     <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;">
       <span>✅ 出行前待办清单</span>
-      <span style="font-size:12px;font-weight:400;color:#e53e3e;">距出发还有 <strong style="font-size:16px;">60天</strong></span>
+      <span style="font-size:12px;font-weight:400;color:#e53e3e;">距出发还有 <strong id="trip-countdown" style="font-size:16px;" aria-live="polite">计算中</strong></span>
     </div>
     <style>
     .cl-item {
@@ -1063,6 +1063,19 @@ summary {
   </div>
 
 <script>
+/* ===== Trip countdown ===== */
+(function() {
+  var countdown = document.getElementById('trip-countdown');
+  if (!countdown) return;
+  var today = new Date();
+  var startDate = new Date(2026, 7, 4);
+  today.setHours(0, 0, 0, 0);
+  var days = Math.round((startDate - today) / 86400000);
+  if (days > 0) countdown.textContent = days + '天';
+  else if (days === 0) countdown.textContent = '今天出发';
+  else countdown.textContent = '已出发';
+})();
+
 /* ===== Interactive Checklist ===== */
 (function() {
   var checks = document.querySelectorAll('.cl-check');
