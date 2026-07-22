@@ -86,6 +86,27 @@ body {
   margin: 0 auto;
   line-height: 1.8;
 }
+.travel-countdown {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 24px;
+  padding: 12px 20px;
+  color: #fff8df;
+  background: rgba(45, 27, 105, 0.46);
+  border: 1px solid rgba(255, 242, 194, 0.72);
+  border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(20, 10, 55, 0.25);
+  backdrop-filter: blur(4px);
+}
+.travel-countdown-label { font-size: 14px; font-weight: 700; }
+.travel-countdown strong {
+  color: #fff1a8;
+  font-size: clamp(28px, 7vw, 38px);
+  line-height: 1;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.25);
+}
 .hero-wave {
   position: absolute;
   bottom: -2px; left: 0; right: 0;
@@ -487,6 +508,10 @@ summary {
     <span class="hero-emoji">🇲🇾</span>
     <h1>2026 暑假 · 马来西亚亲子游</h1>
     <p>吉隆坡 · 马六甲 · 槟城<br>8月4日 — 8月13日 · 10天9晚</p>
+    <div class="travel-countdown" aria-label="出行倒计时">
+      <span class="travel-countdown-label">距离出发</span>
+      <strong id="trip-countdown-hero" aria-live="polite">计算中</strong>
+    </div>
   </div>
   <div class="hero-wave"></div>
 </section>
@@ -790,7 +815,7 @@ summary {
   <div class="card">
     <div class="card-title" style="display:flex;justify-content:space-between;align-items:center;">
       <span>✅ 出行前待办清单</span>
-      <span style="font-size:12px;font-weight:400;color:#e53e3e;">距出发还有 <strong id="trip-countdown" style="font-size:16px;" aria-live="polite">计算中</strong></span>
+      <span style="font-size:12px;font-weight:400;color:#e53e3e;">距出发还有 <strong id="trip-countdown-inline" style="font-size:16px;" aria-live="polite">计算中</strong></span>
     </div>
     <style>
     .cl-item {
@@ -1065,15 +1090,14 @@ summary {
 <script>
 /* ===== Trip countdown ===== */
 (function() {
-  var countdown = document.getElementById('trip-countdown');
-  if (!countdown) return;
+  var countdowns = document.querySelectorAll('[id^="trip-countdown"]');
+  if (!countdowns.length) return;
   var today = new Date();
   var startDate = new Date(2026, 7, 4);
   today.setHours(0, 0, 0, 0);
   var days = Math.round((startDate - today) / 86400000);
-  if (days > 0) countdown.textContent = days + '天';
-  else if (days === 0) countdown.textContent = '今天出发';
-  else countdown.textContent = '已出发';
+  var label = days > 0 ? days + '天' : days === 0 ? '今天出发' : '已出发';
+  countdowns.forEach(function(countdown) { countdown.textContent = label; });
 })();
 
 /* ===== Interactive Checklist ===== */
