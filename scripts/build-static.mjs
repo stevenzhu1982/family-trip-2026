@@ -4,7 +4,7 @@ import path from "node:path";
 const projectRoot = path.resolve(import.meta.dirname, "..");
 const sourceRoot = path.join(projectRoot, "site");
 const outputRoot = path.join(projectRoot, "dist");
-const excludedNames = new Set([".functions", "_worker.js", "functions", "node_modules"]);
+const excludedNames = new Set([".functions", "_worker.js", "functions", "node_modules", "budget.html"]);
 
 async function copyDirectory(source, output) {
   await mkdir(output, { recursive: true });
