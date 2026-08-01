@@ -1,4 +1,3 @@
-# IPTV TV page (public, no login required)
-/tv /tv.html 200
+# IPTV TV page (public) - legacy paths redirect to /tv.html
 /TV /tv.html 301
 /TV/ /tv.html 301

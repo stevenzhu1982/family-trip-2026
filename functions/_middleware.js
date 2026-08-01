@@ -117,9 +117,13 @@ export async function onRequest(context) {
   if (!hasAuthSecrets(env)) return unavailable(request);
   if (pathname === LOGIN_PATH) return handleLogin(request, env);
 
-  // Public TV/IPTV page bypasses login and uses a relaxed CSP
+  // Public TV/IPTV page bypasses login and uses a relaxed CSP.
+  // _redirects 200-proxy rules are NOT applied to requests handled by
+  // Pages Functions, so rewrite the path to the static tv.html file here.
   if (PUBLIC_PATHS.has(pathname)) {
-    const tvResponse = await context.next();
+    const tvRequest =
+      pathname === "/tv.html" ? request : new Request(new URL("/tv.html", request.url), request);
+    const tvResponse = await context.next(tvRequest);
     const tvSecured = new Response(tvResponse.body, tvResponse);
     for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
       tvSecured.headers.set(name, name === "Content-Security-Policy" ? TV_CSP : value);
