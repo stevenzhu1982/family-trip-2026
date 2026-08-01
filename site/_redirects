@@ -1,5 +1,4 @@
 # IPTV TV page (public, no login required)
 /tv /tv.html 200
-/tv.html /tv.html 200
 /TV /tv.html 301
 /TV/ /tv.html 301
