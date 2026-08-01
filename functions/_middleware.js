@@ -11,6 +11,11 @@ const LOGIN_PATH = "/login";
 const LOGOUT_PATH = "/logout";
 const MAX_LOGIN_BODY_BYTES = 4096;
 
+// Public IPTV TV page paths (no login required)
+const PUBLIC_PATHS = new Set(["/tv", "/tv.html", "/TV", "/TV/"]);
+// Relaxed CSP for the TV page: allows hls.js from jsDelivr, iptv-org API and stream playback
+const TV_CSP = "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: http:; connect-src 'self' https: http: blob:; media-src 'self' https: http: blob:; frame-src 'self' https://www.youtube.com; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'";
+
 const SECURITY_HEADERS = {
   "Cache-Control": "private, no-store",
   "Content-Security-Policy": "default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; script-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com; connect-src 'self' https://flights.ch.com http://localhost:8000; frame-src 'self' https://www.youtube.com; media-src 'self' blob:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'",
@@ -111,6 +116,16 @@ export async function onRequest(context) {
 
   if (!hasAuthSecrets(env)) return unavailable(request);
   if (pathname === LOGIN_PATH) return handleLogin(request, env);
+
+  // Public TV/IPTV page bypasses login and uses a relaxed CSP
+  if (PUBLIC_PATHS.has(pathname)) {
+    const tvResponse = await context.next();
+    const tvSecured = new Response(tvResponse.body, tvResponse);
+    for (const [name, value] of Object.entries(SECURITY_HEADERS)) {
+      tvSecured.headers.set(name, name === "Content-Security-Policy" ? TV_CSP : value);
+    }
+    return tvSecured;
+  }
 
   if (!(await hasValidSession(request, env.SESSION_SECRET))) {
     if (pathname.startsWith("/api/")) {
