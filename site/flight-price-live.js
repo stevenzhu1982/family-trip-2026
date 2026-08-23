@@ -70,11 +70,56 @@
       legs.append(renderLeg("返程 · 2月18日", item.inbound));
       card.append(legs);
       const details = [];
-      if (item.cabinClass) details.push(item.cabinClass === "economy" ? "经济舱" : item.cabinClass);
+      if (item.cabin) details.push(item.cabin === "economy" ? "经济舱" : item.cabin);
       if (item.baggage?.checked) details.push(`托运行李：${item.baggage.checked}`);
       if (details.length) card.append(createText("div", "details", details.join("　")));
       resultRoot.append(card);
     });
+  }
+
+  function renderOneWayGroup(group) {
+    const section = document.createElement("section");
+    section.className = "date-group";
+    const title = group.direction === "outbound" ? "去程 · 上海浦东 PVG → 曼谷 BKK" : "返程 · 曼谷 BKK → 上海浦东 PVG";
+    section.append(createText("h2", "date-heading", `${title} · ${group.date.slice(5).replace("-", "月")}日`));
+    if (group.unavailable) {
+      section.append(createText("p", "empty", "该日期的数据服务暂时未返回，请稍后重新查询。"));
+      return section;
+    }
+    if (!group.results.length) {
+      section.append(createText("p", "empty", "该日期未找到泰国航空直飞可售航班。"));
+      return section;
+    }
+    group.results.forEach((item, index) => {
+      const card = document.createElement("article");
+      card.className = "result-card one-way";
+      const top = document.createElement("div");
+      top.className = "result-top";
+      top.append(createText("div", "rank", `#${index + 1} · 单程单人`));
+      top.append(createText("strong", "price", money(item.price, item.currency)));
+      card.append(top);
+      const leg = renderLeg(group.direction === "outbound" ? "去程" : "返程", item.flight);
+      card.append(leg);
+      const details = [];
+      if (item.cabin === "economy") details.push("经济舱");
+      if (item.baggage?.checked) details.push(`托运行李：${item.baggage.checked}`);
+      if (details.length) card.append(createText("div", "details", details.join("　")));
+      section.append(card);
+    });
+    return section;
+  }
+
+  function renderOneWayGrid(payload) {
+    resultRoot.replaceChildren();
+    const outbound = document.createElement("section");
+    outbound.className = "direction-group";
+    outbound.append(createText("h2", "direction-heading", "去程日期 · 2月8日—2月11日"));
+    payload.outbound.forEach((group) => outbound.append(renderOneWayGroup(group)));
+    const inbound = document.createElement("section");
+    inbound.className = "direction-group";
+    inbound.append(createText("h2", "direction-heading", "返程日期 · 2月16日—2月19日"));
+    payload.inbound.forEach((group) => inbound.append(renderOneWayGroup(group)));
+    resultRoot.append(outbound, inbound);
   }
 
   async function query() {
@@ -86,11 +131,15 @@
       const response = await fetch(config.endpoint, { cache: "no-store", credentials: "same-origin" });
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "实时查询暂不可用。");
-      renderResults(payload.results || []);
+      if (payload.mode === "one-way-date-grid") renderOneWayGrid(payload);
+      else renderResults(payload.results || []);
       checkedAt.textContent = new Intl.DateTimeFormat("zh-CN", {
         year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
       }).format(new Date(payload.queriedAt || Date.now()));
-      setStatus(`已查询 ${payload.results?.length || 0} 个符合条件的方案，已按含税总价从低到高排列。`);
+      const resultCount = payload.mode === "one-way-date-grid"
+        ? [...payload.outbound, ...payload.inbound].reduce((total, group) => total + group.results.length, 0)
+        : payload.results?.length || 0;
+      setStatus(`已查询 ${resultCount} 个符合条件的方案，均已按含税单程价从低到高排列。${payload.partial ? " 部分日期暂不可用。" : ""}`);
     } catch (error) {
       resultRoot.replaceChildren(createText("p", "empty", "未展示历史或估算价格；请点击“重新查询”获取本次实时结果。"));
       setStatus(error.message || "实时查询失败，请稍后重试。", true);
