@@ -43,7 +43,7 @@ test("signed session cookie is private and verifiable", async () => {
 test("private pages and APIs reject unauthenticated requests", async () => {
   const page = await onRequest(context(new Request("https://example.test/members.html")));
   assert.equal(page.status, 303);
-  assert.equal(page.headers.get("Location"), "/login");
+  assert.equal(page.headers.get("Location"), "/login?next=%2Fmembers.html");
 
   const api = await onRequest(context(new Request("https://example.test/api/comments")));
   assert.equal(api.status, 401);
@@ -53,7 +53,7 @@ test("private pages and APIs reject unauthenticated requests", async () => {
 test("login never accepts URL credentials and issues a signed cookie on POST", async () => {
   const queryAttempt = await onRequest(context(new Request("https://example.test/?pw=local-test-password")));
   assert.equal(queryAttempt.status, 303);
-  assert.equal(queryAttempt.headers.get("Location"), "/login");
+  assert.equal(queryAttempt.headers.get("Location"), "/login?next=%2F%3Fpw%3Dlocal-test-password");
 
   const body = new URLSearchParams({ password: ENV.SITE_PASSWORD });
   const login = await onRequest(context(new Request("https://example.test/login", {
@@ -68,6 +68,34 @@ test("login never accepts URL credentials and issues a signed cookie on POST", a
   assert.equal(login.headers.get("Location"), "/");
   assert.match(login.headers.get("Set-Cookie"), /^__Host-family_trip_session=/);
   assert.doesNotMatch(login.headers.get("Set-Cookie"), new RegExp(ENV.SITE_PASSWORD));
+});
+
+test("login returns a visitor to the originally requested private page", async () => {
+  const body = new URLSearchParams({ password: ENV.SITE_PASSWORD });
+  const login = await onRequest(context(new Request("https://example.test/login?next=%2Fthailand%2F", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Origin: "https://example.test",
+    },
+    body,
+  })));
+  assert.equal(login.status, 303);
+  assert.equal(login.headers.get("Location"), "/thailand/");
+});
+
+test("login blocks external return paths", async () => {
+  const body = new URLSearchParams({ password: ENV.SITE_PASSWORD });
+  const login = await onRequest(context(new Request("https://example.test/login?next=%2F%2Fattacker.example", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Origin: "https://example.test",
+    },
+    body,
+  })));
+  assert.equal(login.status, 303);
+  assert.equal(login.headers.get("Location"), "/");
 });
 
 test("authenticated requests reach the application with security headers", async () => {

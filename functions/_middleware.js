@@ -25,8 +25,15 @@ const SECURITY_HEADERS = {
   "X-Frame-Options": "DENY",
 };
 
-function loginPage(error = false, status = 200) {
+function safeReturnPath(request) {
+  const next = new URL(request.url).searchParams.get("next");
+  if (!next || !next.startsWith("/") || next.startsWith("//") || next.startsWith("/login")) return "/";
+  return next;
+}
+
+function loginPage(error = false, status = 200, returnPath = "/") {
   const errorMessage = error ? '<p class="error" role="alert">密码错误，请重试。</p>' : "";
+  const action = `${LOGIN_PATH}?next=${encodeURIComponent(returnPath)}`;
   const html = `<!doctype html>
 <html lang="zh-CN">
 <head>
@@ -35,7 +42,7 @@ function loginPage(error = false, status = 200) {
   <title>家庭旅行 · 登录</title>
   <style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#f6f0e7;color:#44372c;font-family:system-ui,sans-serif}.card{width:min(86vw,22rem);padding:2rem;border-radius:1rem;background:#fff;box-shadow:0 1rem 3rem #684f3522}h1{font-size:1.4rem}label{display:block;margin:.8rem 0 .35rem}input,button{box-sizing:border-box;width:100%;padding:.8rem;border-radius:.6rem;font:inherit}input{border:1px solid #c9b9a8}button{margin-top:1rem;border:0;background:#765638;color:#fff;font-weight:700}.error{color:#a32121}</style>
 </head>
-<body><main class="card"><h1>请输入访问密码</h1><form method="post" action="/login"><label for="password">密码</label><input id="password" name="password" type="password" required autocomplete="current-password" autofocus><button type="submit">登录</button>${errorMessage}</form></main></body>
+<body><main class="card"><h1>请输入访问密码</h1><form method="post" action="${action}"><label for="password">密码</label><input id="password" name="password" type="password" required autocomplete="current-password" autofocus><button type="submit">登录</button>${errorMessage}</form></main></body>
 </html>`;
   return new Response(html, {
     status,
@@ -59,14 +66,15 @@ function unavailable(request) {
 }
 
 async function handleLogin(request, env) {
-  if (request.method === "GET" || request.method === "HEAD") return loginPage();
+  const returnPath = safeReturnPath(request);
+  if (request.method === "GET" || request.method === "HEAD") return loginPage(false, 200, returnPath);
   if (request.method !== "POST") {
     return new Response("Method not allowed", { status: 405, headers: { ...SECURITY_HEADERS, Allow: "GET, HEAD, POST" } });
   }
   if (!isSameOrigin(request)) return new Response("Forbidden", { status: 403, headers: SECURITY_HEADERS });
 
   const contentLength = Number(request.headers.get("Content-Length") || 0);
-  if (contentLength > MAX_LOGIN_BODY_BYTES) return loginPage(true, 413);
+  if (contentLength > MAX_LOGIN_BODY_BYTES) return loginPage(true, 413, returnPath);
 
   let password;
   try {
@@ -82,7 +90,7 @@ async function handleLogin(request, env) {
       total += value.byteLength;
       if (total > MAX_LOGIN_BODY_BYTES) {
         await reader.cancel();
-        return loginPage(true, 413);
+        return loginPage(true, 413, returnPath);
       }
       chunks.push(value);
     }
@@ -94,17 +102,17 @@ async function handleLogin(request, env) {
     }
     password = new URLSearchParams(new TextDecoder().decode(body)).get("password");
   } catch {
-    return loginPage(true, 400);
+    return loginPage(true, 400, returnPath);
   }
   if (typeof password !== "string" || !(await passwordsMatch(password, env.SITE_PASSWORD))) {
-    return loginPage(true, 401);
+    return loginPage(true, 401, returnPath);
   }
 
   return new Response(null, {
     status: 303,
     headers: {
       ...SECURITY_HEADERS,
-      Location: "/",
+      Location: returnPath,
       "Set-Cookie": await createSessionCookie(env.SESSION_SECRET),
     },
   });
@@ -136,7 +144,11 @@ export async function onRequest(context) {
         headers: { ...SECURITY_HEADERS, "Content-Type": "application/json; charset=utf-8" },
       });
     }
-    return new Response(null, { status: 303, headers: { ...SECURITY_HEADERS, Location: LOGIN_PATH } });
+    const returnTo = `${pathname}${new URL(request.url).search}`;
+    return new Response(null, {
+      status: 303,
+      headers: { ...SECURITY_HEADERS, Location: `${LOGIN_PATH}?next=${encodeURIComponent(returnTo)}` },
+    });
   }
 
   if (pathname === LOGOUT_PATH) {
