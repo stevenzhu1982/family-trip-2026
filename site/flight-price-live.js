@@ -102,7 +102,7 @@
       card.className = "result-card one-way";
       const top = document.createElement("div");
       top.className = "result-top";
-      top.append(createText("div", "rank", `#${index + 1} · 单程7人总价`));
+      top.append(createText("div", "rank", `#${index + 1} · 单程单人`));
       top.append(createText("strong", "price", money(item.price, item.currency)));
       card.append(top);
       const leg = renderLeg(group.direction === "outbound" ? "去程" : "返程", item.flight);
@@ -146,7 +146,7 @@
       const resultCount = payload.mode === "one-way-date-grid"
         ? [...payload.outbound, ...payload.inbound].reduce((total, group) => total + group.results.length, 0)
         : payload.results?.length || 0;
-      const priceLabel = payload.mode === "one-way-date-grid" ? "含税7人单程总价" : payload.travelers ? "含税7人往返总价" : "含税往返总价";
+      const priceLabel = payload.mode === "one-way-date-grid" ? "含税单程价" : payload.travelers ? "含税单人往返价" : "含税往返总价";
       setStatus(`已查询 ${resultCount} 个符合条件的方案，均已按${priceLabel}从低到高排列。${payload.partial ? " 部分日期暂不可用。" : ""}`);
     } catch (error) {
       resultRoot.replaceChildren(createText("p", "empty", "未展示历史或估算价格；请点击“重新查询”获取本次实时结果。"));

@@ -49,8 +49,8 @@ test("spring endpoint filters both legs to direct selected-airline flights, sort
       ["2027-02-09", "2027-02-18"], ["2027-02-10", "2027-02-19"],
     ]);
     assert.ok(providerRequests.every(({ origin, destination, adults, children, market, max_stops, allow_self_transfer, airlines_include }) => (
-      origin === "PVG" && destination === "BKK" && adults === 6 && market === "CN"
-      && children === 1 && max_stops === 0 && allow_self_transfer === false && airlines_include[0] === "9C"
+      origin === "PVG" && destination === "BKK" && adults === 1 && market === "CN"
+      && children === 0 && max_stops === 0 && allow_self_transfer === false && airlines_include[0] === "9C"
     )));
     assert.ok(DB.calls.filter(({ values }) => values[0] === "9C" && values[5] === 2).length === 4);
   } finally { globalThis.fetch = previousFetch; }
@@ -78,7 +78,7 @@ test("all-carrier endpoint searches BKK open-jaw combinations for the seven-pers
     assert.equal(response.status, 200);
     assert.equal(payload.mode, "all-carrier-bkk-grid");
     assert.equal(calls.length, 16);
-    assert.ok(calls.every(({ adults, children, allow_self_transfer, legs }) => adults === 6 && children === 1 && allow_self_transfer === false && legs.length === 2));
+    assert.ok(calls.every(({ adults, children, allow_self_transfer, legs }) => adults === 1 && children === 0 && allow_self_transfer === false && legs.length === 2));
     assert.ok(calls.every(({ legs }) => legs[0].destination === "BKK" && legs[1].origin === "BKK"));
     assert.equal(payload.results.length, 16);
     assert.equal(payload.results[0].price, 16800);

@@ -6,7 +6,7 @@ import {
 } from "../../src/auth/http.js";
 
 const ROUTE = Object.freeze({ origin: "PVG", destination: "BKK" });
-const PASSENGERS = Object.freeze({ adults: 6, children: 1, label: "6名成人＋1名儿童（7人总价）" });
+const PASSENGERS = Object.freeze({ adults: 1, children: 0, label: "单人含税价" });
 const SPRING_DATE_PAIRS = Object.freeze([
   { departureDate: "2027-02-07", returnDate: "2027-02-16" },
   { departureDate: "2027-02-08", returnDate: "2027-02-17" },
