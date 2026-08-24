@@ -133,7 +133,7 @@
     try {
       const response = await fetch(config.endpoint, { cache: "no-store", credentials: "same-origin" });
       const payload = await response.json();
-      if (!response.ok) throw new Error(payload.error || "实时查询暂不可用。");
+      if (!response.ok || !payload.success) throw new Error(payload.error || "实时查询暂不可用。");
       if (payload.mode === "one-way-date-grid") renderOneWayGrid(payload);
       else renderResults(payload.results || [], payload.travelers?.label || "往返单人");
       checkedAt.textContent = new Intl.DateTimeFormat("zh-CN", {

@@ -47,7 +47,15 @@ async function providerFetch(env, endpoint, body) {
     headers: { "Content-Type": "application/json", "X-Api-Key": env.IGNAV_API_KEY },
     body: JSON.stringify(body),
   });
-  if (!response.ok) throw new Error("provider request failed");
+  if (!response.ok) {
+    const raw = await response.text();
+    let detail = "";
+    try {
+      const parsed = JSON.parse(raw);
+      detail = parsed?.error?.message || parsed?.detail?.message || parsed?.message || "";
+    } catch {}
+    throw new Error(`航班数据服务返回 ${response.status}${detail ? `：${detail}` : ""}`);
+  }
   const payload = await response.json();
   return Array.isArray(payload.itineraries) ? payload.itineraries : [];
 }
@@ -224,6 +232,10 @@ async function allResponse(env) {
   })));
   const settled = await Promise.allSettled(jobs);
   const successful = settled.filter((result) => result.status === "fulfilled").map((result) => result.value);
+  if (!successful.length) {
+    const firstFailure = settled.find((result) => result.status === "rejected");
+    throw firstFailure?.reason instanceof Error ? firstFailure.reason : new Error("航班数据服务暂时不可用");
+  }
   const results = successful.flatMap((result) => result.results).sort((left, right) => left.price - right.price);
   const payload = {
     mode: "all-carrier-bkk-grid", route: { origins: ["PVG", "SHA"], destination: "BKK", returnAirports: ["PVG", "SHA"] },
@@ -248,7 +260,10 @@ export async function onRequest({ request, env }) {
   try {
     const data = airlineKey === "thai" ? await thaiResponse(env) : airlineKey === "all" ? await allResponse(env) : await springResponse(env);
     return jsonResponse(request, { success: true, queriedAt: new Date().toISOString(), provider: "Ignav", airline, ...data }, {}, METHODS);
-  } catch {
-    return jsonResponse(request, { success: false, error: "Flight provider is temporarily unavailable" }, { status: 502 }, METHODS);
+  } catch (error) {
+    return jsonResponse(request, {
+      success: false,
+      error: error instanceof Error ? error.message : "航班数据服务暂时不可用",
+    }, {}, METHODS);
   }
 }
