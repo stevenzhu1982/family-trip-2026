@@ -48,11 +48,42 @@ test("spring endpoint filters both legs to direct selected-airline flights, sort
       ["2027-02-07", "2027-02-16"], ["2027-02-08", "2027-02-17"],
       ["2027-02-09", "2027-02-18"], ["2027-02-10", "2027-02-19"],
     ]);
-    assert.ok(providerRequests.every(({ origin, destination, adults, market, max_stops, allow_self_transfer, airlines_include }) => (
-      origin === "PVG" && destination === "BKK" && adults === 1 && market === "CN"
-      && max_stops === 0 && allow_self_transfer === false && airlines_include[0] === "9C"
+    assert.ok(providerRequests.every(({ origin, destination, adults, children, market, max_stops, allow_self_transfer, airlines_include }) => (
+      origin === "PVG" && destination === "BKK" && adults === 6 && market === "CN"
+      && children === 1 && max_stops === 0 && allow_self_transfer === false && airlines_include[0] === "9C"
     )));
     assert.ok(DB.calls.filter(({ values }) => values[0] === "9C" && values[5] === 2).length === 4);
+  } finally { globalThis.fetch = previousFetch; }
+});
+
+test("all-carrier endpoint searches BKK open-jaw combinations for the seven-person party", async () => {
+  const previousFetch = globalThis.fetch;
+  const DB = database();
+  const calls = [];
+  globalThis.fetch = async (_url, init) => {
+    const body = JSON.parse(init.body);
+    calls.push(body);
+    const [outbound, inbound] = body.legs;
+    return new Response(JSON.stringify({ itineraries: [{
+      price: { amount: 16800, currency: "CNY" }, cabin_class: "economy",
+      legs: [
+        { carrier: "测试航司", duration_minutes: 280, segments: [{ marketing_carrier_code: "XX", flight_number: "100", departure_airport: outbound.origin, arrival_airport: "BKK", departure_time_local: `${outbound.departure_date}T08:00:00+08:00`, arrival_time_local: `${outbound.departure_date}T12:00:00+07:00` }] },
+        { carrier: "测试航司", duration_minutes: 260, segments: [{ marketing_carrier_code: "XX", flight_number: "101", departure_airport: "BKK", arrival_airport: inbound.destination, departure_time_local: `${inbound.departure_date}T17:00:00+07:00`, arrival_time_local: `${inbound.departure_date}T22:00:00+08:00` }] },
+      ],
+    }] }), { status: 200 });
+  };
+  try {
+    const response = await onRequest({ request: new Request("https://example.test/api/flight-prices?airline=all", { headers: { Origin: "https://example.test" } }), env: { IGNAV_API_KEY: "test-key", DB } });
+    const payload = await response.json();
+    assert.equal(response.status, 200);
+    assert.equal(payload.mode, "all-carrier-bkk-grid");
+    assert.equal(calls.length, 16);
+    assert.ok(calls.every(({ adults, children, allow_self_transfer, legs }) => adults === 6 && children === 1 && allow_self_transfer === false && legs.length === 2));
+    assert.ok(calls.every(({ legs }) => legs[0].destination === "BKK" && legs[1].origin === "BKK"));
+    assert.equal(payload.results.length, 16);
+    assert.equal(payload.results[0].price, 16800);
+    assert.equal(payload.results[0].outbound.origin, "PVG");
+    assert.ok(DB.calls.some(({ values }) => values[0] === "ALL"));
   } finally { globalThis.fetch = previousFetch; }
 });
 

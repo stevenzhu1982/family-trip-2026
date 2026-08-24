@@ -5,7 +5,8 @@ import {
   preflightResponse,
 } from "../../src/auth/http.js";
 
-const ROUTE = Object.freeze({ origin: "PVG", destination: "BKK", adults: 1 });
+const ROUTE = Object.freeze({ origin: "PVG", destination: "BKK" });
+const PASSENGERS = Object.freeze({ adults: 6, children: 1, label: "6名成人＋1名儿童（7人总价）" });
 const SPRING_DATE_PAIRS = Object.freeze([
   { departureDate: "2027-02-07", returnDate: "2027-02-16" },
   { departureDate: "2027-02-08", returnDate: "2027-02-17" },
@@ -19,15 +20,25 @@ const THAI_DATES = Object.freeze({
 const AIRLINES = Object.freeze({
   spring: { code: "9C", name: "春秋航空" },
   thai: { code: "TG", name: "泰国航空" },
+  all: { code: "ALL", name: "全航司直飞（BKK）" },
 });
+const ALL_BKK_ROUTES = Object.freeze([
+  { origin: "PVG", destination: "BKK", returnAirport: "PVG" },
+  { origin: "PVG", destination: "BKK", returnAirport: "SHA" },
+  { origin: "SHA", destination: "BKK", returnAirport: "PVG" },
+  { origin: "SHA", destination: "BKK", returnAirport: "SHA" },
+]);
 const METHODS = "GET, OPTIONS";
 const MAX_RESULTS = 30;
 
 function providerBody(origin, destination, departureDate, airlineCode) {
-  return {
-    origin, destination, departure_date: departureDate, adults: ROUTE.adults,
+  const body = {
+    origin, destination, departure_date: departureDate, ...PASSENGERS,
     market: "CN", max_stops: 0, allow_self_transfer: false, airlines_include: [airlineCode],
   };
+  if (!airlineCode) delete body.airlines_include;
+  delete body.label;
+  return body;
 }
 
 async function providerFetch(env, endpoint, body) {
@@ -47,6 +58,8 @@ function formatLeg(leg) {
   const number = segment?.flight_number ? String(segment.flight_number) : "";
   return {
     carrier: leg?.carrier || segment?.operating_carrier_name || "航司待确认",
+    origin: segment?.departure_airport || "—",
+    destination: segment?.arrival_airport || "—",
     flightNumber: number ? (number.startsWith(code) ? number : `${code}${number}`) : "待确认",
     departure: segment?.departure_time_local || null,
     arrival: segment?.arrival_time_local || null,
@@ -77,6 +90,21 @@ function isNonstopRoundTrip(itinerary, airlineCode) {
     && inbound[0].marketing_carrier_code === airlineCode;
 }
 
+function isNonstopSearch(itinerary, route) {
+  const legs = itinerary?.legs;
+  if (!Array.isArray(legs) || legs.length !== 2) return false;
+  const [outbound, inbound] = legs;
+  const outboundSegment = outbound?.segments?.[0];
+  const inboundSegment = inbound?.segments?.[0];
+  return outbound?.segments?.length === 1 && inbound?.segments?.length === 1
+    && outboundSegment?.departure_airport === route.origin
+    && outboundSegment?.arrival_airport === route.destination
+    && inboundSegment?.departure_airport === route.destination
+    && inboundSegment?.arrival_airport === route.returnAirport
+    && String(outboundSegment?.arrival_time_local || "").slice(11, 13) >= "06"
+    && String(inboundSegment?.arrival_time_local || "").slice(0, 10) <= "2027-02-19";
+}
+
 function normalizeRoundTrip(itinerary, dates) {
   return {
     ...dates,
@@ -91,6 +119,15 @@ function normalizeOneWay(itinerary) {
     price: normalizedPrice(itinerary), currency: String(itinerary.price?.currency || "CNY"),
     cabin: String(itinerary.cabin_class || "economy"), baggage: itinerary.bags || {},
     flight: formatLeg(itinerary.outbound),
+  };
+}
+
+function normalizeSearchItinerary(itinerary, dates) {
+  return {
+    ...dates,
+    price: normalizedPrice(itinerary), currency: String(itinerary.price?.currency || "CNY"),
+    cabin: String(itinerary.cabin_class || "economy"), baggage: itinerary.bags || {},
+    outbound: formatLeg(itinerary.legs?.[0]), inbound: formatLeg(itinerary.legs?.[1]),
   };
 }
 
@@ -140,7 +177,7 @@ async function springResponse(env) {
   const pairs = settled.map((result, index) => result.status === "fulfilled"
     ? result.value : { ...SPRING_DATE_PAIRS[index], results: [], unavailable: true });
   const results = pairs.flatMap((pair) => pair.results).sort((left, right) => left.price - right.price);
-  const payload = { mode: "round-trip-date-grid", route: ROUTE, datePairs: SPRING_DATE_PAIRS, pairs, results, partial };
+  const payload = { mode: "round-trip-date-grid", route: ROUTE, travelers: PASSENGERS, datePairs: SPRING_DATE_PAIRS, pairs, results, partial };
   await Promise.all(pairs.map((pair) => saveSnapshot(env, AIRLINES.spring, pair.departureDate, pair.returnDate, {
     resultCount: pair.results.length,
     payload: { mode: "round-trip", route: { ...ROUTE, departureDate: pair.departureDate, returnDate: pair.returnDate }, results: pair.results },
@@ -159,9 +196,44 @@ async function thaiResponse(env) {
     ? result.value : { date: THAI_DATES.outbound[index], direction: "outbound", results: [], unavailable: true });
   const inbound = settled.slice(THAI_DATES.outbound.length).map((result, index) => result.status === "fulfilled"
     ? result.value : { date: THAI_DATES.inbound[index], direction: "inbound", results: [], unavailable: true });
-  const payload = { mode: "one-way-date-grid", route: ROUTE, dates: THAI_DATES, outbound, inbound, partial: failed };
+  const payload = { mode: "one-way-date-grid", route: ROUTE, travelers: PASSENGERS, dates: THAI_DATES, outbound, inbound, partial: failed };
   const resultCount = [...outbound, ...inbound].reduce((total, group) => total + group.results.length, 0);
   await saveSnapshot(env, AIRLINES.thai, THAI_DATES.outbound.join(","), THAI_DATES.inbound.join(","), { resultCount, payload });
+  return payload;
+}
+
+async function searchAllPair(env, dates, route) {
+  const itineraries = await providerFetch(env, "search", {
+    legs: [
+      { origin: route.origin, destination: route.destination, departure_date: dates.departureDate, max_stops: 0, departure_time_range: { arrival_earliest_hour: 6 } },
+      { origin: route.destination, destination: route.returnAirport, departure_date: dates.returnDate, max_stops: 0 },
+    ],
+    adults: PASSENGERS.adults, children: PASSENGERS.children, market: "CN", allow_self_transfer: false,
+  });
+  return itineraries
+    .filter((itinerary) => isNonstopSearch(itinerary, route))
+    .map((itinerary) => normalizeSearchItinerary(itinerary, dates))
+    .filter((itinerary) => itinerary.price !== null)
+    .sort((left, right) => left.price - right.price)
+    .slice(0, MAX_RESULTS);
+}
+
+async function allResponse(env) {
+  const jobs = SPRING_DATE_PAIRS.flatMap((dates) => ALL_BKK_ROUTES.map(async (route) => ({
+    dates, route, results: await searchAllPair(env, dates, route),
+  })));
+  const settled = await Promise.allSettled(jobs);
+  const successful = settled.filter((result) => result.status === "fulfilled").map((result) => result.value);
+  const results = successful.flatMap((result) => result.results).sort((left, right) => left.price - right.price);
+  const payload = {
+    mode: "all-carrier-bkk-grid", route: { origins: ["PVG", "SHA"], destination: "BKK", returnAirports: ["PVG", "SHA"] },
+    travelers: PASSENGERS, datePairs: SPRING_DATE_PAIRS, results,
+    partial: settled.some((result) => result.status === "rejected"),
+  };
+  await Promise.all(SPRING_DATE_PAIRS.map((dates) => saveSnapshot(env, AIRLINES.all, dates.departureDate, dates.returnDate, {
+    resultCount: results.filter((result) => result.departureDate === dates.departureDate && result.returnDate === dates.returnDate).length,
+    payload,
+  })));
   return payload;
 }
 
@@ -174,7 +246,7 @@ export async function onRequest({ request, env }) {
   if (!airline) return jsonResponse(request, { success: false, error: "Unknown airline" }, { status: 400 }, METHODS);
   if (!env.IGNAV_API_KEY) return jsonResponse(request, { success: false, error: "Flight search is not configured" }, { status: 503 }, METHODS);
   try {
-    const data = airlineKey === "thai" ? await thaiResponse(env) : await springResponse(env);
+    const data = airlineKey === "thai" ? await thaiResponse(env) : airlineKey === "all" ? await allResponse(env) : await springResponse(env);
     return jsonResponse(request, { success: true, queriedAt: new Date().toISOString(), provider: "Ignav", airline, ...data }, {}, METHODS);
   } catch {
     return jsonResponse(request, { success: false, error: "Flight provider is temporarily unavailable" }, { status: 502 }, METHODS);

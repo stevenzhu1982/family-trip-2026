@@ -1,7 +1,8 @@
 (() => {
   const configs = {
     spring: { name: "春秋航空", endpoint: "/api/flight-prices?airline=spring" },
-    thai: { name: "泰国航空", endpoint: "/api/flight-prices?airline=thai" }
+    thai: { name: "泰国航空", endpoint: "/api/flight-prices?airline=thai" },
+    all: { name: "全航司直飞（BKK）", endpoint: "/api/flight-prices?airline=all" }
   };
 
   const airline = document.body.dataset.airline;
@@ -43,16 +44,16 @@
     const root = document.createElement("section");
     root.className = "flight-leg";
     root.append(createText("div", "leg-title", title));
-    root.append(createText("div", "route", title.startsWith("去") ? "PVG → BKK" : "BKK → PVG"));
+    root.append(createText("div", "route", `${leg.origin || "—"} → ${leg.destination || "—"}`));
     root.append(createText("div", "leg-time", `${time(leg.departure)} — ${time(leg.arrival)}`));
     root.append(createText("div", "leg-meta", `${leg.carrier} ${leg.flightNumber} · ${leg.durationMinutes ? `${leg.durationMinutes} 分钟` : "时长待确认"}`));
     return root;
   }
 
-  function renderResults(results) {
+  function renderResults(results, fareLabel = "往返单人") {
     resultRoot.replaceChildren();
     if (!results.length) {
-      resultRoot.append(createText("p", "empty", "本次实时查询未找到符合“全程直飞 + 指定航司”的可售航班。"));
+      resultRoot.append(createText("p", "empty", "本次实时查询未找到符合当前直飞、人数和时刻条件的可售航班。"));
       return;
     }
 
@@ -61,7 +62,7 @@
       card.className = "result-card";
       const top = document.createElement("div");
       top.className = "result-top";
-      top.append(createText("div", "rank", `#${index + 1} · 往返单人`));
+      top.append(createText("div", "rank", `#${index + 1} · ${fareLabel}`));
       top.append(createText("strong", "price", money(item.price, item.currency)));
       card.append(top);
       const legs = document.createElement("div");
@@ -97,7 +98,7 @@
       card.className = "result-card one-way";
       const top = document.createElement("div");
       top.className = "result-top";
-      top.append(createText("div", "rank", `#${index + 1} · 单程单人`));
+      top.append(createText("div", "rank", `#${index + 1} · 单程7人总价`));
       top.append(createText("strong", "price", money(item.price, item.currency)));
       card.append(top);
       const leg = renderLeg(group.direction === "outbound" ? "去程" : "返程", item.flight);
@@ -134,14 +135,14 @@
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || "实时查询暂不可用。");
       if (payload.mode === "one-way-date-grid") renderOneWayGrid(payload);
-      else renderResults(payload.results || []);
+      else renderResults(payload.results || [], payload.travelers?.label || "往返单人");
       checkedAt.textContent = new Intl.DateTimeFormat("zh-CN", {
         year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false
       }).format(new Date(payload.queriedAt || Date.now()));
       const resultCount = payload.mode === "one-way-date-grid"
         ? [...payload.outbound, ...payload.inbound].reduce((total, group) => total + group.results.length, 0)
         : payload.results?.length || 0;
-      const priceLabel = payload.mode === "one-way-date-grid" ? "含税单程价" : "含税往返总价";
+      const priceLabel = payload.mode === "one-way-date-grid" ? "含税7人单程总价" : payload.travelers ? "含税7人往返总价" : "含税往返总价";
       setStatus(`已查询 ${resultCount} 个符合条件的方案，均已按${priceLabel}从低到高排列。${payload.partial ? " 部分日期暂不可用。" : ""}`);
     } catch (error) {
       resultRoot.replaceChildren(createText("p", "empty", "未展示历史或估算价格；请点击“重新查询”获取本次实时结果。"));
