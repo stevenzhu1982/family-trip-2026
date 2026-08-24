@@ -6,9 +6,14 @@ import {
 } from "../../src/auth/http.js";
 
 const ROUTE = Object.freeze({ origin: "PVG", destination: "BKK", adults: 1 });
-const SPRING_DATES = Object.freeze({ departureDate: "2027-02-10", returnDate: "2027-02-18" });
+const SPRING_DATE_PAIRS = Object.freeze([
+  { departureDate: "2027-02-07", returnDate: "2027-02-16" },
+  { departureDate: "2027-02-08", returnDate: "2027-02-17" },
+  { departureDate: "2027-02-09", returnDate: "2027-02-18" },
+  { departureDate: "2027-02-10", returnDate: "2027-02-19" },
+]);
 const THAI_DATES = Object.freeze({
-  outbound: ["2027-02-08", "2027-02-09", "2027-02-10", "2027-02-11"],
+  outbound: ["2027-02-07", "2027-02-08", "2027-02-09", "2027-02-10"],
   inbound: ["2027-02-16", "2027-02-17", "2027-02-18", "2027-02-19"],
 });
 const AIRLINES = Object.freeze({
@@ -72,8 +77,9 @@ function isNonstopRoundTrip(itinerary, airlineCode) {
     && inbound[0].marketing_carrier_code === airlineCode;
 }
 
-function normalizeRoundTrip(itinerary) {
+function normalizeRoundTrip(itinerary, dates) {
   return {
+    ...dates,
     price: normalizedPrice(itinerary), currency: String(itinerary.price?.currency || "CNY"),
     cabin: String(itinerary.cabin_class || "economy"), baggage: itinerary.bags || {},
     outbound: formatLeg(itinerary.outbound), inbound: formatLeg(itinerary.inbound),
@@ -116,17 +122,29 @@ async function saveSnapshot(env, airline, departureDate, returnDate, result) {
   ).run();
 }
 
-async function springResponse(env) {
+async function searchSpringPair(env, dates) {
   const itineraries = await providerFetch(env, "round-trip", {
-    ...providerBody(ROUTE.origin, ROUTE.destination, SPRING_DATES.departureDate, AIRLINES.spring.code),
-    return_date: SPRING_DATES.returnDate,
+    ...providerBody(ROUTE.origin, ROUTE.destination, dates.departureDate, AIRLINES.spring.code),
+    return_date: dates.returnDate,
   });
   const results = itineraries
     .filter((itinerary) => isNonstopRoundTrip(itinerary, AIRLINES.spring.code))
-    .map(normalizeRoundTrip).filter((itinerary) => itinerary.price !== null)
+    .map((itinerary) => normalizeRoundTrip(itinerary, dates)).filter((itinerary) => itinerary.price !== null)
     .sort((left, right) => left.price - right.price).slice(0, MAX_RESULTS);
-  const payload = { mode: "round-trip", route: { ...ROUTE, ...SPRING_DATES }, results };
-  await saveSnapshot(env, AIRLINES.spring, SPRING_DATES.departureDate, SPRING_DATES.returnDate, { resultCount: results.length, payload });
+  return { ...dates, results };
+}
+
+async function springResponse(env) {
+  const settled = await Promise.allSettled(SPRING_DATE_PAIRS.map((dates) => searchSpringPair(env, dates)));
+  const partial = settled.some((result) => result.status === "rejected");
+  const pairs = settled.map((result, index) => result.status === "fulfilled"
+    ? result.value : { ...SPRING_DATE_PAIRS[index], results: [], unavailable: true });
+  const results = pairs.flatMap((pair) => pair.results).sort((left, right) => left.price - right.price);
+  const payload = { mode: "round-trip-date-grid", route: ROUTE, datePairs: SPRING_DATE_PAIRS, pairs, results, partial };
+  await Promise.all(pairs.map((pair) => saveSnapshot(env, AIRLINES.spring, pair.departureDate, pair.returnDate, {
+    resultCount: pair.results.length,
+    payload: { mode: "round-trip", route: { ...ROUTE, departureDate: pair.departureDate, returnDate: pair.returnDate }, results: pair.results },
+  })));
   return payload;
 }
 

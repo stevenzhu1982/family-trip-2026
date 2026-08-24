@@ -30,9 +30,9 @@ function roundTrip({ price, carrier = "9C", connecting = false }) {
 test("spring endpoint filters both legs to direct selected-airline flights, sorts, and records the snapshot", async () => {
   const previousFetch = globalThis.fetch;
   const DB = database();
-  let providerRequest;
+  const providerRequests = [];
   globalThis.fetch = async (_url, init) => {
-    providerRequest = init;
+    providerRequests.push(JSON.parse(init.body));
     return new Response(JSON.stringify({ itineraries: [
       roundTrip({ price: 3200 }), roundTrip({ price: 2500 }),
       roundTrip({ price: 1800, connecting: true }), roundTrip({ price: 1600, carrier: "CA" }),
@@ -42,13 +42,17 @@ test("spring endpoint filters both legs to direct selected-airline flights, sort
     const response = await onRequest({ request: new Request("https://example.test/api/flight-prices?airline=spring", { headers: { Origin: "https://example.test" } }), env: { IGNAV_API_KEY: "test-key", DB } });
     const payload = await response.json();
     assert.equal(response.status, 200);
-    assert.deepEqual(payload.results.map(({ price }) => price), [2500, 3200]);
+    assert.deepEqual(payload.results.map(({ price }) => price), [2500, 2500, 2500, 2500, 3200, 3200, 3200, 3200]);
     assert.equal(payload.results[0].outbound.flightNumber, "9C7289");
-    assert.deepEqual(JSON.parse(providerRequest.body), {
-      origin: "PVG", destination: "BKK", departure_date: "2027-02-10", return_date: "2027-02-18",
-      adults: 1, market: "CN", max_stops: 0, allow_self_transfer: false, airlines_include: ["9C"],
-    });
-    assert.ok(DB.calls.some(({ values }) => values[0] === "9C" && values[5] === 2));
+    assert.deepEqual(providerRequests.map(({ departure_date, return_date }) => [departure_date, return_date]), [
+      ["2027-02-07", "2027-02-16"], ["2027-02-08", "2027-02-17"],
+      ["2027-02-09", "2027-02-18"], ["2027-02-10", "2027-02-19"],
+    ]);
+    assert.ok(providerRequests.every(({ origin, destination, adults, market, max_stops, allow_self_transfer, airlines_include }) => (
+      origin === "PVG" && destination === "BKK" && adults === 1 && market === "CN"
+      && max_stops === 0 && allow_self_transfer === false && airlines_include[0] === "9C"
+    )));
+    assert.ok(DB.calls.filter(({ values }) => values[0] === "9C" && values[5] === 2).length === 4);
   } finally { globalThis.fetch = previousFetch; }
 });
 
@@ -75,7 +79,7 @@ test("Thai endpoint searches each requested one-way date and keeps only direct T
     assert.equal(response.status, 200);
     assert.equal(payload.mode, "one-way-date-grid");
     assert.equal(calls.length, 8);
-    assert.deepEqual(calls.map(({ departure_date }) => departure_date), ["2027-02-08", "2027-02-09", "2027-02-10", "2027-02-11", "2027-02-16", "2027-02-17", "2027-02-18", "2027-02-19"]);
+    assert.deepEqual(calls.map(({ departure_date }) => departure_date), ["2027-02-07", "2027-02-08", "2027-02-09", "2027-02-10", "2027-02-16", "2027-02-17", "2027-02-18", "2027-02-19"]);
     assert.equal(payload.outbound[0].results.length, 1);
     assert.equal(payload.inbound[0].results[0].flight.flightNumber, "TG663");
     assert.ok(DB.calls.some(({ values }) => values[0] === "TG" && values[5] === 8));

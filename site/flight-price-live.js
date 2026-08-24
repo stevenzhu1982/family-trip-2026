@@ -66,8 +66,10 @@
       card.append(top);
       const legs = document.createElement("div");
       legs.className = "legs";
-      legs.append(renderLeg("去程 · 2月10日", item.outbound));
-      legs.append(renderLeg("返程 · 2月18日", item.inbound));
+      const departure = item.departureDate ? `去程 · ${item.departureDate.slice(5).replace("-", "月")}日` : "去程";
+      const returning = item.returnDate ? `返程 · ${item.returnDate.slice(5).replace("-", "月")}日` : "返程";
+      legs.append(renderLeg(departure, item.outbound));
+      legs.append(renderLeg(returning, item.inbound));
       card.append(legs);
       const details = [];
       if (item.cabin) details.push(item.cabin === "economy" ? "经济舱" : item.cabin);
@@ -113,11 +115,11 @@
     resultRoot.replaceChildren();
     const outbound = document.createElement("section");
     outbound.className = "direction-group";
-    outbound.append(createText("h2", "direction-heading", "去程日期 · 2月8日—2月11日"));
+    outbound.append(createText("h2", "direction-heading", `去程日期 · ${payload.dates.outbound[0].slice(5).replace("-", "月")}日—${payload.dates.outbound.at(-1).slice(5).replace("-", "月")}日`));
     payload.outbound.forEach((group) => outbound.append(renderOneWayGroup(group)));
     const inbound = document.createElement("section");
     inbound.className = "direction-group";
-    inbound.append(createText("h2", "direction-heading", "返程日期 · 2月16日—2月19日"));
+    inbound.append(createText("h2", "direction-heading", `返程日期 · ${payload.dates.inbound[0].slice(5).replace("-", "月")}日—${payload.dates.inbound.at(-1).slice(5).replace("-", "月")}日`));
     payload.inbound.forEach((group) => inbound.append(renderOneWayGroup(group)));
     resultRoot.append(outbound, inbound);
   }
@@ -139,7 +141,8 @@
       const resultCount = payload.mode === "one-way-date-grid"
         ? [...payload.outbound, ...payload.inbound].reduce((total, group) => total + group.results.length, 0)
         : payload.results?.length || 0;
-      setStatus(`已查询 ${resultCount} 个符合条件的方案，均已按含税单程价从低到高排列。${payload.partial ? " 部分日期暂不可用。" : ""}`);
+      const priceLabel = payload.mode === "one-way-date-grid" ? "含税单程价" : "含税往返总价";
+      setStatus(`已查询 ${resultCount} 个符合条件的方案，均已按${priceLabel}从低到高排列。${payload.partial ? " 部分日期暂不可用。" : ""}`);
     } catch (error) {
       resultRoot.replaceChildren(createText("p", "empty", "未展示历史或估算价格；请点击“重新查询”获取本次实时结果。"));
       setStatus(error.message || "实时查询失败，请稍后重试。", true);
