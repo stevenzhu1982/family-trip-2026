@@ -90,7 +90,11 @@
       return section;
     }
     if (!group.results.length) {
-      section.append(createText("p", "empty", "该日期未找到泰国航空直飞可售航班。"));
+      section.append(createText("p", "empty", "该日期未返回泰国航空 6大1小的直飞实时报价；这不代表没有泰航航班。"));
+      if (group.availability?.length) {
+        section.append(createText("p", "details", "单人查询可返回泰航直飞时刻；团队价格请以泰航下单页为准。"));
+        group.availability.forEach((leg) => section.append(renderLeg("单人可用直飞时刻", leg)));
+      }
       return section;
     }
     group.results.forEach((item, index) => {

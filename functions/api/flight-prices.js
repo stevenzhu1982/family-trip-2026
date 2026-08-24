@@ -41,6 +41,13 @@ function providerBody(origin, destination, departureDate, airlineCode) {
   return body;
 }
 
+function availabilityBody(origin, destination, departureDate, airlineCode) {
+  return {
+    origin, destination, departure_date: departureDate, adults: 1, children: 0,
+    market: "CN", max_stops: 0, allow_self_transfer: false, airlines_include: [airlineCode],
+  };
+}
+
 async function providerFetch(env, endpoint, body) {
   const response = await fetch(`https://ignav.com/api/fares/${endpoint}`, {
     method: "POST",
@@ -144,15 +151,23 @@ async function searchThaiLeg(env, direction, date) {
   const origin = outbound ? ROUTE.origin : ROUTE.destination;
   const destination = outbound ? ROUTE.destination : ROUTE.origin;
   const itineraries = await providerFetch(env, "one-way", providerBody(origin, destination, date, AIRLINES.thai.code));
-  return {
-    date, direction,
-    results: itineraries
+  const results = itineraries
+    .filter((itinerary) => isNonstopLeg(itinerary, AIRLINES.thai.code, origin, destination))
+    .map(normalizeOneWay)
+    .filter((itinerary) => itinerary.price !== null)
+    .sort((left, right) => left.price - right.price)
+    .slice(0, MAX_RESULTS);
+  let availability = [];
+  if (!results.length) {
+    const individualItineraries = await providerFetch(env, "one-way", availabilityBody(origin, destination, date, AIRLINES.thai.code));
+    availability = individualItineraries
       .filter((itinerary) => isNonstopLeg(itinerary, AIRLINES.thai.code, origin, destination))
       .map(normalizeOneWay)
       .filter((itinerary) => itinerary.price !== null)
-      .sort((left, right) => left.price - right.price)
-      .slice(0, MAX_RESULTS),
-  };
+      .map((itinerary) => itinerary.flight)
+      .slice(0, 3);
+  }
+  return { date, direction, results, availability };
 }
 
 async function saveSnapshot(env, airline, departureDate, returnDate, result) {
@@ -201,9 +216,9 @@ async function thaiResponse(env) {
   const settled = await Promise.allSettled(tasks);
   const failed = settled.some((result) => result.status === "rejected");
   const outbound = settled.slice(0, THAI_DATES.outbound.length).map((result, index) => result.status === "fulfilled"
-    ? result.value : { date: THAI_DATES.outbound[index], direction: "outbound", results: [], unavailable: true });
+    ? result.value : { date: THAI_DATES.outbound[index], direction: "outbound", results: [], availability: [], unavailable: true });
   const inbound = settled.slice(THAI_DATES.outbound.length).map((result, index) => result.status === "fulfilled"
-    ? result.value : { date: THAI_DATES.inbound[index], direction: "inbound", results: [], unavailable: true });
+    ? result.value : { date: THAI_DATES.inbound[index], direction: "inbound", results: [], availability: [], unavailable: true });
   const payload = { mode: "one-way-date-grid", route: ROUTE, travelers: PASSENGERS, dates: THAI_DATES, outbound, inbound, partial: failed };
   const resultCount = [...outbound, ...inbound].reduce((total, group) => total + group.results.length, 0);
   await saveSnapshot(env, AIRLINES.thai, THAI_DATES.outbound.join(","), THAI_DATES.inbound.join(","), { resultCount, payload });
