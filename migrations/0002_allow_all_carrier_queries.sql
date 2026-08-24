@@ -1,5 +1,3 @@
-BEGIN TRANSACTION;
-
 CREATE TABLE flight_price_queries_next (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   airline_code TEXT NOT NULL CHECK (airline_code IN ('9C', 'TG', 'ALL')),
@@ -21,5 +19,3 @@ DROP TABLE flight_price_queries;
 ALTER TABLE flight_price_queries_next RENAME TO flight_price_queries;
 CREATE INDEX idx_flight_price_queries_airline_created
   ON flight_price_queries (airline_code, created_at DESC);
-
-COMMIT;
